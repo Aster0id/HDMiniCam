@@ -1,0 +1,6 @@
+framework module Pods_HDMiniCam {
+  umbrella header "Pods-HDMiniCam-umbrella.h"
+
+  export *
+  module * { export * }
+}

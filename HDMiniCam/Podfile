@@ -1,0 +1,15 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'HDMiniCam' do
+  use_frameworks!
+  pod 'Bugly'
+  pod 'FFToast'
+  pod 'MJRefresh'
+  pod 'MQTTClient'
+  pod 'SDWebImage'
+  pod 'SVProgressHUD'
+  pod 'AFNetworking', '~> 3.1'
+  pod 'CocoaAsyncSocket', '~> 7.4.1'
+
+end
