@@ -1,0 +1,18 @@
+
+/* Class = "UILabel"; text = "选择分享权限"; ObjectID = "39e-wF-9Ld"; */
+"39e-wF-9Ld.text" = "Выберите разрешения на совместное использование";
+
+/* Class = "UIButton"; normalTitle = "确定"; ObjectID = "AKk-sE-qb1"; */
+"AKk-sE-qb1.normalTitle" = "определить";
+
+/* Class = "UIButton"; normalTitle = "取消"; ObjectID = "KGR-Cu-TXY"; */
+"KGR-Cu-TXY.normalTitle" = "отменен";
+
+/* Class = "UILabel"; text = "观看,摇头,回放SD卡"; ObjectID = "L6s-bd-G4c"; */
+"L6s-bd-G4c.text" = "Смотрите, качайте головой, воспроизводите SD-карту";
+
+/* Class = "UILabel"; text = "仅观看"; ObjectID = "PuS-tv-pC0"; */
+"PuS-tv-pC0.text" = "Смотреть только";
+
+/* Class = "UILabel"; text = "标题"; ObjectID = "R4b-xZ-fyg"; */
+"R4b-xZ-fyg.text" = "заголовок";
