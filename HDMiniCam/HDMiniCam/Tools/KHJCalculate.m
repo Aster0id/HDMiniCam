@@ -61,39 +61,39 @@
 //    return 100;
 //}
 //
-////计算数组去重个数
-//+ (NSMutableArray *)calCategoryArray:(NSArray *)arr
-//{
-//    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//    NSMutableArray * marr = [[NSMutableArray alloc] initWithCapacity:0];
-//    for (NSString *s  in arr) {
-//
-//        NSNumber *dd = [NSNumber numberWithInteger:[s integerValue]];
-//        [dict setObject:dd forKey:dd];
-//
-//    }
-//    [marr addObjectsFromArray:[dict allValues]];
-//    marr = [self bubbleDescendingOrderSortWithArray:marr];
-//    return marr;
-//}
-//
-//// 冒泡降序排序
-//+ (NSMutableArray *)bubbleDescendingOrderSortWithArray:(NSMutableArray *)descendingArr
-//{
-//    for (int i = 0; i < descendingArr.count; i++) {
-//
-//        for (int j = 0; j < descendingArr.count - 1 - i; j++) {
-//
-//            if ([descendingArr[j] longLongValue] < [descendingArr[j + 1] longLongValue]) {
-//                long long  tmp = [descendingArr[j] longLongValue];
-//                descendingArr[j] = descendingArr[j + 1];
-//                descendingArr[j + 1] = [NSNumber numberWithLongLong:tmp];
-//            }
-//        }
-//    }
-//    return descendingArr;
-//}
-//
+//计算数组去重个数
++ (NSMutableArray *)calCategoryArray:(NSArray *)arr
+{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    NSMutableArray * marr = [[NSMutableArray alloc] initWithCapacity:0];
+    for (NSString *s  in arr) {
+
+        NSNumber *dd = [NSNumber numberWithInteger:[s integerValue]];
+        [dict setObject:dd forKey:dd];
+
+    }
+    [marr addObjectsFromArray:[dict allValues]];
+    marr = [self bubbleDescendingOrderSortWithArray:marr];
+    return marr;
+}
+
+// 冒泡降序排序
++ (NSMutableArray *)bubbleDescendingOrderSortWithArray:(NSMutableArray *)descendingArr
+{
+    for (int i = 0; i < descendingArr.count; i++) {
+
+        for (int j = 0; j < descendingArr.count - 1 - i; j++) {
+
+            if ([descendingArr[j] longLongValue] < [descendingArr[j + 1] longLongValue]) {
+                long long  tmp = [descendingArr[j] longLongValue];
+                descendingArr[j] = descendingArr[j + 1];
+                descendingArr[j + 1] = [NSNumber numberWithLongLong:tmp];
+            }
+        }
+    }
+    return descendingArr;
+}
+
 ///**
 // 获取视频第一桢
 // */
@@ -600,47 +600,48 @@
 //
 //}
 //
-//// 文件大小
-//+ (long long)fileSizeAtPath:(NSString*)filePath
-//{
-//    NSFileManager* manager = [NSFileManager defaultManager];
-//    if ([manager fileExistsAtPath:filePath]){
-//        return [[manager attributesOfItemAtPath:filePath error:nil] fileSize];
-//    }
-//    return 0;
-//}
-//
-//+ (NSString *)valueImageSize:(NSString *)path
-//{
-//    NSArray *typeArray = @[@"bytes",@"KB",@"MB",@"GB",@"TB",@"PB", @"EB",@"ZB",@"YB"];
-//    unsigned long long value = [KHJCalculate fileSizeAtPath:path];
-//    NSString *tString = [KHJCalculate imageSizeString:value];
-//
-//    int index = 0;
-//    while (value > 1024) {
-//        value /= 1024.0;
-//        index ++;
-//    }
-//    NSString *str = [NSString stringWithFormat:@"%@%@",tString,typeArray[index]];
-//    return str;
-//}
-////单位转换
-//+ (NSString *)imageSizeString:(unsigned long long)size{
-//
-//    if (size >= 1024*1024*1024) {
-//        return [NSString stringWithFormat:@"%.2f",size/(1024*1024*1024.0)];
-//    }
-//    else if (size >= 1024*1024) {
-//        return [NSString stringWithFormat:@"%.2f",size/(1024*1024.0)];
-//    }
-//    else if (size > 1024) {
-//        return [NSString stringWithFormat:@"%.2f",size/1024.0];
-//    }
-//    else {
-//        return @"";
-//    }
-//}
-//
++ (NSString *)valueImageSize:(NSString *)path
+{
+    NSArray *typeArray = @[@"bytes",@"KB",@"MB",@"GB",@"TB",@"PB", @"EB",@"ZB",@"YB"];
+    unsigned long long value = [KHJCalculate fileSizeAtPath:path];
+    NSString *tString = [KHJCalculate imageSizeString:value];
+
+    int index = 0;
+    while (value > 1024) {
+        value /= 1024.0;
+        index ++;
+    }
+    NSString *str = [NSString stringWithFormat:@"%@%@",tString,typeArray[index]];
+    return str;
+}
+
+// 文件大小
++ (long long)fileSizeAtPath:(NSString*)filePath
+{
+    NSFileManager* manager = [NSFileManager defaultManager];
+    if ([manager fileExistsAtPath:filePath]){
+        return [[manager attributesOfItemAtPath:filePath error:nil] fileSize];
+    }
+    return 0;
+}
+
+//单位转换
++ (NSString *)imageSizeString:(unsigned long long)size{
+
+    if (size >= 1024*1024*1024) {
+        return [NSString stringWithFormat:@"%.2f",size/(1024*1024*1024.0)];
+    }
+    else if (size >= 1024*1024) {
+        return [NSString stringWithFormat:@"%.2f",size/(1024*1024.0)];
+    }
+    else if (size > 1024) {
+        return [NSString stringWithFormat:@"%.2f",size/1024.0];
+    }
+    else {
+        return @"";
+    }
+}
+
 //+ (NSString *)value:(float)value andImage:(UIImage *)img
 //{
 //    NSData *data        = UIImageJPEGRepresentation(img, value);

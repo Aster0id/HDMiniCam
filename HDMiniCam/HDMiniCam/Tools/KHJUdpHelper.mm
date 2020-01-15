@@ -10,7 +10,7 @@
 #import <CocoaAsyncSocket/AsyncUdpSocket.h>
 #import "PlayLocalMusic.h"
 #import "AppDelegate.h"
-#import "NAVVController.h"
+#import "KHJBaseNavigationController.h"
 //#import "KHJDeviceManager.h"
 
 @interface KHJUdpHelper()<AsyncUdpSocketDelegate>
@@ -118,9 +118,9 @@
 - (void)popMainViewCtrl
 {
 //    [[PlayLocalMusic shareInstance] stopPlay];
-//    TabVController *tab = (TabVController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+//    KHJTabBarBaseVC *tab = (KHJTabBarBaseVC *)[UIApplication sharedApplication].delegate.window.rootViewController;
 //    NSInteger sIndec =  [[NSUserDefaults standardUserDefaults] integerForKey:KHJNaviBarItemIndexKey];
-//    NAVVController *nav =  [tab.viewControllers objectAtIndex:sIndec];
+//    KHJBaseNavigationController *nav =  [tab.viewControllers objectAtIndex:sIndec];
 //    [nav popToRootViewControllerAnimated:YES];
 //    [[NSNotificationCenter defaultCenter] postNotificationName:needReloadList_Noti object:nil];
 }

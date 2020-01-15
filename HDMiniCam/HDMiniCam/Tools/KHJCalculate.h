@@ -15,10 +15,10 @@
 //+ (CGFloat)getAnglesWithThreePoint:(CGPoint)pointA pointB:(CGPoint)pointB pointC:(CGPoint)pointC;
 ////判断在哪个部分
 //+ (NSInteger)isBelongPart:(CGFloat)angle;
-////计算数组去重个数,并且排序
-//+(NSMutableArray *)calCategoryArray:(NSArray *)arr;
-////数组排序
-//+ (NSMutableArray *)bubbleDescendingOrderSortWithArray:(NSMutableArray *)descendingArr;
+//计算数组去重个数,并且排序
++ (NSMutableArray *)calCategoryArray:(NSArray *)arr;
+//数组排序
++ (NSMutableArray *)bubbleDescendingOrderSortWithArray:(NSMutableArray *)descendingArr;
 ////获取视频第一桢
 //+ (UIImage *)getFristImageInmp4Video:(NSString *)filePath;
 ////
@@ -75,8 +75,8 @@
 //+ (NSTimeInterval )UTCDateFromLocalString2:(NSString *)localString;
 //// 文件大小
 //+ (long long)fileSizeAtPath:(NSString*)filePath;
-//// 图片大小
-//+ (NSString *)valueImageSize:(NSString *)path;
+// 图片大小
++ (NSString *)valueImageSize:(NSString *)path;
 //// YYYY_MM_dd HH:mm:ss 时间字符串 转 时间戳
 //+ (NSTimeInterval)getUTCFromDateString:(NSString *)dateStr;
 //// 时间戳 转 yyyyMMdd 时间字符串
