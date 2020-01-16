@@ -8,6 +8,7 @@
 #import "KHJPictureListVC.h"
 #import "KHJPicture_oneCell.h"
 #import "AIPhotoZoom.h"
+#import "KHJHadBindDeviceVC.h"
 //#import "AISDCard_VideoPlayerVC.h"
 //#import "AIDeviceManager.h"
 
@@ -65,6 +66,12 @@
     [self addCollectionView];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
 #pragma mark - ！！！！！！！！！！！！修改 DataDic 总数据的传入方式
 
 - (void)add_tpathMarr
@@ -106,7 +113,6 @@
     scrollHeight = SCREEN_HEIGHT - 64;
     _scroll_one = [self getShowScroll];
 //    self.view.backgroundColor = [UIColor blackColor];
-    [self.navigationController setNavigationBarHidden:YES];
     
     if (self.imageNames.count > 0) {
         [self showImageViewAtIndex:0];
@@ -350,6 +356,9 @@
 - (void)chooseDevice
 {
     CLog(@"筛选设备");
+    KHJHadBindDeviceVC *vc = [[KHJHadBindDeviceVC alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)addCollectionView
@@ -385,8 +394,12 @@
     };
     return cell;
 }
+
 - (IBAction)chooseDevice:(id)sender{
     CLog(@"选择设备");
+    KHJHadBindDeviceVC *vc = [[KHJHadBindDeviceVC alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end
