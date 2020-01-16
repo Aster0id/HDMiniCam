@@ -26,7 +26,7 @@
     UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     leftBtn.frame = CGRectMake(0, 0, 66, 44);
     leftBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -40, 0, 0);
-    [leftBtn setImage:[UIImage imageNamed:@"icon_back"] forState:UIControlStateNormal];
+    [leftBtn setImage:[UIImage imageNamed:@"back_icon"] forState:UIControlStateNormal];
     UIBarButtonItem  *barBut = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
     self.navigationItem.leftBarButtonItem = barBut;
     return leftBtn;

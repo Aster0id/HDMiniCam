@@ -15,7 +15,7 @@
  */
 + (UIColor *)appMainColor
 {
-    return UIColor.orangeColor;
+    return UIColorFromRGB(0x0584e0);
 }
 
 /**

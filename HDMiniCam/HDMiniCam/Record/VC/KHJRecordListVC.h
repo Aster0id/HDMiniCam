@@ -1,5 +1,5 @@
 //
-//  KHJAlarmListVC.h
+//  KHJRecordListVC.h
 //  HDMiniCam
 //
 //  Created by khj888 on 2020/1/15.
@@ -10,7 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJAlarmListVC : UIViewController
+@interface KHJRecordListVC : KHJBaseVC
+
+
 
 @end
 

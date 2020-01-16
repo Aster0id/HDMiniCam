@@ -1,16 +1,16 @@
 //
-//  KHJRecordListVC.h
+//  KHJAddDeviceListVC.h
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/1/15.
+//  Created by khj888 on 2020/1/16.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "KHJBaseVC.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJRecordListVC : UIViewController
+@interface KHJAddDeviceListVC : KHJBaseVC
 
 @end
 

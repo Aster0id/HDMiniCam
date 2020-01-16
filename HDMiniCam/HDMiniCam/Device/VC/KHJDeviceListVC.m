@@ -8,6 +8,8 @@
 
 #import "KHJDeviceListVC.h"
 #import "KHJDeviceListCellTableViewCell.h"
+//
+#import "KHJAddDeviceListVC.h"
 
 @interface KHJDeviceListVC ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -27,6 +29,9 @@
     [self.navigationController setNavigationBarHidden:YES];
 }
 - (IBAction)add:(id)sender {
+    KHJAddDeviceListVC *vc = [[KHJAddDeviceListVC alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 - (IBAction)more:(id)sender {
 }
