@@ -7,6 +7,7 @@
 //
 
 #import "KHJAddDeviceListVC.h"
+#import "KHJSearchDeviceVC.h"
 #import "KHJOnlineVC.h"
 
 @interface KHJAddDeviceListVC ()
@@ -35,7 +36,8 @@
 }
 
 - (IBAction)hand:(id)sender {
-    
+    KHJSearchDeviceVC *vc = [[KHJSearchDeviceVC alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (IBAction)online:(id)sender {

@@ -1,18 +1,24 @@
 //
-//  KHJDeviceListCellTableViewCell.m
+//  KHJSearchDeviceCell.m
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/1/15.
+//  Created by khj888 on 2020/1/17.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
-#import "KHJDeviceListCellTableViewCell.h"
+#import "KHJSearchDeviceCell.h"
 
-@implementation KHJDeviceListCellTableViewCell
+@implementation KHJSearchDeviceCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+}
+
+- (IBAction)btn:(id)sender {
+    if (_block) {
+        _block(self.tag - FLAG_TAG);
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

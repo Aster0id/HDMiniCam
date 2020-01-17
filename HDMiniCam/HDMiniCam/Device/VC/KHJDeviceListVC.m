@@ -7,24 +7,26 @@
 //
 
 #import "KHJDeviceListVC.h"
-#import "KHJDeviceListCellTableViewCell.h"
+#import "KHJDeviceListCell.h"
 //
 #import "KHJAddDeviceListVC.h"
+#import "KHJSearchDeviceVC.h"
+#import "KHJMutliScreenVC.h"
 
-@interface KHJDeviceListVC ()<UITableViewDelegate, UITableViewDataSource>
+@interface KHJDeviceListVC ()<UITableViewDelegate, UITableViewDataSource, KHJDeviceListCellDelegate>
 {
     __weak IBOutlet UITableView *contentTBV;
-    
 }
 @end
 
 @implementation KHJDeviceListVC
 
-- (void)viewDidLoad {
+- (void)viewDidLoad{
     [super viewDidLoad];
+
 }
-- (void)viewWillAppear:(BOOL)animated
-{
+
+- (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
@@ -34,8 +36,14 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (IBAction)more:(id)sender {
+    KHJMutliScreenVC *vc = [[KHJMutliScreenVC alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 - (IBAction)search:(id)sender {
+    KHJSearchDeviceVC *vc = [[KHJSearchDeviceVC alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - UITableViewDelegate && UITableViewDataSource
@@ -49,12 +57,28 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    KHJDeviceListCellTableViewCell *cell = [contentTBV dequeueReusableCellWithIdentifier:@"KHJDeviceListCellTableViewCell"];
+    KHJDeviceListCell *cell = [contentTBV dequeueReusableCellWithIdentifier:@"KHJDeviceListCell"];
     if (cell == nil) {
-        cell = [[NSBundle mainBundle] loadNibNamed:@"KHJDeviceListCellTableViewCell" owner:nil options:nil][0];
+        cell = [[NSBundle mainBundle] loadNibNamed:@"KHJDeviceListCell" owner:nil options:nil][0];
     }
-    
+    cell.tag = indexPath.row + FLAG_TAG;
+    cell.delegate = self;
     return cell;
 }
+
+#pragma mark - KHJDeviceListCell
+
+- (void)gotoSetupWithIndex:(NSInteger)index { 
+    CLog(@"进入第 %ld 个设置界面",index);
+}
+
+- (void)gotoVideoWithIndex:(NSInteger)index { 
+    CLog(@"进入第 %ld 个视频播放界面",index);
+}
+
+- (void)reConnectWithIndex:(NSInteger)index { 
+    CLog(@"重连第 %ld 个",index);
+}
+
 
 @end

@@ -1,5 +1,5 @@
 //
-//  KHJDeviceListCellTableViewCell.h
+//  KHJDeviceListCell.h
 //  HDMiniCam
 //
 //  Created by khj888 on 2020/1/15.
@@ -10,13 +10,24 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJDeviceListCellTableViewCell : KHJBaseCell
+@protocol KHJDeviceListCellDelegate <NSObject>
+
+- (void)gotoVideoWithIndex:(NSInteger)index;
+- (void)gotoSetupWithIndex:(NSInteger)index;
+- (void)reConnectWithIndex:(NSInteger)index;
+
+@end
+
+@interface KHJDeviceListCell : KHJBaseCell
+
+@property (nonatomic, assign) BOOL connected;
 
 @property (weak, nonatomic) IBOutlet UIImageView *bigIMGV;
 @property (weak, nonatomic) IBOutlet UIImageView *smalIMGV;
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *status;
 @property (weak, nonatomic) IBOutlet UILabel *idd;
+@property (nonatomic, weak) id<KHJDeviceListCellDelegate> delegate;
 
 @end
 

@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="KHJDeviceListCellTableViewCell">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="KHJDeviceListCell">
             <rect key="frame" x="0.0" y="0.0" width="430" height="80"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -50,7 +50,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qkg-Kf-pi0">
                         <rect key="frame" x="370" y="0.0" width="60" height="80"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="setup" translatesAutoresizingMaskIntoConstraints="NO" id="7f7-nj-kHx">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reConnect" translatesAutoresizingMaskIntoConstraints="NO" id="7f7-nj-kHx">
                                 <rect key="frame" x="20" y="30" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="3Bp-hy-z2S"/>
@@ -59,6 +59,9 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="faD-XR-zhb">
                                 <rect key="frame" x="0.0" y="0.0" width="60" height="80"/>
+                                <connections>
+                                    <action selector="btn2:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="9dr-0a-iuD"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -72,14 +75,23 @@
                             <constraint firstAttribute="trailing" secondItem="faD-XR-zhb" secondAttribute="trailing" id="yp8-uZ-vp5"/>
                         </constraints>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ebt-y7-FOW">
+                        <rect key="frame" x="0.0" y="0.0" width="370" height="80"/>
+                        <connections>
+                            <action selector="btn1:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Fu5-cd-3Iw"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="uK3-wp-dbB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="2RX-Sn-sFq"/>
                     <constraint firstItem="r8t-x3-6Ia" firstAttribute="height" secondItem="eGx-4U-yo9" secondAttribute="height" id="7Jj-zY-QvU"/>
                     <constraint firstItem="Qkg-Kf-pi0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="AhQ-C9-Ct9"/>
                     <constraint firstAttribute="trailing" secondItem="Qkg-Kf-pi0" secondAttribute="trailing" id="Dhh-gt-Bce"/>
+                    <constraint firstItem="ebt-y7-FOW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="FTs-gB-tbV"/>
                     <constraint firstItem="ipS-jd-7Pe" firstAttribute="trailing" secondItem="eGx-4U-yo9" secondAttribute="trailing" id="GGs-YK-ZfG"/>
+                    <constraint firstItem="ebt-y7-FOW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="LWL-b3-U1u"/>
                     <constraint firstItem="ipS-jd-7Pe" firstAttribute="height" secondItem="eGx-4U-yo9" secondAttribute="height" id="LZ6-5F-p03"/>
+                    <constraint firstItem="Qkg-Kf-pi0" firstAttribute="leading" secondItem="ebt-y7-FOW" secondAttribute="trailing" id="NSj-GD-cSF"/>
                     <constraint firstItem="Qkg-Kf-pi0" firstAttribute="leading" secondItem="r8t-x3-6Ia" secondAttribute="trailing" constant="12" id="NkO-bU-kw6"/>
                     <constraint firstItem="r8t-x3-6Ia" firstAttribute="leading" secondItem="eGx-4U-yo9" secondAttribute="leading" id="Q2R-nQ-10f"/>
                     <constraint firstItem="ipS-jd-7Pe" firstAttribute="leading" secondItem="eGx-4U-yo9" secondAttribute="leading" id="a6Q-iI-kga"/>
@@ -87,6 +99,7 @@
                     <constraint firstItem="r8t-x3-6Ia" firstAttribute="trailing" secondItem="eGx-4U-yo9" secondAttribute="trailing" id="e87-0A-maj"/>
                     <constraint firstItem="eGx-4U-yo9" firstAttribute="leading" secondItem="uK3-wp-dbB" secondAttribute="trailing" constant="12" id="h0l-w5-mv4"/>
                     <constraint firstItem="r8t-x3-6Ia" firstAttribute="top" secondItem="ipS-jd-7Pe" secondAttribute="bottom" constant="2" id="i7R-y1-lSU"/>
+                    <constraint firstAttribute="bottom" secondItem="ebt-y7-FOW" secondAttribute="bottom" id="kVm-5w-QMo"/>
                     <constraint firstItem="uK3-wp-dbB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="sXK-pK-XMx"/>
                     <constraint firstItem="ipS-jd-7Pe" firstAttribute="top" secondItem="eGx-4U-yo9" secondAttribute="bottom" constant="2" id="shf-Yl-Ebc"/>
                     <constraint firstAttribute="bottom" secondItem="Qkg-Kf-pi0" secondAttribute="bottom" id="yNR-W0-F2h"/>
@@ -105,6 +118,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="setup" width="64" height="64"/>
+        <image name="reConnect" width="64" height="64"/>
     </resources>
 </document>

@@ -36,7 +36,6 @@
 {
     UILabel *titleLab = [[UILabel alloc] initWithFrame:CGRectMake(80, 0, SCREEN_WIDTH - 160, 44)];
     titleLab.font = [UIFont systemFontOfSize:17];
-//    titleLab.textColor = UIColorFromRGB(0x333333);
     titleLab.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = titleLab;
     return titleLab;
