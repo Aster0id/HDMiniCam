@@ -51,6 +51,7 @@
 {
     NSInteger index = sender.tag/10 - 1;
     CLog(@"index = %ld",index);
+    sender.selected = !sender.selected;
 }
 
 - (IBAction)gotoSetup:(UIButton *)sender

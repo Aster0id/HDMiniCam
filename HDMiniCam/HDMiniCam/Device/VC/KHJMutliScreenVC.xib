@@ -52,13 +52,13 @@
                                                         <action selector="gotoVideoPlayer:" destination="-1" eventType="touchUpInside" id="wpG-3s-6qq"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" tag="11" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ta-XW-2AZ">
+                                                <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ta-XW-2AZ">
                                                     <rect key="frame" x="124.5" y="0.0" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="ZDO-iB-aUI"/>
                                                     </constraints>
                                                     <state key="normal" image="playVoice_icon"/>
-                                                    <state key="selected" image="playVoice_icon"/>
+                                                    <state key="selected" image="noPlayVoice_icon"/>
                                                     <connections>
                                                         <action selector="voice:" destination="-1" eventType="touchUpInside" id="Eap-yR-2UM"/>
                                                     </connections>
@@ -129,13 +129,13 @@
                                                         <action selector="gotoVideoPlayer:" destination="-1" eventType="touchUpInside" id="49S-Zw-CPE"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" tag="31" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cS1-Gf-JSa">
+                                                <button opaque="NO" tag="31" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cS1-Gf-JSa">
                                                     <rect key="frame" x="124.5" y="0.0" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="ZN9-t5-apj"/>
                                                     </constraints>
                                                     <state key="normal" image="playVoice_icon"/>
-                                                    <state key="selected" image="playVoice_icon"/>
+                                                    <state key="selected" image="noPlayVoice_icon"/>
                                                     <connections>
                                                         <action selector="voice:" destination="-1" eventType="touchUpInside" id="aE5-uO-piq"/>
                                                     </connections>
@@ -211,13 +211,13 @@
                                                         <action selector="gotoVideoPlayer:" destination="-1" eventType="touchUpInside" id="1K7-LE-se2"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" tag="21" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m6W-Zt-eCb">
+                                                <button opaque="NO" tag="21" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m6W-Zt-eCb">
                                                     <rect key="frame" x="124.5" y="0.0" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="bnH-S9-2Cx"/>
                                                     </constraints>
                                                     <state key="normal" image="playVoice_icon"/>
-                                                    <state key="selected" image="playVoice_icon"/>
+                                                    <state key="selected" image="noPlayVoice_icon"/>
                                                     <connections>
                                                         <action selector="voice:" destination="-1" eventType="touchUpInside" id="pzD-Um-JCC"/>
                                                     </connections>
@@ -288,13 +288,13 @@
                                                         <action selector="gotoVideoPlayer:" destination="-1" eventType="touchUpInside" id="H8D-jY-oYB"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" tag="41" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5cc-qc-YY6">
+                                                <button opaque="NO" tag="41" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5cc-qc-YY6">
                                                     <rect key="frame" x="124.5" y="0.0" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="M2t-tU-6jc"/>
                                                     </constraints>
                                                     <state key="normal" image="playVoice_icon"/>
-                                                    <state key="selected" image="playVoice_icon"/>
+                                                    <state key="selected" image="noPlayVoice_icon"/>
                                                     <connections>
                                                         <action selector="voice:" destination="-1" eventType="touchUpInside" id="mpA-e1-ypo"/>
                                                     </connections>
@@ -366,6 +366,7 @@
         <image name="add_icon_gray" width="32" height="32"/>
         <image name="menu_gray" width="19" height="19"/>
         <image name="moreScreen_icon" width="16" height="16"/>
+        <image name="noPlayVoice_icon" width="24" height="24"/>
         <image name="playVoice_icon" width="24" height="24"/>
     </resources>
 </document>
