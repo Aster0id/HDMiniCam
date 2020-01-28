@@ -133,29 +133,29 @@
 
 - (void)show
 {
-//    // 蒙版
-//    UIView *becloudView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-//    becloudView.backgroundColor = [UIColor blackColor];
-//    becloudView.layer.opacity = 0.3;
-//    UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeAlertView:)];
-//    [becloudView addGestureRecognizer:tapGR];
-//    
-//    [ZQWindow addSubview:becloudView];
-//    self.becloudView = becloudView;
+    // 蒙版
+    UIView *becloudView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    becloudView.backgroundColor = [UIColor blackColor];
+    becloudView.layer.opacity = 0.3;
+    UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeAlertView:)];
+    [becloudView addGestureRecognizer:tapGR];
+    
+    [ZQWindow addSubview:becloudView];
+    self.becloudView = becloudView;
     
     
-//    CGSize size = [KHJCalculate sizeWithText:self.titleLabel.text font:[UIFont systemFontOfSize:12] maxSize:CGSizeMake(250, MAXFLOAT)];
-    /* 需要权限view时，self.frame 设置 */
-//    if (self.needPermissionView) {
-//        self.frame = CGRectMake(0, 0, becloudView.frame.size.width * 0.8, 265 + size.height - 17);
-//    }
-//    else {
-//        self.permissionViewCH.constant = 0;
-//        self.permissionContentView.hidden = YES;
-//        self.frame = CGRectMake(0, 0, becloudView.frame.size.width * 0.8, 155 + size.height - 17);
-//    }
-//    self.center = CGPointMake(becloudView.center.x, becloudView.frame.size.height * 0.4);
-//    [ZQWindow addSubview:self];
+    CGSize size = [KHJCalculate sizeWithText:self.titleLabel.text maxSize:CGSizeMake(250, MAXFLOAT)];
+    // 需要权限view时，self.frame 设置
+    if (self.needPermissionView) {
+        self.frame = CGRectMake(0, 0, becloudView.frame.size.width * 0.8, 265 + size.height - 17);
+    }
+    else {
+        self.permissionViewCH.constant = 0;
+        self.permissionContentView.hidden = YES;
+        self.frame = CGRectMake(0, 0, becloudView.frame.size.width * 0.8, 155 + size.height - 17);
+    }
+    self.center = CGPointMake(becloudView.center.x, becloudView.frame.size.height * 0.4);
+    [ZQWindow addSubview:self];
 }
 
 - (void)exitKeyboard

@@ -17,7 +17,7 @@ typedef void(^KHJAlarmListCellBlock)(NSInteger);
 
 @property (weak, nonatomic) IBOutlet UILabel *idd;
 @property (weak, nonatomic) IBOutlet UILabel *num;
-@property (nonatomic, assign) KHJAlarmListCellBlock block;
+@property (nonatomic, copy) KHJAlarmListCellBlock block;
 
 @end
 

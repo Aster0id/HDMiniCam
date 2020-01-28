@@ -89,6 +89,7 @@
 
 // 根据文字 + 字体 + 最大size 计算label的宽高
 //+ (CGSize)sizeWithText:(NSString *)text font:(UIFont *)font maxSize:(CGSize)maxSize;
++ (CGSize)sizeWithText:(NSString *)text maxSize:(CGSize)maxSize;
 
 ////用户信息
 //#pragma mark - 保存账户

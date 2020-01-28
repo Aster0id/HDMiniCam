@@ -16,7 +16,7 @@ typedef void(^KHJPictureCellBlock)(NSInteger);
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIButton *btn;
-@property (nonatomic, assign) KHJPictureCellBlock block;
+@property (nonatomic, copy) KHJPictureCellBlock block;
 
 @end
 

@@ -697,10 +697,12 @@
 //
 // 根据文字 + 字体 + 最大size 计算label的宽高
 //+ (CGSize)sizeWithText:(NSString *)text font:(UIFont *)font maxSize:(CGSize)maxSize;
-//{
-//    NSDictionary *attrs = @{NSFontAttributeName : font};
-//    return [text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attrs context:nil].size;
-//}
++ (CGSize)sizeWithText:(NSString *)text maxSize:(CGSize)maxSize;
+{
+    UIFont *font = [UIFont systemFontOfSize:12];
+    NSDictionary *attrs = @{NSFontAttributeName: font};
+    return [text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attrs context:nil].size;
+}
 
 //+ (NSString *)getDateFromTimes2:(NSTimeInterval)timeInterval
 //{

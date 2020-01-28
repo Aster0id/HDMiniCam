@@ -15,7 +15,7 @@ typedef void(^KHJSearchDeviceCellBlock)(NSInteger);
 @interface KHJSearchDeviceCell : KHJBaseCell
 
 @property (weak, nonatomic) IBOutlet UILabel *idd;
-@property (nonatomic, assign) KHJSearchDeviceCellBlock block;
+@property (nonatomic, copy) KHJSearchDeviceCellBlock block;
 
 @end
 

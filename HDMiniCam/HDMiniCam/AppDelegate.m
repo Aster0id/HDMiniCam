@@ -12,22 +12,33 @@
 #import "KHJPictureListVC.h"
 #import "KHJRecordListVC.h"
 #import "KHJAlarmListVC.h"
+#pragma mark - ios13 开启地理位置权限，获取Wi-Fi名称
+#import <CoreLocation/CoreLocation.h>
 
-@interface AppDelegate ()
+
+@interface AppDelegate ()<CLLocationManagerDelegate>
+
+@property (nonatomic, strong) CLLocationManager *locationManager;
 
 @end
 
 @implementation AppDelegate
 
+- (CLLocationManager *)locationManager
+{
+    if (_locationManager == nil) {
+        _locationManager = [[CLLocationManager alloc] init];
+    }
+    return _locationManager;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//    KHJRecordListVC *vc = [[KHJRecordListVC alloc] init];
-//    KHJBaseNavigationController *nav = [[KHJBaseNavigationController alloc] initWithRootViewController:vc];
-//    self.window.rootViewController = nav;
-//    self.window.backgroundColor = [UIColor whiteColor];
-//    [self.window makeKeyAndVisible];
     [self initHomeView];
+    if ([[UIDevice currentDevice] systemVersion].floatValue >= 13) {
+        // 如果是iOS13 未开启地理位置权限 需要提示一下
+        [self.locationManager requestWhenInUseAuthorization];
+    }
     return YES;
 }
 

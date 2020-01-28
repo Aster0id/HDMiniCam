@@ -9,6 +9,7 @@
 #import "KHJAddDeviceListVC.h"
 #import "KHJSearchDeviceVC.h"
 #import "KHJOnlineVC.h"
+#import "KHJWiFiVC.h"
 
 @interface KHJAddDeviceListVC ()
 {
@@ -46,6 +47,8 @@
 }
 
 - (IBAction)wifi:(id)sender {
+    KHJWiFiVC *vc = [[KHJWiFiVC alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

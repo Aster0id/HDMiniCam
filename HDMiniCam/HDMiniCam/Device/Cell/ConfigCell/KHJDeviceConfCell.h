@@ -14,7 +14,7 @@ typedef void(^KHJDeviceConfCellBlock)(NSInteger);
 
 @interface KHJDeviceConfCell : KHJBaseCell
 
-@property (nonatomic, assign) KHJDeviceConfCellBlock block;
+@property (nonatomic, copy) KHJDeviceConfCellBlock block;
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageview;
 @property (weak, nonatomic) IBOutlet UILabel *lab;

@@ -8,6 +8,13 @@
 
 #import "KHJDeviceConfVC.h"
 #import "KHJDeviceConfCell.h"
+#import "KHJAlarmConfigVC.h"
+#import "KHJWIFIConfigVC.h"
+#import "KHJSDCardConfigVC.h"
+#import "KHJlampConfigVC.h"
+#import "KHJlampConfigVC.h"
+#import "KHJTimeZoneConfigVC.h"
+#import "KHJChangePasswordVC.h"
 
 @interface KHJDeviceConfVC ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -67,12 +74,69 @@
         cell = [[NSBundle  mainBundle] loadNibNamed:@"KHJDeviceConfCell" owner:nil options:nil][0];
     }
     cell.tag = indexPath.row + FLAG_TAG;
+    WeakSelf
     cell.block = ^(NSInteger row) {
         CLog(@"row = %ld",row);
+        [weakSelf pushTo:row];
     };
     cell.lab.text = titleArr[indexPath.row];
     cell.imageview.image = iconArr[indexPath.row];
     return cell;
 }
+
+- (void)pushTo:(NSInteger)row
+{
+    if (row == 0) {
+        KHJAlarmConfigVC *vc = [[KHJAlarmConfigVC alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else if (row == 1) {
+        KHJWIFIConfigVC *vc = [[KHJWIFIConfigVC alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else if (row == 2) {
+        KHJSDCardConfigVC *vc = [[KHJSDCardConfigVC alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else if (row == 3) {
+        KHJlampConfigVC *vc = [[KHJlampConfigVC alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else if (row == 4){
+        KHJTimeZoneConfigVC *vc = [[KHJTimeZoneConfigVC alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else if (row == 5) {
+        KHJChangePasswordVC *vc = [[KHJChangePasswordVC alloc] init];
+        vc.isFinderPassword = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else if (row == 6) {
+        UIAlertController *alertview = [UIAlertController alertControllerWithTitle:@"deviceName" message:@"确定要重启设备吗？" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *delete = [UIAlertAction actionWithTitle:KHJLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:nil];
+        [alertview addAction:delete];
+        [alertview addAction:cancel];
+        [self presentViewController:alertview animated:YES completion:nil];
+    }
+    else if (row == 7) {
+        UIAlertController *alertview = [UIAlertController alertControllerWithTitle:@"deviceName" message:@"确定恢复出厂设置吗？" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *delete = [UIAlertAction actionWithTitle:KHJLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:nil];
+        [alertview addAction:delete];
+        [alertview addAction:cancel];
+        [self presentViewController:alertview animated:YES completion:nil];
+    }
+    else if (row == 8) {
+        KHJChangePasswordVC *vc = [[KHJChangePasswordVC alloc] init];
+        vc.isFinderPassword = NO;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
+
 
 @end

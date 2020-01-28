@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,11 +15,10 @@
             <rect key="frame" x="0.0" y="0.0" width="372" height="231"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R4b-xZ-fyg">
-                    <rect key="frame" x="86" y="10" width="200" height="20"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="标题" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R4b-xZ-fyg">
+                    <rect key="frame" x="15" y="10" width="342" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="W7W-kZ-mIL"/>
-                        <constraint firstAttribute="width" constant="200" id="dgq-cX-G4N"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
@@ -75,7 +74,9 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="rqp-5p-smp" firstAttribute="top" secondItem="R4b-xZ-fyg" secondAttribute="bottom" constant="20" id="8Hj-CA-JDH"/>
+                <constraint firstItem="R4b-xZ-fyg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="9Yk-9r-ZjK"/>
                 <constraint firstItem="R4b-xZ-fyg" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="BLf-cG-D2W"/>
+                <constraint firstAttribute="trailing" secondItem="R4b-xZ-fyg" secondAttribute="trailing" constant="15" id="BVx-HD-YhS"/>
                 <constraint firstItem="rqp-5p-smp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="Eiy-dX-1WV"/>
                 <constraint firstItem="AKk-sE-qb1" firstAttribute="top" secondItem="rqp-5p-smp" secondAttribute="bottom" constant="16" id="R5z-WP-Do6"/>
                 <constraint firstItem="KGR-Cu-TXY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="50" id="Rsf-Zo-bgD"/>

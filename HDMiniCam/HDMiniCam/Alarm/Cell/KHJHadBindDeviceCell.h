@@ -15,7 +15,7 @@ typedef void(^KHJHadBindDeviceCellBlock)(NSInteger);
 @interface KHJHadBindDeviceCell : KHJBaseCell
 
 @property (weak, nonatomic) IBOutlet UILabel *lab;
-@property (nonatomic, assign) KHJHadBindDeviceCellBlock block;
+@property (nonatomic, copy) KHJHadBindDeviceCellBlock block;
 
 @end
 
