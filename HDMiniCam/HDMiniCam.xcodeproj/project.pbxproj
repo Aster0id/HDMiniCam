@@ -10,6 +10,8 @@
 		5C3C5D45249012E93310CF7C /* Pods_HDMiniCam.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E40FDE3B8EEB6E3E1782DFE /* Pods_HDMiniCam.framework */; };
 		93037C8A23D933EE00F4D969 /* KHJWiFiVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93037C8823D933EE00F4D969 /* KHJWiFiVC.m */; };
 		93037C8B23D933EE00F4D969 /* KHJWiFiVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93037C8923D933EE00F4D969 /* KHJWiFiVC.xib */; };
+		9398AEE123E08DC600E8D685 /* KHJWiFiVC_2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398AEDF23E08DC600E8D685 /* KHJWiFiVC_2.m */; };
+		9398AEE223E08DC700E8D685 /* KHJWiFiVC_2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9398AEE023E08DC600E8D685 /* KHJWiFiVC_2.xib */; };
 		93A30C4723D29862009A0F4C /* KHJAlarmConfigVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A30C4523D29862009A0F4C /* KHJAlarmConfigVC.m */; };
 		93A30C4823D29862009A0F4C /* KHJAlarmConfigVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93A30C4623D29862009A0F4C /* KHJAlarmConfigVC.xib */; };
 		93A30C4C23D29889009A0F4C /* KHJWIFIConfigVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A30C4A23D29889009A0F4C /* KHJWIFIConfigVC.m */; };
@@ -170,6 +172,9 @@
 		93037C8723D933EE00F4D969 /* KHJWiFiVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJWiFiVC.h; sourceTree = "<group>"; };
 		93037C8823D933EE00F4D969 /* KHJWiFiVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJWiFiVC.m; sourceTree = "<group>"; };
 		93037C8923D933EE00F4D969 /* KHJWiFiVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJWiFiVC.xib; sourceTree = "<group>"; };
+		9398AEDE23E08DC600E8D685 /* KHJWiFiVC_2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJWiFiVC_2.h; sourceTree = "<group>"; };
+		9398AEDF23E08DC600E8D685 /* KHJWiFiVC_2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJWiFiVC_2.m; sourceTree = "<group>"; };
+		9398AEE023E08DC600E8D685 /* KHJWiFiVC_2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJWiFiVC_2.xib; sourceTree = "<group>"; };
 		93A30C4423D29862009A0F4C /* KHJAlarmConfigVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJAlarmConfigVC.h; sourceTree = "<group>"; };
 		93A30C4523D29862009A0F4C /* KHJAlarmConfigVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJAlarmConfigVC.m; sourceTree = "<group>"; };
 		93A30C4623D29862009A0F4C /* KHJAlarmConfigVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJAlarmConfigVC.xib; sourceTree = "<group>"; };
@@ -904,6 +909,9 @@
 				93037C8723D933EE00F4D969 /* KHJWiFiVC.h */,
 				93037C8823D933EE00F4D969 /* KHJWiFiVC.m */,
 				93037C8923D933EE00F4D969 /* KHJWiFiVC.xib */,
+				9398AEDE23E08DC600E8D685 /* KHJWiFiVC_2.h */,
+				9398AEDF23E08DC600E8D685 /* KHJWiFiVC_2.m */,
+				9398AEE023E08DC600E8D685 /* KHJWiFiVC_2.xib */,
 			);
 			path = Method;
 			sourceTree = "<group>";
@@ -1100,6 +1108,7 @@
 				AB20E61B23CEBF4900D2861C /* KHJAlarmListVC.xib in Resources */,
 				ABEBCDFD23CF1B6E00581AFB /* KHJPictureListVC.xib in Resources */,
 				93C33B5223CE20B400B44E5F /* ZQ_Close@2x.png in Resources */,
+				9398AEE223E08DC700E8D685 /* KHJWiFiVC_2.xib in Resources */,
 				93C33B3423CE20B400B44E5F /* photoshutter.mp3 in Resources */,
 				93C33B4223CE20B400B44E5F /* tomcatC.cer in Resources */,
 				93C33B3E23CE20B400B44E5F /* reset.mp3 in Resources */,
@@ -1186,6 +1195,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9398AEE123E08DC600E8D685 /* KHJWiFiVC_2.m in Sources */,
 				93C33B5423CE20B400B44E5F /* UIView+LJWKeyboardHandlerAddtion.m in Sources */,
 				93C3398A23CE1BA900B44E5F /* KHJBaseCell.m in Sources */,
 				AB30DA4523D05B0F005BD2A1 /* KHJAddDeviceListVC.m in Sources */,

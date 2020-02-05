@@ -12,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KHJWiFiVC">
             <connections>
+                <outlet property="accountTF" destination="4Uk-AV-ZRS" id="bck-vY-UrF"/>
+                <outlet property="passwordTF" destination="aV9-BO-Z6q" id="mY6-pd-43I"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -32,7 +34,7 @@
                                 <fragment content="输入家中的Wi-Fi密码">
                                     <attributes>
                                         <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                        <font key="NSFont" size="26" name="PingFangSC-Regular"/>
+                                        <font key="NSFont" size="29" name="PingFangSC-Semibold"/>
                                         <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                     </attributes>
                                 </fragment>
@@ -116,7 +118,7 @@
                                             <rect key="frame" x="52" y="0.0" width="209" height="49"/>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits"/>
+                                            <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                         </textField>
                                         <button opaque="NO" tag="20" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sG6-oi-VrE">
                                             <rect key="frame" x="261" y="0.0" width="50" height="49"/>
@@ -214,7 +216,7 @@
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="l4p-lC-NoR" secondAttribute="bottom" constant="20" id="tAO-aK-ttb"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
-            <point key="canvasLocation" x="141.59999999999999" y="178.56071964017991"/>
+            <point key="canvasLocation" x="260" y="172"/>
         </view>
     </objects>
     <resources>

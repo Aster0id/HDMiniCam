@@ -7,10 +7,13 @@
 //
 
 #import "KHJWiFiVC.h"
+#import "KHJWiFiVC_2.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 
 @interface KHJWiFiVC ()
 {
+    __weak IBOutlet UITextField *accountTF;
+    __weak IBOutlet UITextField *passwordTF;
     
 }
 @end
@@ -23,6 +26,11 @@
     [self fetchSSIDInfo];
     self.titleLab.text = KHJLocalizedString(@"配置网络", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)backAction
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)fetchSSIDInfo
@@ -46,11 +54,6 @@
     CLog(@"ssid == %@", ssid);
 }
 
-- (void)backAction
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (IBAction)btn:(UIButton *)sender
 {
     if (sender.tag == 10) {
@@ -66,9 +69,11 @@
     }
     else if (sender.tag == 20) {
         CLog(@"显示/隐藏密码");
+        passwordTF.secureTextEntry = !passwordTF.secureTextEntry;
     }
     else if (sender.tag == 30) {
-        CLog(@"下一步");
+        KHJWiFiVC_2 *vc = [[KHJWiFiVC_2 alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 
