@@ -8,10 +8,11 @@
 
 #import "KHJMutliScreenVC.h"
 //
-#import "KHJVideoPlayerVC.h"
+#import "KHJVideoPlayer_hp_VC.h"
 #import "KHJDeviceConfVC.h"
 
 @interface KHJMutliScreenVC ()
+
 {
     __weak IBOutlet UIButton *oneAddBtn;
     __weak IBOutlet UIView *onePlayerView;
@@ -21,10 +22,8 @@
     __weak IBOutlet UIView *threePlayerView;
     __weak IBOutlet UIButton *fourAddBtn;
     __weak IBOutlet UIView *fourPlayerView;
-    
-    
-
 }
+
 @end
 
 @implementation KHJMutliScreenVC
@@ -43,7 +42,7 @@
 {
     NSInteger index = sender.tag/10 - 1;
     CLog(@"index = %ld",index);
-    KHJVideoPlayerVC *vc = [[KHJVideoPlayerVC alloc] init];
+    KHJVideoPlayer_hp_VC *vc = [[KHJVideoPlayer_hp_VC alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

@@ -6,13 +6,13 @@
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
-#import "KHJVideoPlayerVC.h"
+#import "KHJVideoPlayer_hp_VC.h"
 
-@interface KHJVideoPlayerVC ()
+@interface KHJVideoPlayer_hp_VC ()
 
 @end
 
-@implementation KHJVideoPlayerVC
+@implementation KHJVideoPlayer_hp_VC
 
 - (void)viewDidLoad {
     [super viewDidLoad];

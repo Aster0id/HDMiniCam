@@ -29,17 +29,17 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="moreScreen_blue" translatesAutoresizingMaskIntoConstraints="NO" id="wkM-mj-nYR">
-                            <rect key="frame" x="20" y="12" width="20" height="20"/>
+                            <rect key="frame" x="19" y="11" width="22" height="22"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="20" id="QPM-iS-knQ"/>
-                                <constraint firstAttribute="width" constant="20" id="fQc-5F-Hd9"/>
+                                <constraint firstAttribute="height" constant="22" id="QPM-iS-knQ"/>
+                                <constraint firstAttribute="width" constant="22" id="fQc-5F-Hd9"/>
                             </constraints>
                         </imageView>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add_blue" translatesAutoresizingMaskIntoConstraints="NO" id="QXq-Qq-QIo">
-                            <rect key="frame" x="343" y="12" width="20" height="20"/>
+                            <rect key="frame" x="342.66666666666669" y="11.666666666666666" width="20.666666666666686" height="20.666666666666671"/>
                         </imageView>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search_blue" translatesAutoresizingMaskIntoConstraints="NO" id="mo7-2O-xXy">
-                            <rect key="frame" x="299" y="12" width="20" height="20"/>
+                            <rect key="frame" x="298.66666666666669" y="11.666666666666666" width="20.666666666666686" height="20.666666666666671"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6dt-sB-k72" userLabel="more">
                             <rect key="frame" x="0.0" y="0.0" width="60" height="44"/>
@@ -83,13 +83,13 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="Cmk-vd-Z0D" secondAttribute="bottom" id="0VV-Im-7tn"/>
-                        <constraint firstItem="QXq-Qq-QIo" firstAttribute="height" secondItem="wkM-mj-nYR" secondAttribute="height" id="0ye-Qn-2Fp"/>
+                        <constraint firstItem="QXq-Qq-QIo" firstAttribute="height" secondItem="wkM-mj-nYR" secondAttribute="height" multiplier="0.95" id="0ye-Qn-2Fp"/>
                         <constraint firstItem="5mp-Nj-j3H" firstAttribute="centerY" secondItem="Xxe-Cr-X2t" secondAttribute="centerY" id="15j-gr-SMF"/>
                         <constraint firstAttribute="bottom" secondItem="6dt-sB-k72" secondAttribute="bottom" id="2mK-vu-Cnp"/>
                         <constraint firstItem="Cmk-vd-Z0D" firstAttribute="leading" secondItem="Zig-9K-HIv" secondAttribute="trailing" id="2vN-3n-uK5"/>
-                        <constraint firstItem="mo7-2O-xXy" firstAttribute="height" secondItem="wkM-mj-nYR" secondAttribute="height" id="4ru-5x-NVr"/>
+                        <constraint firstItem="mo7-2O-xXy" firstAttribute="height" secondItem="wkM-mj-nYR" secondAttribute="height" multiplier="0.95" id="4ru-5x-NVr"/>
                         <constraint firstAttribute="trailing" secondItem="Cmk-vd-Z0D" secondAttribute="trailing" id="6tc-Tf-chl"/>
-                        <constraint firstItem="QXq-Qq-QIo" firstAttribute="width" secondItem="wkM-mj-nYR" secondAttribute="width" id="Fnm-g2-AeI"/>
+                        <constraint firstItem="QXq-Qq-QIo" firstAttribute="width" secondItem="wkM-mj-nYR" secondAttribute="width" multiplier="0.95" id="Fnm-g2-AeI"/>
                         <constraint firstItem="Cmk-vd-Z0D" firstAttribute="centerY" secondItem="QXq-Qq-QIo" secondAttribute="centerY" id="Jw1-iO-CG3"/>
                         <constraint firstItem="6dt-sB-k72" firstAttribute="leading" secondItem="Xxe-Cr-X2t" secondAttribute="leading" id="Pza-EL-KSH"/>
                         <constraint firstItem="wkM-mj-nYR" firstAttribute="centerX" secondItem="6dt-sB-k72" secondAttribute="centerX" id="SGY-wH-N3P"/>
@@ -100,7 +100,7 @@
                         <constraint firstAttribute="height" constant="44" id="kqV-qD-h60"/>
                         <constraint firstItem="e8s-Vz-x7o" firstAttribute="leading" secondItem="Xxe-Cr-X2t" secondAttribute="leading" id="qBv-xd-lXf"/>
                         <constraint firstItem="5mp-Nj-j3H" firstAttribute="centerX" secondItem="Xxe-Cr-X2t" secondAttribute="centerX" id="qhX-Yy-DIC"/>
-                        <constraint firstItem="mo7-2O-xXy" firstAttribute="width" secondItem="wkM-mj-nYR" secondAttribute="width" id="swQ-yH-aaR"/>
+                        <constraint firstItem="mo7-2O-xXy" firstAttribute="width" secondItem="wkM-mj-nYR" secondAttribute="width" multiplier="0.95" id="swQ-yH-aaR"/>
                         <constraint firstItem="wkM-mj-nYR" firstAttribute="centerY" secondItem="6dt-sB-k72" secondAttribute="centerY" id="vzx-hg-Oud"/>
                         <constraint firstAttribute="bottom" secondItem="Zig-9K-HIv" secondAttribute="bottom" id="x3J-gH-rKg"/>
                         <constraint firstItem="Cmk-vd-Z0D" firstAttribute="centerX" secondItem="QXq-Qq-QIo" secondAttribute="centerX" id="zVH-6O-Ix0"/>
@@ -131,7 +131,7 @@
     </objects>
     <resources>
         <image name="add_blue" width="32" height="32"/>
-        <image name="moreScreen_blue" width="38.5" height="32"/>
+        <image name="moreScreen_blue" width="38.333332061767578" height="32"/>
         <image name="search_blue" width="32" height="32"/>
     </resources>
 </document>

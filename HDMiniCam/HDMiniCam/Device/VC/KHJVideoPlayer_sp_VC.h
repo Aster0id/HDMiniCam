@@ -1,8 +1,8 @@
 //
-//  KHJVideoPlayerVC.h
+//  KHJVideoPlayer_sp_VC.h
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/1/17.
+//  Created by khj888 on 2020/2/12.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJVideoPlayerVC : KHJBaseVC
+@interface KHJVideoPlayer_sp_VC : KHJBaseVC
 
 @end
 

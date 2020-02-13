@@ -12,7 +12,9 @@
 #import "KHJAddDeviceListVC.h"
 #import "KHJSearchDeviceVC.h"
 #import "KHJMutliScreenVC.h"
-#import "KHJVideoPlayerVC.h"
+#import "KHJVideoPlayer_hp_VC.h"
+#import "KHJVideoPlayer_sp_VC.h"
+#import "KHJVideoPlayer_hf_VC.h"
 
 @interface KHJDeviceListVC ()<UITableViewDelegate, UITableViewDataSource, KHJDeviceListCellDelegate>
 {
@@ -75,7 +77,7 @@
 
 - (void)gotoVideoWithIndex:(NSInteger)index { 
     CLog(@"进入第 %ld 个视频播放界面",index);
-    KHJVideoPlayerVC *vc = [[KHJVideoPlayerVC alloc] init];
+    KHJVideoPlayer_sp_VC *vc = [[KHJVideoPlayer_sp_VC alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
