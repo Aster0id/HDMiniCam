@@ -3,6 +3,7 @@
 
 target 'HDMiniCam' do
   use_frameworks!
+  pod 'FMDB'
   pod 'Bugly'
   pod 'FFToast'
   pod 'MJRefresh'

@@ -23,6 +23,9 @@ PODS:
   - CocoaAsyncSocket/GCD (7.4.3)
   - CocoaAsyncSocket/RunLoop (7.4.3)
   - FFToast (1.2.0)
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
   - MJRefresh (3.3.1)
   - MQTTClient (0.15.3):
     - MQTTClient/Core (= 0.15.3)
@@ -42,6 +45,7 @@ DEPENDENCIES:
   - Bugly
   - CocoaAsyncSocket (~> 7.4.1)
   - FFToast
+  - FMDB
   - MJRefresh
   - MQTTClient
   - SDWebImage
@@ -53,6 +57,7 @@ SPEC REPOS:
     - Bugly
     - CocoaAsyncSocket
     - FFToast
+    - FMDB
     - MJRefresh
     - MQTTClient
     - SDWebImage
@@ -63,11 +68,12 @@ SPEC CHECKSUMS:
   Bugly: dbac48b55ad469a97cc4321045cd50df8f63d44f
   CocoaAsyncSocket: a18c75dca4b08723628a0bacca6e94803d90be91
   FFToast: 60e0f3c9fd8fc473205015055ee39cd200404e01
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   MJRefresh: eeda70fbf0ad277f3178cef1cd0c3532591d6237
   MQTTClient: 0dfa04e789479c2e461786464969895c1fcb0875
   SDWebImage: 5bf6aec6481ae2a062bdc59f9d6c1d1e552090e0
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: 604a12e6c1dd0cccba73c30918e5f1722bf4a1e6
+PODFILE CHECKSUM: 639eb3f644e857f1e8167c7708ebcdad3b043c89
 
 COCOAPODS: 1.7.4

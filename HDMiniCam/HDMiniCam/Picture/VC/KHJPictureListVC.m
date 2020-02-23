@@ -16,12 +16,11 @@
 {
     NSInteger scrollHeight;//scroll高度
     NSInteger totalNumber;//总共所有的视频或者图片个数
-    NSMutableArray *tpathMarr;//保存所有路径
+    NSMutableArray *imagePathArr;//保存所有路径
     NSString *currentPath;
     
     __weak IBOutlet UICollectionView *collectionView;
 }
-
 
 @property (strong, nonatomic)UIScrollView *scroll_one;
 
@@ -32,8 +31,6 @@
 @property (nonatomic, strong) NSMutableSet * visibleImageViews;
 //保存可重用的视图
 @property (nonatomic, strong) NSMutableSet * reusedImageViews;
-//所有的图片
-@property (nonatomic, strong) NSMutableArray * imageNames;
 
 @end
 
@@ -43,81 +40,76 @@
 {
     self = [super init];
     if (self) {
-        
-        self.Datadic = [[NSMutableDictionary alloc] init];
-        tpathMarr = [NSMutableArray array];
-        
+        _Datadic = [[NSMutableDictionary alloc] init];
+        imagePathArr = [NSMutableArray array];
         _visibleImageViews = [[NSMutableSet alloc] initWithCapacity:0];
         _reusedImageViews =[[NSMutableSet alloc] initWithCapacity:0];
-        _imageNames = [[NSMutableArray alloc] initWithCapacity:0];
         
     }
     return self;
 }
 
+- (UIScrollView *)scroll_one
+{
+    if (!_scroll_one) {
+        _scroll_one = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, scrollHeight)];
+        _scroll_one.pagingEnabled = YES;
+        _scroll_one.showsVerticalScrollIndicator = NO;
+        _scroll_one.showsHorizontalScrollIndicator = NO;
+        _scroll_one.delegate = self;
+        _scroll_one.contentSize = CGSizeMake(imagePathArr.count * SCREEN_WIDTH, scrollHeight);
+    }
+    return _scroll_one;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    #pragma mark - ！！！！！！！！！！！！修改 DataDic 总数据的传入方式
-    [self add_tpathMarr];
-    #pragma mark - ！！！！！！！！！！！！修改文件获取路径
-    [self add_imageNames];
-    [self common];
+    [self addNoti];
+    scrollHeight = SCREEN_HEIGHT - 120 - Height_TabBar - 44;
+    [imagePathArr addObjectsFromArray:[[KHJHelpCameraData sharedModel] getAllFile]];
+    totalNumber = imagePathArr.count;
+    [self.view addSubview:self.scroll_one];
+    [self.view sendSubviewToBack:self.scroll_one];
+    if (imagePathArr.count > 0) {
+        
+        NSMutableArray *arr1 = [NSMutableArray array];
+        for (NSString *imagePth  in imagePathArr) {
+            NSArray *aa  = [imagePth componentsSeparatedByString:@"/"];
+            NSString *imageName = aa[2];
+            [arr1 addObject:imageName];
+        }
+        imagePathArr = [[KHJCalculate bubbleDescendingOrderSortWithArray:arr1] mutableCopy];
+        [self showImageViewAtIndex:0];
+        [self setShowPage];
+    }
     [self addCollectionView];
+}
+
+- (void)addNoti
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadScrollView_CollectionView) name:@"reloadPictureVC_noti" object:nil];
+}
+
+- (void)reloadScrollView_CollectionView
+{
+    [imagePathArr removeAllObjects];
+    [imagePathArr addObjectsFromArray:[[KHJHelpCameraData sharedModel] getAllFile]];
+    totalNumber = imagePathArr.count;
+    NSMutableArray *arr1 = [NSMutableArray array];
+    for (NSString *imagePth  in imagePathArr) {
+        NSArray *aa  = [imagePth componentsSeparatedByString:@"/"];
+        NSString *imageName = aa[2];
+        [arr1 addObject:imageName];
+    }
+    imagePathArr = [[KHJCalculate bubbleDescendingOrderSortWithArray:arr1] mutableCopy];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [collectionView reloadData];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-}
-
-#pragma mark - ！！！！！！！！！！！！修改 DataDic 总数据的传入方式
-
-- (void)add_tpathMarr
-{
-    if (self.Datadic.count > 0) {
-        //获取总个数
-        NSMutableArray *keyArr = [NSMutableArray arrayWithArray:[self.Datadic allKeys]];
-        [tpathMarr removeAllObjects];
-        totalNumber = 0;
-        NSArray *tArr = [NSArray array];
-        keyArr = [KHJCalculate bubbleDescendingOrderSortWithArray:keyArr];
-        keyArr = [KHJCalculate calCategoryArray:keyArr];
-        for (int i = 0; i< keyArr.count ; i++) {//获取总个数
-            NSString * ss = [NSString stringWithFormat:@"%@",keyArr[i]];
-            tArr =  [self.Datadic objectForKey:ss];
-            totalNumber += [tArr count];
-            [tpathMarr addObjectsFromArray:tArr];
-        }
-    }
-}
-
-#pragma mark - ！！！！！！！！！！！！修改文件获取路径
-
-- (void)add_imageNames
-{
-    for (int i = 0; i < totalNumber; i++) {
-        NSString * docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        NSString *khjFileName = KHJString(@"KHJFileName_%@",SaveManager.userID);//关联账户
-        khjFileName = [docPath stringByAppendingPathComponent:khjFileName];
-        NSString * path = [tpathMarr objectAtIndex:i];
-        path = [khjFileName stringByAppendingPathComponent:path];//得到完整路径
-        [self.imageNames addObject:path];
-    }
-}
-
-- (void)common
-{
-    totalNumber = 0;
-    scrollHeight = SCREEN_HEIGHT - 64;
-    _scroll_one = [self getShowScroll];
-//    self.view.backgroundColor = [UIColor blackColor];
-    
-    if (self.imageNames.count > 0) {
-        [self showImageViewAtIndex:0];
-        [self setShowPage];
-    }
 }
 
 #pragma mark - 构建大图 - 继承 APPhotoZoom 视图
@@ -128,7 +120,7 @@
     AIPhotoZoom *ZoomView = [self.reusedImageViews anyObject];
     
     if (!ZoomView) {//没有就创建一个
-        ZoomView = [[AIPhotoZoom alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, _scroll_one.frame.size.height)];
+        ZoomView = [[AIPhotoZoom alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, self.scroll_one.frame.size.height)];
         ZoomView.imageNormalWidth = SCREEN_WIDTH;
         ZoomView.imageNormalHeight = 250;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageView:)];
@@ -143,7 +135,7 @@
     imageViewFrame.origin.x = CGRectGetWidth(bounds) * index;
     ZoomView.tag = index;
     ZoomView.frame = imageViewFrame;
-    NSString *path = self.imageNames[index];
+    NSString *path = imagePathArr[index];
     if([path containsString:@".mp4"]){
         
 //        NSFileManager *fileManager =  [NSFileManager defaultManager];
@@ -165,6 +157,7 @@
     }
     else {
         ZoomView.needScale = YES;
+        path = KHJString(@"%@/%@",[[KHJHelpCameraData sharedModel] getTakeCameraDocPath],imagePathArr[index]);;
         ZoomView.imageView.image = [[UIImage alloc] initWithContentsOfFile:path];
         [ZoomView showNoCover];
     }
@@ -177,36 +170,41 @@
 
 #pragma mark - 滚动视图设置
 
-- (UIScrollView *)getShowScroll
-{
-    if (_scroll_one == nil) {
-        _scroll_one = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, (int)SCREEN_WIDTH, (int)scrollHeight-44)];
-        _scroll_one.pagingEnabled = YES;
-        _scroll_one.showsVerticalScrollIndicator = NO;
-        _scroll_one.showsHorizontalScrollIndicator = NO;
-        _scroll_one.delegate = self;
-        _scroll_one.contentSize = CGSizeMake(self.imageNames.count*(int)SCREEN_WIDTH, (int)scrollHeight-44);
-        [self.view addSubview:_scroll_one];
-        [self.view sendSubviewToBack:_scroll_one];
-    }
-    return  _scroll_one;
-}
+//- (UIScrollView *)getShowScroll
+//{
+//    if (_scroll_one == nil) {
+//        _scroll_one = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, scrollHeight)];
+//        _scroll_one.pagingEnabled = YES;
+//        _scroll_one.showsVerticalScrollIndicator = NO;
+//        _scroll_one.showsHorizontalScrollIndicator = NO;
+//        _scroll_one.delegate = self;
+//        _scroll_one.contentSize = CGSizeMake(imagePathArr.count * SCREEN_WIDTH, scrollHeight);
+//        [self.view addSubview:_scroll_one];
+//        [self.view sendSubviewToBack:_scroll_one];
+//    }
+//    return  _scroll_one;
+//}
 
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self showImages];
+    if (scrollView == self.scroll_one) {
+        [self showImages];
+    }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    if (scrollView == _scroll_one) {
+    if (scrollView == self.scroll_one) {
         CGFloat pageWidth = scrollView.frame.size.width;
         int currentPage = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
         _currentIndex = currentPage;
         _showLabel.text = [NSString stringWithFormat:@"%d/%ld",currentPage+1,(long)totalNumber];
-        [self reloadCurrentImageSize:(_currentIndex)];
+        [self reloadCurrentImageSize:_currentIndex];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_currentIndex inSection:0];
+        CLog(@"indexPath.row = %ld",indexPath.row);
+        [collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
     }
 }
 
@@ -223,7 +221,9 @@
     NSInteger lastIndex = (NSInteger)floor(maxX / width);
     //处理越界情况
     if (firstIndex < 0) firstIndex = 0;
-    if (lastIndex >= self.imageNames.count) lastIndex = self.imageNames.count - 1;
+    if (lastIndex >= imagePathArr.count) {
+        lastIndex = imagePathArr.count - 1;
+    }
     //回收不再显示的imageview
     NSInteger imageViewIndex = 0;
     for (AIPhotoZoom *ZoomView in self.visibleImageViews) {
@@ -244,12 +244,10 @@
         for (AIPhotoZoom *ZoomView in self.visibleImageViews) {
             //当前显示的index
             if (ZoomView.tag == index) {
-                NSLog(@"index111 = %ld",(long)index);
                 isShow = YES;
             }
         }
         if (!isShow) {
-            NSLog(@"index222 = %ld",(long)index);
             [self showImageViewAtIndex:index];
         }
     }
@@ -261,19 +259,19 @@
 {
     if (_currentIndex == totalNumber) {
         _showLabel.text = KHJString(@"%ld/%ld",(long)_currentIndex,(long)totalNumber);
-        [_scroll_one setContentOffset:CGPointMake(SCREEN_WIDTH *(_currentIndex-1), 0)];
+        [self.scroll_one setContentOffset:CGPointMake(SCREEN_WIDTH *(_currentIndex - 1), 0)];
         [self reloadCurrentImageSize:_currentIndex - 1];
     }
     else {
-        _showLabel.text = KHJString(@"%ld/%ld",_currentIndex+1,(long)totalNumber);
-        [_scroll_one setContentOffset:CGPointMake(SCREEN_WIDTH *_currentIndex, 0)];
+        _showLabel.text = KHJString(@"%ld/%ld",_currentIndex + 1,(long)totalNumber);
+        [self.scroll_one setContentOffset:CGPointMake(SCREEN_WIDTH *_currentIndex, 0)];
         [self reloadCurrentImageSize:_currentIndex];
     }
 }
 
 - (void)reloadCurrentImageSize:(NSInteger)index
 {
-    NSString *path = self.imageNames[index];
+    NSString *path = imagePathArr[index];
     self.imageContentSizeLab.text = [KHJCalculate valueImageSize:path];
 }
 
@@ -282,7 +280,7 @@
 - (void)tapImageView:(UITapGestureRecognizer *)tap
 {
     AIPhotoZoom *zoomView = (AIPhotoZoom *)tap.view;
-    NSString *sPath = self.imageNames[zoomView.tag];
+    NSString *sPath = imagePathArr[zoomView.tag];
     if ([sPath containsString:@".mp4"]) {
         
 //        AISDCard_VideoPlayerVC *playView = [[AISDCard_VideoPlayerVC alloc] init];;
@@ -293,7 +291,7 @@
 - (IBAction)deleteVedio:(UIButton *)sender {
     //删除图片或者视频
     //删除字典中的路径，同时删除本地沙盒图片
-    [self showAlert:self.imageNames[_currentIndex]];
+    [self showAlert:imagePathArr[_currentIndex]];
     CLog(@"deleteVedio");
 }
 
@@ -304,26 +302,22 @@
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(@"commit", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-//        BOOL ret = [[AICameraData sharedModel] DeleateFileWithPath:pathStr];
-//        if (ret) {
-//            CLog(@"删除成功");
-//            if (weakSelf.deleteBlock) {
-//                weakSelf.deleteBlock(pathStr);
-//            }
-//            [self.imageNames removeObject:pathStr];
-//            [weakSelf setCurrentIndex];
-//            [[AIToast share] showToastActionWithToastType:_SuccessType
-//                                              toastPostion:_CenterPostion
-//                                                       tip:@""
-//                                                   content:KHJLocalizedString(@"deleteSuccess", nil)];
-//        }
-//        else {
-//            CLog(@"删除失败");
-//            [[AIToast share] showToastActionWithToastType:_ErrorType
-//                                              toastPostion:_CenterPostion
-//                                                       tip:KHJLocalizedString(@"tips", nil)
-//                                                   content:KHJLocalizedString(@"deleteFail", nil)];
-//        }
+        BOOL ret = [[KHJHelpCameraData sharedModel] DeleateFileWithPath:pathStr];
+        if (ret) {
+            CLog(@"删除成功");
+            if (weakSelf.deleteBlock) {
+                weakSelf.deleteBlock(pathStr);
+            }
+            [self->imagePathArr removeObject:pathStr];
+            [weakSelf setCurrentIndex];
+            [[KHJToast share] showToastActionWithToastType:_SuccessType toastPostion:_CenterPostion tip:@""
+                                                   content:KHJLocalizedString(@"deleteSuccess", nil)];
+        }
+        else {
+            CLog(@"删除失败");
+            [[KHJToast share] showToastActionWithToastType:_ErrorType toastPostion:_CenterPostion tip:KHJLocalizedString(@"tips", nil)
+                                                   content:KHJLocalizedString(@"deleteFail", nil)];
+        }
     }];
     [alertview addAction:cancel];
     [alertview addAction:defult];
@@ -332,19 +326,19 @@
 
 - (void)setCurrentIndex
 {
-//    _scroll_one.contentSize = CGSizeMake(self.imageNames.count*(int)SCREEN_WIDTH, 0);
-//    totalNumber --;
-//    if (totalNumber > 0) {
-//        if (_currentIndex > 0) {
-//            [self showImageViewAtIndex:(_currentIndex-1)];
-//            _currentIndex --;
-//        }
-//        else {
-//            [self showImageViewAtIndex:_currentIndex];
-//        }
-//        [self setShowPage];
-//        [self showImages];
-//    }
+    self.scroll_one.contentSize = CGSizeMake(imagePathArr.count*(int)SCREEN_WIDTH, 0);
+    totalNumber --;
+    if (totalNumber > 0) {
+        if (_currentIndex > 0) {
+            [self showImageViewAtIndex:(_currentIndex-1)];
+            _currentIndex --;
+        }
+        else {
+            [self showImageViewAtIndex:_currentIndex];
+        }
+        [self setShowPage];
+        [self showImages];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -378,7 +372,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 100;
+    return imagePathArr.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -386,12 +380,13 @@
     static NSString *identifierCell = @"Cell";
     KHJPicture_oneCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifierCell forIndexPath:indexPath];
     cell.tag = indexPath.row + FLAG_TAG;
-    cell.btn.backgroundColor = UIColor.blueColor;
-    [cell.btn setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-    [cell.btn setTitle:KHJString(@"%ld",(long)indexPath.row) forState:UIControlStateNormal];
+    WeakSelf
     cell.block = ^(NSInteger row) {
-        CLog(@"rpw = %ld",(long)row);
+        [weakSelf.scroll_one setContentOffset:CGPointMake(row*SCREEN_WIDTH, 0) animated:YES];
     };
+    NSString *path = KHJString(@"%@/%@",[[KHJHelpCameraData sharedModel] getTakeCameraDocPath],imagePathArr[indexPath.row]);
+    UIImage *image = [[UIImage alloc] initWithContentsOfFile:path];
+    cell.imageView.image = image;
     return cell;
 }
 

@@ -31,9 +31,9 @@
                                     </state>
                                     <state key="selected" image="video_sun_s"/>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9EQ-xO-2bi">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9EQ-xO-2bi">
                                     <rect key="frame" x="50" y="0.0" width="50" height="44"/>
-                                    <state key="normal" title="对比度">
+                                    <state key="normal" image="half_circle">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
                                 </button>
@@ -193,6 +193,7 @@
     <resources>
         <image name="LocalVideo_PlayPro" width="34" height="34"/>
         <image name="LocalVideo_Playback" width="34" height="34"/>
+        <image name="half_circle" width="25" height="25"/>
         <image name="video_bigLamp_n" width="20" height="21.5"/>
         <image name="video_bigLamp_s" width="20" height="21.5"/>
         <image name="video_control_n" width="20" height="20"/>
@@ -200,7 +201,7 @@
         <image name="video_direct_left" width="25" height="25"/>
         <image name="video_direct_up" width="25" height="25"/>
         <image name="video_laba_n" width="20" height="20"/>
-        <image name="video_laba_s" width="32" height="32"/>
+        <image name="video_laba_s" width="20" height="20"/>
         <image name="video_lamp_n" width="25" height="25"/>
         <image name="video_lamp_s" width="25" height="25"/>
         <image name="video_micro_n" width="20" height="20"/>

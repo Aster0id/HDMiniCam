@@ -114,7 +114,7 @@
                 <outlet property="smalIMGV" destination="7f7-nj-kHx" id="vPb-uh-obA"/>
                 <outlet property="status" destination="r8t-x3-6Ia" id="CxJ-fr-1IK"/>
             </connections>
-            <point key="canvasLocation" x="375.36231884057975" y="115.84821428571428"/>
+            <point key="canvasLocation" x="96" y="129"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -22,6 +22,9 @@
     [super viewDidLoad];
     self.titleLab.text = KHJLocalizedString(@"搜索局域网", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
 }
 
 - (void)backAction{

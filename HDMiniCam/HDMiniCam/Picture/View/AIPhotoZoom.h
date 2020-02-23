@@ -10,11 +10,8 @@
 @property (assign, nonatomic) CGFloat imageNormalHeight; // 图片未缩放时高度
 @property (assign, nonatomic) BOOL needScale; // 图片未缩放时高度
 
-
 - (void)showCover;
-
 - (void)showNoCover;
-
 //缩放方法，共外界调用
 - (void)pictureZoomWithScale:(CGFloat)zoomScale;
 

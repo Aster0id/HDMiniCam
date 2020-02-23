@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+
 @interface KHJNetWorkingManager : NSObject
 
 typedef void(^codeBlock)(NSDictionary *dic,NSInteger code);

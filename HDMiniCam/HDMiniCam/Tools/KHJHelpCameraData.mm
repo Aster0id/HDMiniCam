@@ -86,9 +86,10 @@
          2. uid 哪台设备上的截图/录制
          3. 年月日 根据年月日来筛选截图/录制
      */
-    NSString *khjwant = [NSString stringWithFormat:@"KHJFileName_%@",SaveManager.userID];
-    NSString *khjdeviceuid = SaveManager.userDeviceUID;
-    NSString *picPath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@/Camera", khjwant,khjdeviceuid]];
+    SaveManager.userID = @"15273015567";
+    NSString *userID = [NSString stringWithFormat:@"KHJFileName_%@",SaveManager.userID];
+    NSString *deviceUID = SaveManager.userDeviceUID;
+    NSString *picPath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@/Camera", userID,deviceUID]];
 //    NSLog(@"%@",picPath) ;
     BOOL isDir = NO;
     // fileExistsAtPath 判断一个文件或目录是否有效

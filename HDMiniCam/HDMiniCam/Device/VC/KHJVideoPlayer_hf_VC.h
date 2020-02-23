@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KHJVideoPlayer_hf_VC : KHJBaseVC
 
+@property (nonatomic, copy) NSString *deviceID;
+
 @end
 
 NS_ASSUME_NONNULL_END

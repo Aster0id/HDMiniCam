@@ -8,9 +8,17 @@
 
 #import "KHJBaseVC.h"
 
+#import "IPCNetManagerInterface.h"
+#import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
+#import "H264HwDecoder.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface KHJVideoPlayer_sp_VC : KHJBaseVC
+
+@property (nonatomic, copy) NSString *deviceID;
+@property (nonatomic, copy) NSString *password;
 
 @end
 

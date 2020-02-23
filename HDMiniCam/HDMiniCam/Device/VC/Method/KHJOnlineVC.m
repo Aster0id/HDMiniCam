@@ -7,6 +7,7 @@
 //
 
 #import "KHJOnlineVC.h"
+#import "KHJQRCodeScanVC.h"
 
 @interface KHJOnlineVC ()
 {
@@ -17,41 +18,93 @@
     __weak IBOutlet UITextField *password;
     __weak IBOutlet UIView *passwordView;
 
+    
 }
 @end
 
 @implementation KHJOnlineVC
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     [self addlayer];
     [self registerLJWKeyboardHandler];
+    
+    
+    NSArray *deviceList = [[KHJDataBase sharedDataBase] getAllDeviceInfo];
+    CLog(@"deviceList = %@",deviceList);
+    
 }
 
-
-- (void)backAction{
+- (void)backAction
+{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
-- (IBAction)searchNet:(id)sender {
-}
-- (IBAction)qr:(id)sender {
-}
-- (IBAction)sure:(id)sender {
-}
-- (IBAction)cancel:(id)sender {
+- (IBAction)searchNet:(id)sender
+{
+    
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (IBAction)qr:(id)sender
+{
+    // 二维码扫描
+    KHJQRCodeScanVC *vc = [[KHJQRCodeScanVC alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
-*/
+
+- (IBAction)sure:(id)sender
+{
+    if (name.text.length == 0) {
+        [self.view makeToast:@"请输入设备名称"];
+        return;
+    }
+    if (uid.text.length == 0) {
+        [self.view makeToast:@"请输入设备id"];
+        return;
+    }
+    if (password.text.length == 0) {
+        [self.view makeToast:@"请输入设备密码"];
+        return;
+    }
+    KHJDeviceInfo *deviceInfo = [[KHJDeviceInfo alloc] init];
+    deviceInfo.deviceID = uid.text;
+    deviceInfo.deviceName = name.text;
+    deviceInfo.devicePassword = password.text;
+    
+    NSArray *deviceList = [[KHJDataBase sharedDataBase] getAllDeviceInfo];
+    CLog(@"deviceList = %@",deviceList);
+    
+    __block BOOL exit = NO;
+    [deviceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        KHJDeviceInfo *info = (KHJDeviceInfo *)obj;
+        if ([info.deviceID isEqualToString:uid.text]) {
+            exit = YES;
+        }
+    }];
+
+    if (!exit) {
+        [[KHJDataBase sharedDataBase] addDeviceInfo_with_deviceInfo:deviceInfo resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
+            if (code == 1) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"addNewDevice_NOTI" object:nil];
+                [self.view makeToast:KHJString(@"设备：\"%@\"，添加成功",deviceInfo.deviceID)];
+            }
+        }];
+    }
+    else {
+        [[KHJDataBase sharedDataBase] updateDeviceInfo_with_deviceInfo:deviceInfo resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
+            if (code == 1) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"addNewDevice_NOTI" object:nil];
+                [self.view makeToast:KHJString(@"设备：\"%@\"，添加成功",deviceInfo.deviceID)];
+            }
+        }];
+    }
+}
+
+- (IBAction)cancel:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)addlayer
 {

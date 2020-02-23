@@ -9,6 +9,9 @@
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
 
+#import "KHJDeviceInfo.h"
+#import "KHJDataBase.h"
+
 //#import "MBProgressHUD.h"
 #import "KHJNetWorkingManager.h"
 #import "KHJCalculate.h"

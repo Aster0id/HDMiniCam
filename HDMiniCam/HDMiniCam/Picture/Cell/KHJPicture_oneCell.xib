@@ -22,13 +22,13 @@
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eNu-sN-aov">
                         <rect key="frame" x="0.0" y="0.0" width="95" height="50"/>
-                        <state key="normal" title="1"/>
                         <connections>
                             <action selector="chooseIcon:" destination="gTV-IL-0wX" eventType="touchUpInside" id="wLs-iL-dB8"/>
                         </connections>
                     </button>
                 </subviews>
             </view>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="eNu-sN-aov" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="5a2-qX-4Pc"/>
                 <constraint firstItem="eNu-sN-aov" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="LQg-gU-Mpc"/>

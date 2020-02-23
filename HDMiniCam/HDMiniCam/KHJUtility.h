@@ -18,5 +18,8 @@
 + (NSString *)BuglyKey;
 + (UIColor *)ios13Color:(UIColor *)newColor ios12Coloer:(UIColor *)oldColor;
 
++ (NSDictionary *)cString_changto_ocStringWith:(const char *)cString;
++ (NSString *)convertToJsonData:(NSDictionary *)dict;
+
 
 @end

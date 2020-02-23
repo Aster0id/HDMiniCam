@@ -344,6 +344,19 @@
                                 <action selector="btnAction:" destination="-1" eventType="touchUpInside" id="rI7-xk-COA"/>
                             </connections>
                         </button>
+                        <button opaque="NO" tag="90" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aRv-iZ-ieg">
+                            <rect key="frame" x="207" y="80" width="207" height="80"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <inset key="titleEdgeInsets" minX="-33" minY="35" maxX="0.0" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="31" minY="-18" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="浏览" image="browseFiles_n">
+                                <color key="titleColor" red="0.54117647059999996" green="0.54117647059999996" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <state key="selected" image="record_s"/>
+                            <connections>
+                                <action selector="btnAction:" destination="-1" eventType="touchUpInside" id="VTp-Hv-KPu"/>
+                            </connections>
+                        </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ezy-w8-Yfs">
                             <rect key="frame" x="0.0" y="80" width="207" height="80"/>
                             <subviews>
@@ -355,7 +368,7 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="监听" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vjg-tX-4LZ">
-                                    <rect key="frame" x="1" y="46.5" width="206" height="16"/>
+                                    <rect key="frame" x="1" y="48.5" width="206" height="16"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                     <color key="textColor" red="0.54117647058823526" green="0.54117647058823526" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
@@ -379,7 +392,7 @@
                             <constraints>
                                 <constraint firstItem="Vjg-tX-4LZ" firstAttribute="leading" secondItem="ezy-w8-Yfs" secondAttribute="leading" constant="1" id="CMJ-7m-cXL"/>
                                 <constraint firstItem="DOf-uQ-dud" firstAttribute="centerY" secondItem="ezy-w8-Yfs" secondAttribute="centerY" constant="-8" id="m7H-OG-sRy"/>
-                                <constraint firstItem="Vjg-tX-4LZ" firstAttribute="top" secondItem="DOf-uQ-dud" secondAttribute="bottom" constant="2" id="mCX-c6-kt6"/>
+                                <constraint firstItem="Vjg-tX-4LZ" firstAttribute="top" secondItem="DOf-uQ-dud" secondAttribute="bottom" constant="4" id="mCX-c6-kt6"/>
                                 <constraint firstAttribute="trailing" secondItem="Vjg-tX-4LZ" secondAttribute="trailing" id="rwD-Jc-7hq"/>
                                 <constraint firstItem="DOf-uQ-dud" firstAttribute="centerX" secondItem="ezy-w8-Yfs" secondAttribute="centerX" id="yFq-Yz-RoS"/>
                             </constraints>
@@ -387,6 +400,7 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="aRv-iZ-ieg" firstAttribute="leading" secondItem="ezy-w8-Yfs" secondAttribute="trailing" id="0hA-MQ-03I"/>
                         <constraint firstItem="vNf-GT-CTH" firstAttribute="bottom" secondItem="U1H-Ug-Mvx" secondAttribute="bottom" id="6vO-ZV-RnP"/>
                         <constraint firstAttribute="height" constant="160" id="7OZ-SR-553"/>
                         <constraint firstItem="U1H-Ug-Mvx" firstAttribute="leading" secondItem="H3w-9Q-jk0" secondAttribute="leading" id="7nj-gl-59d"/>
@@ -394,8 +408,11 @@
                         <constraint firstItem="vNf-GT-CTH" firstAttribute="leading" secondItem="U1H-Ug-Mvx" secondAttribute="trailing" id="KFR-Vm-4YE"/>
                         <constraint firstItem="vNf-GT-CTH" firstAttribute="top" secondItem="U1H-Ug-Mvx" secondAttribute="top" id="KJx-3d-AoY"/>
                         <constraint firstItem="ezy-w8-Yfs" firstAttribute="top" secondItem="U1H-Ug-Mvx" secondAttribute="bottom" id="PrJ-b9-Zub"/>
+                        <constraint firstAttribute="trailing" secondItem="aRv-iZ-ieg" secondAttribute="trailing" id="SW1-uY-xOh"/>
                         <constraint firstItem="U1H-Ug-Mvx" firstAttribute="height" secondItem="H3w-9Q-jk0" secondAttribute="height" multiplier="0.5" id="cgT-RC-LVv"/>
+                        <constraint firstItem="aRv-iZ-ieg" firstAttribute="top" secondItem="vNf-GT-CTH" secondAttribute="bottom" id="dc4-R8-I5V"/>
                         <constraint firstItem="ezy-w8-Yfs" firstAttribute="leading" secondItem="U1H-Ug-Mvx" secondAttribute="leading" id="eqx-Yp-wZb"/>
+                        <constraint firstAttribute="bottom" secondItem="aRv-iZ-ieg" secondAttribute="bottom" id="hfK-c9-yJE"/>
                         <constraint firstAttribute="bottom" secondItem="ezy-w8-Yfs" secondAttribute="bottom" id="ieG-qT-wK6"/>
                         <constraint firstItem="U1H-Ug-Mvx" firstAttribute="top" secondItem="H3w-9Q-jk0" secondAttribute="top" id="nYX-jS-NAm"/>
                         <constraint firstAttribute="trailing" secondItem="vNf-GT-CTH" secondAttribute="trailing" id="qTk-SX-CET"/>
@@ -425,9 +442,10 @@
     </objects>
     <resources>
         <image name="back_icon" width="24" height="24"/>
+        <image name="browseFiles_n" width="36" height="36"/>
         <image name="calendar_icon" width="20" height="20"/>
         <image name="camera_gray_icon" width="20" height="20"/>
-        <image name="listen_icon_n" width="25.5" height="24"/>
+        <image name="listen_icon_n" width="24" height="24"/>
         <image name="listen_icon_s" width="24" height="24"/>
         <image name="next_icon" width="24" height="24"/>
         <image name="record_n" width="24" height="24"/>

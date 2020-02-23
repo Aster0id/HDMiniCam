@@ -23,9 +23,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self fetchSSIDInfo];
     self.titleLab.text = KHJLocalizedString(@"配置网络", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self fetchSSIDInfo];
 }
 
 - (void)backAction
@@ -52,6 +57,7 @@
 - (void)saveSSID:(NSString *)ssid
 {
     CLog(@"ssid == %@", ssid);
+    accountTF.text = ssid;
 }
 
 - (IBAction)btn:(UIButton *)sender

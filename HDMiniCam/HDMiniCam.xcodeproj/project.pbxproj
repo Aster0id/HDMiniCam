@@ -26,7 +26,7 @@
 		93A30C6123D298DC009A0F4C /* KHJChangePasswordVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93A30C5F23D298DC009A0F4C /* KHJChangePasswordVC.xib */; };
 		93A30C6523D43378009A0F4C /* KHJWIFIConfigCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A30C6323D43378009A0F4C /* KHJWIFIConfigCell.m */; };
 		93A30C6623D43378009A0F4C /* KHJWIFIConfigCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93A30C6423D43378009A0F4C /* KHJWIFIConfigCell.xib */; };
-		93C3396223CB75BB00B44E5F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C3396123CB75BB00B44E5F /* AppDelegate.m */; };
+		93C3396223CB75BB00B44E5F /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 93C3396123CB75BB00B44E5F /* AppDelegate.mm */; };
 		93C3396823CB75BB00B44E5F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93C3396623CB75BB00B44E5F /* Main.storyboard */; };
 		93C3396A23CB75BE00B44E5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93C3396923CB75BE00B44E5F /* Assets.xcassets */; };
 		93C3396D23CB75BE00B44E5F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93C3396B23CB75BE00B44E5F /* LaunchScreen.storyboard */; };
@@ -48,29 +48,6 @@
 		93C33B2C23CE20B400B44E5F /* KHJMqttManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C33A9F23CE20AF00B44E5F /* KHJMqttManager.m */; };
 		93C33B2D23CE20B400B44E5F /* NSDate+JLZero.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C33AA023CE20AF00B44E5F /* NSDate+JLZero.m */; };
 		93C33B2E23CE20B400B44E5F /* NSString+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C33AA123CE20AF00B44E5F /* NSString+Utility.m */; };
-		93C33B2F23CE20B400B44E5F /* duplicate.txt in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AA323CE20AF00B44E5F /* duplicate.txt */; };
-		93C33B3023CE20B400B44E5F /* gk7102x.img in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AA423CE20AF00B44E5F /* gk7102x.img */; };
-		93C33B3123CE20B400B44E5F /* tomcatH.cer in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AA523CE20AF00B44E5F /* tomcatH.cer */; };
-		93C33B3223CE20B400B44E5F /* beep.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AA623CE20AF00B44E5F /* beep.ogg */; };
-		93C33B3323CE20B400B44E5F /* moming_30.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AA723CE20AF00B44E5F /* moming_30.mp3 */; };
-		93C33B3423CE20B400B44E5F /* photoshutter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AA823CE20AF00B44E5F /* photoshutter.mp3 */; };
-		93C33B3523CE20B400B44E5F /* moming.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AA923CE20AF00B44E5F /* moming.mp3 */; };
-		93C33B3623CE20B400B44E5F /* reset_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AAA23CE20AF00B44E5F /* reset_sound.mp3 */; };
-		93C33B3723CE20B400B44E5F /* erweima.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AAB23CE20AF00B44E5F /* erweima.mp3 */; };
-		93C33B3823CE20B400B44E5F /* message.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AAC23CE20AF00B44E5F /* message.mp3 */; };
-		93C33B3923CE20B400B44E5F /* play_module_capture.wav in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AAD23CE20AF00B44E5F /* play_module_capture.wav */; };
-		93C33B3A23CE20B400B44E5F /* pull_event.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AAE23CE20AF00B44E5F /* pull_event.mp3 */; };
-		93C33B3B23CE20B400B44E5F /* refreshing_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AAF23CE20AF00B44E5F /* refreshing_sound.mp3 */; };
-		93C33B3C23CE20B400B44E5F /* capture.wav in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AB023CE20AF00B44E5F /* capture.wav */; };
-		93C33B3D23CE20B400B44E5F /* alarmbell_30.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AB123CE20AF00B44E5F /* alarmbell_30.mp3 */; };
-		93C33B3E23CE20B400B44E5F /* reset.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AB223CE20AF00B44E5F /* reset.mp3 */; };
-		93C33B3F23CE20B400B44E5F /* classical.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AB323CE20AF00B44E5F /* classical.mp3 */; };
-		93C33B4023CE20B400B44E5F /* alarmbell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AB423CE20AF00B44E5F /* alarmbell.mp3 */; };
-		93C33B4123CE20B400B44E5F /* reset_en.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AB523CE20AF00B44E5F /* reset_en.mp3 */; };
-		93C33B4223CE20B400B44E5F /* tomcatC.cer in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AB623CE20AF00B44E5F /* tomcatC.cer */; };
-		93C33B4323CE20B400B44E5F /* classical_30.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AB723CE20AF00B44E5F /* classical_30.mp3 */; };
-		93C33B4423CE20B400B44E5F /* erweima_en.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AB823CE20AF00B44E5F /* erweima_en.mp3 */; };
-		93C33B4523CE20B400B44E5F /* audio.wav in Resources */ = {isa = PBXBuildFile; fileRef = 93C33AB923CE20AF00B44E5F /* audio.wav */; };
 		93C33B4623CE20B400B44E5F /* SGQRCode.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 93C33ABC23CE20B000B44E5F /* SGQRCode.bundle */; };
 		93C33B4723CE20B400B44E5F /* UIImage+SGImageSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C33ABE23CE20B000B44E5F /* UIImage+SGImageSize.m */; };
 		93C33B4823CE20B400B44E5F /* SGQRCodeHelperTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C33AC023CE20B000B44E5F /* SGQRCodeHelperTool.m */; };
@@ -159,14 +136,33 @@
 		AB30DA7623D163A4005BD2A1 /* KHJDeviceConfVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB30DA7423D163A4005BD2A1 /* KHJDeviceConfVC.xib */; };
 		AB30DA7B23D164AE005BD2A1 /* KHJDeviceConfCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB30DA7923D164AE005BD2A1 /* KHJDeviceConfCell.m */; };
 		AB30DA7C23D164AE005BD2A1 /* KHJDeviceConfCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB30DA7A23D164AE005BD2A1 /* KHJDeviceConfCell.xib */; };
-		AB32D4B023F4F476008AFD1F /* KHJVideoPlayer_hf_VC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB32D4AE23F4F476008AFD1F /* KHJVideoPlayer_hf_VC.m */; };
+		AB32D4B023F4F476008AFD1F /* KHJVideoPlayer_hf_VC.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB32D4AE23F4F476008AFD1F /* KHJVideoPlayer_hf_VC.mm */; };
 		AB32D4B123F4F476008AFD1F /* KHJVideoPlayer_hf_VC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB32D4AF23F4F476008AFD1F /* KHJVideoPlayer_hf_VC.xib */; };
 		AB32D4B523F53BE4008AFD1F /* ZFTimeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = AB32D4B323F53BE4008AFD1F /* ZFTimeLine.m */; };
 		AB32D4C123F54E7A008AFD1F /* KHJVideoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB32D4C023F54E7A008AFD1F /* KHJVideoModel.m */; };
 		AB32D4C423F54FE0008AFD1F /* TuyaTimeLineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB32D4C323F54FE0008AFD1F /* TuyaTimeLineModel.m */; };
+		AB4EFA7323F6B40000D584E7 /* libIPCNetManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB4EFA7123F6B40000D584E7 /* libIPCNetManager.a */; };
+		AB4EFA7423F6B40000D584E7 /* libFBP2P.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB4EFA7223F6B40000D584E7 /* libFBP2P.a */; };
+		AB4EFA7E23F6D43600D584E7 /* KHJDeviceManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB4EFA7D23F6D43600D584E7 /* KHJDeviceManager.mm */; };
+		AB52C10D23F91FB200C921F1 /* photoshutter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AB52C10C23F91FB200C921F1 /* photoshutter.mp3 */; };
+		AB52C11023FBE1BA00C921F1 /* KHJQRCodeScanVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52C10F23FBE1BA00C921F1 /* KHJQRCodeScanVC.m */; };
+		AB52C11423FBEB0100C921F1 /* KHJAddDeviceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52C11223FBEB0100C921F1 /* KHJAddDeviceListCell.m */; };
+		AB52C11523FBEB0100C921F1 /* KHJAddDeviceListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB52C11323FBEB0100C921F1 /* KHJAddDeviceListCell.xib */; };
+		AB52C11823FC14A300C921F1 /* KHJDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52C11723FC14A300C921F1 /* KHJDataBase.m */; };
+		AB52C11B23FC153400C921F1 /* KHJDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52C11A23FC153400C921F1 /* KHJDeviceInfo.m */; };
+		AB52C11E23FD3B3200C921F1 /* KHJErrorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52C11D23FD3B3200C921F1 /* KHJErrorManager.m */; };
 		AB5911DC23D0141A0060F05C /* KHJRecordListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5911DA23D0141A0060F05C /* KHJRecordListCell.m */; };
 		AB5911DD23D0141A0060F05C /* KHJRecordListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5911DB23D0141A0060F05C /* KHJRecordListCell.xib */; };
-		AB5D784A23F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5D784823F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.m */; };
+		AB597B342400DC0300F04F84 /* H264HwDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = AB597B322400DC0300F04F84 /* H264HwDecoder.m */; };
+		AB597B39240154D500F04F84 /* libIOTCAPIs_P2PTunnel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB597B35240154D400F04F84 /* libIOTCAPIs_P2PTunnel.a */; };
+		AB597B3A240154D500F04F84 /* libIOTCAPIs_ALLT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB597B36240154D500F04F84 /* libIOTCAPIs_ALLT.a */; };
+		AB597B3B240154D500F04F84 /* libIOTCAPIs_ALL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB597B37240154D500F04F84 /* libIOTCAPIs_ALL.a */; };
+		AB597B3C240154D500F04F84 /* libIOTCAPIs_P2PTunnelT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB597B38240154D500F04F84 /* libIOTCAPIs_P2PTunnelT.a */; };
+		AB597B4024027A7600F04F84 /* KHJBackPlayListVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB597B3E24027A7600F04F84 /* KHJBackPlayListVC.mm */; };
+		AB597B4124027A7600F04F84 /* KHJBackPlayListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB597B3F24027A7600F04F84 /* KHJBackPlayListVC.xib */; };
+		AB597B4524027BC900F04F84 /* KHJBackPlayListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB597B4324027BC900F04F84 /* KHJBackPlayListCell.m */; };
+		AB597B4624027BC900F04F84 /* KHJBackPlayListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB597B4424027BC900F04F84 /* KHJBackPlayListCell.xib */; };
+		AB5D784A23F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB5D784823F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.mm */; };
 		AB5D784B23F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5D784923F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.xib */; };
 		ABEBCDFD23CF1B6E00581AFB /* KHJPictureListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABEBCDFB23CF1B6E00581AFB /* KHJPictureListVC.xib */; };
 		ABEBCDFF23CF1B8400581AFB /* KHJPictureListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEBCDFE23CF1B8400581AFB /* KHJPictureListVC.m */; };
@@ -205,7 +201,7 @@
 		93A30C6423D43378009A0F4C /* KHJWIFIConfigCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJWIFIConfigCell.xib; sourceTree = "<group>"; };
 		93C3395D23CB75BB00B44E5F /* HDMiniCam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HDMiniCam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93C3396023CB75BB00B44E5F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		93C3396123CB75BB00B44E5F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		93C3396123CB75BB00B44E5F /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		93C3396723CB75BB00B44E5F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		93C3396923CB75BE00B44E5F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		93C3396C23CB75BE00B44E5F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -244,29 +240,6 @@
 		93C33A9F23CE20AF00B44E5F /* KHJMqttManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHJMqttManager.m; sourceTree = "<group>"; };
 		93C33AA023CE20AF00B44E5F /* NSDate+JLZero.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+JLZero.m"; sourceTree = "<group>"; };
 		93C33AA123CE20AF00B44E5F /* NSString+Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utility.m"; sourceTree = "<group>"; };
-		93C33AA323CE20AF00B44E5F /* duplicate.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = duplicate.txt; sourceTree = "<group>"; };
-		93C33AA423CE20AF00B44E5F /* gk7102x.img */ = {isa = PBXFileReference; lastKnownFileType = file; path = gk7102x.img; sourceTree = "<group>"; };
-		93C33AA523CE20AF00B44E5F /* tomcatH.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = tomcatH.cer; sourceTree = "<group>"; };
-		93C33AA623CE20AF00B44E5F /* beep.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = beep.ogg; sourceTree = "<group>"; };
-		93C33AA723CE20AF00B44E5F /* moming_30.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = moming_30.mp3; sourceTree = "<group>"; };
-		93C33AA823CE20AF00B44E5F /* photoshutter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = photoshutter.mp3; sourceTree = "<group>"; };
-		93C33AA923CE20AF00B44E5F /* moming.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = moming.mp3; sourceTree = "<group>"; };
-		93C33AAA23CE20AF00B44E5F /* reset_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = reset_sound.mp3; sourceTree = "<group>"; };
-		93C33AAB23CE20AF00B44E5F /* erweima.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = erweima.mp3; sourceTree = "<group>"; };
-		93C33AAC23CE20AF00B44E5F /* message.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = message.mp3; sourceTree = "<group>"; };
-		93C33AAD23CE20AF00B44E5F /* play_module_capture.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = play_module_capture.wav; sourceTree = "<group>"; };
-		93C33AAE23CE20AF00B44E5F /* pull_event.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pull_event.mp3; sourceTree = "<group>"; };
-		93C33AAF23CE20AF00B44E5F /* refreshing_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = refreshing_sound.mp3; sourceTree = "<group>"; };
-		93C33AB023CE20AF00B44E5F /* capture.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = capture.wav; sourceTree = "<group>"; };
-		93C33AB123CE20AF00B44E5F /* alarmbell_30.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarmbell_30.mp3; sourceTree = "<group>"; };
-		93C33AB223CE20AF00B44E5F /* reset.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = reset.mp3; sourceTree = "<group>"; };
-		93C33AB323CE20AF00B44E5F /* classical.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = classical.mp3; sourceTree = "<group>"; };
-		93C33AB423CE20AF00B44E5F /* alarmbell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarmbell.mp3; sourceTree = "<group>"; };
-		93C33AB523CE20AF00B44E5F /* reset_en.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = reset_en.mp3; sourceTree = "<group>"; };
-		93C33AB623CE20AF00B44E5F /* tomcatC.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = tomcatC.cer; sourceTree = "<group>"; };
-		93C33AB723CE20AF00B44E5F /* classical_30.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = classical_30.mp3; sourceTree = "<group>"; };
-		93C33AB823CE20AF00B44E5F /* erweima_en.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = erweima_en.mp3; sourceTree = "<group>"; };
-		93C33AB923CE20AF00B44E5F /* audio.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = audio.wav; sourceTree = "<group>"; };
 		93C33ABB23CE20B000B44E5F /* SGQRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCode.h; sourceTree = "<group>"; };
 		93C33ABC23CE20B000B44E5F /* SGQRCode.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SGQRCode.bundle; sourceTree = "<group>"; };
 		93C33ABE23CE20B000B44E5F /* UIImage+SGImageSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SGImageSize.m"; sourceTree = "<group>"; };
@@ -421,7 +394,7 @@
 		AB30DA7923D164AE005BD2A1 /* KHJDeviceConfCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJDeviceConfCell.m; sourceTree = "<group>"; };
 		AB30DA7A23D164AE005BD2A1 /* KHJDeviceConfCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJDeviceConfCell.xib; sourceTree = "<group>"; };
 		AB32D4AD23F4F476008AFD1F /* KHJVideoPlayer_hf_VC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJVideoPlayer_hf_VC.h; sourceTree = "<group>"; };
-		AB32D4AE23F4F476008AFD1F /* KHJVideoPlayer_hf_VC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJVideoPlayer_hf_VC.m; sourceTree = "<group>"; };
+		AB32D4AE23F4F476008AFD1F /* KHJVideoPlayer_hf_VC.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KHJVideoPlayer_hf_VC.mm; sourceTree = "<group>"; };
 		AB32D4AF23F4F476008AFD1F /* KHJVideoPlayer_hf_VC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJVideoPlayer_hf_VC.xib; sourceTree = "<group>"; };
 		AB32D4B323F53BE4008AFD1F /* ZFTimeLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFTimeLine.m; sourceTree = "<group>"; };
 		AB32D4B423F53BE4008AFD1F /* ZFTimeLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFTimeLine.h; sourceTree = "<group>"; };
@@ -429,11 +402,47 @@
 		AB32D4C023F54E7A008AFD1F /* KHJVideoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHJVideoModel.m; sourceTree = "<group>"; };
 		AB32D4C223F54FDF008AFD1F /* TuyaTimeLineModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaTimeLineModel.h; sourceTree = "<group>"; };
 		AB32D4C323F54FE0008AFD1F /* TuyaTimeLineModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaTimeLineModel.m; sourceTree = "<group>"; };
+		AB4EFA6223F6B0BE00D584E7 /* JSONObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JSONObject.hpp; sourceTree = "<group>"; };
+		AB4EFA6323F6B0BE00D584E7 /* SEP2P_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEP2P_API.h; sourceTree = "<group>"; };
+		AB4EFA6423F6B0BE00D584E7 /* cJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cJSON.h; sourceTree = "<group>"; };
+		AB4EFA6523F6B0BE00D584E7 /* SEP2P_Error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEP2P_Error.h; sourceTree = "<group>"; };
+		AB4EFA6623F6B0BE00D584E7 /* IPCNetManagerInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPCNetManagerInterface.h; sourceTree = "<group>"; };
+		AB4EFA6723F6B0BE00D584E7 /* JSONStructProtocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONStructProtocal.h; sourceTree = "<group>"; };
+		AB4EFA6823F6B0BE00D584E7 /* SEP2P_Type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEP2P_Type.h; sourceTree = "<group>"; };
+		AB4EFA6923F6B0BE00D584E7 /* sepcam_protocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sepcam_protocal.h; sourceTree = "<group>"; };
+		AB4EFA7123F6B40000D584E7 /* libIPCNetManager.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIPCNetManager.a; sourceTree = "<group>"; };
+		AB4EFA7223F6B40000D584E7 /* libFBP2P.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFBP2P.a; sourceTree = "<group>"; };
+		AB4EFA7C23F6D43600D584E7 /* KHJDeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHJDeviceManager.h; sourceTree = "<group>"; };
+		AB4EFA7D23F6D43600D584E7 /* KHJDeviceManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KHJDeviceManager.mm; sourceTree = "<group>"; };
+		AB52C10C23F91FB200C921F1 /* photoshutter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = photoshutter.mp3; sourceTree = "<group>"; };
+		AB52C10E23FBE1BA00C921F1 /* KHJQRCodeScanVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHJQRCodeScanVC.h; sourceTree = "<group>"; };
+		AB52C10F23FBE1BA00C921F1 /* KHJQRCodeScanVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHJQRCodeScanVC.m; sourceTree = "<group>"; };
+		AB52C11123FBEB0100C921F1 /* KHJAddDeviceListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJAddDeviceListCell.h; sourceTree = "<group>"; };
+		AB52C11223FBEB0100C921F1 /* KHJAddDeviceListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJAddDeviceListCell.m; sourceTree = "<group>"; };
+		AB52C11323FBEB0100C921F1 /* KHJAddDeviceListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJAddDeviceListCell.xib; sourceTree = "<group>"; };
+		AB52C11623FC14A300C921F1 /* KHJDataBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJDataBase.h; sourceTree = "<group>"; };
+		AB52C11723FC14A300C921F1 /* KHJDataBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJDataBase.m; sourceTree = "<group>"; };
+		AB52C11923FC153400C921F1 /* KHJDeviceInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJDeviceInfo.h; sourceTree = "<group>"; };
+		AB52C11A23FC153400C921F1 /* KHJDeviceInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJDeviceInfo.m; sourceTree = "<group>"; };
+		AB52C11C23FD3B3200C921F1 /* KHJErrorManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJErrorManager.h; sourceTree = "<group>"; };
+		AB52C11D23FD3B3200C921F1 /* KHJErrorManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJErrorManager.m; sourceTree = "<group>"; };
 		AB5911D923D0141A0060F05C /* KHJRecordListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJRecordListCell.h; sourceTree = "<group>"; };
 		AB5911DA23D0141A0060F05C /* KHJRecordListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJRecordListCell.m; sourceTree = "<group>"; };
 		AB5911DB23D0141A0060F05C /* KHJRecordListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJRecordListCell.xib; sourceTree = "<group>"; };
+		AB597B322400DC0300F04F84 /* H264HwDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = H264HwDecoder.m; sourceTree = "<group>"; };
+		AB597B332400DC0300F04F84 /* H264HwDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H264HwDecoder.h; sourceTree = "<group>"; };
+		AB597B35240154D400F04F84 /* libIOTCAPIs_P2PTunnel.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIOTCAPIs_P2PTunnel.a; sourceTree = "<group>"; };
+		AB597B36240154D500F04F84 /* libIOTCAPIs_ALLT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIOTCAPIs_ALLT.a; sourceTree = "<group>"; };
+		AB597B37240154D500F04F84 /* libIOTCAPIs_ALL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIOTCAPIs_ALL.a; sourceTree = "<group>"; };
+		AB597B38240154D500F04F84 /* libIOTCAPIs_P2PTunnelT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIOTCAPIs_P2PTunnelT.a; sourceTree = "<group>"; };
+		AB597B3D24027A7600F04F84 /* KHJBackPlayListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJBackPlayListVC.h; sourceTree = "<group>"; };
+		AB597B3E24027A7600F04F84 /* KHJBackPlayListVC.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KHJBackPlayListVC.mm; sourceTree = "<group>"; };
+		AB597B3F24027A7600F04F84 /* KHJBackPlayListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJBackPlayListVC.xib; sourceTree = "<group>"; };
+		AB597B4224027BC900F04F84 /* KHJBackPlayListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJBackPlayListCell.h; sourceTree = "<group>"; };
+		AB597B4324027BC900F04F84 /* KHJBackPlayListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJBackPlayListCell.m; sourceTree = "<group>"; };
+		AB597B4424027BC900F04F84 /* KHJBackPlayListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJBackPlayListCell.xib; sourceTree = "<group>"; };
 		AB5D784723F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJVideoPlayer_sp_VC.h; sourceTree = "<group>"; };
-		AB5D784823F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJVideoPlayer_sp_VC.m; sourceTree = "<group>"; };
+		AB5D784823F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KHJVideoPlayer_sp_VC.mm; sourceTree = "<group>"; };
 		AB5D784923F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJVideoPlayer_sp_VC.xib; sourceTree = "<group>"; };
 		ABEBCDFA23CF1B6E00581AFB /* KHJPictureListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHJPictureListVC.h; sourceTree = "<group>"; };
 		ABEBCDFB23CF1B6E00581AFB /* KHJPictureListVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHJPictureListVC.xib; sourceTree = "<group>"; };
@@ -451,6 +460,12 @@
 			files = (
 				5C3C5D45249012E93310CF7C /* Pods_HDMiniCam.framework in Frameworks */,
 				93E8A98C23E07B4B00F5DB8F /* NetworkExtension.framework in Frameworks */,
+				AB4EFA7423F6B40000D584E7 /* libFBP2P.a in Frameworks */,
+				AB4EFA7323F6B40000D584E7 /* libIPCNetManager.a in Frameworks */,
+				AB597B3B240154D500F04F84 /* libIOTCAPIs_ALL.a in Frameworks */,
+				AB597B3C240154D500F04F84 /* libIOTCAPIs_P2PTunnelT.a in Frameworks */,
+				AB597B3A240154D500F04F84 /* libIOTCAPIs_ALLT.a in Frameworks */,
+				AB597B39240154D500F04F84 /* libIOTCAPIs_P2PTunnel.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,7 +504,8 @@
 			children = (
 				93E8A98A23E07B3700F5DB8F /* HDMiniCam.entitlements */,
 				93C3396023CB75BB00B44E5F /* AppDelegate.h */,
-				93C3396123CB75BB00B44E5F /* AppDelegate.m */,
+				93C3396123CB75BB00B44E5F /* AppDelegate.mm */,
+				AB4EFA4623F6559400D584E7 /* SDK */,
 				93C3397A23CE1B7E00B44E5F /* Base */,
 				AB20E60423CEBEBF00D2861C /* Device */,
 				AB20E60A23CEBEF900D2861C /* Picture */,
@@ -521,6 +537,10 @@
 				93C3397C23CE1BA800B44E5F /* KHJTabBarBaseVC.m */,
 				93C3398623CE1BA900B44E5F /* KHJBaseNavigationController.h */,
 				93C3398323CE1BA900B44E5F /* KHJBaseNavigationController.m */,
+				AB52C11623FC14A300C921F1 /* KHJDataBase.h */,
+				AB52C11723FC14A300C921F1 /* KHJDataBase.m */,
+				AB52C11923FC153400C921F1 /* KHJDeviceInfo.h */,
+				AB52C11A23FC153400C921F1 /* KHJDeviceInfo.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -528,6 +548,7 @@
 		93C3398D23CE1BEC00B44E5F /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				AB52C10C23F91FB200C921F1 /* photoshutter.mp3 */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -568,7 +589,6 @@
 				93C33AA023CE20AF00B44E5F /* NSDate+JLZero.m */,
 				93C33AEE23CE20B200B44E5F /* NSString+Utility.h */,
 				93C33AA123CE20AF00B44E5F /* NSString+Utility.m */,
-				93C33AA223CE20AF00B44E5F /* raw */,
 				93C33ABA23CE20B000B44E5F /* SGQRCode */,
 				93C33AFF23CE20B300B44E5F /* TZImagePickerController */,
 				93C33AF223CE20B300B44E5F /* UIDevice */,
@@ -586,36 +606,6 @@
 				93C33A9F23CE20AF00B44E5F /* KHJMqttManager.m */,
 			);
 			path = mqtt;
-			sourceTree = "<group>";
-		};
-		93C33AA223CE20AF00B44E5F /* raw */ = {
-			isa = PBXGroup;
-			children = (
-				93C33AA323CE20AF00B44E5F /* duplicate.txt */,
-				93C33AA423CE20AF00B44E5F /* gk7102x.img */,
-				93C33AA523CE20AF00B44E5F /* tomcatH.cer */,
-				93C33AA623CE20AF00B44E5F /* beep.ogg */,
-				93C33AA723CE20AF00B44E5F /* moming_30.mp3 */,
-				93C33AA823CE20AF00B44E5F /* photoshutter.mp3 */,
-				93C33AA923CE20AF00B44E5F /* moming.mp3 */,
-				93C33AAA23CE20AF00B44E5F /* reset_sound.mp3 */,
-				93C33AAB23CE20AF00B44E5F /* erweima.mp3 */,
-				93C33AAC23CE20AF00B44E5F /* message.mp3 */,
-				93C33AAD23CE20AF00B44E5F /* play_module_capture.wav */,
-				93C33AAE23CE20AF00B44E5F /* pull_event.mp3 */,
-				93C33AAF23CE20AF00B44E5F /* refreshing_sound.mp3 */,
-				93C33AB023CE20AF00B44E5F /* capture.wav */,
-				93C33AB123CE20AF00B44E5F /* alarmbell_30.mp3 */,
-				93C33AB223CE20AF00B44E5F /* reset.mp3 */,
-				93C33AB323CE20AF00B44E5F /* classical.mp3 */,
-				93C33AB423CE20AF00B44E5F /* alarmbell.mp3 */,
-				93C33AB523CE20AF00B44E5F /* reset_en.mp3 */,
-				93C33AB623CE20AF00B44E5F /* tomcatC.cer */,
-				93C33AB723CE20AF00B44E5F /* classical_30.mp3 */,
-				93C33AB823CE20AF00B44E5F /* erweima_en.mp3 */,
-				93C33AB923CE20AF00B44E5F /* audio.wav */,
-			);
-			path = raw;
 			sourceTree = "<group>";
 		};
 		93C33ABA23CE20B000B44E5F /* SGQRCode */ = {
@@ -834,14 +824,17 @@
 				AB20E60623CEBEE500D2861C /* KHJDeviceListVC.m */,
 				AB20E60723CEBEE500D2861C /* KHJDeviceListVC.xib */,
 				AB5D784723F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.h */,
-				AB5D784823F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.m */,
+				AB5D784823F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.mm */,
 				AB5D784923F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.xib */,
 				AB30DA6C23D15C4D005BD2A1 /* KHJVideoPlayer_hp_VC.h */,
 				AB30DA6D23D15C4D005BD2A1 /* KHJVideoPlayer_hp_VC.m */,
 				AB30DA6E23D15C4D005BD2A1 /* KHJVideoPlayer_hp_VC.xib */,
 				AB32D4AD23F4F476008AFD1F /* KHJVideoPlayer_hf_VC.h */,
-				AB32D4AE23F4F476008AFD1F /* KHJVideoPlayer_hf_VC.m */,
+				AB32D4AE23F4F476008AFD1F /* KHJVideoPlayer_hf_VC.mm */,
 				AB32D4AF23F4F476008AFD1F /* KHJVideoPlayer_hf_VC.xib */,
+				AB597B3D24027A7600F04F84 /* KHJBackPlayListVC.h */,
+				AB597B3E24027A7600F04F84 /* KHJBackPlayListVC.mm */,
+				AB597B3F24027A7600F04F84 /* KHJBackPlayListVC.xib */,
 				AB30DA4223D05B0F005BD2A1 /* KHJAddDeviceListVC.h */,
 				AB30DA4323D05B0F005BD2A1 /* KHJAddDeviceListVC.m */,
 				AB30DA4423D05B0F005BD2A1 /* KHJAddDeviceListVC.xib */,
@@ -860,6 +853,9 @@
 				AB20E61E23CED07300D2861C /* KHJDeviceListCell.h */,
 				AB20E61F23CED07300D2861C /* KHJDeviceListCell.m */,
 				AB20E62023CED07300D2861C /* KHJDeviceListCell.xib */,
+				AB597B4224027BC900F04F84 /* KHJBackPlayListCell.h */,
+				AB597B4324027BC900F04F84 /* KHJBackPlayListCell.m */,
+				AB597B4424027BC900F04F84 /* KHJBackPlayListCell.xib */,
 				AB30DA7723D16496005BD2A1 /* ConfigCell */,
 				AB30DA6123D14814005BD2A1 /* MethodCell */,
 			);
@@ -929,6 +925,8 @@
 				AB30DA4823D060F2005BD2A1 /* KHJOnlineVC.h */,
 				AB30DA4923D060F2005BD2A1 /* KHJOnlineVC.m */,
 				AB30DA4A23D060F2005BD2A1 /* KHJOnlineVC.xib */,
+				AB52C10E23FBE1BA00C921F1 /* KHJQRCodeScanVC.h */,
+				AB52C10F23FBE1BA00C921F1 /* KHJQRCodeScanVC.m */,
 				AB30DA5C23D1470F005BD2A1 /* KHJSearchDeviceVC.h */,
 				AB30DA5D23D1470F005BD2A1 /* KHJSearchDeviceVC.m */,
 				AB30DA5E23D1470F005BD2A1 /* KHJSearchDeviceVC.xib */,
@@ -948,6 +946,9 @@
 				AB30DA6223D1482F005BD2A1 /* KHJSearchDeviceCell.h */,
 				AB30DA6323D1482F005BD2A1 /* KHJSearchDeviceCell.m */,
 				AB30DA6423D1482F005BD2A1 /* KHJSearchDeviceCell.xib */,
+				AB52C11123FBEB0100C921F1 /* KHJAddDeviceListCell.h */,
+				AB52C11223FBEB0100C921F1 /* KHJAddDeviceListCell.m */,
+				AB52C11323FBEB0100C921F1 /* KHJAddDeviceListCell.xib */,
 			);
 			path = MethodCell;
 			sourceTree = "<group>";
@@ -1006,6 +1007,48 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		AB4EFA4623F6559400D584E7 /* SDK */ = {
+			isa = PBXGroup;
+			children = (
+				AB597B312400DC0300F04F84 /* H264lib */,
+				AB4EFA7C23F6D43600D584E7 /* KHJDeviceManager.h */,
+				AB4EFA7D23F6D43600D584E7 /* KHJDeviceManager.mm */,
+				AB52C11C23FD3B3200C921F1 /* KHJErrorManager.h */,
+				AB52C11D23FD3B3200C921F1 /* KHJErrorManager.m */,
+				AB4EFA6123F6B0BE00D584E7 /* includes */,
+				AB4EFA6A23F6B0BE00D584E7 /* libs */,
+			);
+			path = SDK;
+			sourceTree = "<group>";
+		};
+		AB4EFA6123F6B0BE00D584E7 /* includes */ = {
+			isa = PBXGroup;
+			children = (
+				AB4EFA6923F6B0BE00D584E7 /* sepcam_protocal.h */,
+				AB4EFA6323F6B0BE00D584E7 /* SEP2P_API.h */,
+				AB4EFA6823F6B0BE00D584E7 /* SEP2P_Type.h */,
+				AB4EFA6523F6B0BE00D584E7 /* SEP2P_Error.h */,
+				AB4EFA6423F6B0BE00D584E7 /* cJSON.h */,
+				AB4EFA6223F6B0BE00D584E7 /* JSONObject.hpp */,
+				AB4EFA6723F6B0BE00D584E7 /* JSONStructProtocal.h */,
+				AB4EFA6623F6B0BE00D584E7 /* IPCNetManagerInterface.h */,
+			);
+			path = includes;
+			sourceTree = "<group>";
+		};
+		AB4EFA6A23F6B0BE00D584E7 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				AB597B37240154D500F04F84 /* libIOTCAPIs_ALL.a */,
+				AB597B36240154D500F04F84 /* libIOTCAPIs_ALLT.a */,
+				AB597B35240154D400F04F84 /* libIOTCAPIs_P2PTunnel.a */,
+				AB597B38240154D500F04F84 /* libIOTCAPIs_P2PTunnelT.a */,
+				AB4EFA7223F6B40000D584E7 /* libFBP2P.a */,
+				AB4EFA7123F6B40000D584E7 /* libIPCNetManager.a */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
 		AB5911D723D013F70060F05C /* VC */ = {
 			isa = PBXGroup;
 			children = (
@@ -1024,6 +1067,15 @@
 				AB5911DB23D0141A0060F05C /* KHJRecordListCell.xib */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		AB597B312400DC0300F04F84 /* H264lib */ = {
+			isa = PBXGroup;
+			children = (
+				AB597B322400DC0300F04F84 /* H264HwDecoder.m */,
+				AB597B332400DC0300F04F84 /* H264HwDecoder.h */,
+			);
+			path = H264lib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1111,16 +1163,10 @@
 				AB30DA4123D05396005BD2A1 /* KHJAlarmListCell.xib in Resources */,
 				AB30DA5623D06844005BD2A1 /* KHJHadBindDeviceCell.xib in Resources */,
 				93C3396D23CB75BE00B44E5F /* LaunchScreen.storyboard in Resources */,
-				93C33B3923CE20B400B44E5F /* play_module_capture.wav in Resources */,
 				93037C8B23D933EE00F4D969 /* KHJWiFiVC.xib in Resources */,
 				93C33B4E23CE20B400B44E5F /* ZQAlterField.strings in Resources */,
-				93C33B3F23CE20B400B44E5F /* classical.mp3 in Resources */,
-				93C33B4123CE20B400B44E5F /* reset_en.mp3 in Resources */,
-				93C33B3623CE20B400B44E5F /* reset_sound.mp3 in Resources */,
 				AB30DA6623D1482F005BD2A1 /* KHJSearchDeviceCell.xib in Resources */,
-				93C33B3123CE20B400B44E5F /* tomcatH.cer in Resources */,
 				93A30C4D23D29889009A0F4C /* KHJWIFIConfigVC.xib in Resources */,
-				93C33B3D23CE20B400B44E5F /* alarmbell_30.mp3 in Resources */,
 				93C33B7623CE20B400B44E5F /* navi_back@2x.png in Resources */,
 				AB30DA7023D15C4D005BD2A1 /* KHJVideoPlayer_hp_VC.xib in Resources */,
 				AB20E60923CEBEE500D2861C /* KHJDeviceListVC.xib in Resources */,
@@ -1128,62 +1174,49 @@
 				93A30C6623D43378009A0F4C /* KHJWIFIConfigCell.xib in Resources */,
 				93C33B6A23CE20B400B44E5F /* TZAlbumCell.xib in Resources */,
 				AB30DA4623D05B0F005BD2A1 /* KHJAddDeviceListVC.xib in Resources */,
-				93C33B4323CE20B400B44E5F /* classical_30.mp3 in Resources */,
 				93C33B7A23CE20B400B44E5F /* README.md in Resources */,
 				93C33B5123CE20B400B44E5F /* ZQAlterField.xib in Resources */,
 				93C33B7423CE20B400B44E5F /* TableViewArrow@2x.png in Resources */,
-				93C33B3023CE20B400B44E5F /* gk7102x.img in Resources */,
 				93C33B7723CE20B400B44E5F /* photo_original_def@2x.png in Resources */,
 				AB30DA6B23D14CDF005BD2A1 /* KHJMutliScreenVC.xib in Resources */,
 				93C33B7223CE20B400B44E5F /* photo_original_sel@2x.png in Resources */,
 				AB32D4B123F4F476008AFD1F /* KHJVideoPlayer_hf_VC.xib in Resources */,
+				AB597B4624027BC900F04F84 /* KHJBackPlayListCell.xib in Resources */,
 				93A30C5C23D298C5009A0F4C /* KHJTimeZoneConfigVC.xib in Resources */,
-				93C33B4523CE20B400B44E5F /* audio.wav in Resources */,
+				AB52C11523FBEB0100C921F1 /* KHJAddDeviceListCell.xib in Resources */,
 				93C33B6C23CE20B400B44E5F /* TZAssetCell.xib in Resources */,
 				AB30DA7C23D164AE005BD2A1 /* KHJDeviceConfCell.xib in Resources */,
 				93C33B7923CE20B400B44E5F /* VideoSendIcon@2x.png in Resources */,
 				93C33B4F23CE20B400B44E5F /* ZQAlterField.xib in Resources */,
 				AB30DA5123D066F7005BD2A1 /* KHJHadBindDeviceVC.xib in Resources */,
 				93C33B6E23CE20B400B44E5F /* photo_sel_previewVc@2x.png in Resources */,
+				AB597B4124027A7600F04F84 /* KHJBackPlayListVC.xib in Resources */,
 				AB20E61B23CEBF4900D2861C /* KHJAlarmListVC.xib in Resources */,
 				ABEBCDFD23CF1B6E00581AFB /* KHJPictureListVC.xib in Resources */,
 				93C33B5223CE20B400B44E5F /* ZQ_Close@2x.png in Resources */,
 				9398AEE223E08DC700E8D685 /* KHJWiFiVC_2.xib in Resources */,
-				93C33B3423CE20B400B44E5F /* photoshutter.mp3 in Resources */,
-				93C33B4223CE20B400B44E5F /* tomcatC.cer in Resources */,
-				93C33B3E23CE20B400B44E5F /* reset.mp3 in Resources */,
-				93C33B3C23CE20B400B44E5F /* capture.wav in Resources */,
 				AB30DA4C23D060F2005BD2A1 /* KHJOnlineVC.xib in Resources */,
 				93C33B6B23CE20B400B44E5F /* photo_sel_photoPickerVc@2x.png in Resources */,
 				AB20E61523CEBF2900D2861C /* KHJRecordListVC.xib in Resources */,
 				93C33B6F23CE20B400B44E5F /* MMVideoPreviewPlay@2x.png in Resources */,
 				93C33B5923CE20B400B44E5F /* Resources.bundle in Resources */,
 				AB30DA6023D1470F005BD2A1 /* KHJSearchDeviceVC.xib in Resources */,
-				93C33B3223CE20B400B44E5F /* beep.ogg in Resources */,
-				93C33B3B23CE20B400B44E5F /* refreshing_sound.mp3 in Resources */,
 				93C33B7823CE20B400B44E5F /* photo_number_icon@2x.png in Resources */,
 				AB30DA7623D163A4005BD2A1 /* KHJDeviceConfVC.xib in Resources */,
 				93A30C4823D29862009A0F4C /* KHJAlarmConfigVC.xib in Resources */,
-				93C33B3323CE20B400B44E5F /* moming_30.mp3 in Resources */,
 				93C33B7023CE20B400B44E5F /* preview_original_def@2x.png in Resources */,
-				93C33B3723CE20B400B44E5F /* erweima.mp3 in Resources */,
 				93C3396A23CB75BE00B44E5F /* Assets.xcassets in Resources */,
 				93A30C5223D2989E009A0F4C /* KHJSDCardConfigVC.xib in Resources */,
 				93C33B7323CE20B400B44E5F /* photo_def_photoPickerVc@2x.png in Resources */,
 				93A30C6123D298DC009A0F4C /* KHJChangePasswordVC.xib in Resources */,
 				93C33B6D23CE20B400B44E5F /* MMVideoPreviewPlayHL@2x.png in Resources */,
-				93C33B3A23CE20B400B44E5F /* pull_event.mp3 in Resources */,
 				93C33B7123CE20B400B44E5F /* photo_def_previewVc@2x.png in Resources */,
-				93C33B4423CE20B400B44E5F /* erweima_en.mp3 in Resources */,
 				93C33B6023CE20B400B44E5F /* LICENSE in Resources */,
+				AB52C10D23F91FB200C921F1 /* photoshutter.mp3 in Resources */,
 				AB5D784B23F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.xib in Resources */,
 				ABEBCE0423CF1D5000581AFB /* KHJPicture_oneCell.xib in Resources */,
-				93C33B3523CE20B400B44E5F /* moming.mp3 in Resources */,
 				93C33B7523CE20B400B44E5F /* preview_number_icon@2x.png in Resources */,
-				93C33B2F23CE20B400B44E5F /* duplicate.txt in Resources */,
 				93C3396823CB75BB00B44E5F /* Main.storyboard in Resources */,
-				93C33B3823CE20B400B44E5F /* message.mp3 in Resources */,
-				93C33B4023CE20B400B44E5F /* alarmbell.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1239,6 +1272,7 @@
 				9398AEE123E08DC600E8D685 /* KHJWiFiVC_2.m in Sources */,
 				93C33B5423CE20B400B44E5F /* UIView+LJWKeyboardHandlerAddtion.m in Sources */,
 				93C3398A23CE1BA900B44E5F /* KHJBaseCell.m in Sources */,
+				AB597B4024027A7600F04F84 /* KHJBackPlayListVC.mm in Sources */,
 				AB30DA4523D05B0F005BD2A1 /* KHJAddDeviceListVC.m in Sources */,
 				AB5911DC23D0141A0060F05C /* KHJRecordListCell.m in Sources */,
 				AB30DA6A23D14CDF005BD2A1 /* KHJMutliScreenVC.m in Sources */,
@@ -1248,9 +1282,11 @@
 				93C33B5C23CE20B400B44E5F /* UIDevice+TFDevice.m in Sources */,
 				93C33B6123CE20B400B44E5F /* TZAssetCell.m in Sources */,
 				AB20E62123CED07300D2861C /* KHJDeviceListCell.m in Sources */,
-				AB5D784A23F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.m in Sources */,
+				AB52C11B23FC153400C921F1 /* KHJDeviceInfo.m in Sources */,
+				AB5D784A23F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.mm in Sources */,
 				93C33B4C23CE20B400B44E5F /* SGQRCodeAlbumManager.m in Sources */,
 				93A30C5623D298B3009A0F4C /* KHJlampConfigVC.m in Sources */,
+				AB597B4524027BC900F04F84 /* KHJBackPlayListCell.m in Sources */,
 				93C33B7D23CE218200B44E5F /* Toast+UIView.m in Sources */,
 				93C33B8323CE245600B44E5F /* KHJSaveManager.m in Sources */,
 				AB30DA4023D05396005BD2A1 /* KHJAlarmListCell.m in Sources */,
@@ -1259,6 +1295,7 @@
 				93C33B8023CE236100B44E5F /* PlayLocalMusic.m in Sources */,
 				93C33B6523CE20B400B44E5F /* TZPhotoPreviewController.m in Sources */,
 				93C3398823CE1BA900B44E5F /* KHJTabBarBaseVC.m in Sources */,
+				AB52C11423FBEB0100C921F1 /* KHJAddDeviceListCell.m in Sources */,
 				93C33B6423CE20B400B44E5F /* UIView+Layout.m in Sources */,
 				AB30DA7523D163A4005BD2A1 /* KHJDeviceConfVC.m in Sources */,
 				93C33B6723CE20B400B44E5F /* TZPhotoPickerController.m in Sources */,
@@ -1284,14 +1321,17 @@
 				AB20E60823CEBEE500D2861C /* KHJDeviceListVC.m in Sources */,
 				93C33B2923CE20B400B44E5F /* KHJUtility.m in Sources */,
 				93C33A7423CE1D0800B44E5F /* KHJHub.m in Sources */,
+				AB52C11E23FD3B3200C921F1 /* KHJErrorManager.m in Sources */,
 				93C33B4823CE20B400B44E5F /* SGQRCodeHelperTool.m in Sources */,
+				AB52C11823FC14A300C921F1 /* KHJDataBase.m in Sources */,
 				AB30DA7B23D164AE005BD2A1 /* KHJDeviceConfCell.m in Sources */,
 				93C3397023CB75BE00B44E5F /* main.m in Sources */,
 				AB30DA5523D06844005BD2A1 /* KHJHadBindDeviceCell.m in Sources */,
 				93C33B4923CE20B400B44E5F /* SGQRCodeScanningView.m in Sources */,
 				AB30DA5023D066F7005BD2A1 /* KHJHadBindDeviceVC.m in Sources */,
+				AB4EFA7E23F6D43600D584E7 /* KHJDeviceManager.mm in Sources */,
 				93C33B6223CE20B400B44E5F /* TZVideoPlayerController.m in Sources */,
-				AB32D4B023F4F476008AFD1F /* KHJVideoPlayer_hf_VC.m in Sources */,
+				AB32D4B023F4F476008AFD1F /* KHJVideoPlayer_hf_VC.mm in Sources */,
 				93C33A8823CE1D0800B44E5F /* KHJShakeObj.mm in Sources */,
 				AB20E62A23CEE33400D2861C /* AIPhotoZoom.m in Sources */,
 				93C33B5523CE20B400B44E5F /* UIViewController+LJWKeyboardHandlerHelper.m in Sources */,
@@ -1304,7 +1344,9 @@
 				93C33B2C23CE20B400B44E5F /* KHJMqttManager.m in Sources */,
 				93C3398C23CE1BA900B44E5F /* KHJBaseVC.m in Sources */,
 				93C33B2A23CE20B400B44E5F /* MBProgressHUD.m in Sources */,
+				AB52C11023FBE1BA00C921F1 /* KHJQRCodeScanVC.m in Sources */,
 				AB32D4B523F53BE4008AFD1F /* ZFTimeLine.m in Sources */,
+				AB597B342400DC0300F04F84 /* H264HwDecoder.m in Sources */,
 				93C33B6823CE20B400B44E5F /* TZPhotoPreviewCell.m in Sources */,
 				93A30C4723D29862009A0F4C /* KHJAlarmConfigVC.m in Sources */,
 				93C33A7323CE1D0800B44E5F /* CreateTwoCode.m in Sources */,
@@ -1319,7 +1361,7 @@
 				AB20E61423CEBF2900D2861C /* KHJRecordListVC.m in Sources */,
 				93C33B6923CE20B400B44E5F /* TZImagePickerController.m in Sources */,
 				AB20E63123CEEB9B00D2861C /* KHJPictureCell.m in Sources */,
-				93C3396223CB75BB00B44E5F /* AppDelegate.m in Sources */,
+				93C3396223CB75BB00B44E5F /* AppDelegate.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1489,6 +1531,7 @@
 				CODE_SIGN_ENTITLEMENTS = HDMiniCam/HDMiniCam.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5M2ZZVKCB5;
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = HDMiniCam/PrefixHeader.pch;
 				INFOPLIST_FILE = HDMiniCam/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1499,6 +1542,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/HDMiniCam/Tools/alarmVoiceTools/arm/lib",
 					"$(PROJECT_DIR)/HDMiniCam/Tools/decodeEnc",
+					"$(PROJECT_DIR)/HDMiniCam/SDK/libs",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.khj.HDMiniCam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1514,6 +1558,7 @@
 				CODE_SIGN_ENTITLEMENTS = HDMiniCam/HDMiniCam.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5M2ZZVKCB5;
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = HDMiniCam/PrefixHeader.pch;
 				INFOPLIST_FILE = HDMiniCam/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1524,6 +1569,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/HDMiniCam/Tools/alarmVoiceTools/arm/lib",
 					"$(PROJECT_DIR)/HDMiniCam/Tools/decodeEnc",
+					"$(PROJECT_DIR)/HDMiniCam/SDK/libs",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.khj.HDMiniCam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
