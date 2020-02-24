@@ -12,11 +12,14 @@
 #import "IPCNetManagerInterface.h"
 #import "KHJErrorManager.h"
 
+// 查询远程视频列表的日期
 const char *mCurViewPath_date;
-static char mCurViewPath[] = "/mnt/s0/";//根据自己需求更改此目录
+// 远程视频文件目录路径 recordCfg.DiskInfo->Path.c_str()
 
-//以下静态变量根据项目实际情况移至类的成员去
+// 录像配置信息    - 结构体 - 用户获取视频路径
 IPCNetRecordCfg_st recordCfg;
+// 时间轴数据存储  - 结构体
+RecordDatePeriod_t gRecordDatePeriod;
 
 static int mNextStartIndex=0;
 static int mTotalNum=0;
@@ -125,12 +128,8 @@ void OnGetCmdResult(int cmd,const char*uuid,const char*json)
     if (ret >= 0 && ret <= 100) {
         switch (cmd) {
             case 1075:
-#pragma MARK - 获取设备SD卡信息
+#pragma MARK - 获取设备SD卡信息 - 获取文件个数
                 [[NSNotificationCenter defaultCenter] postNotificationName:noti_1075_KEY object:dict[@"li"]];
-                break;
-            case 1077:
-#pragma MARK - 获取
-                [[NSNotificationCenter defaultCenter] postNotificationName:noti_1077_KEY object:dict[@"dir"][@"l"]];
                 break;
             case 1495:
 #pragma MARK - 修改饱和度、锐度、亮度
@@ -258,7 +257,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
     if (mCurRemoteDirInfo == 0) {
         mCurRemoteDirInfo=rdi;
     } else if (strcmp(mCurRemoteDirInfo->path.c_str(), rdi->path.c_str()) == 0) {
-        for(list<RemoteFileInfo_t*>::iterator it= rdi->mRemoteFileInfoList.begin(); it!=rdi->mRemoteFileInfoList.end(); it++){
+        for(list<RemoteFileInfo_t*>::iterator it = rdi->mRemoteFileInfoList.begin(); it != rdi->mRemoteFileInfoList.end(); it++) {
             RemoteFileInfo_t*rfi = *it;
             RemoteFileInfo_t*rfi_bak = new RemoteFileInfo_t;
             rfi_bak->name=rfi->name;
@@ -290,6 +289,9 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
         sprintf(jsonbuff,"{\"lp\":{\"p\":\"%s\",\"s\":%d,\"c\":%d}}", path.UTF8String, curIndex, reqnum);
         //释放命令绑定资源
         IPCNetListRemotePageFileR(uuid,jsonbuff,OnListRemotePageFileCmdResult2);
+    }
+    else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:noti_1077_KEY object:nil];
     }
 }
 
@@ -730,9 +732,9 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
                                  json:(NSString *)json
                           resultBlock:(resultBlock)resultBlock
 {
+    // noti_1073_KEY
     IPCNetRecordGetCfg_st ipcrgc;
     ipcrgc.ViCh = 0;
-//    ipcrgc.Path = "/mnt/s0";
     ipcrgc.Path = recordCfg.DiskInfo->Path;
     String str;
     ipcrgc.toJSONString(str);
@@ -776,11 +778,40 @@ void OnGetRecordConfCmdResult(int cmd,const char*uuid,const char*json)
                                   json:(NSString *)json
                            resultBlock:(resultBlock)resultBlock
 {
+    // noti_1075_KEY
     int ret = IPCNetListRemoteDirInfoR(deviceID.UTF8String, json.UTF8String, OnListRemoteDirInfoCmdResult);
     CLog(@"获取远程目录信息，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        resultBlock(ret);
     });
+}
+
+/// 获取时间轴数据的远程目录信息
+/// @param deviceID 设备id
+/// @param vi 表示是第几个摄像头，(设备可能含有多个摄像头，暂时取 0 - 即第一个摄像头)
+/// @param date 时间格式：20200214 
+/// @param resultBlock 回调
+- (void)getRemoteDirInfo_timeLine_with_deviceID:(NSString *)deviceID
+                                             vi:(int)vi
+                                           date:(int)date
+                                    resultBlock:(resultBlock)resultBlock
+{
+    char jsonbuff[1024] = {0};
+    sprintf(jsonbuff,"{\"RecInfo\":{\"vi\":%d,\"date\":%d}}", vi, date);
+    int ret = IPCNetListRemoteDirInfoR(deviceID.UTF8String, jsonbuff, OnGetRecTimePeriodCmdResult);
+    CLog(@"获取时间轴数据的远程目录信息，ret = %d",ret);
+    dispatch_async(dispatch_get_main_queue(), ^{
+       resultBlock(ret);
+    });
+}
+
+void OnGetRecTimePeriodCmdResult(int cmd,const char*uuid,const char*json)
+{
+    CLog(@"111111111111111111111111111111111111111 %s cmd:%d uuid:%s json:%s\n",__func__,cmd, uuid, json);
+    JSONObject jsdata(json);
+    gRecordDatePeriod.parseJSON(jsdata);
+//    IPCNetReleaseCmdResource(cmd,uuid,OnGetRecTimePeriodCmdResult);
+    [[NSNotificationCenter defaultCenter] postNotificationName:noti_timeLineInfo_1075_KEY object:[KHJUtility cString_changto_ocStringWith:json]];
 }
 
 /// 获取远程 Page 文件
@@ -791,6 +822,7 @@ void OnGetRecordConfCmdResult(int cmd,const char*uuid,const char*json)
                                    path:(NSString *)path
                             resultBlock:(resultBlock)resultBlock
 {
+    // noti_1077_KEY
     int ret = IPCNetListRemotePageFileR(deviceID.UTF8String, path.UTF8String, OnGetCmdResult);
     CLog(@"获取远程 Page 文件，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{

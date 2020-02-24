@@ -10,14 +10,21 @@
 #import "KHJDeviceManager.h"
 #import "ZFTimeLine.h"
 #import "KHJBackPlayListVC.h"
-
 //
 #import "JSONStructProtocal.h"
 
-extern const char *mCurViewPath_date;
-extern IPCNetRecordCfg_st recordCfg;
+extern RecordDatePeriod_t gRecordDatePeriod;
+/**
+ list<RecordPeriod_t*> mNormalRecordPeriodList;              // 正常记录期间列表
+ list<RecordPeriod_t*> mMoveDetectRecordPeriodList;          // 移动检测记录期间列表
+ list<RecordPeriod_t*> mObjectDetectRecordPeriodList;        // 对象检测记录期间列表
+ list<RecordPeriod_t*> mSoundDetectRecordPeriodList;         // 声音检测记录期间列表
+ list<RecordPeriod_t*> mCryDetectRecordPeriodList;           // 哭泣检测记录时间列表
+ list<RecordPeriod_t*> mHumanShapeDetectRecordPeriodList;    // 人体形状检测记录期间列表
+ list<RecordPeriod_t*> mFaceDetectRecordPeriodList;          // 人脸检测记录周期列表
+ */
 
-@interface KHJVideoPlayer_hf_VC ()<ZFTimeLineDelegate>
+@interface KHJVideoPlayer_hf_VC ()<ZFTimeLineDelegate,KHJBackPlayListVCSaveListDelegate>
 {
     __weak IBOutlet UILabel *nameLab;
     __weak IBOutlet UIView *reconnectView;
@@ -29,6 +36,8 @@ extern IPCNetRecordCfg_st recordCfg;
     
     __weak IBOutlet UILabel *listenLab;
     __weak IBOutlet UIImageView *listenImgView;
+    
+    BOOL exitVideoList;
 }
 
 @property (nonatomic, strong) NSMutableArray *videoList;
@@ -58,86 +67,68 @@ extern IPCNetRecordCfg_st recordCfg;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[KHJDeviceManager sharedManager] getRecordConfig_with_deviceID:self.deviceID json:@"" resultBlock:^(NSInteger code) {
-        CLog(@"code = %ld",(long)code);
-    }];
-    
     [timeLineContent addSubview:self.zfTimeView];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti_1073_key:) name:noti_1073_KEY object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti_1075_key:) name:noti_1075_KEY object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti_1077_key:) name:noti_1077_KEY object:nil];
-}
-
-- (void)noti_1073_key:(NSNotification *)obj
-{
-    [self getBackPlayList];
-}
-
-- (void)noti_1075_key:(NSNotification *)obj
-{
+    
     NSDate *date = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyyMM/dd"];
-    //获取当前时间日期展示字符串 如：2019-05-23-13:58:59
+    [formatter setDateFormat:@"yyyyMMdd"];
     NSString *str = [formatter stringFromDate:date];
-    
-    NSString *rootdir = KHJString(@"%@/%@",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],str);
-    NSDictionary *result = (NSDictionary *)obj.object;
-    CLog(@"num of files:%@ disk size:%@ MB used size:%@ MB\n",result[@"n"], result[@"t"], result[@"u"]);
-    //组织json字符串，lp是list path简写， p为path简写，s是start简写，c是count简写
-//    int count = [result[@"n"] intValue];
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    NSMutableDictionary *body = [NSMutableDictionary dictionary];
-    [body setValue:rootdir  forKey:@"p"];
-    [body setValue:@(0)     forKey:@"s"];
-    [body setValue:@(10)    forKey:@"c"];
-    [dict setValue:body     forKey:@"lp"];
-    NSString *json = [KHJUtility convertToJsonData:(NSDictionary *)dict];
-    [[KHJDeviceManager sharedManager] getRemotePageFile_with_deviceID:self.deviceID path:json resultBlock:^(NSInteger code) {
+    [[KHJDeviceManager sharedManager] getRemoteDirInfo_timeLine_with_deviceID:self.deviceID vi:0 date:[str intValue] resultBlock:^(NSInteger code) {
         CLog(@"code = %ld",(long)code);
     }];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti_timeLineInfo_1075_key:) name:noti_timeLineInfo_1075_KEY object:nil];
 }
 
-- (void)noti_1077_key:(NSNotification *)obj
+- (void)noti_timeLineInfo_1075_key:(NSNotification *)noti
 {
-    [self.videoList addObjectsFromArray:(NSArray *)obj.object];
-    CLog(@"videoList = %@",self.videoList);
-}
-
-- (void)getBackPlayList
-{
-    NSDate *date = [NSDate date];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyyMM/dd"];
-    //获取当前时间日期展示字符串 如：2019-05-23-13:58:59
-    NSString *str = [formatter stringFromDate:date];
-    mCurViewPath_date = str.UTF8String;
+//    NSDictionary *body = (NSDictionary *)noti.object;
+//    NSDictionary *RecInfo = body[@"RecInfo"];
+//    CLog(@"vi = %@",RecInfo[@"vi"]);
+//    CLog(@"date = %@",RecInfo[@"date"]);
+//    CLog(@"period = %@",RecInfo[@"period"]);
     
-    NSString *rootdir = KHJString(@"%@/%@",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],str);
-    int vi = 0;
-    // 0: 只扫描文件   1: 扫描目录和文件
-    int mode = 1;
-    // 文件开始时间
-    int start = 0;
-    // 文件结束时间
-    int end = 240000;
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        for (list<RecordPeriod_t*>::iterator i= gRecordDatePeriod.mTotalRecordList.begin(); i != gRecordDatePeriod.mTotalRecordList.end(); i++) {
 
-    // 组织json字符串，lir是list remote简写，p为path简写，si是sensor index简写，m是mode简写，st是start time，e是end time
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    NSMutableDictionary *body = [NSMutableDictionary dictionary];
-    [body setValue:rootdir forKey:@"p"];
-    [body setValue:@(vi) forKey:@"si"];
-    [body setValue:@(mode) forKey:@"m"];
-    [body setValue:@(start) forKey:@"st"];
-    [body setValue:@(end) forKey:@"e"];
-    [dict setValue:body forKey:@"lir"];
-    // "{\"lir\":{\"p\":\"%s\",\"si\":%d,\"m\":%d,\"st\":%d,\"e\":%d}}"
-//    CLog(@"dict = %@",dict);
-    NSString *json = [KHJUtility convertToJsonData:(NSDictionary *)dict];
-//    CLog(@"json = %@",json);
-    [[KHJDeviceManager sharedManager] getRemoteDirInfo_with_deviceID:self.deviceID json:json resultBlock:^(NSInteger code) {
-        CLog(@"code = %ld",(long)code);
-    }];
+            RecordPeriod_t *rfi = *i;
+            NSString *start = KHJString(@"%d",rfi->start);
+            NSString *end = KHJString(@"%d",rfi->end);
+            int type = rfi->type;
+            if (type == 0) {
+                CLog(@"thread = %@,正常录制 start = %@ end = %@", [NSThread currentThread], start, end);
+            }
+            else if (type == 1) {
+                CLog(@"移动检测录制 start = %@ end = %@",start,end);
+            }
+            else if (type == 3) {
+                CLog(@"声音检测录制 start = %@ end = %@",start,end);
+            }
+            
+//            NSMutableDictionary *body = [NSMutableDictionary dictionary];
+//            NSString *name = [NSString stringWithUTF8String:rfi->name.c_str()];
+//            NSArray *timeArr1 = [name componentsSeparatedByString:@"."];
+//            NSArray *timeArr2 = [timeArr1.firstObject componentsSeparatedByString:@"-"];
+//            NSString *start = timeArr2.firstObject;
+//            NSString *end = timeArr2.lastObject;
+//            [body setValue:[NSString stringWithUTF8String:rfi->name.c_str()] forKey:@"name"];
+//            [body setValue:[NSString stringWithUTF8String:rfi->path.c_str()] forKey:@"videoPath"];
+//            [body setValue:@(rfi->size) forKey:@"size"];
+//            [body setValue:start forKey:@"start"];
+//            [body setValue:end forKey:@"end"];
+//            [weakSelf.listArr addObject:body];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+//            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(exitListData:)]) {
+//                if (weakSelf.listArr.count > 0) {
+//                    [weakSelf.delegate exitListData:YES];
+//                }
+//                else {
+//                    [weakSelf.delegate exitListData:NO];
+//                }
+//            }
+//            [self->contentList reloadData];
+        });
+    });
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -153,11 +144,9 @@ extern IPCNetRecordCfg_st recordCfg;
     }
     else if (sender.tag == 20) {
         // 连接失败，点击重连
-        
     }
     else if (sender.tag == 30) {
         // 前一天
-        
     }
     else if (sender.tag == 40) {
         // 选择日历
@@ -181,9 +170,16 @@ extern IPCNetRecordCfg_st recordCfg;
     else if (sender.tag == 90) {
         // 浏览
         KHJBackPlayListVC *vc = [[KHJBackPlayListVC alloc] init];
+        vc.delegate = self;
         vc.deviceID = self.deviceID;
+        vc.exitVideoList = exitVideoList;
         [self.navigationController pushViewController:vc animated:YES];
     }
+}
+
+- (void)exitListData:(BOOL)isExit
+{
+    exitVideoList = isExit;
 }
 
 #pragma mark - 时间轴滑动

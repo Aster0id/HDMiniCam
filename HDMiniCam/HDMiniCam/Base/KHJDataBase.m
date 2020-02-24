@@ -245,7 +245,7 @@ static KHJDataBase *_db = nil;
                          deviceInfo.reserve15];
         BOOL result = [db executeUpdate:sql];
         if (result) {
-            NSLog(@"更新数据成功");
+            NSLog(@"更新数据成功，当前设备状态.............. \n deviceID = %@ \n deviceStatus = %@",deviceInfo.deviceID,deviceInfo.deviceStatus);
             resultBlock(deviceInfo, 1);
         }
         else {

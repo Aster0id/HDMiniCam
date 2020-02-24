@@ -10,10 +10,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol KHJBackPlayListVCSaveListDelegate <NSObject>
+
+- (void)exitListData:(BOOL)isExit;
+
+@end
+
 @interface KHJBackPlayListVC : KHJBaseVC
 
 @property (nonatomic, copy) NSString *date;
+@property (nonatomic, assign) BOOL exitVideoList;
 @property (nonatomic, copy) NSString *deviceID;
+@property (nonatomic, strong) id<KHJBackPlayListVCSaveListDelegate> delegate;
 
 @end
 

@@ -20,6 +20,7 @@
 // 指令回调
 #define noti_1073_KEY @"noti_1073_KEY"  // 获取录像配置信息
 #define noti_1075_KEY @"noti_1075_KEY"  // 获取设备SD卡，远程信息，文件个数、总空间、已用空间
+#define noti_timeLineInfo_1075_KEY @"noti_timeLineInfo_1075_KEY"  // 获取设备时间轴信息
 #define noti_1077_KEY @"noti_1077_KEY"  //
 #define noti_1497_KEY @"noti_1497_KEY"  // 获取饱和度、锐度、亮度等等
 #define noti_1495_KEY @"noti_1495_KEY"  // 修改饱和度、锐度、亮度

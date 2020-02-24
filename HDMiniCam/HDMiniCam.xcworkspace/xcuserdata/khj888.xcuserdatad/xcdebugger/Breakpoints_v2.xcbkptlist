@@ -131,38 +131,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "AF8CAE1E-88E2-4A12-9A5E-AE5BD715CA1A"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HDMiniCam/SDK/KHJDeviceManager.mm"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "onAudioData(uuid, type, data, len, timestamp)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "2CE5473E-F0FC-40F2-88AA-8491E739511B"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HDMiniCam/SDK/KHJDeviceManager.mm"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
-            landmarkName = "onVideoData(uuid, type, data, len, timestamp)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "33A347B3-4670-4D00-8F3A-DEEDC2E33DC2"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -170,8 +138,8 @@
             filePath = "HDMiniCam/SDK/KHJDeviceManager.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "186"
-            endingLineNumber = "186"
+            startingLineNumber = "185"
+            endingLineNumber = "185"
             landmarkName = "OnSearchDeviceResult(device)"
             landmarkType = "9">
          </BreakpointContent>
@@ -186,8 +154,8 @@
             filePath = "HDMiniCam/SDK/KHJDeviceManager.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1178"
-            endingLineNumber = "1178"
+            startingLineNumber = "1208"
+            endingLineNumber = "1208"
             landmarkName = "-setAcutanceLevel_with_deviceID:level:resultBlock:"
             landmarkType = "7">
          </BreakpointContent>
@@ -291,32 +259,64 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1CB9AF1D-C3BC-4BA6-90A6-50C5D5CF7D23"
-            shouldBeEnabled = "No"
+            uuid = "82674D2E-F858-4F2C-81EC-C1D7C6E2B9BA"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HDMiniCam/SDK/KHJDeviceManager.mm"
+            filePath = "HDMiniCam/Device/VC/KHJBackPlayListVC.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "779"
-            endingLineNumber = "779"
-            landmarkName = "-getRemoteDirInfo_with_deviceID:json:resultBlock:"
+            startingLineNumber = "191"
+            endingLineNumber = "191"
+            landmarkName = "-noti_1075_key:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "82674D2E-F858-4F2C-81EC-C1D7C6E2B9BA - bbf93246157920bd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[KHJBackPlayListVC noti_1075_key:]"
+                  moduleName = "HDMiniCam"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/khj888/Documents/kevin/HDMini/HDMiniCam/HDMiniCam/HDMiniCam/Device/VC/KHJBackPlayListVC.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "191"
+                  endingLineNumber = "191"
+                  offsetFromSymbolStart = "1064">
+               </Location>
+               <Location
+                  uuid = "82674D2E-F858-4F2C-81EC-C1D7C6E2B9BA - a322a062c5958b79"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__35-[KHJBackPlayListVC noti_1075_key:]_block_invoke"
+                  moduleName = "HDMiniCam"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/khj888/Documents/kevin/HDMini/HDMiniCam/HDMiniCam/HDMiniCam/Device/VC/KHJBackPlayListVC.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "192"
+                  endingLineNumber = "192"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A649D7EE-FA5E-4179-A245-ECCF7A152C6E"
+            uuid = "303156F2-37BA-4C1A-8C91-106CBCC3AADF"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HDMiniCam/Device/VC/KHJVideoPlayer_hf_VC.mm"
+            filePath = "HDMiniCam/Device/VC/KHJBackPlayListVC.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
-            landmarkName = "-noti_1077_key:"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
+            landmarkName = "-noti_1075_key:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

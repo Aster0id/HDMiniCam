@@ -273,6 +273,16 @@ typedef void(^resultBlock)(NSInteger code);
                                   json:(NSString *)json
                            resultBlock:(resultBlock)resultBlock;
 
+/// 获取时间轴数据的远程目录信息
+/// @param deviceID 设备id
+/// @param vi 表示是第几个摄像头，(设备可能含有多个摄像头，暂时取 0 - 即第一个摄像头)
+/// @param date 时间格式：20200214 // 2020年2月14日
+/// @param resultBlock 回调
+- (void)getRemoteDirInfo_timeLine_with_deviceID:(NSString *)deviceID
+                                             vi:(int)vi
+                                           date:(int)date
+                                    resultBlock:(resultBlock)resultBlock;
+
 /// 获取远程 Page 文件
 /// @param deviceID 设备id
 /// @param path 路径
@@ -280,6 +290,8 @@ typedef void(^resultBlock)(NSInteger code);
 - (void)getRemotePageFile_with_deviceID:(NSString *)deviceID
                                    path:(NSString *)path
                             resultBlock:(resultBlock)resultBlock;
+
+
 
 /// 删除远程文件
 /// @param deviceID 设备id
