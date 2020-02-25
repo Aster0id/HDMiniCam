@@ -8,6 +8,7 @@
 
 #import "H264HwDecoder.h"
 #import <CoreImage/CoreImage.h>
+#import "JSONStructProtocal.h"
 
 #ifndef FreeCharP
 #define FreeCharP(p) if (p) {free(p); p = NULL;}
@@ -48,6 +49,9 @@ typedef enum : NSUInteger {
     BOOL mIsNeedReinit;         //需要重置解码器
     
     VideoEncodeFormat videoFormat;
+    
+    
+    list<RemoteFileInfo_t*> a;
 }
 @end
 
@@ -91,13 +95,13 @@ static void didDecompress(void *decompressionOutputRefCon, void *sourceFrameRefC
     OSStatus status=-1;
     if (videoFormat == H264EncodeFormat) {
         const uint8_t *const parameterSetPointers[2] = {pSPS,pPPS};
-        const size_t parameterSetSizes[2] = {mSpsSize, mPpsSize};
+        const size_t parameterSetSizes[2] = {static_cast<size_t>(mSpsSize), static_cast<size_t>(mPpsSize)};
         
         status = CMVideoFormatDescriptionCreateFromH264ParameterSets(kCFAllocatorDefault, 2, parameterSetPointers, parameterSetSizes, 4, &mDecoderFormatDescription);
     }else if(videoFormat == H265EncodeFormat){
         if(mrPpsSize==0){
             const uint8_t *const parameterSetPointers[3] = {pVPS, pSPS, pPPS};
-            const size_t parameterSetSizes[3] = {mVpsSize, mSpsSize, mPpsSize};
+            const size_t parameterSetSizes[3] = {static_cast<size_t>(mVpsSize), static_cast<size_t>(mSpsSize), static_cast<size_t>(mPpsSize)};
             if (@available(iOS 11.0, *)) {
                 status = CMVideoFormatDescriptionCreateFromHEVCParameterSets(kCFAllocatorDefault,
                                                                              3,
@@ -112,7 +116,7 @@ static void didDecompress(void *decompressionOutputRefCon, void *sourceFrameRefC
             }
         }else{
             const uint8_t *const parameterSetPointers[4] = {pVPS, pSPS, pPPS, prPPS};
-            const size_t parameterSetSizes[4] = {mVpsSize, mSpsSize, mPpsSize, mrPpsSize};
+            const size_t parameterSetSizes[4] = {static_cast<size_t>(mVpsSize), static_cast<size_t>(mSpsSize), static_cast<size_t>(mPpsSize), static_cast<size_t>(mrPpsSize)};
             if (@available(iOS 11.0, *)) {
                 status = CMVideoFormatDescriptionCreateFromHEVCParameterSets(kCFAllocatorDefault,
                                                                              4,
@@ -324,7 +328,7 @@ static void didDecompress(void *decompressionOutputRefCon, void *sourceFrameRefC
                                                           &blockBuffer);
     if (status == kCMBlockBufferNoErr) {
         CMSampleBufferRef sampleBuffer = NULL;
-        const size_t sampleSizeArray[] = { videoBufferSize };
+        const size_t sampleSizeArray[] = { static_cast<size_t>(videoBufferSize) };
         status = CMSampleBufferCreateReady(kCFAllocatorDefault, blockBuffer, mDecoderFormatDescription, 1, 0, NULL, 1, sampleSizeArray, &sampleBuffer);
         
         if (status == kCMBlockBufferNoErr && sampleBuffer) {

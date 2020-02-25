@@ -185,69 +185,69 @@
 //    return currentDateString;
 //}
 //
+
++ (NSString *)nextDay:(NSString *) dateString
+{
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"yyyy_MM_dd"];
+    NSDate *date = [format dateFromString:dateString];
+    NSDate *newDate = [[NSDate alloc] initWithTimeIntervalSinceReferenceDate:([date timeIntervalSinceReferenceDate] + 24*3600)];
+
+    NSString *currentDateString = [format stringFromDate:newDate];
+    return currentDateString;
+}
+
++ (NSString *)prevDay:(NSString *) dateString
+{
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"yyyy_MM_dd"];
+    NSDate *date = [format dateFromString:dateString];
+    NSDate *newDate = [[NSDate alloc] initWithTimeIntervalSinceReferenceDate:([date timeIntervalSinceReferenceDate] - 24*3600)];
+    NSString *currentDateString = [format stringFromDate:newDate];
+    return currentDateString;
+}
+
+// 日期比较
++ (NSInteger)compareDate:(NSString*)aDate withDate:(NSString*)bDate
+{
+    NSInteger aa = 0;;
+    NSDateFormatter *dateformater = [[NSDateFormatter alloc] init];
+    [dateformater setDateFormat:@"yyyy_MM_dd"];
+    NSDate *dta = [[NSDate alloc] init];
+    NSDate *dtb = [[NSDate alloc] init];
+
+    dta = [dateformater dateFromString:aDate];
+    dtb = [dateformater dateFromString:bDate];
+    NSComparisonResult result = [dta compare:dtb];
+    if (result == NSOrderedSame) {
+        //        相等
+        aa = 0;
+    }
+    else if (result == NSOrderedAscending) {
+        //bDate比aDate大
+        aa = 1;
+    }
+    else if (result == NSOrderedDescending) {
+        //bDate比aDate小
+        aa = -1;
+    }
+    return aa;
+}
 //
-//+ (NSString *)nextDay:(NSString *) dateString
-//{
-//    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-//    [format setDateFormat:@"yyyy_MM_dd"];
-//    NSDate *date = [format dateFromString:dateString];
-//    NSDate *newDate = [[NSDate alloc] initWithTimeIntervalSinceReferenceDate:([date timeIntervalSinceReferenceDate] + 24*3600)];
-//
-//    NSString *currentDateString = [format stringFromDate:newDate];
-//    return currentDateString;
-//}
-//
-//+ (NSString *)prevDay:(NSString *) dateString
-//{
-//    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-//    [format setDateFormat:@"yyyy_MM_dd"];
-//    NSDate *date = [format dateFromString:dateString];
-//    NSDate *newDate = [[NSDate alloc] initWithTimeIntervalSinceReferenceDate:([date timeIntervalSinceReferenceDate] - 24*3600)];
-//    NSString *currentDateString = [format stringFromDate:newDate];
-//    return currentDateString;
-//}
-//
-//// 日期比较
-//+ (NSInteger)compareDate:(NSString*)aDate withDate:(NSString*)bDate
-//{
-//    NSInteger aa = 0;;
-//    NSDateFormatter *dateformater = [[NSDateFormatter alloc] init];
-//    [dateformater setDateFormat:@"yyyy_MM_dd"];
-//    NSDate *dta = [[NSDate alloc] init];
-//    NSDate *dtb = [[NSDate alloc] init];
-//
-//    dta = [dateformater dateFromString:aDate];
-//    dtb = [dateformater dateFromString:bDate];
-//    NSComparisonResult result = [dta compare:dtb];
-//    if (result == NSOrderedSame) {
-//        //        相等
-//        aa = 0;
-//    }
-//    else if (result == NSOrderedAscending) {
-//        //bDate比aDate大
-//        aa = 1;
-//    }
-//    else if (result == NSOrderedDescending) {
-//        //bDate比aDate小
-//        aa = -1;
-//    }
-//    return aa;
-//}
-//
-////获取当前的时间
-//+ (NSString*)getCurrentTimes
-//{
-//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//    // ----------设置你想要的格式,hh与HH的区别:分别表示12小时制,24小时制
-//    [formatter setDateFormat:@"yyyy_MM_dd"];
-//    //现在时间,你可以输出来看下是什么格式
-//    NSDate *datenow = [NSDate date];
-//    //----------将nsdate按formatter格式转成nsstring
-//    NSString *currentTimeString = [formatter stringFromDate:datenow];
-////    NSLog(@"currentTimeString =  %@",currentTimeString);
-//    return currentTimeString;
-//}
-//
+//获取当前的时间
++ (NSString*)getCurrentTimes
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    // ----------设置你想要的格式,hh与HH的区别:分别表示12小时制,24小时制
+    [formatter setDateFormat:@"yyyy_MM_dd"];
+    //现在时间,你可以输出来看下是什么格式
+    NSDate *datenow = [NSDate date];
+    //----------将nsdate按formatter格式转成nsstring
+    NSString *currentTimeString = [formatter stringFromDate:datenow];
+//    NSLog(@"currentTimeString =  %@",currentTimeString);
+    return currentTimeString;
+}
+
 ////根据返回的时间戳字符串，获取指定的格式的时间
 //+ (NSString*)getTimeFormat:(NSString *)timeStampString
 //{

@@ -49,7 +49,7 @@ void onStatus(const char* uuid,int status)
     }
     else {
         NSString *statusCodeString = [KHJErrorManager getError_with_code:status];
-        NSLog(@" \n onStatus \n 设备id = %s \n 状态错误 = %@",uuid,statusCodeString);
+//        NSLog(@" \n onStatus \n 设备id = %s \n 状态错误 = %@",uuid,statusCodeString);
     }
 
     NSMutableDictionary *body = [NSMutableDictionary dictionary];
@@ -92,7 +92,7 @@ void onAudioData(const char* uuid,int type,unsigned char*data,int len,long times
 void onJSONString(const char* uuid,int msg_type,const char* jsonstr)
 {
     // 子线程回调
-    NSLog(@" \n 设备id = %s \n messageCode = %d \n json数据 = %s",uuid,msg_type,jsonstr);
+//    NSLog(@" \n 设备id = %s \n messageCode = %d \n json数据 = %s",uuid,msg_type,jsonstr);
     if (msg_type == 4003) {
         // 设备连接
         NSDictionary *body = [NSDictionary dictionary];

@@ -2258,7 +2258,6 @@ typedef struct RecordDatePeriod{
                     }
                     else {
                         mTotalRecordList.push_back(prp);
-                        CLog(@"11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
                     }
 				}
 			}

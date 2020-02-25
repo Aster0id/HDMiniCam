@@ -23,20 +23,20 @@
 //+ (UIImage *)getFristImageInmp4Video:(NSString *)filePath;
 ////
 //+ (UIImage*)getCoverImage:(NSURL *)_outMovieURL;
-////下一天日期
-//+ (NSString *)nextDay:(NSString *)dateString;
-//// 前一天日期
-//+ (NSString *)prevDay:(NSString *)dateString;
+//下一天日期
++ (NSString *)nextDay:(NSString *)dateString;
+// 前一天日期
++ (NSString *)prevDay:(NSString *)dateString;
 //// 字符串转时间戳
 //+ (long)getTimeStrWithString:(NSString *)str;
 ///**
 // 字符串转时间戳 如：2017年04月10日 17时15分
 // */
 //+ (long)getTimeStr_2WithString:(NSString *)str;
-//// 日期比较
-//+ (NSInteger)compareDate:(NSString *)aDate withDate:(NSString *)bDate;
-//// 获取当前时间
-//+ (NSString*)getCurrentTimes;
+// 日期比较
++ (NSInteger)compareDate:(NSString *)aDate withDate:(NSString *)bDate;
+// 获取当前时间
++ (NSString*)getCurrentTimes;
 //// 根据返回的时间戳字符串，获取指定的格式的时间
 //+ (NSString*)getTimeFormat:(NSString *)timeStampString;
 //// 根据返回的时间戳字符串，获取指定的格式的时间

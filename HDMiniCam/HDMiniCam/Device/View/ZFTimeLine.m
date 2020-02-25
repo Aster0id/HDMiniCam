@@ -230,7 +230,6 @@
             }
         }
         [self setNeedsDisplay];
-        
     }
     else if(pinchGest.state == UIGestureRecognizerStateEnded) {
         if (!self.userInteractionEnabled) {
@@ -240,7 +239,7 @@
     }
 }
 
-//刷新,但不改变时间
+// 刷新,但不改变时间
 - (void)refresh
 {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -341,106 +340,78 @@
         //数组很大的时候，需要2分查找
         for (KHJVideoModel *tInfo in self.timesArr) {
 
-            NSInteger index = [self.timesArr indexOfObject:tInfo];
+//            NSInteger index = [self.timesArr indexOfObject:tInfo];
             NSTimeInterval start = tInfo.startTime;
             NSTimeInterval end = tInfo.startTime + tInfo.durationTime;
             // 解决全天录制断录问题
             // 倒数第二个才需要判断
             // 条件一：SD卡数据时 条件二：在timesArr数组中 条件三：0，1 - 全天录制
-            if ((index < self.timesArr.count - 1) && (tInfo.recType == 0 || tInfo.recType == 1)) {
-                KHJVideoModel *nextInfo = self.timesArr[index + 1];
-                if (self.isSDDataSource) {
-                    /* sd卡 补画 20分钟 */
-                    if (nextInfo.startTime - end <= 20*60) {
-                        end = nextInfo.startTime;
-                    }
-                }
-                else {
-                    /* 云端 补画 5秒 */
-                    if (nextInfo.startTime - end <= 5) {
-                        end = nextInfo.startTime;
-                    }
-                }
-            }
-            
-            NSDateFormatter *dateFomater = [[NSDateFormatter alloc]init];
-            dateFomater.dateFormat = @"yyyy_MM_dd HH:mm:ss";
-            
-            NSDate *date = [NSDate dateWithTimeIntervalSince1970:start];
-            NSString *startDate = [dateFomater stringFromDate:date];
-            CLog(@"start        = %f",start);
-            CLog(@"startDate    = %@",startDate);
-            
-            date = [NSDate dateWithTimeIntervalSince1970:end];
-            NSString *endDate = [dateFomater stringFromDate:date];
-            CLog(@"end          = %f",end);
-            CLog(@"endDate      = %@",endDate);
-            
-            date = [NSDate dateWithTimeIntervalSince1970:leftInterval];
-            NSString *leftDate = [dateFomater stringFromDate:date];
-            CLog(@"leftInterval     = %f",leftInterval);
-            CLog(@"leftDate         = %@",leftDate);
-            
-            date = [NSDate dateWithTimeIntervalSince1970:rightInterval];
-            NSString *rightDate = [dateFomater stringFromDate:date];
-            CLog(@"rightInterval    = %f",rightInterval);
-            CLog(@"rightDate        = %@",rightDate);
-            
-            /*
-             涂鸦
-             end = "2019-09-18 17:23:19 +0000";
-             endTime = 1568798599;
-             start = "2019-09-18 17:13:18 +0000";
-             startTime = 1568797998;
-             */
-            
-            TuyaTimeLineModel *model = [[TuyaTimeLineModel alloc] init];
-            model.startTime = start;
-            model.startDate = startDate;
-            model.endTime = end;
-            model.endDate = endDate;
-            
-            /*
-             涂鸦
-             model.startTime = [result[i][@"startTime"] integerValue];
-             model.endTime = [result[i][@"endTime"] integerValue];
-             model.startDate = String(@"%@",result[i][@"start"]);
-             model.endDate = String(@"%@",result[i][@"end"]);
-             */
-            
-            
-            
-            
-//            if ((start > leftInterval && start < rightInterval) ||
-//                (end > leftInterval && end < rightInterval ) ||
-//                (start < leftInterval && end > rightInterval) ) {
-//                //计算起始位置对应的x值
-//                float startX = (start-leftInterval)/[self secondsOfIntervalValue];
-//                //计算时间长度对应的宽度
-//                float length = (end - start)/[self secondsOfIntervalValue] + 0.5;
-////                float length = (end - start)/[self secondsOfIntervalValue];
-//                if (tInfo.recType == 0 || tInfo.recType == 1) {//灰色
-//                    [self drawColorRect:startX Context:contex length:length withColor:UIColor.lightGrayColor];
-//                }
-//                else if(tInfo.recType == 2) {//2移动侦测
-//                    [self drawColorRect:startX Context:contex length:length withColor:UIColor.orangeColor];
-//                }
-//                else if(tInfo.recType == 4) {
-//                    //4是声音侦测
-//                    [self drawColorRect:startX Context:contex length:length withColor:ssRGB(0x2a, 0xb9, 0xb7)];
-//                }
-//                else if(tInfo.recType ==6 ){
-//                    //6移动和声音
-//                    [self drawColorRect:startX Context:contex length:length withColor:UIColor.redColor];
+//            if ((index < self.timesArr.count - 1) && (tInfo.recType == 0 || tInfo.recType == 1)) {
+//                KHJVideoModel *nextInfo = self.timesArr[index + 1];
+//                if (self.isSDDataSource) {
+//                    /* sd卡 补画 20分钟 */
+//                    if (nextInfo.startTime - end <= 20*60) {
+//                        end = nextInfo.startTime;
+//                    }
 //                }
 //                else {
-//                    // 人脸人形检测（默认的报警类型）
-//                    [self drawColorRect:startX Context:contex length:length withColor:UIColor.orangeColor];
+//                    /* 云端 补画 5秒 */
+//                    if (nextInfo.startTime - end <= 5) {
+//                        end = nextInfo.startTime;
+//                    }
 //                }
 //            }
-//            else {
-//                CLog(@"时间区域显示不正常！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
-//            }
+//
+            NSDateFormatter *dateFomater = [[NSDateFormatter alloc]init];
+            dateFomater.dateFormat = @"yyyy_MM_dd HH:mm:ss";
+
+//            NSDate *date = [NSDate dateWithTimeIntervalSince1970:start];
+//            NSString *startDate = [dateFomater stringFromDate:date];
+//            CLog(@"start        = %f",start);
+//            CLog(@"startDate    = %@",startDate);
+//            date = [NSDate dateWithTimeIntervalSince1970:end];
+//            NSString *endDate = [dateFomater stringFromDate:date];
+//            CLog(@"end          = %f",end);
+//            CLog(@"endDate      = %@",endDate);
+//            date = [NSDate dateWithTimeIntervalSince1970:leftInterval];
+//            NSString *leftDate = [dateFomater stringFromDate:date];
+//            CLog(@"leftInterval     = %f",leftInterval);
+//            CLog(@"leftDate         = %@",leftDate);
+//            date = [NSDate dateWithTimeIntervalSince1970:rightInterval];
+//            NSString *rightDate = [dateFomater stringFromDate:date];
+//            CLog(@"rightInterval    = %f",rightInterval);
+//            CLog(@"rightDate        = %@",rightDate);
+        
+            if ((start > leftInterval && start < rightInterval) ||
+                (end > leftInterval && end < rightInterval ) ||
+                (start < leftInterval && end > rightInterval) ) {
+                //计算起始位置对应的x值
+                float startX = (start-leftInterval)/[self secondsOfIntervalValue];
+                //计算时间长度对应的宽度
+                float length = (end - start)/[self secondsOfIntervalValue] + 0.5;
+//                float length = (end - start)/[self secondsOfIntervalValue];
+                if (tInfo.recType == 0 || tInfo.recType == 1) {//灰色
+                    [self drawColorRect:startX Context:contex length:length withColor:UIColor.lightGrayColor];
+                }
+                else if(tInfo.recType == 2) {//2移动侦测
+                    [self drawColorRect:startX Context:contex length:length withColor:UIColor.orangeColor];
+                }
+                else if(tInfo.recType == 4) {
+                    //4是声音侦测
+                    [self drawColorRect:startX Context:contex length:length withColor:KHJRGB(0x2a, 0xb9, 0xb7)];
+                }
+                else if(tInfo.recType ==6 ){
+                    //6移动和声音
+                    [self drawColorRect:startX Context:contex length:length withColor:UIColor.redColor];
+                }
+                else {
+                    // 人脸人形检测（默认的报警类型）
+                    [self drawColorRect:startX Context:contex length:length withColor:UIColor.orangeColor];
+                }
+            }
+            else {
+                CLog(@"时间区域显示不正常！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
+            }
         }
     }
     

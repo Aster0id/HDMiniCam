@@ -29,6 +29,7 @@
 #define KHJIMAGE(name)                  [UIImage imageNamed:name]
 #define KHJString(...)                  [NSString stringWithFormat:__VA_ARGS__]
 #define KHJLocalizedString(key,comment) [[NSBundle mainBundle] localizedStringForKey:(key)value:@"" table:nil]
+#define KHJRGB(r, g, b)                 [UIColor colorWithRed:((r) / 255.0) green:((g) / 255.0) blue:((b) / 255.0) alpha:1.0]
 /* 当前选择的 tabbar 下标 */
 #define KHJNaviBarItemIndexKey  @"NaviBarItemIndexKey"
 

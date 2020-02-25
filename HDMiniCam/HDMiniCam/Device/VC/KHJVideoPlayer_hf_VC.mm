@@ -9,8 +9,11 @@
 #import "KHJVideoPlayer_hf_VC.h"
 #import "KHJDeviceManager.h"
 #import "ZFTimeLine.h"
+#import "NSDate+JLZero.h"
 #import "KHJBackPlayListVC.h"
 //
+#import "KHJPickerView.h"
+#import "KHJVideoModel.h"
 #import "JSONStructProtocal.h"
 
 extern RecordDatePeriod_t gRecordDatePeriod;
@@ -38,14 +41,34 @@ extern RecordDatePeriod_t gRecordDatePeriod;
     __weak IBOutlet UIImageView *listenImgView;
     
     BOOL exitVideoList;
+    
+    // 当天零点时间戳
+    NSTimeInterval currentTimeInterval;
+    NSTimeInterval zeroTimeInterval;
 }
 
 @property (nonatomic, strong) NSMutableArray *videoList;
+
+@property (nonatomic, strong) KHJPickerView *datePickerView;
 @property (nonatomic, copy) ZFTimeLine *zfTimeView;
 
 @end
 
 @implementation KHJVideoPlayer_hf_VC
+
+- (KHJPickerView *)datePickerView
+{
+    if (!_datePickerView) {
+//        if (IS_IPHONE_5) {
+//            _datePickerView = [[KHJPickerView alloc] initWithFrame:CGRectMake(0, segment.frame.size.height+segment.frame.origin.y+6, SCREEN_WIDTH, 40)];
+//        }
+//        else {
+//            _datePickerView = [[KHJPickerView alloc] initWithFrame:CGRectMake(0, segment.frame.size.height+segment.frame.origin.y+10, SCREEN_WIDTH, 40)];
+//        }
+        _datePickerView.hidden = YES;
+    }
+    return _datePickerView;
+}
 
 - (NSMutableArray *)videoList
 {
@@ -73,6 +96,10 @@ extern RecordDatePeriod_t gRecordDatePeriod;
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyyMMdd"];
     NSString *str = [formatter stringFromDate:date];
+    
+    currentTimeInterval = [date timeIntervalSince1970];
+    zeroTimeInterval = [NSDate getZeroWithTimeInterverl:currentTimeInterval];
+
     [[KHJDeviceManager sharedManager] getRemoteDirInfo_timeLine_with_deviceID:self.deviceID vi:0 date:[str intValue] resultBlock:^(NSInteger code) {
         CLog(@"code = %ld",(long)code);
     }];
@@ -81,52 +108,57 @@ extern RecordDatePeriod_t gRecordDatePeriod;
 
 - (void)noti_timeLineInfo_1075_key:(NSNotification *)noti
 {
-//    NSDictionary *body = (NSDictionary *)noti.object;
-//    NSDictionary *RecInfo = body[@"RecInfo"];
-//    CLog(@"vi = %@",RecInfo[@"vi"]);
-//    CLog(@"date = %@",RecInfo[@"date"]);
-//    CLog(@"period = %@",RecInfo[@"period"]);
-    
+    WeakSelf
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        for (list<RecordPeriod_t*>::iterator i= gRecordDatePeriod.mTotalRecordList.begin(); i != gRecordDatePeriod.mTotalRecordList.end(); i++) {
+        
+        for (list<RecordPeriod_t*>::iterator i = gRecordDatePeriod.mTotalRecordList.begin(); i != gRecordDatePeriod.mTotalRecordList.end(); i++) {
 
             RecordPeriod_t *rfi = *i;
             NSString *start = KHJString(@"%d",rfi->start);
             NSString *end = KHJString(@"%d",rfi->end);
             int type = rfi->type;
-            if (type == 0) {
-                CLog(@"thread = %@,正常录制 start = %@ end = %@", [NSThread currentThread], start, end);
+            NSString *startString   = KHJString(@"%06d",[start intValue]);
+            NSString *endString     = KHJString(@"%06d",[end intValue]);
+            
+            int startHour = [[startString substringWithRange:NSMakeRange(0, 2)] intValue];
+            int startMin = [[startString substringWithRange:NSMakeRange(2, 2)] intValue];
+            int startSec = [[startString substringWithRange:NSMakeRange(4, 2)] intValue];
+            int startTimeInterval = startHour * 3600 + startMin * 60 + startSec;
+            
+            int endHour = [[endString substringWithRange:NSMakeRange(0, 2)] intValue];
+            int endMin = [[endString substringWithRange:NSMakeRange(2, 2)] intValue];
+            int endSec = [[endString substringWithRange:NSMakeRange(4, 2)] intValue];
+            int endTimeInterval = endHour * 3600 + endMin * 60 + endSec;
+
+            KHJVideoModel *model = [[KHJVideoModel alloc] init];
+            model.startTime = startTimeInterval + self->zeroTimeInterval; // 起始时间
+            model.durationTime = endTimeInterval - startTimeInterval;// 视频时长
+            if (type == 0) {        // 正常录制
+                model.recType = 0;
             }
-            else if (type == 1) {
-                CLog(@"移动检测录制 start = %@ end = %@",start,end);
+            else if (type == 1) {   // 移动检测录制
+                model.recType = 2;
             }
-            else if (type == 3) {
-                CLog(@"声音检测录制 start = %@ end = %@",start,end);
+            else if (type == 3) {   // 声音检测录制
+                model.recType = 4;
             }
             
-//            NSMutableDictionary *body = [NSMutableDictionary dictionary];
-//            NSString *name = [NSString stringWithUTF8String:rfi->name.c_str()];
-//            NSArray *timeArr1 = [name componentsSeparatedByString:@"."];
-//            NSArray *timeArr2 = [timeArr1.firstObject componentsSeparatedByString:@"-"];
-//            NSString *start = timeArr2.firstObject;
-//            NSString *end = timeArr2.lastObject;
-//            [body setValue:[NSString stringWithUTF8String:rfi->name.c_str()] forKey:@"name"];
-//            [body setValue:[NSString stringWithUTF8String:rfi->path.c_str()] forKey:@"videoPath"];
-//            [body setValue:@(rfi->size) forKey:@"size"];
-//            [body setValue:start forKey:@"start"];
-//            [body setValue:end forKey:@"end"];
-//            [weakSelf.listArr addObject:body];
+            NSArray *arr = [weakSelf.videoList copy];
+            __block BOOL isExit = NO;
+            [arr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                KHJVideoModel *model1 = (KHJVideoModel *)obj;
+                if (model1.startTime == model.startTime) {
+                    isExit = YES;
+                    *stop = YES;
+                }
+            }];
+            if (!isExit) {
+                [weakSelf.videoList addObject:model];
+            }
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-//            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(exitListData:)]) {
-//                if (weakSelf.listArr.count > 0) {
-//                    [weakSelf.delegate exitListData:YES];
-//                }
-//                else {
-//                    [weakSelf.delegate exitListData:NO];
-//                }
-//            }
-//            [self->contentList reloadData];
+            weakSelf.zfTimeView.timesArr = weakSelf.videoList;
+            [weakSelf.zfTimeView updateCurrentInterval:self->currentTimeInterval];
         });
     });
 }
@@ -154,7 +186,6 @@ extern RecordDatePeriod_t gRecordDatePeriod;
     }
     else if (sender.tag == 50) {
         // 后一天
-        
     }
     else if (sender.tag == 60) {
         // 拍照

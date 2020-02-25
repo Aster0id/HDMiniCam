@@ -153,7 +153,7 @@
 		AB52C11E23FD3B3200C921F1 /* KHJErrorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52C11D23FD3B3200C921F1 /* KHJErrorManager.m */; };
 		AB5911DC23D0141A0060F05C /* KHJRecordListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5911DA23D0141A0060F05C /* KHJRecordListCell.m */; };
 		AB5911DD23D0141A0060F05C /* KHJRecordListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5911DB23D0141A0060F05C /* KHJRecordListCell.xib */; };
-		AB597B342400DC0300F04F84 /* H264HwDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = AB597B322400DC0300F04F84 /* H264HwDecoder.m */; };
+		AB597B342400DC0300F04F84 /* H264HwDecoder.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB597B322400DC0300F04F84 /* H264HwDecoder.mm */; };
 		AB597B39240154D500F04F84 /* libIOTCAPIs_P2PTunnel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB597B35240154D400F04F84 /* libIOTCAPIs_P2PTunnel.a */; };
 		AB597B3A240154D500F04F84 /* libIOTCAPIs_ALLT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB597B36240154D500F04F84 /* libIOTCAPIs_ALLT.a */; };
 		AB597B3B240154D500F04F84 /* libIOTCAPIs_ALL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB597B37240154D500F04F84 /* libIOTCAPIs_ALL.a */; };
@@ -164,6 +164,8 @@
 		AB597B4624027BC900F04F84 /* KHJBackPlayListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB597B4424027BC900F04F84 /* KHJBackPlayListCell.xib */; };
 		AB5D784A23F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB5D784823F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.mm */; };
 		AB5D784B23F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5D784923F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.xib */; };
+		AB7648632405127F00D6DE1C /* KHJPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7648622405127F00D6DE1C /* KHJPickerView.m */; };
+		AB7648662405132A00D6DE1C /* JKUIPickDate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7648652405132A00D6DE1C /* JKUIPickDate.m */; };
 		ABEBCDFD23CF1B6E00581AFB /* KHJPictureListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABEBCDFB23CF1B6E00581AFB /* KHJPictureListVC.xib */; };
 		ABEBCDFF23CF1B8400581AFB /* KHJPictureListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEBCDFE23CF1B8400581AFB /* KHJPictureListVC.m */; };
 		ABEBCE0323CF1D5000581AFB /* KHJPicture_oneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEBCE0123CF1D5000581AFB /* KHJPicture_oneCell.m */; };
@@ -429,7 +431,7 @@
 		AB5911D923D0141A0060F05C /* KHJRecordListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJRecordListCell.h; sourceTree = "<group>"; };
 		AB5911DA23D0141A0060F05C /* KHJRecordListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJRecordListCell.m; sourceTree = "<group>"; };
 		AB5911DB23D0141A0060F05C /* KHJRecordListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJRecordListCell.xib; sourceTree = "<group>"; };
-		AB597B322400DC0300F04F84 /* H264HwDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = H264HwDecoder.m; sourceTree = "<group>"; };
+		AB597B322400DC0300F04F84 /* H264HwDecoder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = H264HwDecoder.mm; sourceTree = "<group>"; };
 		AB597B332400DC0300F04F84 /* H264HwDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H264HwDecoder.h; sourceTree = "<group>"; };
 		AB597B35240154D400F04F84 /* libIOTCAPIs_P2PTunnel.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIOTCAPIs_P2PTunnel.a; sourceTree = "<group>"; };
 		AB597B36240154D500F04F84 /* libIOTCAPIs_ALLT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIOTCAPIs_ALLT.a; sourceTree = "<group>"; };
@@ -444,6 +446,10 @@
 		AB5D784723F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJVideoPlayer_sp_VC.h; sourceTree = "<group>"; };
 		AB5D784823F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KHJVideoPlayer_sp_VC.mm; sourceTree = "<group>"; };
 		AB5D784923F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJVideoPlayer_sp_VC.xib; sourceTree = "<group>"; };
+		AB7648612405127F00D6DE1C /* KHJPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHJPickerView.h; sourceTree = "<group>"; };
+		AB7648622405127F00D6DE1C /* KHJPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHJPickerView.m; sourceTree = "<group>"; };
+		AB7648642405132A00D6DE1C /* JKUIPickDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKUIPickDate.h; sourceTree = "<group>"; };
+		AB7648652405132A00D6DE1C /* JKUIPickDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKUIPickDate.m; sourceTree = "<group>"; };
 		ABEBCDFA23CF1B6E00581AFB /* KHJPictureListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHJPictureListVC.h; sourceTree = "<group>"; };
 		ABEBCDFB23CF1B6E00581AFB /* KHJPictureListVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHJPictureListVC.xib; sourceTree = "<group>"; };
 		ABEBCDFE23CF1B8400581AFB /* KHJPictureListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHJPictureListVC.m; sourceTree = "<group>"; };
@@ -556,6 +562,10 @@
 		93C3398E23CE1BFB00B44E5F /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				AB7648642405132A00D6DE1C /* JKUIPickDate.h */,
+				AB7648652405132A00D6DE1C /* JKUIPickDate.m */,
+				AB7648612405127F00D6DE1C /* KHJPickerView.h */,
+				AB7648622405127F00D6DE1C /* KHJPickerView.m */,
 				93C33B8123CE245600B44E5F /* KHJSaveManager.h */,
 				93C33B8223CE245600B44E5F /* KHJSaveManager.m */,
 				93C33B7C23CE218200B44E5F /* Toast+UIView.h */,
@@ -1072,8 +1082,8 @@
 		AB597B312400DC0300F04F84 /* H264lib */ = {
 			isa = PBXGroup;
 			children = (
-				AB597B322400DC0300F04F84 /* H264HwDecoder.m */,
 				AB597B332400DC0300F04F84 /* H264HwDecoder.h */,
+				AB597B322400DC0300F04F84 /* H264HwDecoder.mm */,
 			);
 			path = H264lib;
 			sourceTree = "<group>";
@@ -1329,12 +1339,14 @@
 				AB30DA5523D06844005BD2A1 /* KHJHadBindDeviceCell.m in Sources */,
 				93C33B4923CE20B400B44E5F /* SGQRCodeScanningView.m in Sources */,
 				AB30DA5023D066F7005BD2A1 /* KHJHadBindDeviceVC.m in Sources */,
+				AB7648632405127F00D6DE1C /* KHJPickerView.m in Sources */,
 				AB4EFA7E23F6D43600D584E7 /* KHJDeviceManager.mm in Sources */,
 				93C33B6223CE20B400B44E5F /* TZVideoPlayerController.m in Sources */,
 				AB32D4B023F4F476008AFD1F /* KHJVideoPlayer_hf_VC.mm in Sources */,
 				93C33A8823CE1D0800B44E5F /* KHJShakeObj.mm in Sources */,
 				AB20E62A23CEE33400D2861C /* AIPhotoZoom.m in Sources */,
 				93C33B5523CE20B400B44E5F /* UIViewController+LJWKeyboardHandlerHelper.m in Sources */,
+				AB7648662405132A00D6DE1C /* JKUIPickDate.m in Sources */,
 				93C33B5723CE20B400B44E5F /* LJWKeyboardHandler.m in Sources */,
 				93C33B5023CE20B400B44E5F /* ZQUtil.m in Sources */,
 				93C33B2E23CE20B400B44E5F /* NSString+Utility.m in Sources */,
@@ -1346,7 +1358,7 @@
 				93C33B2A23CE20B400B44E5F /* MBProgressHUD.m in Sources */,
 				AB52C11023FBE1BA00C921F1 /* KHJQRCodeScanVC.m in Sources */,
 				AB32D4B523F53BE4008AFD1F /* ZFTimeLine.m in Sources */,
-				AB597B342400DC0300F04F84 /* H264HwDecoder.m in Sources */,
+				AB597B342400DC0300F04F84 /* H264HwDecoder.mm in Sources */,
 				93C33B6823CE20B400B44E5F /* TZPhotoPreviewCell.m in Sources */,
 				93A30C4723D29862009A0F4C /* KHJAlarmConfigVC.m in Sources */,
 				93C33A7323CE1D0800B44E5F /* CreateTwoCode.m in Sources */,
