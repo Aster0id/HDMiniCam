@@ -11,7 +11,7 @@
 #import "IPCNetManagerInterface.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
-#import "H264HwDecoder.h"
+#import "H26xHwDecoder.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

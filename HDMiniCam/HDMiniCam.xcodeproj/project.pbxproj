@@ -104,6 +104,7 @@
 		93C33B8023CE236100B44E5F /* PlayLocalMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C33B7F23CE236100B44E5F /* PlayLocalMusic.m */; };
 		93C33B8323CE245600B44E5F /* KHJSaveManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C33B8223CE245600B44E5F /* KHJSaveManager.m */; };
 		93E8A98C23E07B4B00F5DB8F /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E8A98B23E07B4B00F5DB8F /* NetworkExtension.framework */; };
+		93FC9F7824057033000B9B51 /* H26xHwDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FC9F7524057033000B9B51 /* H26xHwDecoder.m */; };
 		AB20E60823CEBEE500D2861C /* KHJDeviceListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB20E60623CEBEE500D2861C /* KHJDeviceListVC.m */; };
 		AB20E60923CEBEE500D2861C /* KHJDeviceListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB20E60723CEBEE500D2861C /* KHJDeviceListVC.xib */; };
 		AB20E61423CEBF2900D2861C /* KHJRecordListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB20E61223CEBF2900D2861C /* KHJRecordListVC.m */; };
@@ -153,7 +154,6 @@
 		AB52C11E23FD3B3200C921F1 /* KHJErrorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52C11D23FD3B3200C921F1 /* KHJErrorManager.m */; };
 		AB5911DC23D0141A0060F05C /* KHJRecordListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5911DA23D0141A0060F05C /* KHJRecordListCell.m */; };
 		AB5911DD23D0141A0060F05C /* KHJRecordListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5911DB23D0141A0060F05C /* KHJRecordListCell.xib */; };
-		AB597B342400DC0300F04F84 /* H264HwDecoder.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB597B322400DC0300F04F84 /* H264HwDecoder.mm */; };
 		AB597B39240154D500F04F84 /* libIOTCAPIs_P2PTunnel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB597B35240154D400F04F84 /* libIOTCAPIs_P2PTunnel.a */; };
 		AB597B3A240154D500F04F84 /* libIOTCAPIs_ALLT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB597B36240154D500F04F84 /* libIOTCAPIs_ALLT.a */; };
 		AB597B3B240154D500F04F84 /* libIOTCAPIs_ALL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB597B37240154D500F04F84 /* libIOTCAPIs_ALL.a */; };
@@ -345,6 +345,10 @@
 		93C33B8223CE245600B44E5F /* KHJSaveManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHJSaveManager.m; sourceTree = "<group>"; };
 		93E8A98A23E07B3700F5DB8F /* HDMiniCam.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HDMiniCam.entitlements; sourceTree = "<group>"; };
 		93E8A98B23E07B4B00F5DB8F /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
+		93FC9F7424057033000B9B51 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
+		93FC9F7524057033000B9B51 /* H26xHwDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = H26xHwDecoder.m; sourceTree = "<group>"; };
+		93FC9F7624057033000B9B51 /* H26xHwDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H26xHwDecoder.h; sourceTree = "<group>"; };
+		93FC9F7724057033000B9B51 /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
 		9E40FDE3B8EEB6E3E1782DFE /* Pods_HDMiniCam.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HDMiniCam.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB20E60523CEBEE500D2861C /* KHJDeviceListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJDeviceListVC.h; sourceTree = "<group>"; };
 		AB20E60623CEBEE500D2861C /* KHJDeviceListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJDeviceListVC.m; sourceTree = "<group>"; };
@@ -431,8 +435,6 @@
 		AB5911D923D0141A0060F05C /* KHJRecordListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJRecordListCell.h; sourceTree = "<group>"; };
 		AB5911DA23D0141A0060F05C /* KHJRecordListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJRecordListCell.m; sourceTree = "<group>"; };
 		AB5911DB23D0141A0060F05C /* KHJRecordListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJRecordListCell.xib; sourceTree = "<group>"; };
-		AB597B322400DC0300F04F84 /* H264HwDecoder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = H264HwDecoder.mm; sourceTree = "<group>"; };
-		AB597B332400DC0300F04F84 /* H264HwDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H264HwDecoder.h; sourceTree = "<group>"; };
 		AB597B35240154D400F04F84 /* libIOTCAPIs_P2PTunnel.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIOTCAPIs_P2PTunnel.a; sourceTree = "<group>"; };
 		AB597B36240154D500F04F84 /* libIOTCAPIs_ALLT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIOTCAPIs_ALLT.a; sourceTree = "<group>"; };
 		AB597B37240154D500F04F84 /* libIOTCAPIs_ALL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIOTCAPIs_ALL.a; sourceTree = "<group>"; };
@@ -1082,8 +1084,10 @@
 		AB597B312400DC0300F04F84 /* H264lib */ = {
 			isa = PBXGroup;
 			children = (
-				AB597B332400DC0300F04F84 /* H264HwDecoder.h */,
-				AB597B322400DC0300F04F84 /* H264HwDecoder.mm */,
+				93FC9F7624057033000B9B51 /* H26xHwDecoder.h */,
+				93FC9F7524057033000B9B51 /* H26xHwDecoder.m */,
+				93FC9F7724057033000B9B51 /* list.h */,
+				93FC9F7424057033000B9B51 /* types.h */,
 			);
 			path = H264lib;
 			sourceTree = "<group>";
@@ -1303,6 +1307,7 @@
 				93C33B5B23CE20B400B44E5F /* NSBundle+Language.m in Sources */,
 				93C33B6623CE20B400B44E5F /* TZImageManager.m in Sources */,
 				93C33B8023CE236100B44E5F /* PlayLocalMusic.m in Sources */,
+				93FC9F7824057033000B9B51 /* H26xHwDecoder.m in Sources */,
 				93C33B6523CE20B400B44E5F /* TZPhotoPreviewController.m in Sources */,
 				93C3398823CE1BA900B44E5F /* KHJTabBarBaseVC.m in Sources */,
 				AB52C11423FBEB0100C921F1 /* KHJAddDeviceListCell.m in Sources */,
@@ -1358,7 +1363,6 @@
 				93C33B2A23CE20B400B44E5F /* MBProgressHUD.m in Sources */,
 				AB52C11023FBE1BA00C921F1 /* KHJQRCodeScanVC.m in Sources */,
 				AB32D4B523F53BE4008AFD1F /* ZFTimeLine.m in Sources */,
-				AB597B342400DC0300F04F84 /* H264HwDecoder.mm in Sources */,
 				93C33B6823CE20B400B44E5F /* TZPhotoPreviewCell.m in Sources */,
 				93A30C4723D29862009A0F4C /* KHJAlarmConfigVC.m in Sources */,
 				93C33A7323CE1D0800B44E5F /* CreateTwoCode.m in Sources */,

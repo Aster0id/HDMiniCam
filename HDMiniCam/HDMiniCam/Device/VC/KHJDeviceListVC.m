@@ -8,10 +8,10 @@
 
 #import "KHJDeviceListVC.h"
 #import "KHJDeviceListCell.h"
-
 //
 #import "KHJDeviceManager.h"
 //
+#import "KHJDeviceInfo.h"
 #import "KHJAddDeviceListVC.h"
 #import "KHJSearchDeviceVC.h"
 #import "KHJMutliScreenVC.h"

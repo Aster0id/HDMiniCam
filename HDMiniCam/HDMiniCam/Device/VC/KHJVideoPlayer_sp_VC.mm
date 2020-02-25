@@ -18,7 +18,7 @@
 #import <Photos/PHPhotoLibrary.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
-H264HwDecoder *h264Decode;
+H26xHwDecoder *h264Decode;
 
 @interface KHJVideoPlayer_sp_VC ()
 {

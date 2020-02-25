@@ -1,5 +1,5 @@
 //
-//  H264HwDecoder.h
+//  H26xHwDecoder.h
 //  test3
 //
 //  Created by khj888 on 2020/2/21.
@@ -24,17 +24,17 @@ typedef enum : NSUInteger {
     H264HWDataType_Layer,
 } H264HWDataType;
 
-@protocol H264HwDecoderDelegate <NSObject>
+@protocol H26xHwDecoderDelegate <NSObject>
 
-- (void)getImageWith:(UIImage *)image imageSize:(CGSize)imageSize;
+- (void)getImageWith:(UIImage *_Nullable)image imageSize:(CGSize)imageSize;
 
 @end
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface H264HwDecoder : NSObject
+@interface H26xHwDecoder : NSObject
 
-@property (nonatomic, strong) id<H264HwDecoderDelegate> delegate;
+@property (nonatomic, strong) id<H26xHwDecoderDelegate> delegate;
 
 @property (nonatomic,assign) H264HWDataType showType;                   //显示类型
 @property (nonatomic,strong) UIImage *image;                            //解码成RGB数据时的IMG
@@ -51,11 +51,13 @@ NS_ASSUME_NONNULL_BEGIN
  @return 视图的宽高(width, height)，当为接收为AVSampleBufferDisplayLayer时返回接口是无效的
  */
 - (CGSize)decodeH264VideoData:(uint8_t *)videoData videoSize:(NSInteger)videoSize videoType:(VideoEncodeFormat)videoType;
- 
+
+- (int)decodeH26xVideoData:(uint8_t *)videoData videoSize:(int)videoSize frameType:(int)frameType timestamp:(long)timestamp;
+
 /**
  释放解码器
  */
-- (void)releaseH264HwDecoder;
+- (void)releaseH26xHwDecoder;
  
 /**
  视频截图
