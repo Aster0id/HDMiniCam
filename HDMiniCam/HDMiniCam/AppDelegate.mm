@@ -14,7 +14,7 @@
 #import "KHJAlarmListVC.h"
 #pragma mark - ios13 开启地理位置权限，获取Wi-Fi名称
 #import <CoreLocation/CoreLocation.h>
-
+#import "KHJDeviceManager.h"
 #import "KHJDataBase.h"
 
 @interface AppDelegate ()<CLLocationManagerDelegate>
@@ -35,14 +35,21 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    #pragma mark - 启动时，调动底层
     KHJDataBase *db = [KHJDataBase sharedDataBase];
     [db initDataBase];
+    NSArray *list = [[KHJDataBase sharedDataBase] getAllDeviceInfo];
+    for (int i = 0; i < list.count; i++) {
+        KHJDeviceInfo *info = [[KHJDeviceInfo alloc] init];
+        info = list[i];
+        [[KHJDeviceManager sharedManager] connect_with_deviceID:info.deviceID password:info.devicePassword resultBlock:^(NSInteger code) {}];
+    }
     
-    [self initHomeView];
+    // 如果是iOS13 未开启地理位置权限 需要提示一下
     if ([[UIDevice currentDevice] systemVersion].floatValue >= 13) {
-        // 如果是iOS13 未开启地理位置权限 需要提示一下
         [self.locationManager requestWhenInUseAuthorization];
     }
+    [self initHomeView];
     return YES;
 }
 

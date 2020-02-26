@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface KHJDeviceConfVC : KHJBaseVC
 
 @property (nonatomic, copy) NSString *deviceID;
+@property (nonatomic, strong) KHJDeviceInfo *deviceInfo;
 
 @end
 

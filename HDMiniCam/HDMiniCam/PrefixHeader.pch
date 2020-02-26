@@ -19,6 +19,7 @@
 #import "KHJHub.h"
 #import "KHJBaseCell.h"
 #import "KHJBaseVC.h"
+#import "KHJVideoPlayerBaseVC.h"
 #import "KHJToast.h"
 #import "Toast+UIView.h"
 #import "KHJPublicDefine.h"

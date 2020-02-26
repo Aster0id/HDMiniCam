@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KHJAlarmConfigVC : KHJBaseVC
 
+@property (nonatomic, strong) KHJDeviceInfo *deviceInfo;
+
 @end
 
 NS_ASSUME_NONNULL_END

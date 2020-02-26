@@ -11,6 +11,7 @@
 #import "JSONStructProtocal.h"
 #import "IPCNetManagerInterface.h"
 #import "KHJErrorManager.h"
+#import "H26xHwDecoder.h"
 
 // 查询远程视频列表的日期
 const char *mCurViewPath_date;
@@ -35,90 +36,6 @@ RemoteDirInfo_t*mCurRemoteDirInfo;
 @end
 
 @implementation KHJDeviceManager
-
-#pragma mark - 设备回调
-
-/// 设备状态改变
-/// @param uuid 设备id
-/// @param status 设备状态
-void onStatus(const char* uuid,int status)
-{
-    // 子线程回调
-    if (status != 0) {
-//        NSLog(@" \n onStatus \n 设备id = %s， 当前在线 ！！！！！！！！！！！！！！",uuid);
-    }
-    else {
-        NSString *statusCodeString = [KHJErrorManager getError_with_code:status];
-//        NSLog(@" \n onStatus \n 设备id = %s \n 状态错误 = %@",uuid,statusCodeString);
-    }
-
-    NSMutableDictionary *body = [NSMutableDictionary dictionary];
-    [body setValue:[[NSString alloc] initWithUTF8String:uuid] forKey:@"deviceID"];
-    [body setValue:@(status) forKey:@"deviceStatus"];
-            
-    [[NSNotificationCenter defaultCenter] postNotificationName:noti_onStatus_KEY object:body];
-}
-
-/// 获取视频数据
-/// @param uuid 设备id
-/// @param type 类型
-/// @param data 视频数据
-/// @param len 数据长度
-/// @param timestamp 时间戳
-void onVideoData(const char* uuid,int type,unsigned char*data,int len,long timestamp)
-{
-    // 子线程回调
-//    CLog(@"thread = %@",[NSThread currentThread]);
-//    NSLog(@" \n onVideoData 设备id = %s \n type = %d  \n length = %d  \n timestamp = %ld",uuid,type,len,timestamp);
-}
-
-/// 获取音频数据
-/// @param uuid 设备id
-/// @param type 类型
-/// @param data 音频数据
-/// @param len 数据长度
-/// @param timestamp 时间戳
-void onAudioData(const char* uuid,int type,unsigned char*data,int len,long timestamp)
-{
-    // 子线程回调
-//    CLog(@"onAudioData = %@",[NSThread currentThread]);
-//    NSLog(@" \n onAudioData 设备id = %s \n type = %d  \n length = %d  \n timestamp = %ld",uuid,type,len,timestamp);
-}
-
-/// 返回的json数据
-/// @param uuid 设备id
-/// @param msg_type 信息类型
-/// @param jsonstr json数据
-void onJSONString(const char* uuid,int msg_type,const char* jsonstr)
-{
-    // 子线程回调
-//    NSLog(@" \n 设备id = %s \n messageCode = %d \n json数据 = %s",uuid,msg_type,jsonstr);
-    if (msg_type == 4003) {
-        // 设备连接
-        NSDictionary *body = [NSDictionary dictionary];
-        body = [KHJUtility cString_changto_ocStringWith:jsonstr];
-        CLog(@" \n 登录设备，连接设备 body = %@",body);
-        
-        if ([body.allKeys containsObject:@"Login.info"]) {
-#pragma mark - 登录回调
-//            NSString *Tick = body[@"Login.info"][@"Tick"];
-//            CLog(@"Tick = %@", Tick);
-        }
-        else if ([body.allKeys containsObject:@"dev_info"]) {
-#pragma mark - 设备信息回调
-            NSString *deviceName    = body[@"dev_info"][@"name"];
-            NSString *deviceID      = body[@"dev_info"][@"p2p_uuid"];
-            CLog(@" \n deviceID = %@, \n deviceName = %@",deviceID, deviceName);
-            NSMutableDictionary *body = [NSMutableDictionary dictionary];
-            [body setValue:deviceID forKey:@"deviceID"];
-            [body setValue:deviceName forKey:@"deviceName"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:noti_onJSONString_KEY object:body];
-        }
-    }
-    else {
-        
-    }
-}
 
 void OnGetCmdResult(int cmd,const char*uuid,const char*json)
 {
@@ -592,11 +509,15 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
 - (void)getDeviceWiFi_with_deviceID:(NSString *)deviceID
                         resultBlock:(resultBlock)resultBlock
 {
-    int ret = IPCNetGetWiFi(deviceID.UTF8String);
+    int ret = IPCNetGetWiFiR(deviceID.UTF8String, OnGetDeviceWiFi_CmdResult);
     CLog(@"获取设备Wi-Fi，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        resultBlock(ret);
     });
+}
+void OnGetDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:noti_OnGetDeviceWiFi_CmdResult_KEY object:[KHJUtility cString_changto_ocStringWith:json]];
 }
 
 /// 设置设备Wi-Fi
@@ -624,11 +545,15 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
 - (void)searchDeviceWiFi_with_deviceID:(NSString *)deviceID
                            resultBlock:(resultBlock)resultBlock
 {
-    int ret = IPCNetSearchWiFi(deviceID.UTF8String);
+    int ret = IPCNetSearchWiFiR(deviceID.UTF8String, OnSearchDeviceWiFi_CmdResult);
     CLog(@"搜索附近Wi-Fi列表，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        resultBlock(ret);
     });
+}
+void OnSearchDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:noti_OnSearchDeviceWiFi_CmdResult_KEY object:[KHJUtility cString_changto_ocStringWith:json]];
 }
 
 /// 搜索附近的设备
@@ -1008,11 +933,24 @@ void OnGetRecTimePeriodCmdResult(int cmd,const char*uuid,const char*json)
                                json:(NSString *)json
                         resultBlock:(resultBlock)resultBlock
 {
-//    int ret = IPCNetSetWiFiAPInfoR(deviceID.UTF8String, json.UTF8String, OnGetCmdResult);
-//    CLog(@"设设置设备热点，ret = %d",ret);
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//       resultBlock(ret);
-//    });
+    int ret = IPCNetSetWiFiAPInfoR(deviceID.UTF8String, json.UTF8String, OnSetWiFiAPInfoCmdResult);
+    CLog(@"设设置设备热点，ret = %d",ret);
+    dispatch_async(dispatch_get_main_queue(), ^{
+       resultBlock(ret);
+    });
+}
+
+void OnSetWiFiAPInfoCmdResult(int cmd,const char*uuid,const char*json)
+{
+    NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
+    CLog(@"dict = %@",dict);
+    int ret = [dict[@"ret"] intValue];
+    if (ret >= 0 && ret <= 100) {
+        
+    }
+    else {
+        CLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
+    }
 }
 
 #pragma mark - 设备设置
@@ -1270,8 +1208,6 @@ void OnGetRecTimePeriodCmdResult(int cmd,const char*uuid,const char*json)
        resultBlock(ret);
     });
 }
-
-
 
 @end
 

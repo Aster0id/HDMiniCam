@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
 @interface KHJBaseVC : UIViewController
 
 @property (nonatomic, strong) UIButton *leftBtn;

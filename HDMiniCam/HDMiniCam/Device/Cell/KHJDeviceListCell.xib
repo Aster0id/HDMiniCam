@@ -35,7 +35,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="摄像机状态" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r8t-x3-6Ia">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="连接中" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r8t-x3-6Ia">
                         <rect key="frame" x="109.5" y="52" width="248.5" height="20"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -50,7 +50,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qkg-Kf-pi0">
                         <rect key="frame" x="370" y="0.0" width="60" height="80"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reConnect" translatesAutoresizingMaskIntoConstraints="NO" id="7f7-nj-kHx">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reConnect" highlightedImage="setup" translatesAutoresizingMaskIntoConstraints="NO" id="7f7-nj-kHx">
                                 <rect key="frame" x="20" y="30" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="3Bp-hy-z2S"/>
@@ -114,10 +114,11 @@
                 <outlet property="smalIMGV" destination="7f7-nj-kHx" id="vPb-uh-obA"/>
                 <outlet property="status" destination="r8t-x3-6Ia" id="CxJ-fr-1IK"/>
             </connections>
-            <point key="canvasLocation" x="96" y="129"/>
+            <point key="canvasLocation" x="45" y="88"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="reConnect" width="64" height="64"/>
+        <image name="setup" width="64" height="64"/>
     </resources>
 </document>

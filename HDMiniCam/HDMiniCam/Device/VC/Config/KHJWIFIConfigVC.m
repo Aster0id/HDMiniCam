@@ -9,22 +9,59 @@
 #import "KHJWIFIConfigVC.h"
 #import "KHJWIFIConfigCell.h"
 #import "ZQAlterField.h"
+#import "KHJDeviceManager.h"
 
 @interface KHJWIFIConfigVC ()<UITableViewDelegate, UITableViewDataSource>
 {
+    NSArray *wifiListArr;
     UIView *back_groundView;
     __weak IBOutlet UILabel *wifiName;
     __weak IBOutlet UITableView *contentTBV;
-    
 }
+
 @end
 
 @implementation KHJWIFIConfigVC
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.titleLab.text = KHJLocalizedString(@"wifi设置", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    [[KHJDeviceManager sharedManager] getDeviceWiFi_with_deviceID:self.deviceInfo.deviceID resultBlock:^(NSInteger code) {}];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OnGetDeviceWiFi_CmdResult:) name:noti_OnGetDeviceWiFi_CmdResult_KEY object:nil];
+}
+
+- (void)OnGetDeviceWiFi_CmdResult:(NSNotification *)noti
+{
+    NSDictionary *result = (NSDictionary *)noti.object;
+    int ret = [result[@"ret"] intValue];
+    NSDictionary *body = [NSDictionary dictionaryWithDictionary:result[@"NetWork.Wireless"]];
+    if (ret == 0) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self->wifiName.text = body[@"SSID"];
+        });
+        [[KHJDeviceManager sharedManager] searchDeviceWiFi_with_deviceID:self.deviceInfo.deviceID resultBlock:^(NSInteger code) {}];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OnSearchDeviceWiFi_CmdResult:) name:noti_OnSearchDeviceWiFi_CmdResult_KEY object:nil];
+    }
+    else {
+        [self.view makeToast:KHJLocalizedString(@"获取设备Wi-Fi失败！", nil)];
+    }
+}
+
+- (void)OnSearchDeviceWiFi_CmdResult:(NSNotification *)noti
+{
+    NSDictionary *result = (NSDictionary *)noti.object;
+    int ret = [result[@"ret"] intValue];
+    if (ret == 0) {
+        wifiListArr = result[@"NetWork.WirelessSearch"][@"Aplist"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self->contentTBV reloadData];
+        });
+    }
+    else {
+        [self.view makeToast:KHJLocalizedString(@"获取设备Wi-Fi失败！", nil)];
+    }
 }
 
 - (void)backAction
@@ -34,7 +71,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return wifiListArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -45,33 +82,39 @@
     }
     cell.tag = indexPath.row + FLAG_TAG;
     WeakSelf
+    NSDictionary *body = wifiListArr[indexPath.row];
     cell.block = ^(int row) {
         CLog(@"row = %ld",(long)row);
-        [weakSelf changewifi:@"changewifi"];
+        [weakSelf changewifi:body];
     };
+    cell.name.text = body[@"SSID"];
     return cell;
 }
 
-- (void)changewifi:(NSString *)wifiname
+- (void)changewifi:(NSDictionary *)body
 {
     WeakSelf
     ZQAlterField *alertView = [ZQAlterField alertView];
-    alertView.title = KHJString(@"%@%@",KHJLocalizedString(@"更改 Wi-Fi 为：", nil),@"dddassadadasasd");
+    alertView.title = KHJString(@"%@%@",KHJLocalizedString(@"更改 Wi-Fi 为：", nil),body[@"SSID"]);
     alertView.placeholder = KHJLocalizedString(@"请输入 Wi-Fi 密码", nil);
     alertView.Maxlength = 50;
     alertView.ensureBgColor = KHJUtility.appMainColor;
     [alertView ensureClickBlock:^(NSString *inputString, int type) {
         CLog(@"输入内容为%@",inputString);
         dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf changeConnectWifi:inputString];
+            [weakSelf changeConnectWifi:body];
         });
     }];
     [alertView show];
 }
 
-- (void)changeConnectWifi:(NSString *)pwd
+- (void)changeConnectWifi:(NSDictionary *)body
 {
     [self addShadow_changeNetwork];
+    [[KHJDeviceManager sharedManager] setDeviceWiFi_with_deviceID:self.deviceInfo.deviceID ssid:body[@"SSID"] password:body[@""] encType:body[@""] resultBlock:^(NSInteger code) {
+        
+    }];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aaa) name:@"" object:nil];
 }
 
 - (void)addShadow_changeNetwork

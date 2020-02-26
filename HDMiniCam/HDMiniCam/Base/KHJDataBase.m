@@ -207,14 +207,16 @@ static KHJDataBase *_db = nil;
     [self.queue inDatabase:^(FMDatabase *db) {
         NSString *sql = [NSString stringWithFormat:@"delete FROM DeviceInfoListTable WHERE deviceID='%@'",deviceInfo.deviceID];
         BOOL result = [db executeUpdate:sql];
-        if (result) {
-            NSLog(@"删除数据成功");
-            resultBlock(deviceInfo, 1);
-        }
-        else {
-            NSLog(@"删除数据失败");
-            resultBlock(deviceInfo, 0);
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (result) {
+                NSLog(@"删除数据成功");
+                resultBlock(deviceInfo, 1);
+            }
+            else {
+                NSLog(@"删除数据失败");
+                resultBlock(deviceInfo, 0);
+            }
+        });
     }];
 }
 

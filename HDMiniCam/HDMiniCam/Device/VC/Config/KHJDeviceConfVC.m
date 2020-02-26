@@ -27,9 +27,10 @@
 
 @implementation KHJDeviceConfVC
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    self.deviceID = @"IPC123123123xx";
+    self.deviceID = self.deviceInfo.deviceID;
     self.titleLab.text = KHJLocalizedString(@"高级配置", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     
@@ -42,8 +43,17 @@
                 KHJIMAGE(@"config_restart"),
                 KHJIMAGE(@"config_reboot"),
                 KHJIMAGE(@"config_app")];
-    titleArr = @[@"报警配置",@"Wi-Fi连接配置",@"SD卡录像设置",@"杂项设置",@"时间设置",@"修改访问密码",@"重启设备",@"恢复出厂设置",@"APP密码"];
+    titleArr = @[KHJLocalizedString(@"报警配置", nil),
+                 KHJLocalizedString(@"Wi-Fi连接配置", nil),
+                 KHJLocalizedString(@"SD卡录像设置", nil),
+                 KHJLocalizedString(@"杂项设置", nil),
+                 KHJLocalizedString(@"时间设置", nil),
+                 KHJLocalizedString(@"修改访问密码", nil),
+                 KHJLocalizedString(@"重启设备", nil),
+                 KHJLocalizedString(@"恢复出厂设置", nil),
+                 KHJLocalizedString(@"APP密码", nil)];
 }
+
 - (void)backAction
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -51,7 +61,7 @@
 
 #pragma mark - UITableViewDataSource
 
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *head = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 22)];
     head.backgroundColor = UIColorFromRGB(0xD5D5D5);
@@ -76,7 +86,6 @@
     cell.tag = indexPath.row + FLAG_TAG;
     WeakSelf
     cell.block = ^(NSInteger row) {
-        CLog(@"row = %ld",row);
         [weakSelf pushTo:row];
     };
     cell.lab.text = titleArr[indexPath.row];
@@ -92,6 +101,7 @@
     }
     else if (row == 1) {
         KHJWIFIConfigVC *vc = [[KHJWIFIConfigVC alloc] init];
+        vc.deviceInfo = self.deviceInfo;
         [self.navigationController pushViewController:vc animated:YES];
     }
     else if (row == 2) {
@@ -112,7 +122,7 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
     else if (row == 6) {
-        UIAlertController *alertview = [UIAlertController alertControllerWithTitle:@"deviceName" message:@"确定要重启设备吗？" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:KHJLocalizedString(@"确定要重启设备吗？", nil) preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *delete = [UIAlertAction actionWithTitle:KHJLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
         }];
@@ -122,7 +132,7 @@
         [self presentViewController:alertview animated:YES completion:nil];
     }
     else if (row == 7) {
-        UIAlertController *alertview = [UIAlertController alertControllerWithTitle:@"deviceName" message:@"确定恢复出厂设置吗？" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:KHJLocalizedString(@"确定恢复出厂设置吗？", nil) preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *delete = [UIAlertAction actionWithTitle:KHJLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
         }];

@@ -6,11 +6,11 @@
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
-#import "KHJBaseVC.h"
+#import "KHJVideoPlayerBaseVC.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJVideoPlayer_hf_VC : KHJBaseVC
+@interface KHJVideoPlayer_hf_VC : KHJVideoPlayerBaseVC
 
 @property (nonatomic, copy) NSString *deviceID;
 

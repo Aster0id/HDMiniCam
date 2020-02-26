@@ -7,10 +7,9 @@
 //
 
 #import "KHJBaseVC.h"
+#import "H26xHwDecoder.h"
 
 @interface KHJBaseVC ()
-
-
 
 @end
 

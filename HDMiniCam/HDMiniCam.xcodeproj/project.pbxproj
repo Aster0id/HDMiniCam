@@ -166,6 +166,8 @@
 		AB5D784B23F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5D784923F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.xib */; };
 		AB7648632405127F00D6DE1C /* KHJPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7648622405127F00D6DE1C /* KHJPickerView.m */; };
 		AB7648662405132A00D6DE1C /* JKUIPickDate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7648652405132A00D6DE1C /* JKUIPickDate.m */; };
+		AB764975240617A300D6DE1C /* KHJVideoPlayerBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB764974240617A300D6DE1C /* KHJVideoPlayerBaseVC.m */; };
+		AB7649782406794F00D6DE1C /* HZWPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7649772406794F00D6DE1C /* HZWPicker.m */; };
 		ABEBCDFD23CF1B6E00581AFB /* KHJPictureListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABEBCDFB23CF1B6E00581AFB /* KHJPictureListVC.xib */; };
 		ABEBCDFF23CF1B8400581AFB /* KHJPictureListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEBCDFE23CF1B8400581AFB /* KHJPictureListVC.m */; };
 		ABEBCE0323CF1D5000581AFB /* KHJPicture_oneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEBCE0123CF1D5000581AFB /* KHJPicture_oneCell.m */; };
@@ -452,6 +454,10 @@
 		AB7648622405127F00D6DE1C /* KHJPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHJPickerView.m; sourceTree = "<group>"; };
 		AB7648642405132A00D6DE1C /* JKUIPickDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKUIPickDate.h; sourceTree = "<group>"; };
 		AB7648652405132A00D6DE1C /* JKUIPickDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKUIPickDate.m; sourceTree = "<group>"; };
+		AB764973240617A300D6DE1C /* KHJVideoPlayerBaseVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJVideoPlayerBaseVC.h; sourceTree = "<group>"; };
+		AB764974240617A300D6DE1C /* KHJVideoPlayerBaseVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJVideoPlayerBaseVC.m; sourceTree = "<group>"; };
+		AB7649762406794F00D6DE1C /* HZWPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZWPicker.h; sourceTree = "<group>"; };
+		AB7649772406794F00D6DE1C /* HZWPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZWPicker.m; sourceTree = "<group>"; };
 		ABEBCDFA23CF1B6E00581AFB /* KHJPictureListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHJPictureListVC.h; sourceTree = "<group>"; };
 		ABEBCDFB23CF1B6E00581AFB /* KHJPictureListVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHJPictureListVC.xib; sourceTree = "<group>"; };
 		ABEBCDFE23CF1B8400581AFB /* KHJPictureListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHJPictureListVC.m; sourceTree = "<group>"; };
@@ -541,6 +547,8 @@
 				93C3397E23CE1BA800B44E5F /* KHJBaseCell.m */,
 				93C3398023CE1BA900B44E5F /* KHJBaseVC.h */,
 				93C3398523CE1BA900B44E5F /* KHJBaseVC.m */,
+				AB764973240617A300D6DE1C /* KHJVideoPlayerBaseVC.h */,
+				AB764974240617A300D6DE1C /* KHJVideoPlayerBaseVC.m */,
 				93C3398423CE1BA900B44E5F /* KHJTabBarBaseVC.h */,
 				93C3397C23CE1BA800B44E5F /* KHJTabBarBaseVC.m */,
 				93C3398623CE1BA900B44E5F /* KHJBaseNavigationController.h */,
@@ -564,6 +572,8 @@
 		93C3398E23CE1BFB00B44E5F /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				AB7649762406794F00D6DE1C /* HZWPicker.h */,
+				AB7649772406794F00D6DE1C /* HZWPicker.m */,
 				AB7648642405132A00D6DE1C /* JKUIPickDate.h */,
 				AB7648652405132A00D6DE1C /* JKUIPickDate.m */,
 				AB7648612405127F00D6DE1C /* KHJPickerView.h */,
@@ -1289,6 +1299,7 @@
 				AB597B4024027A7600F04F84 /* KHJBackPlayListVC.mm in Sources */,
 				AB30DA4523D05B0F005BD2A1 /* KHJAddDeviceListVC.m in Sources */,
 				AB5911DC23D0141A0060F05C /* KHJRecordListCell.m in Sources */,
+				AB764975240617A300D6DE1C /* KHJVideoPlayerBaseVC.m in Sources */,
 				AB30DA6A23D14CDF005BD2A1 /* KHJMutliScreenVC.m in Sources */,
 				93C33B5A23CE20B400B44E5F /* KHJToast.m in Sources */,
 				93A30C5123D2989E009A0F4C /* KHJSDCardConfigVC.m in Sources */,
@@ -1346,6 +1357,7 @@
 				AB30DA5023D066F7005BD2A1 /* KHJHadBindDeviceVC.m in Sources */,
 				AB7648632405127F00D6DE1C /* KHJPickerView.m in Sources */,
 				AB4EFA7E23F6D43600D584E7 /* KHJDeviceManager.mm in Sources */,
+				AB7649782406794F00D6DE1C /* HZWPicker.m in Sources */,
 				93C33B6223CE20B400B44E5F /* TZVideoPlayerController.m in Sources */,
 				AB32D4B023F4F476008AFD1F /* KHJVideoPlayer_hf_VC.mm in Sources */,
 				93C33A8823CE1D0800B44E5F /* KHJShakeObj.mm in Sources */,

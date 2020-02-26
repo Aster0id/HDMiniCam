@@ -18,6 +18,8 @@
 #import "KHJVideoPlayer_hp_VC.h"
 #import "KHJVideoPlayer_sp_VC.h"
 #import "KHJVideoPlayer_hf_VC.h"
+#import "KHJOnlineVC.h"
+#import "KHJDeviceConfVC.h"
 
 @interface KHJDeviceListVC ()<UITableViewDelegate, UITableViewDataSource, KHJDeviceListCellDelegate>
 {
@@ -41,15 +43,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    CLog(@"11111111111")
     [self addDeviceNoti];
     [self reloadNewDeviceList];
-//    [[KHJDataBase sharedDataBase] removeAllDevice];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+- (void)reloadNewDeviceList
+{
+    [self.deviceList removeAllObjects];
+    [self.deviceList addObjectsFromArray:[[KHJDataBase sharedDataBase] getAllDeviceInfo]];
+    [contentTBV reloadData];
 }
 
 - (IBAction)add:(id)sender
@@ -93,34 +102,29 @@
     }
     KHJDeviceInfo *info = [[KHJDeviceInfo alloc] init];
     info = self.deviceList[indexPath.row];
-    CLog(@"info.deviceID = %@",info.deviceID);
+    
     cell.idd.text = info.deviceID;
     cell.name.text = info.deviceName;
+    
+    cell.smalIMGV.highlighted = NO;
     if ([info.deviceStatus isEqualToString:@"0"]) {
         cell.status.text = @"在线";
+        cell.smalIMGV.highlighted = YES;
     }
     else if ([info.deviceStatus isEqualToString:@"-6"]) {
         cell.status.text = @"离线";
     }
     else if ([info.deviceStatus isEqualToString:@"-26"]) {
         cell.status.text = @"密码错误";
+        cell.smalIMGV.highlighted = YES;
     }
     else {
-        cell.status.text = @"未连接";
+        cell.status.text = @"连接中...";
     }
+    
     cell.delegate = self;
     cell.tag = indexPath.row + FLAG_TAG;
-    [self loginDevice_with_deviceInfo:info];
     return cell;
-}
-
-- (void)loginDevice_with_deviceInfo:(KHJDeviceInfo *)deviceInfo
-{
-    if (deviceInfo.deviceStatus != 0) {
-        [[KHJDeviceManager sharedManager] connect_with_deviceID:deviceInfo.deviceID password:deviceInfo.devicePassword resultBlock:^(NSInteger code) {
-            CLog(@"code = %ld",(long)code);
-        }];
-    }
 }
 
 #pragma mark - KHJDeviceListCell
@@ -134,16 +138,92 @@
 {
     CLog(@"进入第 %ld 个视频播放界面",index);
     KHJDeviceInfo *info = self.deviceList[index];
-    KHJVideoPlayer_sp_VC *vc = [[KHJVideoPlayer_sp_VC alloc] init];
-    vc.hidesBottomBarWhenPushed = YES;
-    vc.deviceID = info.deviceID;
-    vc.password = info.devicePassword;
-    [self.navigationController pushViewController:vc animated:YES];
+    if ([info.deviceStatus isEqualToString:@"0"]) {
+        KHJVideoPlayer_sp_VC *vc = [[KHJVideoPlayer_sp_VC alloc] init];
+        vc.deviceInfo = info;
+        vc.deviceID = info.deviceID;
+        vc.password = info.devicePassword;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else if ([info.deviceStatus isEqualToString:@"-26"]) {
+        // 密码错误，请重新设置
+        [self.view makeToast:KHJLocalizedString(@"密码错误，请重新设置", nil)];
+    }
+    else if ([info.deviceStatus isEqualToString:@"-6"]) {
+        // 离线，重连
+        [[KHJDeviceManager sharedManager] disconnect_with_deviceID:info.deviceID resultBlock:^(NSInteger code) {
+            [[KHJDeviceManager sharedManager] connect_with_deviceID:info.deviceID password:info.devicePassword resultBlock:^(NSInteger code) {}];
+        }];
+    }
+    else {
+
+    }
 }
 
 - (void)reConnectWithIndex:(NSInteger)index
 {
-    CLog(@"重连第 %ld 个",index);
+    KHJDeviceInfo *info = self.deviceList[index];
+    if ([info.deviceStatus isEqualToString:@"0"]) {
+        // 在线，弹出设置框
+        [self showSetupWith:info];
+    }
+    else if ([info.deviceStatus isEqualToString:@"-6"]) {
+        // 离线，重连
+        [[KHJDeviceManager sharedManager] disconnect_with_deviceID:info.deviceID resultBlock:^(NSInteger code) {
+            [[KHJDeviceManager sharedManager] connect_with_deviceID:info.deviceID password:info.devicePassword resultBlock:^(NSInteger code) {}];
+        }];
+    }
+    else if ([info.deviceStatus isEqualToString:@"-26"]) {
+        // 密码错误，弹出设置框
+        [self showSetupWith:info];
+    }
+    else {
+        // 连接中
+    }
+}
+
+- (void)showSetupWith:(KHJDeviceInfo *)deviceInfo
+{
+    WeakSelf
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:deviceInfo.deviceName message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"修改设备", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        KHJOnlineVC *vc = [[KHJOnlineVC alloc] init];
+        vc.deviceInfo = deviceInfo;
+        vc.hidesBottomBarWhenPushed = YES;
+        [weakSelf.navigationController pushViewController:vc animated:YES];
+    }];
+    UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"删除设备", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[KHJDataBase sharedDataBase] deleteDeviceInfo_with_deviceInfo:deviceInfo resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
+            if ([weakSelf.deviceList containsObject:deviceInfo]) {
+                NSInteger index = [weakSelf.deviceList indexOfObject:deviceInfo];
+                [weakSelf.deviceList removeObject:deviceInfo];
+                [self->contentTBV deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+                [weakSelf.view makeToast:KHJLocalizedString(@"设备删除成功", nil)];
+            }
+        }];
+    }];
+    
+    UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"重连设备", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        // 离线，重连
+        [[KHJDeviceManager sharedManager] disconnect_with_deviceID:deviceInfo.deviceID resultBlock:^(NSInteger code) {
+            [[KHJDeviceManager sharedManager] connect_with_deviceID:deviceInfo.deviceID password:deviceInfo.devicePassword resultBlock:^(NSInteger code) {}];
+        }];
+    }];
+    UIAlertAction *config3 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"高级配置", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        KHJDeviceConfVC *vc = [[KHJDeviceConfVC alloc] init];
+        vc.deviceInfo = deviceInfo;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:nil];
+
+    [alertview addAction:config];
+    [alertview addAction:config1];
+    [alertview addAction:config2];
+    [alertview addAction:config3];
+    [alertview addAction:cancel];
+    [self presentViewController:alertview animated:YES completion:nil];
 }
 
 #pragma mark - 添加设备通知
@@ -151,7 +231,7 @@
 - (void)addDeviceNoti
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getDeviceStatus:) name:noti_onStatus_KEY object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadNewDeviceList) name:@"addNewDevice_NOTI" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadNewDeviceList) name:noti_addDevice_KEY object:nil];
 }
 
 - (void)getDeviceStatus:(NSNotification *)noti
@@ -165,39 +245,12 @@
         if ([info.deviceID isEqualToString:deviceID]) {
             // 设备状态不保存在数据库，只临时赋值给对象
             info.deviceStatus = deviceStatus;
-            [[KHJDataBase sharedDataBase] updateDeviceInfo_with_deviceInfo:info resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
-                if (code == 1) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        for (KHJDeviceListCell *cell in [self->contentTBV visibleCells]) {
-                            if ([cell.idd.text  isEqualToString:info.deviceID]) {
-                                if ([info.deviceStatus isEqualToString:@"0"]) {
-                                    cell.status.text = @"在线";
-                                }
-                                else if ([info.deviceStatus isEqualToString:@"-6"]) {
-                                    cell.status.text = @"离线";
-                                }
-                                else if ([info.deviceStatus isEqualToString:@"-26"]) {
-                                    cell.status.text = @"密码错误";
-                                }
-                                else {
-                                    cell.status.text = @"密码错误";
-                                }
-                                break;
-                            }
-                        }
-                    });
-                }
-            }];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self->contentTBV reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+            });
             *stop = YES;
         }
     }];
-}
-
-- (void)reloadNewDeviceList
-{
-    [self.deviceList removeAllObjects];
-    [self.deviceList addObjectsFromArray:[[KHJDataBase sharedDataBase] getAllDeviceInfo]];
-    [contentTBV reloadData];
 }
 
 @end

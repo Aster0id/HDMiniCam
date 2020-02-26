@@ -9,6 +9,8 @@
 #ifndef KHJPublicDefine_h
 #define KHJPublicDefine_h
 
+// 添加设备通知
+#define noti_addDevice_KEY @"noti_addDevice_KEY"
 // 设备状态更新通知
 #define noti_onStatus_KEY @"noti_onStatus_KEY"
 // 视频数据通知
@@ -24,6 +26,8 @@
 #define noti_1077_KEY @"noti_1077_KEY"  //
 #define noti_1497_KEY @"noti_1497_KEY"  // 获取饱和度、锐度、亮度等等
 #define noti_1495_KEY @"noti_1495_KEY"  // 修改饱和度、锐度、亮度
+#define noti_OnGetDeviceWiFi_CmdResult_KEY      @"noti_OnGetDeviceWiFi_CmdResult_KEY"       // 获取设备连接的wifi
+#define noti_OnSearchDeviceWiFi_CmdResult_KEY   @"noti_OnSearchDeviceWiFi_CmdResult_KEY"    // 搜索设备周围的wifi
 
 #define FLAG_TAG                        9999999
 #define KHJIMAGE(name)                  [UIImage imageNamed:name]

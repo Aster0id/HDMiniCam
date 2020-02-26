@@ -6,8 +6,7 @@
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
-#import "KHJBaseVC.h"
-
+#import "KHJVideoPlayerBaseVC.h"
 #import "IPCNetManagerInterface.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
@@ -15,10 +14,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJVideoPlayer_sp_VC : KHJBaseVC
+@interface KHJVideoPlayer_sp_VC : KHJVideoPlayerBaseVC
 
 @property (nonatomic, copy) NSString *deviceID;
 @property (nonatomic, copy) NSString *password;
+@property (nonatomic, strong) KHJDeviceInfo *deviceInfo;
 
 @end
 

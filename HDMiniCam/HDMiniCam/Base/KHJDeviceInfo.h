@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *deviceID;
 
 /// 设备状态
+// 0 在线 -6 离线 -26 密码错误 其余 连接中...
 @property (nonatomic, copy) NSString *deviceStatus;
 
 /// 设备密码

@@ -18,9 +18,7 @@
 #import <Photos/PHPhotoLibrary.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
-H26xHwDecoder *h264Decode;
-
-@interface KHJVideoPlayer_sp_VC ()
+@interface KHJVideoPlayer_sp_VC ()<H26xHwDecoderDelegate>
 {
     __weak IBOutlet UIView *slideView;
     __weak IBOutlet UILabel *sliderNameLab;
@@ -101,6 +99,7 @@ H26xHwDecoder *h264Decode;
     sliderControl.continuous = NO;
     tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
     [playerImageView addGestureRecognizer:tap];
+    [self startVideo];
     
     /// 获取当前视频的分辨率
     [[KHJDeviceManager sharedManager] getQualityLevel_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {
@@ -109,7 +108,24 @@ H26xHwDecoder *h264Decode;
     /// 刷新_1497_body
     [[KHJDeviceManager sharedManager] getSaturationLevel_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {
         CLog(@"code = %ld",(long)code);
+    }];}
+
+- (void)startVideo
+{
+    if (![self.deviceInfo.deviceStatus isEqualToString:@"0"]) {
+        [self.view makeToast:@"设备不在线，请重新连接！"];
+        return;
+    }
+    [[KHJDeviceManager sharedManager] startGetVideo_with_deviceID:self.deviceID quality:1 resultBlock:^(NSInteger code) {
+        CLog(@"开始获取视频 code = %ld",code);
     }];
+}
+
+#pragma MARK - H26xHwDecoderDelegate
+
+- (void)getImageWith:(UIImage *)image imageSize:(CGSize)imageSize
+{
+    playerImageView.image = image;
 }
 
 - (void)addNoti
@@ -134,9 +150,10 @@ H26xHwDecoder *h264Decode;
 
 - (void)tapAction
 {
-    if (!slideView.hidden) {
-        slideView.hidden = YES;
-    }
+//    if (!slideView.hidden) {
+//        slideView.hidden = YES;
+//    }
+    [self startVideo];
 }
 
 - (void)viewDidAppear:(BOOL)animated

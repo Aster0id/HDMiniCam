@@ -124,7 +124,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "185"
             endingLineNumber = "185"
-            landmarkName = "OnSearchDeviceResult(device)"
+            landmarkName = "OnListRemotePageFileCmdResult2(cmd, uuid, json)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -138,9 +138,9 @@
             filePath = "HDMiniCam/SDK/KHJDeviceManager.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1208"
-            endingLineNumber = "1208"
-            landmarkName = "-setAcutanceLevel_with_deviceID:level:resultBlock:"
+            startingLineNumber = "1214"
+            endingLineNumber = "1214"
+            landmarkName = "-setDeviceTime_with_deviceID:time:resultBlock:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
