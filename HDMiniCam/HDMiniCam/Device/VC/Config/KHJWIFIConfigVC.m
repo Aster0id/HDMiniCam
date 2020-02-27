@@ -102,37 +102,19 @@
     [alertView ensureClickBlock:^(NSString *inputString, int type) {
         CLog(@"输入内容为%@",inputString);
         dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf changeConnectWifi:body];
+            [weakSelf changeConnectWifi:body password:inputString];
         });
     }];
     [alertView show];
 }
 
-- (void)changeConnectWifi:(NSDictionary *)body
+- (void)changeConnectWifi:(NSDictionary *)body password:(NSString *)password
 {
-    [self addShadow_changeNetwork];
-    [[KHJDeviceManager sharedManager] setDeviceWiFi_with_deviceID:self.deviceInfo.deviceID ssid:body[@"SSID"] password:body[@""] encType:body[@""] resultBlock:^(NSInteger code) {
-        
-    }];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aaa) name:@"" object:nil];
-}
-
-- (void)addShadow_changeNetwork
-{
-    back_groundView = [[UIView alloc] init];
-    back_groundView.frame            = CGRectMake(0, 1,SCREEN_WIDTH,SCREEN_HEIGHT);
-    back_groundView.backgroundColor  = [UIColor colorWithRed:(40/255.0f) green:(40/255.0f) blue:(40/255.0f) alpha:1.0f];
-    back_groundView.alpha            = 0.6;
-    [[[UIApplication sharedApplication] keyWindow] addSubview:back_groundView];
-    [[KHJHub shareHub] showText:KHJLocalizedString(@"changeNetTooSlow", nil) addToView:self.view type:_default];
-    //   设置超时，以防设备断开，一直请求
-    __weak typeof(back_groundView) weakVackgroundView = back_groundView;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(90 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [KHJHub shareHub].hud.hidden = YES;
-        [weakVackgroundView removeFromSuperview];
-        [[KHJToast share] showToastActionWithToastType:_SuccessType
-                                          toastPostion:_CenterPostion tip:@""
-                                               content:KHJLocalizedString(@"changeNetTimeOut", nil)];
+    [[KHJDeviceManager sharedManager] setDeviceWiFi_with_deviceID:self.deviceInfo.deviceID ssid:body[@"SSID"] password:password encType:body[@"EncType"] resultBlock:^(NSInteger code) {}];
+    WeakSelf
+    [self.view makeToast:KHJLocalizedString(@"正在切换Wi-Fi，请等待重连", nil)];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [weakSelf.navigationController popToRootViewControllerAnimated:YES];
     });
 }
 
