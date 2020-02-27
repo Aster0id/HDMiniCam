@@ -71,8 +71,8 @@
 //+ (NSInteger)binarySearchCloudEnd:(NSArray *)source target:(NSInteger)target;
 //// 通过时间戳，创建视频名称
 //+ (NSString *)getVedioNameFromTimes:(NSTimeInterval)timeInterval;
-//// 将当前时间字符串 转为 UTCDate
-//+ (NSTimeInterval )UTCDateFromLocalString2:(NSString *)localString;
+// 将当前时间字符串 转为 UTCDate
++ (NSTimeInterval )UTCDateFromLocalString2:(NSString *)localString;
 //// 文件大小
 //+ (long long)fileSizeAtPath:(NSString*)filePath;
 // 图片大小

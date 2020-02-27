@@ -40,7 +40,6 @@
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
         
-        _timesArr = [NSMutableArray array];
         self.alpha = 0.8;
         intervalValue = 20;
         formatterScale = [[NSDateFormatter alloc]init];
@@ -313,20 +312,8 @@
 //绘图
 - (void)drawRect:(CGRect)rect
 {
-    //计算x=0时对应的时间戳
+    //计算 x = 0时对应的时间戳
     float centerX = rect.size.width/2.0;
-    
-//    CLog(@"centerX = %f",centerX);
-//    CLog(@"[self secondsOfIntervalValue] = %f",[self secondsOfIntervalValue]);
-//    CLog(@"centerX * [self secondsOfIntervalValue] = %f",centerX * [self secondsOfIntervalValue]);
-//    CLog(@"currentInterval = %f",currentInterval);
-//
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:currentInterval];
-    NSDateFormatter *dateFomater = [[NSDateFormatter alloc]init];
-    dateFomater.dateFormat = @"yyyy_MM_dd";
-//    NSString *currentDate = [dateFomater stringFromDate:date];
-//    CLog(@"currentDate = %@",currentDate);
-
     /* 屏幕显示区域，最小的时间戳 */
     NSTimeInterval leftInterval = currentInterval - centerX * [self secondsOfIntervalValue];
     /* 屏幕显示区域，最大的世界戳 */
@@ -338,49 +325,10 @@
     if (self.timesArr.count != 0) {
         //数组很大的时候，需要2分查找
         for (KHJVideoModel *tInfo in self.timesArr) {
-
-//            NSInteger index = [self.timesArr indexOfObject:tInfo];
+            
             NSTimeInterval start = tInfo.startTime;
             NSTimeInterval end = tInfo.startTime + tInfo.durationTime;
-            // 解决全天录制断录问题
-            // 倒数第二个才需要判断
-            // 条件一：SD卡数据时 条件二：在timesArr数组中 条件三：0，1 - 全天录制
-//            if ((index < self.timesArr.count - 1) && (tInfo.recType == 0 || tInfo.recType == 1)) {
-//                KHJVideoModel *nextInfo = self.timesArr[index + 1];
-//                if (self.isSDDataSource) {
-//                    /* sd卡 补画 20分钟 */
-//                    if (nextInfo.startTime - end <= 20*60) {
-//                        end = nextInfo.startTime;
-//                    }
-//                }
-//                else {
-//                    /* 云端 补画 5秒 */
-//                    if (nextInfo.startTime - end <= 5) {
-//                        end = nextInfo.startTime;
-//                    }
-//                }
-//            }
-//
-//            NSDateFormatter *dateFomater = [[NSDateFormatter alloc]init];
-//            dateFomater.dateFormat = @"yyyy_MM_dd HH:mm:ss";
-//
-//            NSDate *date = [NSDate dateWithTimeIntervalSince1970:start];
-//            NSString *startDate = [dateFomater stringFromDate:date];
-//            CLog(@"start        = %f",start);
-//            CLog(@"startDate    = %@",startDate);
-//            date = [NSDate dateWithTimeIntervalSince1970:end];
-//            NSString *endDate = [dateFomater stringFromDate:date];
-//            CLog(@"end          = %f",end);
-//            CLog(@"endDate      = %@",endDate);
-//            date = [NSDate dateWithTimeIntervalSince1970:leftInterval];
-//            NSString *leftDate = [dateFomater stringFromDate:date];
-//            CLog(@"leftInterval     = %f",leftInterval);
-//            CLog(@"leftDate         = %@",leftDate);
-//            date = [NSDate dateWithTimeIntervalSince1970:rightInterval];
-//            NSString *rightDate = [dateFomater stringFromDate:date];
-//            CLog(@"rightInterval    = %f",rightInterval);
-//            CLog(@"rightDate        = %@",rightDate);
-        
+            
             if ((start > leftInterval && start < rightInterval) ||
                 (end > leftInterval && end < rightInterval ) ||
                 (start < leftInterval && end > rightInterval) ) {
@@ -388,7 +336,6 @@
                 float startX = (start-leftInterval)/[self secondsOfIntervalValue];
                 //计算时间长度对应的宽度
                 float length = (end - start)/[self secondsOfIntervalValue] + 0.5;
-//                float length = (end - start)/[self secondsOfIntervalValue];
                 if (tInfo.recType == 0 || tInfo.recType == 1) {//灰色
                     [self drawColorRect:startX Context:contex length:length withColor:UIColor.lightGrayColor];
                 }
@@ -457,7 +404,6 @@
     [self drawTopLine:rect.size.height context:contex width:rect.size.width];
     
     NSString *timeStr = [self currentShowTimeStr];
-//    NSLog(@"timeStr = %@",timeStr);
     timeLab.text = timeStr;
 }
 

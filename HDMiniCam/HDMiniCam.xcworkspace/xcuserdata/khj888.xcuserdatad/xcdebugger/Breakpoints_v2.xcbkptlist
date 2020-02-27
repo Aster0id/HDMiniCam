@@ -122,8 +122,10 @@
             filePath = "HDMiniCam/SDK/KHJDeviceManager.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1214"
-            endingLineNumber = "1214">
+            startingLineNumber = "1215"
+            endingLineNumber = "1215"
+            landmarkName = "KHJDeviceManager"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -332,6 +334,22 @@
             endingLineNumber = "169"
             landmarkName = "OnListRemotePageFileCmdResult2(cmd, uuid, json)"
             landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0A5814F8-B383-493A-BCDC-0E9F7270AB09"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HDMiniCam/Device/VC/KHJVideoPlayer_hf_VC.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
+            landmarkName = "-btnAction:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

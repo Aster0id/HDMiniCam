@@ -2213,13 +2213,7 @@ typedef struct RecordDatePeriod{
 	int vi;
 	int date;//20200223 表示 2020年2月23日
     list<RecordPeriod_t*>mTotalRecordList;
-    list<RecordPeriod_t*>mNormalRecordPeriodList;
-	list<RecordPeriod_t*>mMoveDetectRecordPeriodList;
-	list<RecordPeriod_t*>mObjectDetectRecordPeriodList;
-	list<RecordPeriod_t*>mSoundDetectRecordPeriodList;
-	list<RecordPeriod_t*>mCryDetectRecordPeriodList;
-	list<RecordPeriod_t*>mHumanShapeDetectRecordPeriodList;
-	list<RecordPeriod_t*>mFaceDetectRecordPeriodList;
+    
 	boolean parseJSON(JSONObject &jsdata) {
 
         JSONObject *jsroot = jsdata.getJSONObject("RecInfo");
@@ -2269,8 +2263,8 @@ typedef struct RecordDatePeriod{
                     }
 				}
 			}
+            [[NSNotificationCenter defaultCenter] postNotificationName:noti_timeLineInfo_1075_KEY object:nil];
         }
-        
         return true;
     }
 }RecordDatePeriod_t;

@@ -12,20 +12,14 @@
 #import "NSDate+JLZero.h"
 #import "KHJBackPlayListVC.h"
 //
+#import "JKUIPickDate.h"
 #import "KHJPickerView.h"
 #import "KHJVideoModel.h"
 #import "JSONStructProtocal.h"
 
+typedef void(^runloopBlock)(void);
+
 extern RecordDatePeriod_t gRecordDatePeriod;
-/**
- list<RecordPeriod_t*> mNormalRecordPeriodList;              // 正常记录期间列表
- list<RecordPeriod_t*> mMoveDetectRecordPeriodList;          // 移动检测记录期间列表
- list<RecordPeriod_t*> mObjectDetectRecordPeriodList;        // 对象检测记录期间列表
- list<RecordPeriod_t*> mSoundDetectRecordPeriodList;         // 声音检测记录期间列表
- list<RecordPeriod_t*> mCryDetectRecordPeriodList;           // 哭泣检测记录时间列表
- list<RecordPeriod_t*> mHumanShapeDetectRecordPeriodList;    // 人体形状检测记录期间列表
- list<RecordPeriod_t*> mFaceDetectRecordPeriodList;          // 人脸检测记录周期列表
- */
 
 @interface KHJVideoPlayer_hf_VC ()<ZFTimeLineDelegate,KHJBackPlayListVCSaveListDelegate>
 {
@@ -43,11 +37,19 @@ extern RecordDatePeriod_t gRecordDatePeriod;
     
     BOOL exitVideoList;
     
-    // 当天零点时间戳
-    NSTimeInterval currentTimeInterval;
-    NSTimeInterval zeroTimeInterval;
-    NSTimeInterval todayTimeInterval;
+    NSTimer *recordTimer;
 }
+
+@property (nonatomic, assign) NSInteger recordTimes;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
+// 装记任务的Arr
+@property (nonatomic, strong) NSMutableArray *MP4_taskArray;
+// 最大任务数
+@property (nonatomic, assign) NSUInteger maxTask;
+
+@property (nonatomic, assign) NSTimeInterval zeroTimeInterval;
+@property (nonatomic, assign) NSTimeInterval todayTimeInterval;
+@property (nonatomic, assign) NSTimeInterval currentTimeInterval;
 
 @property (nonatomic, strong) NSMutableArray *videoList;
 
@@ -92,66 +94,67 @@ extern RecordDatePeriod_t gRecordDatePeriod;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _recordTimes = 2;
+    [self addMP4_RunloopObserver];
     nextDayBtn.hidden = YES;
     [timeLineContent addSubview:self.zfTimeView];
     
     NSDate *date = [NSDate date];
-    currentTimeInterval = [date timeIntervalSince1970];
-    todayTimeInterval = [NSDate getZeroWithTimeInterverl:currentTimeInterval];
-    zeroTimeInterval = [NSDate getZeroWithTimeInterverl:currentTimeInterval];
+    _currentTimeInterval = [date timeIntervalSince1970];
+    _todayTimeInterval = [NSDate getZeroWithTimeInterverl:_currentTimeInterval];
+    _zeroTimeInterval = [NSDate getZeroWithTimeInterverl:_currentTimeInterval];
 
     NSDateFormatter *formatter1 = [[NSDateFormatter alloc] init];
     [formatter1 setDateFormat:@"yyyy_MM_dd"];
     dateLAB.text = [formatter1 stringFromDate:date];
+    [self fireTimer];
     [self getTimeLineDataWith:dateLAB.text];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti_timeLineInfo_1075_key:) name:noti_timeLineInfo_1075_KEY object:nil];
 }
 
 - (void)noti_timeLineInfo_1075_key:(NSNotification *)noti
 {
     WeakSelf
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        
-        for (list<RecordPeriod_t*>::iterator i = gRecordDatePeriod.mTotalRecordList.begin(); i != gRecordDatePeriod.mTotalRecordList.end(); i++) {
+    [self addMP4_tasks:^{
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            NSArray *backPlayList = [NSArray arrayWithArray:(NSArray *)noti.object];
+            CLog(@"______________________noti_timeLineInfo_1075_key \n backPlayList = %@",backPlayList);
+            for (int i = 0; i < backPlayList.count; i++) {
+                NSDictionary *body = backPlayList[i];
+                int type                = [body[@"type"] intValue];
+                NSString *startString   = KHJString(@"%06d",[body[@"start"] intValue]);
+                NSString *endString     = KHJString(@"%06d",[body[@"end"] intValue]);
+                
+                int startHour = [[startString substringWithRange:NSMakeRange(0, 2)] intValue];
+                int startMin = [[startString substringWithRange:NSMakeRange(2, 2)] intValue];
+                int startSec = [[startString substringWithRange:NSMakeRange(4, 2)] intValue];
+                int startTimeInterval = startHour * 3600 + startMin * 60 + startSec;
+                
+                int endHour = [[endString substringWithRange:NSMakeRange(0, 2)] intValue];
+                int endMin = [[endString substringWithRange:NSMakeRange(2, 2)] intValue];
+                int endSec = [[endString substringWithRange:NSMakeRange(4, 2)] intValue];
+                int endTimeInterval = endHour * 3600 + endMin * 60 + endSec;
 
-            RecordPeriod_t *rfi = *i;
-            NSString *start = KHJString(@"%d",rfi->start);
-            NSString *end = KHJString(@"%d",rfi->end);
-            int type = rfi->type;
-            NSString *startString   = KHJString(@"%06d",[start intValue]);
-            NSString *endString     = KHJString(@"%06d",[end intValue]);
-
-            int startHour = [[startString substringWithRange:NSMakeRange(0, 2)] intValue];
-            int startMin = [[startString substringWithRange:NSMakeRange(2, 2)] intValue];
-            int startSec = [[startString substringWithRange:NSMakeRange(4, 2)] intValue];
-            int startTimeInterval = startHour * 3600 + startMin * 60 + startSec;
-            
-            int endHour = [[endString substringWithRange:NSMakeRange(0, 2)] intValue];
-            int endMin = [[endString substringWithRange:NSMakeRange(2, 2)] intValue];
-            int endSec = [[endString substringWithRange:NSMakeRange(4, 2)] intValue];
-            int endTimeInterval = endHour * 3600 + endMin * 60 + endSec;
-
-            KHJVideoModel *model = [[KHJVideoModel alloc] init];
-            model.startTime = startTimeInterval + self->zeroTimeInterval; // 起始时间
-            model.durationTime = endTimeInterval - startTimeInterval;// 视频时长
-            if (type == 0) {        // 正常录制
-                model.recType = 0;
+                KHJVideoModel *model = [[KHJVideoModel alloc] init];
+                model.startTime = startTimeInterval + weakSelf.zeroTimeInterval; // 起始时间
+                model.durationTime = endTimeInterval - startTimeInterval;// 视频时长
+                if (type == 0) {        // 正常录制
+                    model.recType = 0;
+                }
+                else if (type == 1) {   // 移动检测录制
+                    model.recType = 2;
+                }
+                else if (type == 3) {   // 声音检测录制
+                    model.recType = 4;
+                }
+                [weakSelf.videoList addObject:model];
             }
-            else if (type == 1) {   // 移动检测录制
-                model.recType = 2;
-            }
-            else if (type == 3) {   // 声音检测录制
-                model.recType = 4;
-            }
-            [weakSelf.videoList addObject:model];
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            CLog(@"weakSelf.videoList.count ======= %ld",(long)weakSelf.videoList.count);
-            weakSelf.zfTimeView.timesArr = weakSelf.videoList;
-            [weakSelf.zfTimeView updateCurrentInterval:self->currentTimeInterval];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.zfTimeView.timesArr = weakSelf.videoList;
+                [weakSelf.zfTimeView updateCurrentInterval:weakSelf.currentTimeInterval];
+            });
         });
-    });
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -170,8 +173,8 @@ extern RecordDatePeriod_t gRecordDatePeriod;
     }
     else if (sender.tag == 30) {
         // 前一天
-        zeroTimeInterval -= 24*3600;
-        currentTimeInterval -= 24*3600;
+        _zeroTimeInterval -= 24*3600;
+        _currentTimeInterval -= 24*3600;
         [self.videoList removeAllObjects];
         dateLAB.text = [KHJCalculate prevDay:dateLAB.text];
         [self getTimeLineDataWith:dateLAB.text];
@@ -179,16 +182,21 @@ extern RecordDatePeriod_t gRecordDatePeriod;
     }
     else if (sender.tag == 40) {
         // 选择日历
-        
+        JKUIPickDate *pickdate = [JKUIPickDate setDate];
+        WeakSelf
+        [pickdate passvalue:^(NSString *date) {
+            self->dateLAB.text = date;
+            [weakSelf chooseDate:date];
+        }];
     }
     else if (sender.tag == 50) {
         // 后一天
-        zeroTimeInterval += 24*3600;
-        currentTimeInterval += 24*3600;
+        _zeroTimeInterval += 24*3600;
+        _currentTimeInterval += 24*3600;
         [self.videoList removeAllObjects];
         dateLAB.text = [KHJCalculate nextDay:dateLAB.text];
         [self getTimeLineDataWith:dateLAB.text];
-        if (zeroTimeInterval == todayTimeInterval) {
+        if (_zeroTimeInterval == _todayTimeInterval) {
             nextDayBtn.hidden = YES;
         }
     }
@@ -210,6 +218,23 @@ extern RecordDatePeriod_t gRecordDatePeriod;
         vc.deviceID = self.deviceID;
         vc.exitVideoList = exitVideoList;
         [self.navigationController pushViewController:vc animated:YES];
+    }
+}
+
+- (void)chooseDate:(NSString *)date
+{
+    NSTimeInterval tt       = [KHJCalculate UTCDateFromLocalString2:date];
+    NSTimeInterval cTime    = [[NSDate date] timeIntervalSince1970];
+    NSTimeInterval ct = _currentTimeInterval - [NSDate getZeroWithTimeInterverl:_currentTimeInterval];
+    _currentTimeInterval = tt + ct;
+    _zeroTimeInterval = [NSDate getZeroWithTimeInterverl:_currentTimeInterval];
+    if (cTime - tt < 24*60*60) {//是当前日期
+        nextDayBtn.hidden = _zeroTimeInterval == _todayTimeInterval;
+    }
+    else {//是之前日期
+        [self.videoList removeAllObjects];
+        [self getTimeLineDataWith:dateLAB.text];
+        nextDayBtn.hidden = _zeroTimeInterval == _todayTimeInterval;
     }
 }
 
@@ -236,5 +261,93 @@ extern RecordDatePeriod_t gRecordDatePeriod;
     CLog(@" timeLine: moveToDate: ");
 }
 
+#pragma mark - Timer ---------------------------------------------------------------
+
+/* 开启倒计时 */
+- (void)fireTimer
+{
+    [self stopTimer];
+    recordTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:recordTimer forMode:NSRunLoopCommonModes];
+    [recordTimer fire];
+}
+
+- (void)timerAction
+{
+    _recordTimes--;
+    if (_recordTimes == 0) {
+        [self stopTimer];
+        self.activityView.hidden = YES;
+    }
+    else {
+        self.activityView.hidden = NO;
+    }
+}
+
+/* 停止倒计时 */
+- (void)stopTimer
+{
+    if ([recordTimer isValid] || recordTimer != nil) {
+        [recordTimer invalidate];
+        _recordTimes = 2;
+        recordTimer = nil;
+    }
+}
+
+
+#pragma mark - ---------------------------------------------------------------
+
+- (NSMutableArray *)MP4_taskArray
+{
+    if (!_MP4_taskArray) {
+        _MP4_taskArray = [NSMutableArray array];
+    }
+    return _MP4_taskArray;
+}
+
+/* 添加MP4，预览图加载任务 */
+- (void)addMP4_tasks:(runloopBlock)task
+{
+    [self.MP4_taskArray addObject:task];
+}
+
+// 添加runloop观察者
+- (void)addMP4_RunloopObserver
+{
+    // 1.获取当前Runloop
+    CFRunLoopRef runloop = CFRunLoopGetCurrent();
+    CFRunLoopObserverContext context = {
+        0,
+        (__bridge void *)(self),
+        &CFRetain,
+        &CFRelease,
+        NULL
+    };
+    // 2.定义观察者
+    static CFRunLoopObserverRef defaultModeObserver;
+    defaultModeObserver = CFRunLoopObserverCreate(kCFAllocatorDefault,
+                                                  kCFRunLoopBeforeWaiting,
+                                                  YES,
+                                                  0,
+                                                  &MP4_callBack,
+                                                  &context);
+    // 3. 给当前Runloop添加观察者
+    CFRunLoopAddObserver(runloop, defaultModeObserver, kCFRunLoopCommonModes);
+    // C中出现 copy,retain,Create等关键字,都需要release
+    CFRelease(defaultModeObserver);
+}
+
+static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info) {
+    KHJVideoPlayer_hf_VC *vc  = (__bridge KHJVideoPlayer_hf_VC *)info;
+    if (vc.MP4_taskArray.count == 0) {
+        return;
+    }
+    runloopBlock block          = [vc.MP4_taskArray firstObject];
+    if (block) {
+        block();
+    }
+    [vc.MP4_taskArray removeObjectAtIndex:0];
+    vc.recordTimes = 2;
+}
 
 @end

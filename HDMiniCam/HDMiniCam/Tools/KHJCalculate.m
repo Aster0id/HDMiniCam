@@ -590,16 +590,16 @@
 //    return start;
 //}
 //
-//// 将当前时间字符串 转为 UTCDate
-//+ (NSTimeInterval )UTCDateFromLocalString2:(NSString *)localString
-//{
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setDateFormat:@"yyyy_MM_dd"];
-//    NSDate *date = [dateFormatter dateFromString:localString];
-//    return [date timeIntervalSince1970];
-//
-//}
-//
+// 将当前时间字符串 转为 UTCDate
++ (NSTimeInterval )UTCDateFromLocalString2:(NSString *)localString
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy_MM_dd"];
+    NSDate *date = [dateFormatter dateFromString:localString];
+    return [date timeIntervalSince1970];
+
+}
+
 + (NSString *)valueImageSize:(NSString *)path
 {
     NSArray *typeArray = @[@"bytes",@"KB",@"MB",@"GB",@"TB",@"PB", @"EB",@"ZB",@"YB"];

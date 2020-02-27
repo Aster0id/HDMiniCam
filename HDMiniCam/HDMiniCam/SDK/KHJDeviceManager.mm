@@ -733,10 +733,13 @@ void OnGetRecordConfCmdResult(int cmd,const char*uuid,const char*json)
 void OnGetRecTimePeriodCmdResult(int cmd,const char*uuid,const char*json)
 {
 //    CLog(@"111111111111111111111111111111111111111 %s cmd:%d uuid:%s json:%s\n",__func__,cmd, uuid, json);
-    JSONObject jsdata(json); 
-    gRecordDatePeriod.parseJSON(jsdata);
+//    JSONObject jsdata(json);
+//    gRecordDatePeriod.parseJSON(jsdata);
 //    IPCNetReleaseCmdResource(cmd,uuid,OnGetRecTimePeriodCmdResult);
-    [[NSNotificationCenter defaultCenter] postNotificationName:noti_timeLineInfo_1075_KEY object:[KHJUtility cString_changto_ocStringWith:json]];
+    NSDictionary *backPlay_result = [KHJUtility cString_changto_ocStringWith:json];
+    NSArray *result_array = backPlay_result[@"RecInfo"][@"period"];
+    CLog(@"result_array.count = %ld",(long)result_array.count);
+    [[NSNotificationCenter defaultCenter] postNotificationName:noti_timeLineInfo_1075_KEY object:result_array];
 }
 
 /// 获取远程 Page 文件

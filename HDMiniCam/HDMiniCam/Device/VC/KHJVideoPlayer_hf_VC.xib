@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KHJVideoPlayer_hf_VC">
             <connections>
+                <outlet property="activityView" destination="k2E-xR-TuM" id="Y0r-qb-ZkT"/>
                 <outlet property="dateLAB" destination="qOf-da-YXh" id="EHJ-tO-1TC"/>
                 <outlet property="listenImgView" destination="DOf-uQ-dud" id="nwz-Qg-P50"/>
                 <outlet property="listenLab" destination="Vjg-tX-4LZ" id="3gT-Ay-vFw"/>
@@ -63,7 +64,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ExO-qs-eiu">
                     <rect key="frame" x="0.0" y="88" width="414" height="233"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aho-EY-SUT">
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aho-EY-SUT">
                             <rect key="frame" x="132" y="91.5" width="150" height="50"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="连接失败，点击重连" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QLu-lJ-x6F">
@@ -93,12 +94,18 @@
                                 <constraint firstItem="vgD-08-tcQ" firstAttribute="top" secondItem="Aho-EY-SUT" secondAttribute="top" id="vm3-Lt-tDw"/>
                             </constraints>
                         </view>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="k2E-xR-TuM">
+                            <rect key="frame" x="197" y="106.5" width="20" height="20"/>
+                            <color key="color" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="Aho-EY-SUT" firstAttribute="centerY" secondItem="ExO-qs-eiu" secondAttribute="centerY" id="0q5-Ah-4NT"/>
                         <constraint firstAttribute="width" secondItem="ExO-qs-eiu" secondAttribute="height" multiplier="16:9" id="6Zq-al-enh"/>
                         <constraint firstItem="Aho-EY-SUT" firstAttribute="centerX" secondItem="ExO-qs-eiu" secondAttribute="centerX" id="AJt-pK-F8c"/>
+                        <constraint firstItem="k2E-xR-TuM" firstAttribute="centerY" secondItem="ExO-qs-eiu" secondAttribute="centerY" id="Agx-Iq-BiV"/>
+                        <constraint firstItem="k2E-xR-TuM" firstAttribute="centerX" secondItem="ExO-qs-eiu" secondAttribute="centerX" id="ViC-oH-mp6"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5hu-Eb-QXa">
