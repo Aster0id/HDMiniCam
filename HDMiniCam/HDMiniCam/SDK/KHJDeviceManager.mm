@@ -44,10 +44,6 @@ void OnGetCmdResult(int cmd,const char*uuid,const char*json)
     int ret = [dict[@"ret"] intValue];
     if (ret >= 0 && ret <= 100) {
         switch (cmd) {
-            case 1075:
-#pragma MARK - 获取设备SD卡信息 - 获取文件个数
-                [[NSNotificationCenter defaultCenter] postNotificationName:noti_1075_KEY object:dict[@"li"]];
-                break;
             case 1495:
 #pragma MARK - 修改饱和度、锐度、亮度
                 [[NSNotificationCenter defaultCenter] postNotificationName:noti_1495_KEY object:nil];
@@ -160,7 +156,7 @@ void OnListRemoteDirInfoCmdResult(int cmd,const char*uuid,const char*json)
 void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
 {
     JSONObject jsdata(json);//解析json
-    RemoteDirInfo_t *rdi=new RemoteDirInfo_t;
+    RemoteDirInfo_t *rdi = new RemoteDirInfo_t;
 
     NSString *path = KHJString(@"%@/%s",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],mCurViewPath_date);
 //    CLog(@"path = %@",path);
@@ -173,14 +169,15 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
 
     if (mCurRemoteDirInfo == 0) {
         mCurRemoteDirInfo=rdi;
-    } else if (strcmp(mCurRemoteDirInfo->path.c_str(), rdi->path.c_str()) == 0) {
+    }
+    else if (strcmp(mCurRemoteDirInfo->path.c_str(), rdi->path.c_str()) == 0) {
         for(list<RemoteFileInfo_t*>::iterator it = rdi->mRemoteFileInfoList.begin(); it != rdi->mRemoteFileInfoList.end(); it++) {
-            RemoteFileInfo_t*rfi = *it;
-            RemoteFileInfo_t*rfi_bak = new RemoteFileInfo_t;
-            rfi_bak->name=rfi->name;
-            rfi_bak->path=rfi->path;
-            rfi_bak->type=rfi->type;
-            rfi_bak->size=rfi->size;
+            RemoteFileInfo_t *rfi = *it;
+            RemoteFileInfo_t *rfi_bak = new RemoteFileInfo_t;
+            rfi_bak->name = rfi->name;
+            rfi_bak->path = rfi->path;
+            rfi_bak->type = rfi->type;
+            rfi_bak->size = rfi->size;
             // 添加新的文件到目录
             mCurRemoteDirInfo->mRemoteFileInfoList.push_back(rfi_bak);
         }
@@ -188,10 +185,10 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
     }
 
     if (mRemoteRootDirInfo == 0) {
-        mRemoteRootDirInfo=rdi;
+        mRemoteRootDirInfo = rdi;
     }
     
-    IPCNetReleaseCmdResource( cmd,uuid,OnListRemotePageFileCmdResult2);
+    IPCNetReleaseCmdResource(cmd, uuid,OnListRemotePageFileCmdResult2);
 
     //根据当前获取到的索引，继续获取剩下的文件
     if (mTotalNum > mNextStartIndex) {
@@ -386,11 +383,11 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
                                path:(NSString *)path
                         resultBlock:(resultBlock)resultBlock
 {
-//    int ret = IPCNetStartPlaybackR(deviceID.UTF8String, path.UTF8String, OnGetCmdResult);
-//    CLog(@"开始录像回放，ret = %d",ret);
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//       resultBlock(ret);
-//    });
+    int ret = IPCNetStartPlaybackR(deviceID.UTF8String, path.UTF8String, OnGetCmdResult);
+    CLog(@"开始录像回放，ret = %d",ret);
+    dispatch_async(dispatch_get_main_queue(), ^{
+       resultBlock(ret);
+    });
 }
 
 /// 停止录像回放
@@ -399,11 +396,11 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
 - (void)stopPlayback_with_deviceID:(NSString *)deviceID
                        resultBlock:(resultBlock)resultBlock
 {
-//    int ret = IPCNetStopPlaybackR(deviceID.UTF8String, OnGetCmdResult);
-//    CLog(@"停止录像回放，ret = %d",ret);
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//       resultBlock(ret);
-//    });
+    int ret = IPCNetStopPlaybackR(deviceID.UTF8String, OnGetCmdResult);
+    CLog(@"停止录像回放，ret = %d",ret);
+    dispatch_async(dispatch_get_main_queue(), ^{
+       resultBlock(ret);
+    });
 }
 
 /// 暂停录像回放
@@ -677,7 +674,9 @@ void OnGetRecordConfCmdResult(int cmd,const char*uuid,const char*json)
     Log("%s cmd:%d uuid:%s json:%s\n",__func__,cmd, uuid, json);
     recordCfg.parseJSON(jsdata);
     IPCNetReleaseCmdResource(cmd,uuid,OnGetRecordConfCmdResult);
-    [[NSNotificationCenter defaultCenter] postNotificationName:noti_1073_KEY object:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:noti_1073_KEY object:nil];
+    });
 }
 
 /// 设置录像配置
@@ -732,7 +731,7 @@ void OnGetRecordConfCmdResult(int cmd,const char*uuid,const char*json)
 
 void OnGetRecTimePeriodCmdResult(int cmd,const char*uuid,const char*json)
 {
-//    CLog(@"111111111111111111111111111111111111111 %s cmd:%d uuid:%s json:%s\n",__func__,cmd, uuid, json);
+    CLog(@"111111111111111111111111111111111111111 %s cmd:%d uuid:%s json:%s\n",__func__,cmd, uuid, json);
 //    JSONObject jsdata(json);
 //    gRecordDatePeriod.parseJSON(jsdata);
 //    IPCNetReleaseCmdResource(cmd,uuid,OnGetRecTimePeriodCmdResult);
@@ -766,11 +765,23 @@ void OnGetRecTimePeriodCmdResult(int cmd,const char*uuid,const char*json)
                                   path:(NSString *)path
                            resultBlock:(resultBlock)resultBlock
 {
-//    int ret = IPCNetDeleteRemoteFileR(deviceID.UTF8String, path.UTF8String, OnGetCmdResult);
-//    CLog(@"删除远程文件，ret = %d",ret);
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//       resultBlock(ret);
-//    });
+    int ret = IPCNetDeleteRemoteFileR(deviceID.UTF8String, path.UTF8String, OnDeleteRemoteFileCmdResult);
+    CLog(@"删除远程文件，ret = %d",ret);
+    dispatch_async(dispatch_get_main_queue(), ^{
+       resultBlock(ret);
+    });
+}
+
+void OnDeleteRemoteFileCmdResult(int cmd,const char*uuid,const char*json)
+{
+    NSDictionary *result = [KHJUtility cString_changto_ocStringWith:json];
+    CLog(@"result = %@",result);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        int ret = [result[@"ret"] intValue];
+        if (ret == 0) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:noti_OnDeleteRemoteFileCmdResult_KEY object:nil];
+        }
+    });
 }
 
 #pragma mark - 开始下载设备文件

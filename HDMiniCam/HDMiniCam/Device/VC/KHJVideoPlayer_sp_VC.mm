@@ -56,11 +56,11 @@
     __weak IBOutlet UILabel *eightLab;
     
     UITapGestureRecognizer *tap;
+    __weak IBOutlet UIActivityIndicatorView *activeView;
 }
 
 @property (nonatomic, strong) NSMutableDictionary *_1497_body;
 @property (nonatomic, strong) NSMutableDictionary *change_1497_body;
-@property(nonatomic,strong) UIActivityIndicatorView *activIndict;
 
 @end
 
@@ -82,16 +82,6 @@
     return _change_1497_body;
 }
 
-- (UIActivityIndicatorView *)activIndict
-{
-    if (!_activIndict) {
-        _activIndict = [[UIActivityIndicatorView alloc] initWithFrame:CGRectZero];
-        _activIndict.center = CGPointMake(CGRectGetWidth(playerView.frame)/2.0, CGRectGetHeight(playerView.frame)/2.0);
-        [_activIndict startAnimating];
-    }
-    return _activIndict;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -108,14 +98,12 @@
     /// 刷新_1497_body
     [[KHJDeviceManager sharedManager] getSaturationLevel_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {
         CLog(@"code = %ld",(long)code);
-    }];}
+    }];
+}
 
 - (void)startVideo
 {
-    if (![self.deviceInfo.deviceStatus isEqualToString:@"0"]) {
-        [self.view makeToast:@"设备不在线，请重新连接！"];
-        return;
-    }
+    [activeView startAnimating];
     [[KHJDeviceManager sharedManager] startGetVideo_with_deviceID:self.deviceID quality:1 resultBlock:^(NSInteger code) {
         CLog(@"开始获取视频 code = %ld",code);
     }];
@@ -125,7 +113,11 @@
 
 - (void)getImageWith:(UIImage *)image imageSize:(CGSize)imageSize
 {
+    if (activeView.isAnimating) {
+        [activeView stopAnimating];
+    }
     playerImageView.image = image;
+    CLog(@"正在出视频...........");
 }
 
 - (void)addNoti
@@ -150,25 +142,21 @@
 
 - (void)tapAction
 {
-//    if (!slideView.hidden) {
-//        slideView.hidden = YES;
-//    }
-    [self startVideo];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [playerView addSubview:self.activIndict];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.activIndict removeFromSuperview];
-    });
+    if (!slideView.hidden) {
+        slideView.hidden = YES;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[KHJDeviceManager sharedManager] stopGetVideo_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
 }
 
 - (IBAction)topBtn:(UIButton *)sender

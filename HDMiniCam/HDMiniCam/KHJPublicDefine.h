@@ -29,6 +29,7 @@
 #define noti_OnGetDeviceWiFi_CmdResult_KEY      @"noti_OnGetDeviceWiFi_CmdResult_KEY"       // 获取设备连接的Wi-Fi
 #define noti_OnSearchDeviceWiFi_CmdResult_KEY   @"noti_OnSearchDeviceWiFi_CmdResult_KEY"    // 搜索设备周围的Wi-Fi
 #define noti_OnSetDeviceWiFi_CmdResult_KEY      @"noti_OnSetDeviceWiFi_CmdResult_KEY"       // 设置设备Wi-Fi
+#define noti_OnDeleteRemoteFileCmdResult_KEY    @"noti_OnDeleteRemoteFileCmdResult_KEY"     // 删除远程文件
 
 #define FLAG_TAG                        9999999
 #define KHJIMAGE(name)                  [UIImage imageNamed:name]

@@ -13,18 +13,19 @@
 #import "KHJBackPlayListVC.h"
 //
 #import "JKUIPickDate.h"
-#import "KHJPickerView.h"
 #import "KHJVideoModel.h"
 #import "JSONStructProtocal.h"
 
 typedef void(^runloopBlock)(void);
 
+extern IPCNetRecordCfg_st recordCfg;
 extern RecordDatePeriod_t gRecordDatePeriod;
 
-@interface KHJVideoPlayer_hf_VC ()<ZFTimeLineDelegate,KHJBackPlayListVCSaveListDelegate>
+@interface KHJVideoPlayer_hf_VC ()<ZFTimeLineDelegate,KHJBackPlayListVCSaveListDelegate,H26xHwDecoderDelegate>
 {
     __weak IBOutlet UILabel *nameLab;
     __weak IBOutlet UIView *reconnectView;
+    __weak IBOutlet UIImageView *playerImageView;
     __weak IBOutlet UIButton *preDayBtn;
     __weak IBOutlet UILabel *dateLAB;
     __weak IBOutlet UIButton *nextDayBtn;
@@ -36,7 +37,6 @@ extern RecordDatePeriod_t gRecordDatePeriod;
     __weak IBOutlet UIImageView *listenImgView;
     
     BOOL exitVideoList;
-    
     NSTimer *recordTimer;
 }
 
@@ -51,27 +51,20 @@ extern RecordDatePeriod_t gRecordDatePeriod;
 @property (nonatomic, assign) NSTimeInterval todayTimeInterval;
 @property (nonatomic, assign) NSTimeInterval currentTimeInterval;
 
+@property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, strong) NSMutableArray *videoList;
 
-@property (nonatomic, strong) KHJPickerView *datePickerView;
 @property (nonatomic, copy) ZFTimeLine *zfTimeView;
 
 @end
 
 @implementation KHJVideoPlayer_hf_VC
 
-- (KHJPickerView *)datePickerView
+#pragma MARK - H26xHwDecoderDelegate
+
+- (void)getImageWith:(UIImage *)image imageSize:(CGSize)imageSize
 {
-    if (!_datePickerView) {
-//        if (IS_IPHONE_5) {
-//            _datePickerView = [[KHJPickerView alloc] initWithFrame:CGRectMake(0, segment.frame.size.height+segment.frame.origin.y+6, SCREEN_WIDTH, 40)];
-//        }
-//        else {
-//            _datePickerView = [[KHJPickerView alloc] initWithFrame:CGRectMake(0, segment.frame.size.height+segment.frame.origin.y+10, SCREEN_WIDTH, 40)];
-//        }
-        _datePickerView.hidden = YES;
-    }
-    return _datePickerView;
+    playerImageView.image = image;
 }
 
 - (NSMutableArray *)videoList
@@ -98,7 +91,7 @@ extern RecordDatePeriod_t gRecordDatePeriod;
     [self addMP4_RunloopObserver];
     nextDayBtn.hidden = YES;
     [timeLineContent addSubview:self.zfTimeView];
-    
+
     NSDate *date = [NSDate date];
     _currentTimeInterval = [date timeIntervalSince1970];
     _todayTimeInterval = [NSDate getZeroWithTimeInterverl:_currentTimeInterval];
@@ -110,7 +103,43 @@ extern RecordDatePeriod_t gRecordDatePeriod;
     [self fireTimer];
     [self getTimeLineDataWith:dateLAB.text];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti_timeLineInfo_1075_key:) name:noti_timeLineInfo_1075_KEY object:nil];
+//    [[KHJDeviceManager sharedManager] getRecordConfig_with_deviceID:self.deviceID json:@"" resultBlock:^(NSInteger code) {
+//        CLog(@"code = %ld",(long)code);
+//    }];
+//    // 1、获取录像配置信息：获取文件路径
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti_1073_key:) name:noti_1073_KEY object:nil];
+//    // 3、通过文件路径 + 文件数量 => 获取 回放视频列表
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti_1077_key:) name:noti_1077_KEY object:nil];
 }
+
+//- (void)noti_1073_key:(NSNotification *)noti
+//{
+//    NSString *date = [dateLAB.text stringByReplacingOccurrencesOfString:@"_" withString:@""];
+//    NSString *one = [date substringWithRange:NSMakeRange(0, 6)];
+//    NSString *two = [date substringWithRange:NSMakeRange(6, 2)];
+//    NSString *rootdir = KHJString(@"%@/%@",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],KHJString(@"%@/%@",one,two));
+//    int vi = 0;
+//    // 0: 只扫描文件   1: 扫描目录和文件
+//    int mode = 1;
+//    // 文件开始时间
+//    int start = 0;
+//    // 文件结束时间
+//    int end = 240000;
+//
+//    // 组织json字符串，lir是list remote简写，p为path简写，si是sensor index简写，m是mode简写，st是start time，e是end time
+//    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//    NSMutableDictionary *body = [NSMutableDictionary dictionary];
+//    [body setValue:rootdir forKey:@"p"];
+//    [body setValue:@(vi) forKey:@"si"];
+//    [body setValue:@(mode) forKey:@"m"];
+//    [body setValue:@(start) forKey:@"st"];
+//    [body setValue:@(end) forKey:@"e"];
+//    [dict setValue:body forKey:@"lir"];
+//    NSString *json = [KHJUtility convertToJsonData:(NSDictionary *)dict];
+//    [[KHJDeviceManager sharedManager] getRemoteDirInfo_with_deviceID:self.deviceID json:json resultBlock:^(NSInteger code) {
+//        CLog(@"code = %ld",(long)code);
+//    }];
+//}
 
 - (void)noti_timeLineInfo_1075_key:(NSNotification *)noti
 {
@@ -118,21 +147,21 @@ extern RecordDatePeriod_t gRecordDatePeriod;
     [self addMP4_tasks:^{
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             NSArray *backPlayList = [NSArray arrayWithArray:(NSArray *)noti.object];
-            CLog(@"______________________noti_timeLineInfo_1075_key \n backPlayList = %@",backPlayList);
+
             for (int i = 0; i < backPlayList.count; i++) {
                 NSDictionary *body = backPlayList[i];
                 int type                = [body[@"type"] intValue];
                 NSString *startString   = KHJString(@"%06d",[body[@"start"] intValue]);
                 NSString *endString     = KHJString(@"%06d",[body[@"end"] intValue]);
-                
-                int startHour = [[startString substringWithRange:NSMakeRange(0, 2)] intValue];
-                int startMin = [[startString substringWithRange:NSMakeRange(2, 2)] intValue];
-                int startSec = [[startString substringWithRange:NSMakeRange(4, 2)] intValue];
-                int startTimeInterval = startHour * 3600 + startMin * 60 + startSec;
-                
+
+                int startHour   = [[startString substringWithRange:NSMakeRange(0, 2)] intValue];
+                int startMin    = [[startString substringWithRange:NSMakeRange(2, 2)] intValue];
+                int startSec    = [[startString substringWithRange:NSMakeRange(4, 2)] intValue];
+                int startTimeInterval   = startHour * 3600 + startMin * 60 + startSec;
+
                 int endHour = [[endString substringWithRange:NSMakeRange(0, 2)] intValue];
-                int endMin = [[endString substringWithRange:NSMakeRange(2, 2)] intValue];
-                int endSec = [[endString substringWithRange:NSMakeRange(4, 2)] intValue];
+                int endMin  = [[endString substringWithRange:NSMakeRange(2, 2)] intValue];
+                int endSec  = [[endString substringWithRange:NSMakeRange(4, 2)] intValue];
                 int endTimeInterval = endHour * 3600 + endMin * 60 + endSec;
 
                 KHJVideoModel *model = [[KHJVideoModel alloc] init];
@@ -156,6 +185,44 @@ extern RecordDatePeriod_t gRecordDatePeriod;
         });
     }];
 }
+
+//- (void)noti_1077_key:(NSNotification *)obj
+//{
+//    [self reloadTableView];
+//}
+
+//- (void)reloadTableView
+//{
+//    WeakSelf
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//        for (list<RemoteFileInfo_t*>::iterator i= mCurRemoteDirInfo->mRemoteFileInfoList.begin(); i != mCurRemoteDirInfo->mRemoteFileInfoList.end(); i++){
+//            RemoteFileInfo_t *rfi = *i;
+//            NSMutableDictionary *body = [NSMutableDictionary dictionary];
+//            NSString *name = [NSString stringWithUTF8String:rfi->name.c_str()];
+//            NSArray *timeArr1 = [name componentsSeparatedByString:@"."];
+//            NSArray *timeArr2 = [timeArr1.firstObject componentsSeparatedByString:@"-"];
+//            NSString *start = timeArr2.firstObject;
+//            NSString *end = timeArr2.lastObject;
+//            [body setValue:[NSString stringWithUTF8String:rfi->name.c_str()] forKey:@"name"];
+//            [body setValue:[NSString stringWithUTF8String:rfi->path.c_str()] forKey:@"videoPath"];
+//            [body setValue:@(rfi->size) forKey:@"size"];
+//            [body setValue:start forKey:@"start"];
+//            [body setValue:end forKey:@"end"];
+//            [weakSelf.listArr addObject:body];
+//        }
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(exitListData:)]) {
+//                if (weakSelf.listArr.count > 0) {
+//                    [weakSelf.delegate exitListData:YES];
+//                }
+//                else {
+//                    [weakSelf.delegate exitListData:NO];
+//                }
+//            }
+//            [self->contentList reloadData];
+//        });
+//    });
+//}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -215,6 +282,7 @@ extern RecordDatePeriod_t gRecordDatePeriod;
         // 浏览
         KHJBackPlayListVC *vc = [[KHJBackPlayListVC alloc] init];
         vc.delegate = self;
+        vc.date = dateLAB.text;
         vc.deviceID = self.deviceID;
         vc.exitVideoList = exitVideoList;
         [self.navigationController pushViewController:vc animated:YES];
@@ -253,12 +321,24 @@ extern RecordDatePeriod_t gRecordDatePeriod;
 
 - (void)LineBeginMove
 {
-    CLog(@"LineBeginMove");
+    CLog(@"LineBeginMove 停止回放");
+//    [[KHJDeviceManager sharedManager] stopPlayback_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
 }
 
 - (void)timeLine:(ZFTimeLine *)timeLine moveToDate:(NSTimeInterval)date
 {
-    CLog(@" timeLine: moveToDate: ");
+    CLog(@" timeLine: moveToDate: %f",date - _zeroTimeInterval);
+//    NSInteger index = [KHJCalculate binarySearchSDCardStart:self.videoList target:date];
+//    if (index == -1) {
+//        [self.view makeToast:@"当前没有视频！"];
+//    }
+//    else {
+//        [self.view makeToast:KHJString(@"当前第 %ld 个视频，总共 %ld 个视频", index, self.videoList.count)];
+//    }
+//    if (self.videoList.count < index) {
+//        return;
+//    }
+//    self.currentIndex = index;
 }
 
 #pragma mark - Timer ---------------------------------------------------------------

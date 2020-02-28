@@ -44,7 +44,7 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="8B1-pk-B5I"/>
                         </constraints>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -69,7 +69,7 @@
                 <outlet property="detailsLab" destination="uzH-a4-Urv" id="gHu-ZN-GI8"/>
                 <outlet property="nameLab" destination="dus-rA-2Xa" id="AHX-eB-d4K"/>
             </connections>
-            <point key="canvasLocation" x="-20.289855072463769" y="77.678571428571431"/>
+            <point key="canvasLocation" x="-65" y="110"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -27,7 +27,7 @@ H26xHwDecoder *h264Decode;
 
 - (void)getImageWith:(UIImage * _Nullable)image imageSize:(CGSize)imageSize
 {
-    
+    CLog(@"KHJVideoPlayerBaseVC.getImageWith");
 }
 
 - (UIButton *)leftBtn

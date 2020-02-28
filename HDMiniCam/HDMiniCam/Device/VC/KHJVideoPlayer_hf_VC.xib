@@ -16,6 +16,7 @@
                 <outlet property="listenLab" destination="Vjg-tX-4LZ" id="3gT-Ay-vFw"/>
                 <outlet property="nameLab" destination="g0R-K7-cOV" id="BkL-Bg-1JL"/>
                 <outlet property="nextDayBtn" destination="QlN-He-TqK" id="sDE-ty-j52"/>
+                <outlet property="playerImageView" destination="fxE-3O-5TX" id="6vZ-pF-B9V"/>
                 <outlet property="preDayBtn" destination="NZ1-zX-hpH" id="Z4V-iH-Ugy"/>
                 <outlet property="reconnectView" destination="Aho-EY-SUT" id="MTo-4h-VZd"/>
                 <outlet property="recordBtn" destination="vNf-GT-CTH" id="iNt-wp-sb5"/>
@@ -64,6 +65,9 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ExO-qs-eiu">
                     <rect key="frame" x="0.0" y="88" width="414" height="233"/>
                     <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fxE-3O-5TX">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
+                        </imageView>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aho-EY-SUT">
                             <rect key="frame" x="132" y="91.5" width="150" height="50"/>
                             <subviews>
@@ -105,7 +109,11 @@
                         <constraint firstAttribute="width" secondItem="ExO-qs-eiu" secondAttribute="height" multiplier="16:9" id="6Zq-al-enh"/>
                         <constraint firstItem="Aho-EY-SUT" firstAttribute="centerX" secondItem="ExO-qs-eiu" secondAttribute="centerX" id="AJt-pK-F8c"/>
                         <constraint firstItem="k2E-xR-TuM" firstAttribute="centerY" secondItem="ExO-qs-eiu" secondAttribute="centerY" id="Agx-Iq-BiV"/>
+                        <constraint firstAttribute="bottom" secondItem="fxE-3O-5TX" secondAttribute="bottom" id="Hus-Y2-DQq"/>
+                        <constraint firstItem="fxE-3O-5TX" firstAttribute="top" secondItem="ExO-qs-eiu" secondAttribute="top" id="U9A-pn-BIW"/>
                         <constraint firstItem="k2E-xR-TuM" firstAttribute="centerX" secondItem="ExO-qs-eiu" secondAttribute="centerX" id="ViC-oH-mp6"/>
+                        <constraint firstAttribute="trailing" secondItem="fxE-3O-5TX" secondAttribute="trailing" id="ddb-nW-81s"/>
+                        <constraint firstItem="fxE-3O-5TX" firstAttribute="leading" secondItem="ExO-qs-eiu" secondAttribute="leading" id="uX6-mR-n9W"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5hu-Eb-QXa">
@@ -445,7 +453,7 @@
                 <constraint firstItem="6f3-hz-FVQ" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="zDv-RP-Gem"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
-            <point key="canvasLocation" x="-26.086956521739133" y="120.53571428571428"/>
+            <point key="canvasLocation" x="-130" y="119"/>
         </view>
     </objects>
     <resources>

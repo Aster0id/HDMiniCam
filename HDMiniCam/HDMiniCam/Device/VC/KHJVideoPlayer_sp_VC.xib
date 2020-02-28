@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KHJVideoPlayer_sp_VC">
             <connections>
+                <outlet property="activeView" destination="kbJ-E2-ZxK" id="6Tv-uO-WuZ"/>
                 <outlet property="bottomView" destination="6qU-ns-muU" id="dHx-Rp-FG5"/>
                 <outlet property="centerView" destination="8xQ-E3-7Xz" id="opD-m7-90O"/>
                 <outlet property="eightImgView" destination="feb-Si-vhY" id="DsG-n6-92B"/>
@@ -210,6 +211,10 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </view>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="kbJ-E2-ZxK">
+                                    <rect key="frame" x="197" y="106.5" width="20" height="20"/>
+                                    <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </activityIndicatorView>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -219,8 +224,10 @@
                                 <constraint firstItem="Tsy-e2-SWK" firstAttribute="leading" secondItem="v1R-Iz-BvX" secondAttribute="leading" id="YSL-Ja-Y6c"/>
                                 <constraint firstItem="Tsy-e2-SWK" firstAttribute="top" secondItem="v1R-Iz-BvX" secondAttribute="top" id="bBD-xP-1ft"/>
                                 <constraint firstItem="UqB-Fi-PsC" firstAttribute="top" secondItem="v1R-Iz-BvX" secondAttribute="top" id="bri-wT-aq1"/>
+                                <constraint firstItem="kbJ-E2-ZxK" firstAttribute="centerX" secondItem="v1R-Iz-BvX" secondAttribute="centerX" id="d13-hV-EAi"/>
                                 <constraint firstItem="UqB-Fi-PsC" firstAttribute="leading" secondItem="v1R-Iz-BvX" secondAttribute="leading" id="fdQ-cL-jgX"/>
                                 <constraint firstItem="V8a-sq-GEy" firstAttribute="centerY" secondItem="UqB-Fi-PsC" secondAttribute="centerY" id="llN-Qm-zpE"/>
+                                <constraint firstItem="kbJ-E2-ZxK" firstAttribute="centerY" secondItem="v1R-Iz-BvX" secondAttribute="centerY" id="msK-lC-gtN"/>
                                 <constraint firstAttribute="trailing" secondItem="UqB-Fi-PsC" secondAttribute="trailing" id="sBd-ae-HF5"/>
                                 <constraint firstAttribute="bottom" secondItem="UqB-Fi-PsC" secondAttribute="bottom" id="vcy-Tj-aPi"/>
                             </constraints>

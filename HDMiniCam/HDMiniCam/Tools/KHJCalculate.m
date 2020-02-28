@@ -11,7 +11,7 @@
 #include <ifaddrs.h>
 #include <arpa/inet.h>
 #include <net/if.h>
-//#import "KHJVideoModel.h"
+#import "KHJVideoModel.h"
 
 @interface KHJCalculate()
 {
@@ -464,84 +464,83 @@
 //    return dic;
 //}
 //
-////2分查找
-//+ (NSInteger)binarySearch:(NSArray *)source target:(NSInteger)target
-//{
-//
-//}
-////{
-////    if (source.count == 0) {
-////        return -1;
-////    }
-////    NSInteger start = 0;
-////    NSInteger end = source.count - 1;
-////    NSInteger mid = 0;
-////    while (start + 1 < end) {//判断在两个视频的中间
-////
-////        mid = start + (end - start) / 2;
-////        KHJVideoModel *vModel = source[mid];
-////        if (vModel.startTime == target) { // 相邻就退出
-////            return mid;
-////        }
-////        else if (vModel.startTime < target) {//大于起始时间
-////            start = mid;
-////        }
-////        else {
-////            end = mid;
-////        }
-////    }
-////    KHJVideoModel *vModel = source[start];
-////
-////    if ( vModel.startTime <= target && (vModel.startTime+vModel.durationTime) >= target) {
-////        return start;
-////    }
-////    vModel = source[end];
-////    if (vModel.startTime <= target && (vModel.startTime+vModel.durationTime) >= target) {
-////        return end;
-////    }
-////    return -1;
-////}
-//+ (NSInteger)binarySearchSDCardStart:(NSArray *)source target:(NSInteger)target
-//{
-//    if (source.count == 0) {
-//        return -1;
-//    }
-//    NSInteger start = 0;
-//    NSInteger end = source.count - 1;
-//    NSInteger mid = 0;
-//    while (start + 1 < end) {//判断在两个视频的中间
-//
-//        mid = start + (end - start) / 2;
-//        KHJVideoModel *vModel = source[mid];
-//        if (vModel.startTime == target) { // 相邻就退出
-//            return mid;
-//        }
-//        else if (vModel.startTime < target) {//大于起始时间
-//            start = mid;
-//        }
-//        else {
-//            end = mid;
-//        }
-//    }
-//    KHJVideoModel *vModel = source[start];
-//    if ( vModel.startTime <= target && (vModel.startTime+vModel.durationTime) >= target) {
-//        return start;
-//    }
-//    KHJVideoModel *endModel = source[end];
-//    if (endModel.startTime <= target && (endModel.startTime+endModel.durationTime) >= target) {
-//        return end;
-//    }
-//    if(target > (endModel.startTime+endModel.durationTime)){
-//
-//        return -1;
-//    }
-//    if (endModel.startTime -(vModel.startTime + vModel.durationTime) > 0 && endModel.startTime -(vModel.startTime + vModel.durationTime) <= 20 *60) {
-//
-//        return end;
-//    }
-//
-//    return -1;
-//}
+//2分查找
++ (NSInteger)binarySearch:(NSArray *)source target:(NSInteger)target
+{
+    if (source.count == 0) {
+        return -1;
+    }
+    NSInteger start = 0;
+    NSInteger end = source.count - 1;
+    NSInteger mid = 0;
+    while (start + 1 < end) {//判断在两个视频的中间
+
+        mid = start + (end - start) / 2;
+        KHJVideoModel *vModel = source[mid];
+        if (vModel.startTime == target) { // 相邻就退出
+            return mid;
+        }
+        else if (vModel.startTime < target) {//大于起始时间
+            start = mid;
+        }
+        else {
+            end = mid;
+        }
+    }
+    KHJVideoModel *vModel = source[start];
+
+    if ( vModel.startTime <= target && (vModel.startTime+vModel.durationTime) >= target) {
+        return start;
+    }
+    vModel = source[end];
+    if (vModel.startTime <= target && (vModel.startTime+vModel.durationTime) >= target) {
+        return end;
+    }
+    return -1;
+}
++ (NSInteger)binarySearchSDCardStart:(NSArray *)source target:(NSInteger)target
+{
+    if (source.count == 0) {
+        return -1;
+    }
+    NSInteger start = 0;
+    NSInteger end = source.count - 1;
+    NSInteger mid = 0;
+    while (start + 1 < end) {//判断在两个视频的中间
+
+        mid = start + (end - start) / 2;
+        KHJVideoModel *vModel = source[mid];
+        if (vModel.startTime == target) { // 相邻就退出
+            return mid;
+        }
+        else if (vModel.startTime < target) {//大于起始时间
+            start = mid;
+        }
+        else {
+            end = mid;
+        }
+    }
+    KHJVideoModel *firstModel = source.firstObject;
+    if (target < firstModel.startTime) {
+        return -1;
+    }
+    KHJVideoModel *vModel = source[start];
+    if ( vModel.startTime <= target && vModel.startTime + vModel.durationTime >= target) {
+        return start;
+    }
+    KHJVideoModel *endModel = source[end];
+    if (endModel.startTime <= target && endModel.startTime + endModel.durationTime >= target) {
+        return end;
+    }
+    if (target > endModel.startTime + endModel.durationTime) {
+        return -1;
+    }
+    if (endModel.startTime - (vModel.startTime + vModel.durationTime) > 0 &&
+        endModel.startTime - (vModel.startTime + vModel.durationTime) <= 20 * 60) {
+        return end;
+    }
+    return -1;
+}
 //+ (NSInteger)binarySearchCloudStart:(NSArray *)source target:(NSInteger)target
 //{
 //    if (source.count == 0) {

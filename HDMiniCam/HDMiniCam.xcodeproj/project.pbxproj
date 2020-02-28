@@ -142,6 +142,8 @@
 		AB32D4B523F53BE4008AFD1F /* ZFTimeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = AB32D4B323F53BE4008AFD1F /* ZFTimeLine.m */; };
 		AB32D4C123F54E7A008AFD1F /* KHJVideoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB32D4C023F54E7A008AFD1F /* KHJVideoModel.m */; };
 		AB32D4C423F54FE0008AFD1F /* TuyaTimeLineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB32D4C323F54FE0008AFD1F /* TuyaTimeLineModel.m */; };
+		AB32F9AC2408FF1B00687054 /* KHJBackPlayerList_playerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB32F9AA2408FF1B00687054 /* KHJBackPlayerList_playerVC.m */; };
+		AB32F9AD2408FF1B00687054 /* KHJBackPlayerList_playerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB32F9AB2408FF1B00687054 /* KHJBackPlayerList_playerVC.xib */; };
 		AB4EFA7323F6B40000D584E7 /* libIPCNetManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB4EFA7123F6B40000D584E7 /* libIPCNetManager.a */; };
 		AB4EFA7423F6B40000D584E7 /* libFBP2P.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB4EFA7223F6B40000D584E7 /* libFBP2P.a */; };
 		AB4EFA7E23F6D43600D584E7 /* KHJDeviceManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB4EFA7D23F6D43600D584E7 /* KHJDeviceManager.mm */; };
@@ -410,6 +412,9 @@
 		AB32D4C023F54E7A008AFD1F /* KHJVideoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHJVideoModel.m; sourceTree = "<group>"; };
 		AB32D4C223F54FDF008AFD1F /* TuyaTimeLineModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaTimeLineModel.h; sourceTree = "<group>"; };
 		AB32D4C323F54FE0008AFD1F /* TuyaTimeLineModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaTimeLineModel.m; sourceTree = "<group>"; };
+		AB32F9A92408FF1B00687054 /* KHJBackPlayerList_playerVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJBackPlayerList_playerVC.h; sourceTree = "<group>"; };
+		AB32F9AA2408FF1B00687054 /* KHJBackPlayerList_playerVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJBackPlayerList_playerVC.m; sourceTree = "<group>"; };
+		AB32F9AB2408FF1B00687054 /* KHJBackPlayerList_playerVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJBackPlayerList_playerVC.xib; sourceTree = "<group>"; };
 		AB4EFA6223F6B0BE00D584E7 /* JSONObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JSONObject.hpp; sourceTree = "<group>"; };
 		AB4EFA6323F6B0BE00D584E7 /* SEP2P_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEP2P_API.h; sourceTree = "<group>"; };
 		AB4EFA6423F6B0BE00D584E7 /* cJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cJSON.h; sourceTree = "<group>"; };
@@ -857,6 +862,9 @@
 				AB597B3D24027A7600F04F84 /* KHJBackPlayListVC.h */,
 				AB597B3E24027A7600F04F84 /* KHJBackPlayListVC.mm */,
 				AB597B3F24027A7600F04F84 /* KHJBackPlayListVC.xib */,
+				AB32F9A92408FF1B00687054 /* KHJBackPlayerList_playerVC.h */,
+				AB32F9AA2408FF1B00687054 /* KHJBackPlayerList_playerVC.m */,
+				AB32F9AB2408FF1B00687054 /* KHJBackPlayerList_playerVC.xib */,
 				AB30DA4223D05B0F005BD2A1 /* KHJAddDeviceListVC.h */,
 				AB30DA4323D05B0F005BD2A1 /* KHJAddDeviceListVC.m */,
 				AB30DA4423D05B0F005BD2A1 /* KHJAddDeviceListVC.xib */,
@@ -1215,6 +1223,7 @@
 				AB30DA5123D066F7005BD2A1 /* KHJHadBindDeviceVC.xib in Resources */,
 				93C33B6E23CE20B400B44E5F /* photo_sel_previewVc@2x.png in Resources */,
 				AB597B4124027A7600F04F84 /* KHJBackPlayListVC.xib in Resources */,
+				AB32F9AD2408FF1B00687054 /* KHJBackPlayerList_playerVC.xib in Resources */,
 				AB20E61B23CEBF4900D2861C /* KHJAlarmListVC.xib in Resources */,
 				ABEBCDFD23CF1B6E00581AFB /* KHJPictureListVC.xib in Resources */,
 				93C33B5223CE20B400B44E5F /* ZQ_Close@2x.png in Resources */,
@@ -1362,6 +1371,7 @@
 				AB32D4B023F4F476008AFD1F /* KHJVideoPlayer_hf_VC.mm in Sources */,
 				93C33A8823CE1D0800B44E5F /* KHJShakeObj.mm in Sources */,
 				AB20E62A23CEE33400D2861C /* AIPhotoZoom.m in Sources */,
+				AB32F9AC2408FF1B00687054 /* KHJBackPlayerList_playerVC.m in Sources */,
 				93C33B5523CE20B400B44E5F /* UIViewController+LJWKeyboardHandlerHelper.m in Sources */,
 				AB7648662405132A00D6DE1C /* JKUIPickDate.m in Sources */,
 				93C33B5723CE20B400B44E5F /* LJWKeyboardHandler.m in Sources */,

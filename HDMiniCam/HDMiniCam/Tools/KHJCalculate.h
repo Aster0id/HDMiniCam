@@ -63,9 +63,9 @@
 //+ (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString;
 //// 根据返回的时间戳字符串，获取指定的格式的时间
 //+(NSString*)getSureTimeFormat:(NSString *)timeStampString;
-//// 2分查找
-//+ (NSInteger)binarySearch:(NSArray *)source target:(NSInteger)target;
-//+ (NSInteger)binarySearchSDCardStart:(NSArray *)source target:(NSInteger)target;
+// 2分查找
++ (NSInteger)binarySearch:(NSArray *)source target:(NSInteger)target;
++ (NSInteger)binarySearchSDCardStart:(NSArray *)source target:(NSInteger)target;
 //
 //+ (NSInteger)binarySearchCloudStart:(NSArray *)source target:(NSInteger)target;
 //+ (NSInteger)binarySearchCloudEnd:(NSArray *)source target:(NSInteger)target;

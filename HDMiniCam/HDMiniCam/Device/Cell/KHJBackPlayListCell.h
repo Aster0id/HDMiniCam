@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLab;
 @property (weak, nonatomic) IBOutlet UILabel *detailsLab;
-@property (nonatomic, copy) id<KHJBackPlayListCellDelegate> delegate;
+@property (nonatomic, strong) id<KHJBackPlayListCellDelegate> delegate;
 
 @end
 
