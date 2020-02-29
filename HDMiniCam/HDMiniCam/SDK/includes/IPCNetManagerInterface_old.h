@@ -433,7 +433,6 @@ int __declspec(dllexport) _stdcall IPCNetSetGPIOR(const char* uuid,const char*js
 
 
 //设置录像配置，设置之前，请先调用 IPCNetGetRecordConfR 获取配置
-//具体用法参见 sample_code.cpp
 int __declspec(dllexport) _stdcall IPCNetSetRecordConfR(const char* uuid,const char*json,OnCmdResult_t r);
 #define IPCNetSetRecordConf(x,y) IPCNetSetRecordConfR(x,y,0)
 int __declspec(dllexport) _stdcall IPCNetGetRecordConfR(const char* uuid,const char*json,OnCmdResult_t r);
@@ -464,12 +463,11 @@ void get_sdcard_files_list(const char *uuid)
 	IPCNetListRemoteDirInfoR(uuid, jsonbuff, OnListRemoteDirInfoCmdResult);
 }
 
-//以下静态变量根据项目实际情况移至类的成员去
+//一下静态变量根据项目实际情况移至类的成员去
 static int mNextStartIndex=0;
 static int mTotalNum=0;
 static RemoteDirInfo_t*mRemoteRootDirInfo,mSelectedRemoteDirInfo;
 static RemoteDirInfo_t*mCurRemoteDirInfo;
-//RemoteDirInfo_t 在 JSONStructProtocal.h 定义
 
 void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json);
 void OnListRemoteDirInfoCmdResult(int cmd,const char*uuid,const char*json)
@@ -614,25 +612,6 @@ int __declspec(dllexport) _stdcall IPCNetSetWiFiAPInfoR(const char* uuid,const c
 
 
 //*******************************  时间轴录像回放例子  ********************************
-/*
-请参见 sample_code.cpp 的
-void get_record_time_period(const char*uuid, int vi, int date)
-其中，vi是video index的缩写，指示播放设备哪个摄像头的录像，一般设备只有一个摄像头，所以vi一般传0
-date 表示获取哪一天的时间轴时间，格式为 20200214， 表示2020年2月14日， 调用例子如下
-
-const char*uuid = "device uuid";
-int vi=0;
-int date = 20200214;
-get_record_time_period(uuid, vi, date);
-*/
-
-//播放指定时间的录像，如果指定时间没有录像，则会播放时间之后的录像
-//vi是video index的缩写，指示播放设备哪个摄像头的录像，一般设备只有一个摄像头，所以vi一般传0
-//date 表示获取哪一天的时间轴时间，格式为 20200214， 表示2020年2月14日
-//time 表示指定的时间点，格式为 161938, 表示16点19分38秒(16:19:38)
-//调用格式为 IPCNetStartPlaybackAtTimeR("device uuid", 0, 20200214, 161938, NULL);//OnCmdResult_t r 参数可以设置为接收返回结果的回调函数
-int __declspec(dllexport) _stdcall IPCNetStartPlaybackAtTimeR(const char* uuid, int vi, int date, int time, OnCmdResult_t r);
-#define IPCNetStartPlaybackAtTime(w,x,y,z) IPCNetStartPlaybackAtTimeR(w,x,y,z,0)
 //*************************************************************************************
 
 
@@ -681,24 +660,6 @@ int __declspec(dllexport) _stdcall IPCNetGetDenoiseSettingR(const char* uuid,OnC
 #define IPCNetGetDenoiseSetting(x) IPCNetGetDenoiseSettingR(x,0)
 int __declspec(dllexport) _stdcall IPCNetSetDenoiseSettingR(const char* uuid,const char*json,OnCmdResult_t r);
 #define IPCNetSetDenoiseSetting(x,y) IPCNetSetDenoiseSettingR(x,y,0)
-
-
-//
-typedef void* RecSess_t;
-/*
-void*record_session = IPCNetStartRecordLocalVideo("test.ts", 2, 640, 360, 30, 0, 8000, 1);
-if(record_session!=NULL){
-	int type=0;
-	int ret = IPCNetPutLocalVideoFrame(session, type, const char*data, int len, unsigned long long timestamp);
-}
-*/
-////0:h264,1:mjpg,2:h265 and so on.
-/*RecSess_t __declspec(dllexport) _stdcall IPCNetStartRecordLocalVideo(const char*path, int videoType, int width, int height, int fps,
-	int audioType, int sampleRate, int channels);
-int __declspec(dllexport) _stdcall IPCNetPutLocalRecordVideoFrame(RecSess_t session, int type, const char*data, int len, unsigned long long timestamp);
-int __declspec(dllexport) _stdcall IPCNetPutLocalRecordAudioFrame(RecSess_t session, int type, const char*data, int len, unsigned long long timestamp);
-void __declspec(dllexport) _stdcall IPCNetFinishLocalRecord(RecSess_t session);
-*/
 
 #ifdef __cplusplus
 }

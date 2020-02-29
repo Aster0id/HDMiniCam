@@ -117,7 +117,6 @@
         [activeView stopAnimating];
     }
     playerImageView.image = image;
-    CLog(@"正在出视频...........");
 }
 
 - (void)addNoti

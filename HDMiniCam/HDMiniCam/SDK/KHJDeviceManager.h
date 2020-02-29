@@ -12,6 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^resultBlock)(NSInteger code);
+typedef void(^playBackVideoOrAudioDataRetultBlock)(const char*uuid,int type,unsigned char*data,int len,long timestamp);
 
 @interface KHJDeviceManager : NSObject
 
@@ -93,6 +94,16 @@ typedef void(^resultBlock)(NSInteger code);
 
 #pragma mark - 设备回放
 
+/// 设置 音频 和 视频 回调           第一步
+/// @param deviceID 设备id
+/// @param resultBlock 回调
+- (void)setPlaybackAudioVideoDataCallBack_with_deviceID:(NSString *)deviceID
+                                            resultBlock:(playBackVideoOrAudioDataRetultBlock)resultBlock;
+
+/// 移除 音频 和 视频 回调
+/// @param deviceID 设备id
+- (void)removePlaybackAudioVideoDataCallBack_with_deviceID:(NSString *)deviceID;
+
 /// 开始录像回放
 /// @param deviceID 设备id
 /// @param path 回放路径
@@ -107,10 +118,12 @@ typedef void(^resultBlock)(NSInteger code);
 - (void)stopPlayback_with_deviceID:(NSString *)deviceID
                        resultBlock:(resultBlock)resultBlock;
 
-/// 暂停录像回放
+/// 暂停/继续录像回放
 /// @param deviceID 设备id
+/// @param contin 暂停/继续
 /// @param resultBlock 回调
 - (void)pausePlayback_with_deviceID:(NSString *)deviceID
+                             contin:(BOOL)contin
                         resultBlock:(resultBlock)resultBlock;
 
 /// 回放快进
@@ -282,6 +295,18 @@ typedef void(^resultBlock)(NSInteger code);
                                              vi:(int)vi
                                            date:(int)date
                                     resultBlock:(resultBlock)resultBlock;
+
+/// 播放时间轴回放视频
+/// @param deviceID 设备id
+/// @param vi 表示是第几个摄像头，(设备可能含有多个摄像头，暂时取 0 - 即第一个摄像头)
+/// @param date 时间格式：20200214
+/// @param time 时间格式：20200214
+/// @param resultBlock 回调
+- (void)starPlayback_timeLine_with_deviceID:(NSString *)deviceID
+                                         vi:(int)vi
+                                       date:(int)date
+                                       time:(int)time
+                                resultBlock:(resultBlock)resultBlock;
 
 /// 获取远程 Page 文件
 /// @param deviceID 设备id

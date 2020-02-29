@@ -38,6 +38,7 @@ extern RecordDatePeriod_t gRecordDatePeriod;
     
     BOOL exitVideoList;
     NSTimer *recordTimer;
+    H26xHwDecoder *h264Decode;
 }
 
 @property (nonatomic, assign) NSInteger recordTimes;
@@ -88,8 +89,9 @@ extern RecordDatePeriod_t gRecordDatePeriod;
 {
     [super viewDidLoad];
     _recordTimes = 2;
-    [self addMP4_RunloopObserver];
     nextDayBtn.hidden = YES;
+    h264Decode = [[H26xHwDecoder alloc] init];
+    h264Decode.delegate = self;
     [timeLineContent addSubview:self.zfTimeView];
 
     NSDate *date = [NSDate date];
@@ -103,43 +105,9 @@ extern RecordDatePeriod_t gRecordDatePeriod;
     [self fireTimer];
     [self getTimeLineDataWith:dateLAB.text];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti_timeLineInfo_1075_key:) name:noti_timeLineInfo_1075_KEY object:nil];
-//    [[KHJDeviceManager sharedManager] getRecordConfig_with_deviceID:self.deviceID json:@"" resultBlock:^(NSInteger code) {
-//        CLog(@"code = %ld",(long)code);
-//    }];
-//    // 1、获取录像配置信息：获取文件路径
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti_1073_key:) name:noti_1073_KEY object:nil];
-//    // 3、通过文件路径 + 文件数量 => 获取 回放视频列表
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti_1077_key:) name:noti_1077_KEY object:nil];
+ 
+    [self addMP4_RunloopObserver];
 }
-
-//- (void)noti_1073_key:(NSNotification *)noti
-//{
-//    NSString *date = [dateLAB.text stringByReplacingOccurrencesOfString:@"_" withString:@""];
-//    NSString *one = [date substringWithRange:NSMakeRange(0, 6)];
-//    NSString *two = [date substringWithRange:NSMakeRange(6, 2)];
-//    NSString *rootdir = KHJString(@"%@/%@",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],KHJString(@"%@/%@",one,two));
-//    int vi = 0;
-//    // 0: 只扫描文件   1: 扫描目录和文件
-//    int mode = 1;
-//    // 文件开始时间
-//    int start = 0;
-//    // 文件结束时间
-//    int end = 240000;
-//
-//    // 组织json字符串，lir是list remote简写，p为path简写，si是sensor index简写，m是mode简写，st是start time，e是end time
-//    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//    NSMutableDictionary *body = [NSMutableDictionary dictionary];
-//    [body setValue:rootdir forKey:@"p"];
-//    [body setValue:@(vi) forKey:@"si"];
-//    [body setValue:@(mode) forKey:@"m"];
-//    [body setValue:@(start) forKey:@"st"];
-//    [body setValue:@(end) forKey:@"e"];
-//    [dict setValue:body forKey:@"lir"];
-//    NSString *json = [KHJUtility convertToJsonData:(NSDictionary *)dict];
-//    [[KHJDeviceManager sharedManager] getRemoteDirInfo_with_deviceID:self.deviceID json:json resultBlock:^(NSInteger code) {
-//        CLog(@"code = %ld",(long)code);
-//    }];
-//}
 
 - (void)noti_timeLineInfo_1075_key:(NSNotification *)noti
 {
@@ -185,44 +153,6 @@ extern RecordDatePeriod_t gRecordDatePeriod;
         });
     }];
 }
-
-//- (void)noti_1077_key:(NSNotification *)obj
-//{
-//    [self reloadTableView];
-//}
-
-//- (void)reloadTableView
-//{
-//    WeakSelf
-//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//        for (list<RemoteFileInfo_t*>::iterator i= mCurRemoteDirInfo->mRemoteFileInfoList.begin(); i != mCurRemoteDirInfo->mRemoteFileInfoList.end(); i++){
-//            RemoteFileInfo_t *rfi = *i;
-//            NSMutableDictionary *body = [NSMutableDictionary dictionary];
-//            NSString *name = [NSString stringWithUTF8String:rfi->name.c_str()];
-//            NSArray *timeArr1 = [name componentsSeparatedByString:@"."];
-//            NSArray *timeArr2 = [timeArr1.firstObject componentsSeparatedByString:@"-"];
-//            NSString *start = timeArr2.firstObject;
-//            NSString *end = timeArr2.lastObject;
-//            [body setValue:[NSString stringWithUTF8String:rfi->name.c_str()] forKey:@"name"];
-//            [body setValue:[NSString stringWithUTF8String:rfi->path.c_str()] forKey:@"videoPath"];
-//            [body setValue:@(rfi->size) forKey:@"size"];
-//            [body setValue:start forKey:@"start"];
-//            [body setValue:end forKey:@"end"];
-//            [weakSelf.listArr addObject:body];
-//        }
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(exitListData:)]) {
-//                if (weakSelf.listArr.count > 0) {
-//                    [weakSelf.delegate exitListData:YES];
-//                }
-//                else {
-//                    [weakSelf.delegate exitListData:NO];
-//                }
-//            }
-//            [self->contentList reloadData];
-//        });
-//    });
-//}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -309,6 +239,7 @@ extern RecordDatePeriod_t gRecordDatePeriod;
 - (void)getTimeLineDataWith:(NSString *)date
 {
     NSString *time = [date stringByReplacingOccurrencesOfString:@"_" withString:@""];
+    // 获取远程回放的配置信息
     [[KHJDeviceManager sharedManager] getRemoteDirInfo_timeLine_with_deviceID:self.deviceID vi:0 date:[time intValue] resultBlock:^(NSInteger code) {}];
 }
 
@@ -322,23 +253,28 @@ extern RecordDatePeriod_t gRecordDatePeriod;
 - (void)LineBeginMove
 {
     CLog(@"LineBeginMove 停止回放");
-//    [[KHJDeviceManager sharedManager] stopPlayback_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
+    [[KHJDeviceManager sharedManager] stopPlayback_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
 }
 
 - (void)timeLine:(ZFTimeLine *)timeLine moveToDate:(NSTimeInterval)date
 {
     CLog(@" timeLine: moveToDate: %f",date - _zeroTimeInterval);
-//    NSInteger index = [KHJCalculate binarySearchSDCardStart:self.videoList target:date];
-//    if (index == -1) {
-//        [self.view makeToast:@"当前没有视频！"];
-//    }
-//    else {
-//        [self.view makeToast:KHJString(@"当前第 %ld 个视频，总共 %ld 个视频", index, self.videoList.count)];
-//    }
-//    if (self.videoList.count < index) {
-//        return;
-//    }
-//    self.currentIndex = index;
+    NSInteger index = [KHJCalculate binarySearchSDCardStart:self.videoList target:date];
+    if (self.videoList.count < index) {
+        return;
+    }
+    if (index == -1) {
+        [self.view makeToast:@"当前没有视频！"];
+    }
+    else {
+        KHJVideoModel *info = self.videoList[index];
+        [self.view makeToast:KHJString(@"当前第 %ld 个视频，总共 %ld 个视频", index, self.videoList.count)];
+        int date_int = [[dateLAB.text stringByReplacingOccurrencesOfString:@"_" withString:@""] intValue];
+        int timestamp_int = [[[KHJCalculate getTimesFromUTC:info.startTime] stringByReplacingOccurrencesOfString:@":" withString:@""] intValue];
+        // 播放回放视频
+        [[KHJDeviceManager sharedManager] starPlayback_timeLine_with_deviceID:self.deviceID vi:0 date:date_int time:timestamp_int resultBlock:^(NSInteger code) {}];
+    }
+    self.currentIndex = index;
 }
 
 #pragma mark - Timer ---------------------------------------------------------------
@@ -428,6 +364,46 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
     }
     [vc.MP4_taskArray removeObjectAtIndex:0];
     vc.recordTimes = 2;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self registerCallBack];
+};
+
+// 注册回放监听
+- (void)registerCallBack
+{
+    WeakSelf
+    [[KHJDeviceManager sharedManager] setPlaybackAudioVideoDataCallBack_with_deviceID:self.deviceID resultBlock:^(const char * _Nonnull uuid, int type, unsigned char * _Nonnull data, int len, long timestamp) {
+        [weakSelf.activityView stopAnimating];
+        self->playerImageView.hidden = NO;
+        if (type < 20) {
+            // h264数据
+            CLog(@"h264数据");
+            [weakSelf getPlayBackVideo_With_deviceID:uuid dataType:type data:data length:len timeStamps:timestamp];
+        }
+        else if (type >= 50) {
+            // h265数据
+            CLog(@"h265数据");
+            [weakSelf getPlayBackVideo_With_deviceID:uuid dataType:type data:data length:len timeStamps:timestamp];
+        }
+        else {
+            // 音频数据
+        }
+    }];
+}
+
+/// 获取sd卡回放 视频数据
+/// @param deviceID 设备id
+/// @param dataType 数据类型
+/// @param data 音频 或 视频
+/// @param length 数据长度
+/// @param timeStamps 时间戳
+- (void)getPlayBackVideo_With_deviceID:(const char* )deviceID dataType:(int)dataType data:(unsigned char *)data length:(int)length timeStamps:(long)timeStamps
+{
+    [h264Decode decodeH26xVideoData:data videoSize:length frameType:dataType timestamp:timeStamps];
 }
 
 @end

@@ -47,6 +47,18 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+//    NSMutableDictionary *body = [NSMutableDictionary dictionary];
+//    [body setValue:@"000039" forKey:@"end"];
+//    [body setValue:@"000023-000039.avi" forKey:@"name"];
+//    [body setValue:@"779994" forKey:@"size"];
+//    [body setValue:@"000023" forKey:@"start"];
+//    [body setValue:@"/mnt/s0/media/vi0/202002/29/000023-000039.avi" forKey:@"videoPath"];
+//    KHJBackPlayerList_playerVC *vc = [[KHJBackPlayerList_playerVC alloc] init];
+//    vc.body = body;
+//    vc.deviceID = self.deviceID;
+//    [self.navigationController pushViewController:vc animated:YES];
+
     if (self.exitVideoList) {
         [self reloadTableView];
     }
@@ -149,6 +161,7 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
     UIAlertAction *config           = [UIAlertAction actionWithTitle:KHJLocalizedString(@"播放视频", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         KHJBackPlayerList_playerVC *vc = [[KHJBackPlayerList_playerVC alloc] init];
         vc.body = body;
+        vc.deviceID = weakSelf.deviceID;
         [weakSelf.navigationController pushViewController:vc animated:YES];
     }];
     UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"删除视频", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

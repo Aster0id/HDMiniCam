@@ -166,15 +166,15 @@
 //    return currentDateString;
 //}
 //
-//// 时间戳转字符串，获取、时、分、秒
-//+ (NSString *)getTimesFromUTC:(NSTimeInterval)timeInterval
-//{
-//    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-//    [format setDateFormat:@"HH:mm:ss"];
-//    NSDate *newDate = [[NSDate alloc] initWithTimeIntervalSince1970:timeInterval];
-//    NSString *currentDateString = [format stringFromDate:newDate];
-//    return currentDateString;
-//}
+// 时间戳转字符串，获取、时、分、秒
++ (NSString *)getTimesFromUTC:(NSTimeInterval)timeInterval
+{
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"HH:mm:ss"];
+    NSDate *newDate = [[NSDate alloc] initWithTimeIntervalSince1970:timeInterval];
+    NSString *currentDateString = [format stringFromDate:newDate];
+    return currentDateString;
+}
 //// 时间戳转字符串，获取年、月、日
 //+ (NSString *)getYearFromUTC:(NSTimeInterval)timeInterval
 //{
@@ -676,14 +676,14 @@
 //    return  (long)[datestr timeIntervalSince1970];
 //}
 //
-//+ (NSString *)getDateFromTimes:(NSTimeInterval)timeInterval
-//{
-//    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-//    [format setDateFormat:@"yyyyMMdd"];
-//    NSDate *newDate = [[NSDate alloc] initWithTimeIntervalSince1970:timeInterval];
-//    NSString *currentDateString = [format stringFromDate:newDate];
-//    return currentDateString;
-//}
++ (NSString *)getDateFromTimes:(NSTimeInterval)timeInterval
+{
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"yyyyMMdd"];
+    NSDate *newDate = [[NSDate alloc] initWithTimeIntervalSince1970:timeInterval];
+    NSString *currentDateString = [format stringFromDate:newDate];
+    return currentDateString;
+}
 //
 //+ (NSString *)getTimewFromTimes:(NSTimeInterval)timeInterval
 //{

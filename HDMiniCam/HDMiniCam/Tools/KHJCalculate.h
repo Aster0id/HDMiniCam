@@ -43,8 +43,8 @@
 //+ (NSString*)formateTimeStamp:(NSString *)timeStampString;
 //// 获取时间戳
 //+ (NSInteger)getUTCTime:(NSString *)string;
-//// 时间戳转字符串，获取、时、分、秒
-//+ (NSString *)getTimesFromUTC:(NSTimeInterval)timeInterval;
+// 时间戳转字符串，获取、时、分、秒
++ (NSString *)getTimesFromUTC:(NSTimeInterval)timeInterval;
 //// 邮箱验证
 //+ (BOOL)isAvailableEmail:(NSString *)email;
 //// 手机号验证
@@ -79,8 +79,8 @@
 + (NSString *)valueImageSize:(NSString *)path;
 //// YYYY_MM_dd HH:mm:ss 时间字符串 转 时间戳
 //+ (NSTimeInterval)getUTCFromDateString:(NSString *)dateStr;
-//// 时间戳 转 yyyyMMdd 时间字符串
-//+ (NSString *)getDateFromTimes:(NSTimeInterval)timeInterval;
+// 时间戳 转 yyyyMMdd 时间字符串
++ (NSString *)getDateFromTimes:(NSTimeInterval)timeInterval;
 //// 时间戳 转 yyyy_MM_dd 时间字符串
 //+ (NSString *)getDateFromTimes2:(NSTimeInterval)timeInterval;
 //

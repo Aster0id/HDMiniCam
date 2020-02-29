@@ -10,12 +10,13 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KHJBackPlayerList_playerVC">
             <connections>
+                <outlet property="activeView" destination="4IX-Z3-feL" id="oKl-SL-PRA"/>
                 <outlet property="endTimeLab" destination="Qav-eM-LVD" id="3cG-Ba-VcD"/>
+                <outlet property="nameLab" destination="tzb-4V-cbQ" id="tqn-pb-fSf"/>
                 <outlet property="playBtn" destination="bAZ-au-Vla" id="Tdj-Bz-XaU"/>
                 <outlet property="playerImageView" destination="aIe-Fw-qSX" id="heD-yf-bJO"/>
                 <outlet property="sliderView" destination="uln-Wd-zpM" id="Agf-iK-1bY"/>
                 <outlet property="startTimeLab" destination="OdF-be-7m1" id="M4D-Ej-1TK"/>
-                <outlet property="titleLab" destination="tzb-4V-cbQ" id="hoS-U8-EGf"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -147,16 +148,21 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QT4-Ng-hYr">
                             <rect key="frame" x="0.0" y="210.5" width="414" height="233"/>
                             <subviews>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="4IX-Z3-feL">
+                                    <rect key="frame" x="197" y="106.5" width="20" height="20"/>
+                                </activityIndicatorView>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aIe-Fw-qSX">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
                                 </imageView>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="aIe-Fw-qSX" firstAttribute="top" secondItem="QT4-Ng-hYr" secondAttribute="top" id="0uA-A4-EWt"/>
+                                <constraint firstItem="4IX-Z3-feL" firstAttribute="centerY" secondItem="QT4-Ng-hYr" secondAttribute="centerY" id="Dfo-yC-fPR"/>
                                 <constraint firstAttribute="trailing" secondItem="aIe-Fw-qSX" secondAttribute="trailing" id="MrL-0C-X1o"/>
                                 <constraint firstAttribute="bottom" secondItem="aIe-Fw-qSX" secondAttribute="bottom" id="b94-qz-av4"/>
                                 <constraint firstItem="aIe-Fw-qSX" firstAttribute="leading" secondItem="QT4-Ng-hYr" secondAttribute="leading" id="daM-gA-YC5"/>
+                                <constraint firstItem="4IX-Z3-feL" firstAttribute="centerX" secondItem="QT4-Ng-hYr" secondAttribute="centerX" id="ol5-ou-WXg"/>
                                 <constraint firstAttribute="width" secondItem="QT4-Ng-hYr" secondAttribute="height" multiplier="16:9" id="vWD-c8-CTt"/>
                             </constraints>
                         </view>
