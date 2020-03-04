@@ -44,12 +44,35 @@
         info = list[i];
         [[KHJDeviceManager sharedManager] connect_with_deviceID:info.deviceID password:info.devicePassword resultBlock:^(NSInteger code) {}];
     }
-    
+
     // 如果是iOS13 未开启地理位置权限 需要提示一下
     if ([[UIDevice currentDevice] systemVersion].floatValue >= 13) {
         [self.locationManager requestWhenInUseAuthorization];
     }
     [self initHomeView];
+    
+//    NSLog(@"syncConcurrentMethod---begin");
+//
+//    dispatch_queue_t queue= dispatch_queue_create("test.queue", DISPATCH_QUEUE_SERIAL);
+//
+//    dispatch_sync(queue, ^{
+//        for (int i = 0; i < 20; ++i) {
+//            NSLog(@"1------%@",[NSThread currentThread]);
+//        }
+//    });
+//    dispatch_sync(queue, ^{
+//        for (int i = 0; i < 20; ++i) {
+//            NSLog(@"2------%@",[NSThread currentThread]);
+//        }
+//    });
+//    dispatch_sync(queue, ^{
+//        for (int i = 0; i < 20; ++i) {
+//            NSLog(@"3------%@",[NSThread currentThread]);
+//        }
+//    });
+//
+//    NSLog(@"syncConcurrentMethod---end");
+    
     return YES;
 }
 

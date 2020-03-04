@@ -8,6 +8,7 @@
 
 #import "KHJRecordListVC.h"
 #import "KHJRecordListCell.h"
+#import "KHJRecordListVC_Two.h"
 
 @interface KHJRecordListVC ()<UITableViewDelegate, UITableViewDataSource, KHJRecordListCellDelegate>
 
@@ -15,7 +16,6 @@
     __weak IBOutlet UITableView *contentTBV;
     
     ///
-    __weak IBOutlet UIButton *leftNavi;
     __weak IBOutlet UIView *contentNavi;
     __weak IBOutlet UIView *naviOne;
     __weak IBOutlet UIImageView *naviOneIMGV;
@@ -30,17 +30,33 @@
     ///
 }
 
-@property (nonatomic, copy) NSString *deviceID;
+@property (nonatomic, strong) NSMutableArray *deviceList;
+@property (nonatomic, strong) NSMutableArray *videoList;
 @property (nonatomic, assign) BOOL isEdit;
 
 @end
 
 @implementation KHJRecordListVC
 
+- (NSMutableArray *)videoList
+{
+    if (!_videoList) {
+        _videoList = [NSMutableArray array];
+    }
+    return _videoList;
+}
+
+- (NSMutableArray *)deviceList
+{
+    if (!_deviceList) {
+        _deviceList = [NSMutableArray array];
+    }
+    return _deviceList;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.deviceID = @"IPC123123131231";
     [self addLayer];
     [self changeCurrentSatus:naviOne imageView:naviOneIMGV];
 }
@@ -49,22 +65,13 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    self.deviceList = [[KHJDataBase sharedDataBase] getAllDeviceInfo];
+    [contentTBV reloadData];
 }
 
 - (IBAction)btn:(UIButton *)sender
 {
-    if (sender.tag == 10) {
-        // 编辑、完成编辑
-        _isEdit = !_isEdit;
-        if (_isEdit){
-            [leftNavi setTitle:@"完成" forState:UIControlStateNormal];
-        }
-        else{
-            [leftNavi setTitle:@"编辑" forState:UIControlStateNormal];
-        }
-        [contentTBV reloadData];
-    }
-    else if (sender.tag == 20) {
+    if (sender.tag == 20) {
         // 查看手机录制的视频列表
         [self changeCurrentSatus:naviOne imageView:naviOneIMGV];
     }
@@ -80,31 +87,13 @@
         // 查看已下载的视频列表
         [self changeCurrentSatus:naviFour imageView:naviFourIMGV];
     }
-    else if (sender.tag == 60) {
-        // 查看设备列表
-
-    }
 }
 
 #pragma mark - UITableViewDelegate && UITableViewDataSource
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *head = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 30)];
-    head.backgroundColor = UIColorFromRGB(0x8a8a8a);
-    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(12, 0, SCREEN_WIDTH - 24, 30)];
-    lab.font = [UIFont systemFontOfSize:14];
-    lab.textColor = UIColor.whiteColor;
-    lab.text = self.deviceID;
-    [head addSubview:lab];
-    return head;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 30;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.deviceList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -113,16 +102,13 @@
     if (!cell) {
         cell = [[NSBundle mainBundle] loadNibNamed:@"KHJRecordListCell" owner:nil options:nil][0];
     }
-    if (_isEdit){
-        cell.btn.enabled = NO;
-        cell.leftContraint.constant = 60;
-    }
-    else{
-        cell.btn.enabled = YES;
-        cell.leftContraint.constant = 0;
-    }
     cell.delegate = self;
     cell.tag = FLAG_TAG + indexPath.row;
+    KHJDeviceInfo *info = self.deviceList[indexPath.row];
+    cell.idLab.text = info.deviceName;
+    cell.nameLab.text = info.deviceID;
+    NSArray *list = [[KHJHelpCameraData sharedModel] getmp4VideoArray_with_deviceID:info.deviceID];
+    cell.numberLab.text = KHJString(@"共 %d 个",(int)list.count);
     return cell;
 }
 
@@ -163,13 +149,13 @@
     }
 }
 
-- (void)contentWith:(NSInteger)row{
+- (void)contentWith:(NSInteger)row
+{
     CLog(@"contentWith Row = %ld",(long)row);
+    KHJRecordListVC_Two *vc = [[KHJRecordListVC_Two alloc] init];
+    vc.info = self.deviceList[row];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
-
-- (void)deleteWith:(NSInteger)row {
-    CLog(@"deleteWith Row = %ld",(long)row);
-}
-
 
 @end

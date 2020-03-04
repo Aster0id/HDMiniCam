@@ -638,6 +638,18 @@ int __declspec(dllexport) _stdcall IPCNetStartPlaybackAtTimeR(const char* uuid, 
 
 
 //单文件录像回放
+//回放音视频接口
+/*
+//type含义如下
+if(type<20){
+	//H624
+}else if(type>=20 && type<=30){
+	//audio
+}else if(type>=50){
+	//h265
+}
+//timestamp 毫秒为单位，表示从开始播放的时长，当前播放位置的时间戳
+*/
 typedef void(*OnPlaybackAudioVideoDataCallBack_t)(const char*uuid,int type,unsigned char*data,int len,long timestamp);
 int __declspec(dllexport) _stdcall IPCNetSetPlaybackAudioVideoDataCallBack(const char* uuid,OnPlaybackAudioVideoDataCallBack_t cb);
 //start play back, the video will come from OnPlaybackAudioVideoDataCallBack_t which set by IPCNetSetPlaybackAudioVideoDataCallBack
@@ -686,19 +698,32 @@ int __declspec(dllexport) _stdcall IPCNetSetDenoiseSettingR(const char* uuid,con
 //
 typedef void* RecSess_t;
 /*
-void*record_session = IPCNetStartRecordLocalVideo("test.ts", 2, 640, 360, 30, 0, 8000, 1);
-if(record_session!=NULL){
-	int type=0;
-	int ret = IPCNetPutLocalVideoFrame(session, type, const char*data, int len, unsigned long long timestamp);
-}
+//only mp4 support!
+例子请见sample_code.cpp 的 video record start 
+startVideoRecord/putVideoAudioData
 */
+typedef enum IPCNET_VIDEO_ENCODE_TYPE{
+	IPCNET_VIDEO_ENCODE_TYPE_H264 = 0,
+	IPCNET_VIDEO_ENCODE_TYPE_MJPG = 1,
+	IPCNET_VIDEO_ENCODE_TYPE_H265 = 2,
+}IPCNET_VIDEO_ENCODE_TYPE_et;
+typedef enum IPCNET_AUDIO_ENCODE_TYPE{
+	IPCNET_AUDIO_ENCODE_TYPE_G711U = 0,
+	IPCNET_AUDIO_ENCODE_TYPE_G711A = 1,
+	IPCNET_AUDIO_ENCODE_TYPE_PCM = 2,
+	IPCNET_AUDIO_ENCODE_TYPE_AAC = 3,
+}IPCNET_AUDIO_ENCODE_TYPE_et;
 ////0:h264,1:mjpg,2:h265 and so on.
-/*RecSess_t __declspec(dllexport) _stdcall IPCNetStartRecordLocalVideo(const char*path, int videoType, int width, int height, int fps,
-	int audioType, int sampleRate, int channels);
+//0:g711u,1:g711a,2:pcm,3:aac
+RecSess_t __declspec(dllexport) _stdcall IPCNetStartRecordLocalVideo(const char*path, IPCNET_VIDEO_ENCODE_TYPE_et videoType, int fps,
+	IPCNET_AUDIO_ENCODE_TYPE_et audioType, int sampleRate, int bitWidth, int channels);
+//视频真正开始录制之前，需要输入PPS/SPS/VPS，也可以输入PPS/SPS/VPS与I帧复合的视频帧
+//最好第一帧是PPS/SPS/VPS与I帧复合的视频帧，这样录制的视频开始时间才是及时生效的，否则会等待PPS/SPS/VPS以及I帧的到来
+//I帧就是关键帧IDR
 int __declspec(dllexport) _stdcall IPCNetPutLocalRecordVideoFrame(RecSess_t session, int type, const char*data, int len, unsigned long long timestamp);
 int __declspec(dllexport) _stdcall IPCNetPutLocalRecordAudioFrame(RecSess_t session, int type, const char*data, int len, unsigned long long timestamp);
 void __declspec(dllexport) _stdcall IPCNetFinishLocalRecord(RecSess_t session);
-*/
+
 
 #ifdef __cplusplus
 }

@@ -62,7 +62,7 @@ typedef struct {
 	struct list_head mVideoFramePackageList;
     pthread_mutex_t mVideoFramePackageListLock;
     BOOL mDecodeThreadRunning;
-	NSThread *mNSThread;
+	NSThread*mNSThread;
 }
 @end
 

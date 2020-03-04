@@ -21,8 +21,6 @@ const char *mCurViewPath_date;
 
 // 录像配置信息    - 结构体 - 用户获取视频路径
 IPCNetRecordCfg_st recordCfg;
-// 时间轴数据存储  - 结构体
-RecordDatePeriod_t gRecordDatePeriod;
 
 static int mNextStartIndex=0;
 static int mTotalNum=0;
@@ -30,7 +28,6 @@ static RemoteDirInfo_t*mRemoteRootDirInfo,mSelectedRemoteDirInfo;
 RemoteDirInfo_t*mCurRemoteDirInfo;
 
 //RemoteDirInfo_t 在 JSONStructProtocal.h 定义
-
 @interface KHJDeviceManager ()
 {
     
@@ -425,7 +422,7 @@ void OnSetPlaybackAudioVideoDataCallBackCmdResult(const char*uuid,int type,unsig
     });
 }
 
-/// 开始录像回放                  第二步
+/// 开始视频回放                  第二步
 /// @param deviceID 设备id
 /// @param path 回放路径
 /// @param resultBlock 回调
@@ -434,7 +431,7 @@ void OnSetPlaybackAudioVideoDataCallBackCmdResult(const char*uuid,int type,unsig
                         resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetStartPlaybackR(deviceID.UTF8String, path.UTF8String, OnStartPlaybackCmdResult);
-    CLog(@"开始录像回放，ret = %d",ret);
+    CLog(@"开始视频回放，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0 && ret <= 100) {
            resultBlock(ret);
@@ -447,14 +444,14 @@ void OnStartPlaybackCmdResult(int cmd,const char*uuid,const char*json)
     CLog(@"OnStartPlaybackCmdResult %s cmd:%d uuid:%s json:%s\n",__func__,cmd, uuid, json);
 }
 
-/// 停止录像回放
+/// 停止视频回放
 /// @param deviceID 设备id
 /// @param resultBlock 回调
 - (void)stopPlayback_with_deviceID:(NSString *)deviceID
                        resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetStopPlaybackR(deviceID.UTF8String, OnGetCmdResult);
-    CLog(@"停止录像回放，ret = %d",ret);
+    CLog(@"停止视频回放，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0 && ret <= 100) {
            resultBlock(ret);
@@ -462,7 +459,7 @@ void OnStartPlaybackCmdResult(int cmd,const char*uuid,const char*json)
     });
 }
 
-/// 暂停录像回放
+/// 暂停视频回放
 /// @param deviceID 设备id
 /// @param contin 暂停/继续
 /// @param resultBlock 回调
@@ -472,14 +469,14 @@ void OnStartPlaybackCmdResult(int cmd,const char*uuid,const char*json)
 {
     if (!contin) {
         int ret = IPCNetRestorePlaybackAfterPause(deviceID.UTF8String);
-//        CLog(@"暂停播放录像，ret = %d",ret);
+//        CLog(@"暂停播放回放视频，ret = %d",ret);
         dispatch_async(dispatch_get_main_queue(), ^{
            resultBlock(ret);
         });
     }
     else {
         int ret = IPCNetPausePlaybackR(deviceID.UTF8String, OnGetCmdResult);
-//        CLog(@"继续播放录像，ret = %d",ret);
+//        CLog(@"继续播放回放视频，ret = %d",ret);
         dispatch_async(dispatch_get_main_queue(), ^{
            resultBlock(ret);
         });
@@ -763,7 +760,6 @@ void OnSearchDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
 
 void OnGetRecordConfCmdResult(int cmd,const char*uuid,const char*json)
 {
-    
     JSONObject jsdata(json);//解析json
     Log("%s cmd:%d uuid:%s json:%s\n",__func__,cmd, uuid, json);
     recordCfg.parseJSON(jsdata);
@@ -786,6 +782,25 @@ void OnGetRecordConfCmdResult(int cmd,const char*uuid,const char*json)
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       resultBlock(ret);
 //    });
+}
+
+//static int gStartVideoRecord = 0;
+//static char gVideoRecordPath[1024]={0};
+//static RecSess_t gVideoRecordSession=NULL;
+
+- (void)startRecord_with_DeviceID:(NSString *)deviceID
+                             path:(NSString *)path
+                     recordStatus:(int)recordStatus
+                      resultBlock:(resultBlock)resultBlock
+{
+    if (recordStatus == 1) {
+//        memset(path.UTF8String, 0, sizeof(path.UTF8String));
+//        strncmp(path.UTF8String, path, sizeof(path.UTF8String));
+//        int ret = IPCNetStartRecordLocalVideo(<#const char *path#>, <#IPCNET_VIDEO_ENCODE_TYPE_et videoType#>, <#int fps#>, <#IPCNET_AUDIO_ENCODE_TYPE_et audioType#>, <#int sampleRate#>, <#int bitWidth#>, <#int channels#>)
+    }
+    else {
+        
+    }
 }
 
 /// 获取远程目录信息

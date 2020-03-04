@@ -18,6 +18,10 @@
 #import <Photos/PHPhotoLibrary.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
+// 是否直播录屏
+extern KHJLiveRecordType liveRecordType;
+extern NSString *liveRecordVideoPath;
+
 @interface KHJVideoPlayer_sp_VC ()<H26xHwDecoderDelegate>
 {
     __weak IBOutlet UIView *slideView;
@@ -62,9 +66,29 @@
 @property (nonatomic, strong) NSMutableDictionary *_1497_body;
 @property (nonatomic, strong) NSMutableDictionary *change_1497_body;
 
+// 音频处理模块
+// 音频会话（AudioSession）:其用于管理与获取iOS设备音频的硬件信息，并且是以单例的形式存在。
+@property (nonatomic, strong) AVAudioSession *audioSession;
+
 @end
 
 @implementation KHJVideoPlayer_sp_VC
+
+- (AVAudioSession *)audioSession
+{
+    if (!_audioSession) {
+        _audioSession = [AVAudioSession sharedInstance];
+        // 根据我们需要硬件设备提供的能力来设置类别：
+        [_audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+        // 设置I/O的Buffer,Buffer越小则说明延迟越低：
+        NSTimeInterval bufferDuration = 0.002;
+        [_audioSession setPreferredIOBufferDuration:bufferDuration error:nil];
+        double hwSampleRate = 44100.0;
+        [_audioSession setPreferredSampleRate:hwSampleRate error:nil];
+        [_audioSession setActive:YES error:nil];
+    }
+    return _audioSession;
+}
 
 - (NSMutableDictionary *)_1497_body
 {
@@ -85,12 +109,51 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self customizeDataSource];
+}
+
+- (void)customizeDataSource
+{
     [self addNoti];
     sliderControl.continuous = NO;
     tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
     [playerImageView addGestureRecognizer:tap];
     [self startVideo];
+}
+
+- (void)createAudioUnit
+{
+    // 设置音频I/O口 --> AudioComponentDescription
+//    OSStatus status;
+//    AudioComponentDescription  desc;
+//    desc.componentType         = kAudioUnitType_Output;         //音频输出
+//    desc.componentSubType      = kAudioUnitSubType_RemoteIO;    //输出通道
+//    desc.componentFlags        = 0;                             //默认“0”
+//    desc.componentFlagsMask    = 0;                             //默认“0”
+//    desc.componentManufacturer = kAudioUnitManufacturer_Apple;  //制造商信息
     
+    // 寻找音频组件 --> AudioComponent
+//    AudioComponent inputComponent = AudioComponentFindNext(NULL, &desc);    //找音频部件
+    
+    // 建立音频组件 --> AudioComponentInstance
+//    status = AudioComponentInstanceNew(inputComponent, &au_player);         //实现这个部件单元
+}
+
+- (void)startVideo
+{
+    [activeView startAnimating];
+    [[KHJDeviceManager sharedManager] startGetVideo_with_deviceID:self.deviceID quality:1 resultBlock:^(NSInteger code) {}];
+    [[KHJDeviceManager sharedManager] startGetAudio_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self getVideoStatus];
+}
+
+- (void)getVideoStatus
+{
     /// 获取当前视频的分辨率
     [[KHJDeviceManager sharedManager] getQualityLevel_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {
         CLog(@"___code = %ld",(long)code);
@@ -98,14 +161,6 @@
     /// 刷新_1497_body
     [[KHJDeviceManager sharedManager] getSaturationLevel_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {
         CLog(@"code = %ld",(long)code);
-    }];
-}
-
-- (void)startVideo
-{
-    [activeView startAnimating];
-    [[KHJDeviceManager sharedManager] startGetVideo_with_deviceID:self.deviceID quality:1 resultBlock:^(NSInteger code) {
-        CLog(@"开始获取视频 code = %ld",code);
     }];
 }
 
@@ -154,8 +209,10 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewWillDisappear:animated];
+    liveRecordType = KHJLiveRecordType_Normal;
     [[KHJDeviceManager sharedManager] stopGetVideo_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
+    [[KHJDeviceManager sharedManager] stopGetAudio_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
+    [super viewWillDisappear:animated];
 }
 
 - (IBAction)topBtn:(UIButton *)sender
@@ -374,6 +431,10 @@
     startRecord = YES;
     recordTimeView.hidden = NO;
     [self fireTimer];
+    
+    // 直播录屏，截取数据
+    liveRecordType = KHJLiveRecordType_Recording;
+    liveRecordVideoPath = [[[KHJHelpCameraData sharedModel] getTakeVideoDocPath_with_deviceID:self.deviceID] stringByAppendingPathComponent:[[KHJHelpCameraData sharedModel] getVideoNameWithType:@"mp4" deviceID:self.deviceID]];
 }
 
 /// 停止录像
@@ -381,6 +442,9 @@
 {
     startRecord = NO;
     recordTimeView.hidden = YES;
+    // 结束直播录屏，停止截取数据
+    liveRecordVideoPath = @"";
+    liveRecordType = KHJLiveRecordType_stopRecoding;
 }
 
 #pragma mark - 切换清晰度
@@ -436,11 +500,11 @@
     NSURL *url = [NSURL fileURLWithPath:filePath];
     [[PlayLocalMusic shareInstance] play:url repeates:0];
     
-    NSString *savedImagePath= [[[KHJHelpCameraData sharedModel] getTakeCameraDocPath] stringByAppendingPathComponent:[[KHJHelpCameraData sharedModel] getVideoNameWithType:@"jpg"]];
+    NSString *savedImagePath = [[[KHJHelpCameraData sharedModel] getTakeCameraDocPath_deviceID:self.deviceID] stringByAppendingPathComponent:[[KHJHelpCameraData sharedModel] getVideoNameWithType:@"jpg" deviceID:self.deviceID]];
     CLog(@"saveImagePath = %@",savedImagePath);
 
     //截取指定区域图片
-    UIImage *screenImage = [self snapsHotView:centerView];
+    UIImage *screenImage = [self snapsHotView:playerView];
     // png格式的二进制
     NSData *imagedata = UIImageJPEGRepresentation(screenImage,0.5);
     BOOL is = [imagedata writeToFile:savedImagePath atomically:YES];

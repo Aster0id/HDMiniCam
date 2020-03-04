@@ -42,14 +42,14 @@
     UIColor *returnColor = nil;
 #pragma mark - 适配iOS13
     if (@available(iOS 13.0, *)) {
-//        returnColor = [UIColor colorWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
-//            if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-//                return newColor;
-//            }
-//            else {
-//                return oldColor;
-//            }
-//        }];
+        returnColor = [UIColor colorWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
+            if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+                return newColor;
+            }
+            else {
+                return oldColor;
+            }
+        }];
     }
     else {
         returnColor = oldColor;

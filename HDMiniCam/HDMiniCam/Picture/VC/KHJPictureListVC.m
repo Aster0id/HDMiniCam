@@ -17,7 +17,6 @@
     NSInteger scrollHeight;//scroll高度
     NSInteger totalNumber;//总共所有的视频或者图片个数
     NSMutableArray *imagePathArr;//保存所有路径
-    NSString *currentPath;
     
     __weak IBOutlet UICollectionView *collectionView;
 }
@@ -40,11 +39,10 @@
 {
     self = [super init];
     if (self) {
-        _Datadic = [[NSMutableDictionary alloc] init];
-        imagePathArr = [NSMutableArray array];
-        _visibleImageViews = [[NSMutableSet alloc] initWithCapacity:0];
-        _reusedImageViews =[[NSMutableSet alloc] initWithCapacity:0];
-        
+        imagePathArr        = [NSMutableArray array];
+        _Datadic            = [[NSMutableDictionary alloc] init];
+        _visibleImageViews  = [[NSMutableSet alloc] initWithCapacity:0];
+        _reusedImageViews   =[[NSMutableSet alloc] initWithCapacity:0];
     }
     return self;
 }
@@ -71,19 +69,43 @@
     totalNumber = imagePathArr.count;
     [self.view addSubview:self.scroll_one];
     [self.view sendSubviewToBack:self.scroll_one];
-    if (imagePathArr.count > 0) {
-        
-        NSMutableArray *arr1 = [NSMutableArray array];
-        for (NSString *imagePth  in imagePathArr) {
-            NSArray *aa  = [imagePth componentsSeparatedByString:@"/"];
-            NSString *imageName = aa[2];
-            [arr1 addObject:imageName];
-        }
-        imagePathArr = [[KHJCalculate bubbleDescendingOrderSortWithArray:arr1] mutableCopy];
-        [self showImageViewAtIndex:0];
-        [self setShowPage];
-    }
     [self addCollectionView];
+
+    WeakSelf
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        if (self->imagePathArr.count > 0) {
+            NSMutableArray *arr1 = [NSMutableArray array];
+            for (NSString *imagePth  in self->imagePathArr) {
+                NSString *imageName  = [[[imagePth componentsSeparatedByString:@"/"].lastObject componentsSeparatedByString:@"-"].lastObject componentsSeparatedByString:@"."][0];
+                [arr1 addObject:imageName];
+            }
+            NSArray *array = [[KHJCalculate bubbleDescendingOrderSortWithArray:arr1] mutableCopy];
+            NSArray *array2 = [self->imagePathArr copy];
+            [self->imagePathArr removeAllObjects];
+            [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSString *string = KHJString(@"%@",obj);
+                [array2 enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if ([obj containsString:string]) {
+                        [self->imagePathArr addObject:obj];
+                        *stop = YES;
+                    }
+                }];
+            }];
+            CLog(@"imagePathArr = %@",self->imagePathArr);
+            [arr1 removeAllObjects];
+            for (NSString *imagePth  in self->imagePathArr) {
+                NSArray *aa  = [imagePth componentsSeparatedByString:@"/"];
+                NSString *imageName = KHJString(@"%@/%@",aa[1],aa[2]);
+                [arr1 addObject:imageName];
+            }
+            self->imagePathArr = [arr1 mutableCopy];
+            CLog(@"imagePathArr = %@",self->imagePathArr);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf showImageViewAtIndex:weakSelf.currentIndex];
+                [weakSelf setShowPage];
+            });
+        }
+    });
 }
 
 - (void)addNoti
@@ -95,14 +117,43 @@
 {
     [imagePathArr removeAllObjects];
     [imagePathArr addObjectsFromArray:[[KHJHelpCameraData sharedModel] getAllFile]];
-    totalNumber = imagePathArr.count;
-    NSMutableArray *arr1 = [NSMutableArray array];
-    for (NSString *imagePth  in imagePathArr) {
-        NSArray *aa  = [imagePth componentsSeparatedByString:@"/"];
-        NSString *imageName = aa[2];
-        [arr1 addObject:imageName];
-    }
-    imagePathArr = [[KHJCalculate bubbleDescendingOrderSortWithArray:arr1] mutableCopy];
+    WeakSelf
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        if (self->imagePathArr.count > 0) {
+            NSMutableArray *arr1 = [NSMutableArray array];
+            for (NSString *imagePth  in self->imagePathArr) {
+                NSString *imageName  = [[[imagePth componentsSeparatedByString:@"/"].lastObject componentsSeparatedByString:@"-"].lastObject componentsSeparatedByString:@"."][0];
+                [arr1 addObject:imageName];
+            }
+            NSArray *array = [[KHJCalculate bubbleDescendingOrderSortWithArray:arr1] mutableCopy];
+            NSArray *array2 = [self->imagePathArr copy];
+            [self->imagePathArr removeAllObjects];
+            [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSString *string = KHJString(@"%@",obj);
+                [array2 enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if ([obj containsString:string]) {
+                        [self->imagePathArr addObject:obj];
+                        *stop = YES;
+                    }
+                }];
+            }];
+            [arr1 removeAllObjects];
+            for (NSString *imagePth  in self->imagePathArr) {
+                NSArray *aa  = [imagePth componentsSeparatedByString:@"/"];
+                NSString *imageName = KHJString(@"%@/%@",aa[1],aa[2]);
+                [arr1 addObject:imageName];
+            }
+            self->imagePathArr = [arr1 mutableCopy];
+            self->totalNumber = arr1.count;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.currentIndex = 0;
+                [weakSelf showImageViewAtIndex:weakSelf.currentIndex];
+                [weakSelf setShowPage];
+                [self->collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
+                                             atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+            });
+        }
+    });
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -116,17 +167,17 @@
 
 - (void)showImageViewAtIndex:(NSInteger)index
 {
-    //先从复用池中找imageview
+    // 先从复用池中找 imageView
     AIPhotoZoom *ZoomView = [self.reusedImageViews anyObject];
-    
-    if (!ZoomView) {//没有就创建一个
+    if (!ZoomView) {
         ZoomView = [[AIPhotoZoom alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, self.scroll_one.frame.size.height)];
         ZoomView.imageNormalWidth = SCREEN_WIDTH;
         ZoomView.imageNormalHeight = 250;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageView:)];
         [ZoomView addGestureRecognizer:tap];
     }
-    else {//有的话就 把imageview移除
+    else {
+        // 有的话就 把 imageView 移除
         [self.reusedImageViews removeObject:ZoomView];
     }
     //在这里可以配置imageview
@@ -157,7 +208,7 @@
     }
     else {
         ZoomView.needScale = YES;
-        path = KHJString(@"%@/%@",[[KHJHelpCameraData sharedModel] getTakeCameraDocPath],imagePathArr[index]);;
+        path = KHJString(@"%@/%@",[[KHJHelpCameraData sharedModel] getTakeCameraDocPath_deviceID:@""],imagePathArr[index]);;
         ZoomView.imageView.image = [[UIImage alloc] initWithContentsOfFile:path];
         [ZoomView showNoCover];
     }
@@ -167,23 +218,6 @@
     [self.visibleImageViews addObject:ZoomView];
     [self.scroll_one addSubview:ZoomView];
 }
-
-#pragma mark - 滚动视图设置
-
-//- (UIScrollView *)getShowScroll
-//{
-//    if (_scroll_one == nil) {
-//        _scroll_one = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, scrollHeight)];
-//        _scroll_one.pagingEnabled = YES;
-//        _scroll_one.showsVerticalScrollIndicator = NO;
-//        _scroll_one.showsHorizontalScrollIndicator = NO;
-//        _scroll_one.delegate = self;
-//        _scroll_one.contentSize = CGSizeMake(imagePathArr.count * SCREEN_WIDTH, scrollHeight);
-//        [self.view addSubview:_scroll_one];
-//        [self.view sendSubviewToBack:_scroll_one];
-//    }
-//    return  _scroll_one;
-//}
 
 #pragma mark - UIScrollViewDelegate
 
@@ -257,6 +291,7 @@
 
 - (void)setShowPage
 {
+    self.scroll_one.contentSize = CGSizeMake(totalNumber * (int)SCREEN_WIDTH, 0);
     if (_currentIndex == totalNumber) {
         _showLabel.text = KHJString(@"%ld/%ld",(long)_currentIndex,(long)totalNumber);
         [self.scroll_one setContentOffset:CGPointMake(SCREEN_WIDTH *(_currentIndex - 1), 0)];
@@ -282,13 +317,14 @@
     AIPhotoZoom *zoomView = (AIPhotoZoom *)tap.view;
     NSString *sPath = imagePathArr[zoomView.tag];
     if ([sPath containsString:@".mp4"]) {
-        
 //        AISDCard_VideoPlayerVC *playView = [[AISDCard_VideoPlayerVC alloc] init];;
 //        playView.urlPath = sPath;
 //        [self.navigationController pushViewController:playView animated:YES];
     }
 }
-- (IBAction)deleteVedio:(UIButton *)sender {
+
+- (IBAction)deleteVedio:(UIButton *)sender
+{
     //删除图片或者视频
     //删除字典中的路径，同时删除本地沙盒图片
     [self showAlert:imagePathArr[_currentIndex]];
@@ -364,7 +400,7 @@
     collectionView.collectionViewLayout = layout;
     collectionView.showsVerticalScrollIndicator = NO;
     collectionView.showsHorizontalScrollIndicator = NO;
-    [collectionView registerNib:[UINib nibWithNibName:@"KHJPicture_oneCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"Cell"];
+    [collectionView registerNib:[UINib nibWithNibName:@"KHJPicture_oneCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"KHJPicture_oneCell"];
     [self.view addSubview:collectionView];
 }
 
@@ -377,20 +413,21 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *identifierCell = @"Cell";
+    static NSString *identifierCell = @"KHJPicture_oneCell";
     KHJPicture_oneCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifierCell forIndexPath:indexPath];
     cell.tag = indexPath.row + FLAG_TAG;
     WeakSelf
     cell.block = ^(NSInteger row) {
         [weakSelf.scroll_one setContentOffset:CGPointMake(row*SCREEN_WIDTH, 0) animated:YES];
     };
-    NSString *path = KHJString(@"%@/%@",[[KHJHelpCameraData sharedModel] getTakeCameraDocPath],imagePathArr[indexPath.row]);
+    NSString *path = KHJString(@"%@/%@",[[KHJHelpCameraData sharedModel] getTakeCameraDocPath_deviceID:@""],imagePathArr[indexPath.row]);
     UIImage *image = [[UIImage alloc] initWithContentsOfFile:path];
     cell.imageView.image = image;
     return cell;
 }
 
-- (IBAction)chooseDevice:(id)sender{
+- (IBAction)chooseDevice:(id)sender
+{
     CLog(@"选择设备");
     KHJHadBindDeviceVC *vc = [[KHJHadBindDeviceVC alloc] init];
     vc.hidesBottomBarWhenPushed = YES;

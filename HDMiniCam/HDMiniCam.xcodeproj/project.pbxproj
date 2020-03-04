@@ -154,6 +154,17 @@
 		AB52C11823FC14A300C921F1 /* KHJDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52C11723FC14A300C921F1 /* KHJDataBase.m */; };
 		AB52C11B23FC153400C921F1 /* KHJDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52C11A23FC153400C921F1 /* KHJDeviceInfo.m */; };
 		AB52C11E23FD3B3200C921F1 /* KHJErrorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52C11D23FD3B3200C921F1 /* KHJErrorManager.m */; };
+		AB5462C8240CA66A00A096ED /* libIPCNetManager_old.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5462C5240CA66900A096ED /* libIPCNetManager_old.a */; };
+		AB5462C9240CA66A00A096ED /* liblibgpac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5462C6240CA66900A096ED /* liblibgpac.a */; };
+		AB5462CA240CA66A00A096ED /* libfaac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5462C7240CA66A00A096ED /* libfaac.a */; };
+		AB5462CE240FA0A900A096ED /* KHJRecordListVC_Two.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5462CC240FA0A900A096ED /* KHJRecordListVC_Two.m */; };
+		AB5462CF240FA0A900A096ED /* KHJRecordListVC_Two.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5462CD240FA0A900A096ED /* KHJRecordListVC_Two.xib */; };
+		AB5462D3240FA1A100A096ED /* KHJRecordListCell_Two.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5462D1240FA1A100A096ED /* KHJRecordListCell_Two.m */; };
+		AB5462D4240FA1A100A096ED /* KHJRecordListCell_Two.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5462D2240FA1A100A096ED /* KHJRecordListCell_Two.xib */; };
+		AB5462D8240FB4FA00A096ED /* KHJRecordListVC_Three.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5462D6240FB4FA00A096ED /* KHJRecordListVC_Three.m */; };
+		AB5462D9240FB4FA00A096ED /* KHJRecordListVC_Three.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5462D7240FB4FA00A096ED /* KHJRecordListVC_Three.xib */; };
+		AB5462E2240FB91000A096ED /* KHJCollectionViewCell_three.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5462E0240FB91000A096ED /* KHJCollectionViewCell_three.m */; };
+		AB5462E3240FB91000A096ED /* KHJCollectionViewCell_three.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5462E1240FB91000A096ED /* KHJCollectionViewCell_three.xib */; };
 		AB5911DC23D0141A0060F05C /* KHJRecordListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5911DA23D0141A0060F05C /* KHJRecordListCell.m */; };
 		AB5911DD23D0141A0060F05C /* KHJRecordListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5911DB23D0141A0060F05C /* KHJRecordListCell.xib */; };
 		AB597B39240154D500F04F84 /* libIOTCAPIs_P2PTunnel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB597B35240154D400F04F84 /* libIOTCAPIs_P2PTunnel.a */; };
@@ -168,7 +179,7 @@
 		AB5D784B23F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5D784923F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.xib */; };
 		AB7648632405127F00D6DE1C /* KHJPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7648622405127F00D6DE1C /* KHJPickerView.m */; };
 		AB7648662405132A00D6DE1C /* JKUIPickDate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7648652405132A00D6DE1C /* JKUIPickDate.m */; };
-		AB764975240617A300D6DE1C /* KHJVideoPlayerBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB764974240617A300D6DE1C /* KHJVideoPlayerBaseVC.m */; };
+		AB764975240617A300D6DE1C /* KHJVideoPlayerBaseVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB764974240617A300D6DE1C /* KHJVideoPlayerBaseVC.mm */; };
 		AB7649782406794F00D6DE1C /* HZWPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7649772406794F00D6DE1C /* HZWPicker.m */; };
 		ABEBCDFD23CF1B6E00581AFB /* KHJPictureListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABEBCDFB23CF1B6E00581AFB /* KHJPictureListVC.xib */; };
 		ABEBCDFF23CF1B8400581AFB /* KHJPictureListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEBCDFE23CF1B8400581AFB /* KHJPictureListVC.m */; };
@@ -439,6 +450,21 @@
 		AB52C11A23FC153400C921F1 /* KHJDeviceInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJDeviceInfo.m; sourceTree = "<group>"; };
 		AB52C11C23FD3B3200C921F1 /* KHJErrorManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJErrorManager.h; sourceTree = "<group>"; };
 		AB52C11D23FD3B3200C921F1 /* KHJErrorManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJErrorManager.m; sourceTree = "<group>"; };
+		AB5462C5240CA66900A096ED /* libIPCNetManager_old.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIPCNetManager_old.a; sourceTree = "<group>"; };
+		AB5462C6240CA66900A096ED /* liblibgpac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibgpac.a; sourceTree = "<group>"; };
+		AB5462C7240CA66A00A096ED /* libfaac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfaac.a; sourceTree = "<group>"; };
+		AB5462CB240FA0A900A096ED /* KHJRecordListVC_Two.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJRecordListVC_Two.h; sourceTree = "<group>"; };
+		AB5462CC240FA0A900A096ED /* KHJRecordListVC_Two.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJRecordListVC_Two.m; sourceTree = "<group>"; };
+		AB5462CD240FA0A900A096ED /* KHJRecordListVC_Two.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJRecordListVC_Two.xib; sourceTree = "<group>"; };
+		AB5462D0240FA1A100A096ED /* KHJRecordListCell_Two.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJRecordListCell_Two.h; sourceTree = "<group>"; };
+		AB5462D1240FA1A100A096ED /* KHJRecordListCell_Two.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJRecordListCell_Two.m; sourceTree = "<group>"; };
+		AB5462D2240FA1A100A096ED /* KHJRecordListCell_Two.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJRecordListCell_Two.xib; sourceTree = "<group>"; };
+		AB5462D5240FB4FA00A096ED /* KHJRecordListVC_Three.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJRecordListVC_Three.h; sourceTree = "<group>"; };
+		AB5462D6240FB4FA00A096ED /* KHJRecordListVC_Three.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJRecordListVC_Three.m; sourceTree = "<group>"; };
+		AB5462D7240FB4FA00A096ED /* KHJRecordListVC_Three.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJRecordListVC_Three.xib; sourceTree = "<group>"; };
+		AB5462DF240FB91000A096ED /* KHJCollectionViewCell_three.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJCollectionViewCell_three.h; sourceTree = "<group>"; };
+		AB5462E0240FB91000A096ED /* KHJCollectionViewCell_three.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJCollectionViewCell_three.m; sourceTree = "<group>"; };
+		AB5462E1240FB91000A096ED /* KHJCollectionViewCell_three.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJCollectionViewCell_three.xib; sourceTree = "<group>"; };
 		AB5911D923D0141A0060F05C /* KHJRecordListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJRecordListCell.h; sourceTree = "<group>"; };
 		AB5911DA23D0141A0060F05C /* KHJRecordListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJRecordListCell.m; sourceTree = "<group>"; };
 		AB5911DB23D0141A0060F05C /* KHJRecordListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJRecordListCell.xib; sourceTree = "<group>"; };
@@ -460,7 +486,7 @@
 		AB7648642405132A00D6DE1C /* JKUIPickDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKUIPickDate.h; sourceTree = "<group>"; };
 		AB7648652405132A00D6DE1C /* JKUIPickDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKUIPickDate.m; sourceTree = "<group>"; };
 		AB764973240617A300D6DE1C /* KHJVideoPlayerBaseVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJVideoPlayerBaseVC.h; sourceTree = "<group>"; };
-		AB764974240617A300D6DE1C /* KHJVideoPlayerBaseVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJVideoPlayerBaseVC.m; sourceTree = "<group>"; };
+		AB764974240617A300D6DE1C /* KHJVideoPlayerBaseVC.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KHJVideoPlayerBaseVC.mm; sourceTree = "<group>"; };
 		AB7649762406794F00D6DE1C /* HZWPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZWPicker.h; sourceTree = "<group>"; };
 		AB7649772406794F00D6DE1C /* HZWPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZWPicker.m; sourceTree = "<group>"; };
 		ABEBCDFA23CF1B6E00581AFB /* KHJPictureListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHJPictureListVC.h; sourceTree = "<group>"; };
@@ -477,6 +503,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB5462C9240CA66A00A096ED /* liblibgpac.a in Frameworks */,
+				AB5462CA240CA66A00A096ED /* libfaac.a in Frameworks */,
 				5C3C5D45249012E93310CF7C /* Pods_HDMiniCam.framework in Frameworks */,
 				93E8A98C23E07B4B00F5DB8F /* NetworkExtension.framework in Frameworks */,
 				AB4EFA7423F6B40000D584E7 /* libFBP2P.a in Frameworks */,
@@ -485,6 +513,7 @@
 				AB597B3C240154D500F04F84 /* libIOTCAPIs_P2PTunnelT.a in Frameworks */,
 				AB597B3A240154D500F04F84 /* libIOTCAPIs_ALLT.a in Frameworks */,
 				AB597B39240154D500F04F84 /* libIOTCAPIs_P2PTunnel.a in Frameworks */,
+				AB5462C8240CA66A00A096ED /* libIPCNetManager_old.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,7 +582,7 @@
 				93C3398023CE1BA900B44E5F /* KHJBaseVC.h */,
 				93C3398523CE1BA900B44E5F /* KHJBaseVC.m */,
 				AB764973240617A300D6DE1C /* KHJVideoPlayerBaseVC.h */,
-				AB764974240617A300D6DE1C /* KHJVideoPlayerBaseVC.m */,
+				AB764974240617A300D6DE1C /* KHJVideoPlayerBaseVC.mm */,
 				93C3398423CE1BA900B44E5F /* KHJTabBarBaseVC.h */,
 				93C3397C23CE1BA800B44E5F /* KHJTabBarBaseVC.m */,
 				93C3398623CE1BA900B44E5F /* KHJBaseNavigationController.h */,
@@ -1075,6 +1104,9 @@
 				AB597B38240154D500F04F84 /* libIOTCAPIs_P2PTunnelT.a */,
 				AB4EFA7223F6B40000D584E7 /* libFBP2P.a */,
 				AB4EFA7123F6B40000D584E7 /* libIPCNetManager.a */,
+				AB5462C7240CA66A00A096ED /* libfaac.a */,
+				AB5462C5240CA66900A096ED /* libIPCNetManager_old.a */,
+				AB5462C6240CA66900A096ED /* liblibgpac.a */,
 			);
 			path = libs;
 			sourceTree = "<group>";
@@ -1085,6 +1117,12 @@
 				AB20E61123CEBF2900D2861C /* KHJRecordListVC.h */,
 				AB20E61223CEBF2900D2861C /* KHJRecordListVC.m */,
 				AB20E61323CEBF2900D2861C /* KHJRecordListVC.xib */,
+				AB5462CB240FA0A900A096ED /* KHJRecordListVC_Two.h */,
+				AB5462CC240FA0A900A096ED /* KHJRecordListVC_Two.m */,
+				AB5462CD240FA0A900A096ED /* KHJRecordListVC_Two.xib */,
+				AB5462D5240FB4FA00A096ED /* KHJRecordListVC_Three.h */,
+				AB5462D6240FB4FA00A096ED /* KHJRecordListVC_Three.m */,
+				AB5462D7240FB4FA00A096ED /* KHJRecordListVC_Three.xib */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -1095,6 +1133,12 @@
 				AB5911D923D0141A0060F05C /* KHJRecordListCell.h */,
 				AB5911DA23D0141A0060F05C /* KHJRecordListCell.m */,
 				AB5911DB23D0141A0060F05C /* KHJRecordListCell.xib */,
+				AB5462D0240FA1A100A096ED /* KHJRecordListCell_Two.h */,
+				AB5462D1240FA1A100A096ED /* KHJRecordListCell_Two.m */,
+				AB5462D2240FA1A100A096ED /* KHJRecordListCell_Two.xib */,
+				AB5462DF240FB91000A096ED /* KHJCollectionViewCell_three.h */,
+				AB5462E0240FB91000A096ED /* KHJCollectionViewCell_three.m */,
+				AB5462E1240FB91000A096ED /* KHJCollectionViewCell_three.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1207,6 +1251,7 @@
 				93C33B6A23CE20B400B44E5F /* TZAlbumCell.xib in Resources */,
 				AB30DA4623D05B0F005BD2A1 /* KHJAddDeviceListVC.xib in Resources */,
 				93C33B7A23CE20B400B44E5F /* README.md in Resources */,
+				AB5462D9240FB4FA00A096ED /* KHJRecordListVC_Three.xib in Resources */,
 				93C33B5123CE20B400B44E5F /* ZQAlterField.xib in Resources */,
 				93C33B7423CE20B400B44E5F /* TableViewArrow@2x.png in Resources */,
 				93C33B7723CE20B400B44E5F /* photo_original_def@2x.png in Resources */,
@@ -1222,6 +1267,7 @@
 				93C33B4F23CE20B400B44E5F /* ZQAlterField.xib in Resources */,
 				AB30DA5123D066F7005BD2A1 /* KHJHadBindDeviceVC.xib in Resources */,
 				93C33B6E23CE20B400B44E5F /* photo_sel_previewVc@2x.png in Resources */,
+				AB5462E3240FB91000A096ED /* KHJCollectionViewCell_three.xib in Resources */,
 				AB597B4124027A7600F04F84 /* KHJBackPlayListVC.xib in Resources */,
 				AB32F9AD2408FF1B00687054 /* KHJBackPlayerList_playerVC.xib in Resources */,
 				AB20E61B23CEBF4900D2861C /* KHJAlarmListVC.xib in Resources */,
@@ -1243,6 +1289,8 @@
 				93C33B7323CE20B400B44E5F /* photo_def_photoPickerVc@2x.png in Resources */,
 				93A30C6123D298DC009A0F4C /* KHJChangePasswordVC.xib in Resources */,
 				93C33B6D23CE20B400B44E5F /* MMVideoPreviewPlayHL@2x.png in Resources */,
+				AB5462D4240FA1A100A096ED /* KHJRecordListCell_Two.xib in Resources */,
+				AB5462CF240FA0A900A096ED /* KHJRecordListVC_Two.xib in Resources */,
 				93C33B7123CE20B400B44E5F /* photo_def_previewVc@2x.png in Resources */,
 				93C33B6023CE20B400B44E5F /* LICENSE in Resources */,
 				AB52C10D23F91FB200C921F1 /* photoshutter.mp3 in Resources */,
@@ -1308,7 +1356,7 @@
 				AB597B4024027A7600F04F84 /* KHJBackPlayListVC.mm in Sources */,
 				AB30DA4523D05B0F005BD2A1 /* KHJAddDeviceListVC.m in Sources */,
 				AB5911DC23D0141A0060F05C /* KHJRecordListCell.m in Sources */,
-				AB764975240617A300D6DE1C /* KHJVideoPlayerBaseVC.m in Sources */,
+				AB764975240617A300D6DE1C /* KHJVideoPlayerBaseVC.mm in Sources */,
 				AB30DA6A23D14CDF005BD2A1 /* KHJMutliScreenVC.m in Sources */,
 				93C33B5A23CE20B400B44E5F /* KHJToast.m in Sources */,
 				93A30C5123D2989E009A0F4C /* KHJSDCardConfigVC.m in Sources */,
@@ -1347,11 +1395,13 @@
 				93C33B4723CE20B400B44E5F /* UIImage+SGImageSize.m in Sources */,
 				93C33B5E23CE20B400B44E5F /* LeeDatePickerSingleHeadView.m in Sources */,
 				93C33A9723CE1EF200B44E5F /* KHJUdpHelper.mm in Sources */,
+				AB5462E2240FB91000A096ED /* KHJCollectionViewCell_three.m in Sources */,
 				93C33B5323CE20B400B44E5F /* ZQAlterField.m in Sources */,
 				93C33B4B23CE20B400B44E5F /* SGQRCodeGenerateManager.m in Sources */,
 				AB30DA4B23D060F2005BD2A1 /* KHJOnlineVC.m in Sources */,
 				93C33B5823CE20B400B44E5F /* UIWindow+LJWPresentViewController.m in Sources */,
 				AB32D4C123F54E7A008AFD1F /* KHJVideoModel.m in Sources */,
+				AB5462CE240FA0A900A096ED /* KHJRecordListVC_Two.m in Sources */,
 				93A30C6523D43378009A0F4C /* KHJWIFIConfigCell.m in Sources */,
 				AB20E60823CEBEE500D2861C /* KHJDeviceListVC.m in Sources */,
 				93C33B2923CE20B400B44E5F /* KHJUtility.m in Sources */,
@@ -1372,6 +1422,7 @@
 				93C33A8823CE1D0800B44E5F /* KHJShakeObj.mm in Sources */,
 				AB20E62A23CEE33400D2861C /* AIPhotoZoom.m in Sources */,
 				AB32F9AC2408FF1B00687054 /* KHJBackPlayerList_playerVC.mm in Sources */,
+				AB5462D3240FA1A100A096ED /* KHJRecordListCell_Two.m in Sources */,
 				93C33B5523CE20B400B44E5F /* UIViewController+LJWKeyboardHandlerHelper.m in Sources */,
 				AB7648662405132A00D6DE1C /* JKUIPickDate.m in Sources */,
 				93C33B5723CE20B400B44E5F /* LJWKeyboardHandler.m in Sources */,
@@ -1386,6 +1437,7 @@
 				AB52C11023FBE1BA00C921F1 /* KHJQRCodeScanVC.m in Sources */,
 				AB32D4B523F53BE4008AFD1F /* ZFTimeLine.m in Sources */,
 				93C33B6823CE20B400B44E5F /* TZPhotoPreviewCell.m in Sources */,
+				AB5462D8240FB4FA00A096ED /* KHJRecordListVC_Three.m in Sources */,
 				93A30C4723D29862009A0F4C /* KHJAlarmConfigVC.m in Sources */,
 				93C33A7323CE1D0800B44E5F /* CreateTwoCode.m in Sources */,
 				AB30DA5F23D1470F005BD2A1 /* KHJSearchDeviceVC.m in Sources */,

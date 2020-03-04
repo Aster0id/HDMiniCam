@@ -10,16 +10,9 @@
 
 @implementation KHJRecordListCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    
-}
-
-- (IBAction)delete:(id)sender
+- (void)awakeFromNib
 {
-    if (_delegate && [_delegate respondsToSelector:@selector(deleteWith:)]) {
-        [_delegate deleteWith:self.tag - FLAG_TAG];
-    }
+    [super awakeFromNib];
 }
 
 - (IBAction)content:(id)sender

@@ -12,7 +12,6 @@
             <connections>
                 <outlet property="contentNavi" destination="40W-Hk-fCm" id="548-pq-YHA"/>
                 <outlet property="contentTBV" destination="MJt-V2-Ede" id="TNW-jh-qCT"/>
-                <outlet property="leftNavi" destination="Zen-rC-7er" id="Fwv-Y3-yg6"/>
                 <outlet property="naviFour" destination="Bjk-cp-yct" id="oLh-On-Nah"/>
                 <outlet property="naviFourIMGV" destination="Lmu-ns-1Hi" id="yFS-mh-3Vf"/>
                 <outlet property="naviOne" destination="tdT-9V-FGy" id="L5p-xe-veA"/>
@@ -32,38 +31,6 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L6X-Iv-qMa">
                     <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chooseDevice" translatesAutoresizingMaskIntoConstraints="NO" id="gfw-vo-LF1">
-                            <rect key="frame" x="366.5" y="4.5" width="35" height="35"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="35" id="HuW-sP-eg3"/>
-                                <constraint firstAttribute="width" constant="35" id="Spd-EG-1Y1"/>
-                            </constraints>
-                        </imageView>
-                        <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zen-rC-7er">
-                            <rect key="frame" x="0.0" y="0.0" width="60" height="44"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="44" id="ToD-22-C02"/>
-                                <constraint firstAttribute="width" constant="60" id="TwM-bC-DdK"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <state key="normal" title="编辑">
-                                <color key="titleColor" red="0.019607843140000001" green="0.51764705879999995" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="btn:" destination="-1" eventType="touchUpInside" id="ucq-Sc-87Q"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" tag="60" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8vE-oc-FII">
-                            <rect key="frame" x="354" y="0.0" width="60" height="44"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="44" id="Q9X-et-4I3"/>
-                                <constraint firstAttribute="width" constant="60" id="QMS-61-gdT"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <connections>
-                                <action selector="btn:" destination="-1" eventType="touchUpInside" id="O0R-pS-nDu"/>
-                            </connections>
-                        </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WMO-7W-Oxx">
                             <rect key="frame" x="0.0" y="43" width="414" height="1"/>
                             <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -219,22 +186,16 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
-                        <constraint firstItem="gfw-vo-LF1" firstAttribute="centerX" secondItem="8vE-oc-FII" secondAttribute="centerX" id="3pZ-mz-l6k"/>
                         <constraint firstAttribute="trailing" secondItem="WMO-7W-Oxx" secondAttribute="trailing" id="4Fc-ZX-Dxe"/>
                         <constraint firstAttribute="bottom" secondItem="WMO-7W-Oxx" secondAttribute="bottom" id="Apz-I7-ebd"/>
                         <constraint firstItem="WMO-7W-Oxx" firstAttribute="leading" secondItem="L6X-Iv-qMa" secondAttribute="leading" id="FSJ-FJ-Ncg"/>
-                        <constraint firstAttribute="trailing" secondItem="8vE-oc-FII" secondAttribute="trailing" id="LfM-UE-jES"/>
                         <constraint firstAttribute="height" constant="44" id="Rwu-Xj-WJt"/>
                         <constraint firstItem="40W-Hk-fCm" firstAttribute="top" secondItem="L6X-Iv-qMa" secondAttribute="top" constant="6" id="Tyj-gX-NSE"/>
-                        <constraint firstAttribute="bottom" secondItem="8vE-oc-FII" secondAttribute="bottom" id="XoA-XJ-wMs"/>
-                        <constraint firstAttribute="bottom" secondItem="Zen-rC-7er" secondAttribute="bottom" id="q4M-GR-j8v"/>
                         <constraint firstItem="WMO-7W-Oxx" firstAttribute="top" secondItem="40W-Hk-fCm" secondAttribute="bottom" constant="8" id="rWq-8h-Tge"/>
                         <constraint firstItem="40W-Hk-fCm" firstAttribute="centerX" secondItem="L6X-Iv-qMa" secondAttribute="centerX" id="vSI-JN-R9c"/>
-                        <constraint firstItem="Zen-rC-7er" firstAttribute="leading" secondItem="L6X-Iv-qMa" secondAttribute="leading" id="vW8-Yq-sCK"/>
-                        <constraint firstItem="gfw-vo-LF1" firstAttribute="centerY" secondItem="8vE-oc-FII" secondAttribute="centerY" id="x0i-j2-MdH"/>
                     </constraints>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="MJt-V2-Ede">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="MJt-V2-Ede">
                     <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <connections>
@@ -254,11 +215,10 @@
                 <constraint firstItem="MJt-V2-Ede" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="web-Go-cKY"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
-            <point key="canvasLocation" x="74" y="49"/>
+            <point key="canvasLocation" x="-229" y="-157"/>
         </view>
     </objects>
     <resources>
-        <image name="chooseDevice" width="64" height="64"/>
         <image name="downloaded_icon_n" width="32" height="32"/>
         <image name="downloaded_icon_s" width="32" height="32"/>
         <image name="downloading_icon_n" width="32" height="32"/>

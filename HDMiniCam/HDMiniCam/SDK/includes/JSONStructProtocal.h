@@ -1,7 +1,7 @@
 /*
-* filename:JSONStructProtocal.h
-* author:hujian
-* date:2017/12/03 11:03
+*filename:JSONStructProtocal.h
+*author:hujian
+*date:2017/12/03 11:03
 */
 #ifndef __JSON_STRUCT_PROTOCAL_H__
 #define __JSON_STRUCT_PROTOCAL_H__
@@ -127,17 +127,17 @@ typedef enum{
 	IPCNET_SET_GPIO_REQ = 1084,
 	IPCNET_SET_GPIO_RESP,
 
-	IPCNET_GET_SUBDEV_REQ = 1086,
-	IPCNET_GET_SUBDEV_RESP,
+	IPCNET_SET_ACTION_REQ = 1086,//IPCNET_GET_SUBDEV_REQ = 1086,
+	IPCNET_SET_ACTION_RESP,//IPCNET_GET_SUBDEV_RESP
 	
-	IPCNET_SET_SUBDEV_REQ = 1088,
-	IPCNET_SET_SUBDEV_RESP,
+	IPCNET_QUERY_ACTION_REQ = 1088,//IPCNET_GET_SUBDEV_REQ
+	IPCNET_QUERY_ACTION_RESP,//IPCNET_GET_SUBDEV_RESP
 
-	IPCNET_GET_BUS_REQ = 1090,
-	IPCNET_GET_BUS_RESP,
+	IPCNET_GET_ACTION_LIST_REQ = 1090,//IPCNET_GET_BUS_REQ
+	IPCNET_GET_ACTION_LIST_RESP,//IPCNET_GET_BUS_RESP
 	
-	IPCNET_SET_BUS_REQ = 1092, //串口透传
-	IPCNET_SET_BUS_RESP,    // 1093
+	IPCNET_EXECUTE_ACTION_REQ = 1092,//IPCNET_SET_BUS_REQ //涓插彛閫忎紶
+	IPCNET_EXECUTE_ACTION_RESP,    // 1093 //IPCNET_SET_BUS_RESP
 
 	IPCNET_GET_DEV_INFO_REQ = 1094,
 	IPCNET_GET_DEV_INFO_RESP,
@@ -589,11 +589,6 @@ typedef enum
 	AUDIO_ACC,
 }AUDIO_TYPE;
 
-typedef struct{
-	int Start;
-	int End;
-}ValueRange_t;
-
 #define CMD_TYPE_START  0x01        //开始发送码流
 #define CMD_TYPE_STOP   0x02        //结束发送码流
 #define CMD_TYPE_START_EX  0x03        //开始发送码流
@@ -613,7 +608,7 @@ typedef struct PKT_HEAD
 
 typedef struct P2P_PKT_HEAD
 {
-    T_U32 signature;
+    unsigned signature;
     PKT_HEAD_t pkt_hd;
 }P2P_PKT_HEAD_t;
 
@@ -670,7 +665,6 @@ public:
 	String user;//用户名称
 	String passwd;//md5加密后的密码
 	int interval;//心跳间隔时间
-	int utc;
 	int parseJSON(JSONObject &jsdata){
 	    int ret=1;
 		JSONObject *jsroot= jsdata.getJSONObject("MSG_LOGIN_t");
@@ -690,7 +684,6 @@ public:
 		jsethnetwork.put("user", user);
 		jsethnetwork.put("passwd", passwd);
 		jsethnetwork.put("interval", interval);
-		jsethnetwork.put("utc", utc);
 		jsroot.put("MSG_LOGIN_t", jsethnetwork);
 		jsroot.toString(str);
 		return str.length();
@@ -1226,7 +1219,7 @@ typedef struct IPCNetMobileNetworkInfo{
 	}
 }IPCNetMobileNetworkInfo_st;
 typedef struct IPCNetWifiApItem{
-	/* IPCNetWifiApItem(){
+	/*IPCNetWifiApItem(){
 		SSID=0;
 		EncType=0;
 	}
@@ -1239,7 +1232,7 @@ typedef struct IPCNetWifiApItem{
 		}
 	}
 	char* SSID;
-	char* EncType; */
+	char* EncType;*/
 	String SSID;
 	String EncType;
 	int RSSI;
@@ -1488,7 +1481,6 @@ typedef struct IPCNetVideoEncodeCfg{
 	int VideoEncodeNum;
 	IPCNetVideoEncode_st **VideoEncode;
 	IPCNetVideoEncodeCfg(){
-		ViCh=0;
 		VideoEncode=0;
 		VideoEncodeNum=0;
 	}
@@ -2080,9 +2072,9 @@ typedef struct {
         
             JSONObject *jsroot = jsdata.getJSONObject("li");
             if (jsroot) {
-                jsroot->getInt("n",num);//当前目录文件总数
-                jsroot->getInt("t",total);//磁盘空间总容量
-                jsroot->getInt("u",used);//磁盘已使用空间
+                jsroot->getInt("n",num);
+                jsroot->getInt("t",total);
+                jsroot->getInt("u",used);
             }
         
         return true;
@@ -2186,105 +2178,19 @@ typedef struct RemoteDirInfo{
 
 }RemoteDirInfo_t;
 
-typedef enum{
-	REC_TYPE_NORMAL = 0,
-	REC_TYPE_MOTION_DETECT,
-	REC_TYPE_OBJECT_DETECT,
-	REC_TYPE_SOUND_DETECT,
-	REC_TYPE_CRY_DETECT,
-	REC_TYPE_HUMAN_SHAPE_DETECT,
-	REC_TYPE_FACE_DETECT
-}REC_TYPE_et;
-	
-#define REC_FILE_MOTION_DETECT_SIGNATURE "md"
-#define REC_FILE_OBJECT_DETECT_SIGNATURE "od"
-#define REC_FILE_SOUND_DETECT_SIGNATURE "snd"
-#define REC_FILE_CRY_DETECT_SIGNATURE "cd"
-#define REC_FILE_HUMAN_SHAPE_DETECT_SIGNATURE "hsd"
-#define REC_FILE_FACE_DETECT_SIGNATURE "fd"
-
-typedef struct RecordPeriod{
-    int start;
-	int end;
-	REC_TYPE_et type;
-}RecordPeriod_t;
-
-typedef struct RecordDatePeriod{
-	int vi;
-	int date;//20200223 表示 2020年2月23日
-    list<RecordPeriod_t*>mTotalRecordList;
-    
-	boolean parseJSON(JSONObject &jsdata) {
-
-        JSONObject *jsroot = jsdata.getJSONObject("RecInfo");
-
-        if (jsroot) {
-			jsroot->getInt("vi",vi);
-			jsroot->getInt("date",date);
-			JSONArray *japerriod = jsroot->getJSONArray("period");
-
-            if(japerriod){                
-                String str;
-                japerriod->toString(str);
-                int length = japerriod->getLength();
-                
-				for(int i = 0; i < length; i++){
-					JSONObject *jperiod = japerriod->getJSONObject(i);
-                    
-					int start = 0;
-					int end = 0;
-					int type = 0;
-					int ret=1;
-					ret = jperiod->getInt("start", start);
-					ret &= jperiod->getInt("end", end);
-					ret &= jperiod->getInt("type", type);
-					if (ret == 0) {
-						Log("RecordDatePeriod:parseJSON:%d parse error!\n", __LINE__);
-						continue;
-					}
-					RecordPeriod_t*prp=new RecordPeriod_t;
-					prp->type = (REC_TYPE_et)type;
-					prp->start = start;
-					prp->end = end;
-                    
-                    int found = 0;
-                    for(list<RecordPeriod_t*>::iterator it = mTotalRecordList.begin(); it != mTotalRecordList.end(); it++){
-                        RecordPeriod_t*rfi = *it;
-                        if(rfi->start <= start && rfi->end >= end && rfi->type == type) {
-                            found = 1;
-                            break;
-                        }
-                    }
-                    if (found == 1){
-                        free(prp);
-                    }
-                    else {
-                        mTotalRecordList.push_back(prp);
-                    }
-				}
-			}
-            [[NSNotificationCenter defaultCenter] postNotificationName:noti_timeLineInfo_1075_KEY object:nil];
-        }
-        return true;
-    }
-}RecordDatePeriod_t;
-
 typedef struct IPCPtzCtrlMsg{
-	int Vi;
-	int Ch;
+	int ViCh;
     int CtrlCmd;    //控制命令
     int Speed;      //速度
     int RunTimes;    //巡航次数，巡航类的命令使用
     int Position;    //电机定位使用
 	IPCPtzCtrlMsg(){
-		Vi=0;
-		Ch = 1;
+		ViCh=0;
 	}
     boolean parseJSON(JSONObject &jsdata) {
         JSONObject *jsroot = jsdata.getJSONObject("PtzCtrlMsg.info");
         if (jsroot) {
-			jsroot->getInt("Vi",Vi);
-			jsroot->getInt("Ch",Ch);
+			jsroot->getInt("ViCh",ViCh);
             jsroot->getInt("CtrlCmd",CtrlCmd);
             jsroot->getInt("Speed",Speed);
             jsroot->getInt("RunTimes",RunTimes);
@@ -2298,8 +2204,7 @@ typedef struct IPCPtzCtrlMsg{
         JSONObject jsroot;// = new JSONObject();
 
         JSONObject jsethnetwork;// = new JSONObject();
-		jsethnetwork.put("Vi", Vi);
-		jsethnetwork.put("Ch", Ch);
+		jsethnetwork.put("ViCh", ViCh);
         jsethnetwork.put("CtrlCmd", CtrlCmd);
         jsethnetwork.put("Speed", Speed);
         jsethnetwork.put("Position", Position);
@@ -2317,19 +2222,15 @@ typedef struct IPCNetManualExpInfo{
 
 	int MeAgEnable;	//模拟增益使能开关
 	int MeAgVal;		//模拟增益设置//0x400~0xFFFFFFFF
-	ValueRange_t MeAgRange;
 	
 	int MeDgEnable;	//设置数字增益使能开关
 	int MeDgVal;		//数字增益设置//0x400~0xFFFFFFFF
-	ValueRange_t MeDgRange;
 
 	int MeIspDgEnable;	//设置数字增益使能开关
 	int MeIspDgVal;		//数字增益设置//0x400~0xFFFFFFFF
-	ValueRange_t MeIspDgRange;
 
 	int MeExpGainEn;
 	int MeExpGainVal;
-	ValueRange_t MeExpGainRange;
 
 	int *ShutterList;
 	int ShutterListCount;
@@ -2353,47 +2254,15 @@ typedef struct IPCNetManualExpInfo{
 
             jsroot->getInt("MeAgEnable",MeAgEnable);
             jsroot->getInt("MeAgVal",MeAgVal);
-			JSONObject *jsvalrange = jsroot->getJSONObject("MeAgRange");
-			if(jsvalrange){
-				jsvalrange->getInt("Start", MeAgRange.Start);
-				jsvalrange->getInt("End", MeAgRange.End);
-			}else{
-				MeAgRange.Start = 0;
-				MeAgRange.End = 0;
-			}
 
 			jsroot->getInt("MeDgEnable",MeDgEnable);
 			jsroot->getInt("MeDgVal",MeDgVal);
-			jsvalrange = jsroot->getJSONObject("MeDgRange");
-			if(jsvalrange){
-				jsvalrange->getInt("Start", MeDgRange.Start);
-				jsvalrange->getInt("End", MeDgRange.End);
-			}else{
-				MeDgRange.Start = 0;
-				MeDgRange.End = 0;
-			}
 
 			jsroot->getInt("MeIspDgEnable",MeIspDgEnable);
 			jsroot->getInt("MeIspDgVal",MeIspDgVal);
-			jsvalrange = jsroot->getJSONObject("MeIspDgRange");
-			if(jsvalrange){
-				jsvalrange->getInt("Start", MeIspDgRange.Start);
-				jsvalrange->getInt("End", MeIspDgRange.End);
-			}else{
-				MeIspDgRange.Start = 0;
-				MeIspDgRange.End = 0;
-			}
 
 			jsroot->getInt("MeExpGainEn",MeExpGainEn);
 			jsroot->getInt("MeExpGainVal",MeExpGainVal);
-			jsvalrange = jsroot->getJSONObject("MeExpGainRange");
-			if(jsvalrange){
-				jsvalrange->getInt("Start", MeExpGainRange.Start);
-				jsvalrange->getInt("End", MeExpGainRange.End);
-			}else{
-				MeExpGainRange.Start = 0;
-				MeExpGainRange.End = 0;
-			}
 
 			JSONArray*jaShutterList=jsroot->getJSONArray("ShutterList");
 			if(jaShutterList){
@@ -2412,19 +2281,19 @@ typedef struct IPCNetManualExpInfo{
         JSONObject jsroot;// = new JSONObject();
 
         JSONObject jsethnetwork;// = new JSONObject();
-        jsethnetwork.put("MeLineEnable", MeLineEnable==1?1:0);
+        jsethnetwork.put("MeLineEnable", MeLineEnable);
         jsethnetwork.put("MeLineEnum", MeLineEnum);
 
-        jsethnetwork.put("MeAgEnable", MeAgEnable==1?1:0);
+        jsethnetwork.put("MeAgEnable", MeAgEnable);
         jsethnetwork.put("MeAgVal", MeAgVal);
 
-		jsethnetwork.put("MeDgEnable", MeDgEnable==1?1:0);
+		jsethnetwork.put("MeDgEnable", MeDgEnable);
         jsethnetwork.put("MeDgVal", MeDgVal);
 
-		jsethnetwork.put("MeIspDgEnable", MeIspDgEnable==1?1:0);
+		jsethnetwork.put("MeIspDgEnable", MeIspDgEnable);
         jsethnetwork.put("MeIspDgVal", MeIspDgVal);
 
-		jsethnetwork.put("MeExpGainEn", MeExpGainEn==1?1:0);
+		jsethnetwork.put("MeExpGainEn", MeExpGainEn);
         jsethnetwork.put("MeExpGainVal", MeExpGainVal);
 
 		JSONArray jaShutterList;

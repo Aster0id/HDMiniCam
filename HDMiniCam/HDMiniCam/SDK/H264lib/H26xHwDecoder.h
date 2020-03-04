@@ -26,7 +26,7 @@ typedef enum : NSUInteger {
 
 @protocol H26xHwDecoderDelegate <NSObject>
 
-- (void)getImageWith:(UIImage *_Nullable)image imageSize:(CGSize)imageSize;
+- (void)getImageWith:(UIImage *)image imageSize:(CGSize)imageSize;
 
 @end
 

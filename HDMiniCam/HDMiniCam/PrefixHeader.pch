@@ -59,4 +59,10 @@
 #define CLog(...);
 #endif
 
+typedef enum : NSUInteger {
+    KHJLiveRecordType_Normal = 0,
+    KHJLiveRecordType_Recording,
+    KHJLiveRecordType_stopRecoding,
+} KHJLiveRecordType;
+
 #endif /* PrefixHeader_pch */

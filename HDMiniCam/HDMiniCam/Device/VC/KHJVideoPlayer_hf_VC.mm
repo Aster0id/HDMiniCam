@@ -19,7 +19,6 @@
 typedef void(^runloopBlock)(void);
 
 extern IPCNetRecordCfg_st recordCfg;
-extern RecordDatePeriod_t gRecordDatePeriod;
 
 @interface KHJVideoPlayer_hf_VC ()<ZFTimeLineDelegate,KHJBackPlayListVCSaveListDelegate,H26xHwDecoderDelegate>
 {
@@ -45,8 +44,6 @@ extern RecordDatePeriod_t gRecordDatePeriod;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 // 装记任务的Arr
 @property (nonatomic, strong) NSMutableArray *MP4_taskArray;
-// 最大任务数
-@property (nonatomic, assign) NSUInteger maxTask;
 
 @property (nonatomic, assign) NSTimeInterval zeroTimeInterval;
 @property (nonatomic, assign) NSTimeInterval todayTimeInterval;

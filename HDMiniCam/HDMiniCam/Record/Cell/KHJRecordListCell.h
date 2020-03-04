@@ -12,22 +12,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol KHJRecordListCellDelegate <NSObject>
 
-- (void)deleteWith:(NSInteger)row;
 - (void)contentWith:(NSInteger)row;
 
 @end
 
 @interface KHJRecordListCell : KHJBaseCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *imgv;
-@property (weak, nonatomic) IBOutlet UIButton *btn;
 @property (weak, nonatomic) IBOutlet UILabel *idLab;
-@property (weak, nonatomic) IBOutlet UILabel *sizeLab;
 @property (weak, nonatomic) IBOutlet UILabel *nameLab;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftContraint;
-
-@property (nonatomic, assign) BOOL show;
-
+@property (weak, nonatomic) IBOutlet UILabel *numberLab;
 @property (nonatomic, assign) id<KHJRecordListCellDelegate> delegate;
 
 @end
