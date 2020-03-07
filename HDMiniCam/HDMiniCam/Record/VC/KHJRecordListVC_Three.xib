@@ -19,13 +19,13 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="KH6-7z-Q6N">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="H5K-oN-Ybp">
-                        <size key="itemSize" width="50" height="50"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="KH6-7z-Q6N">
+                    <rect key="frame" x="10" y="44" width="394" height="818"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="1" minimumInteritemSpacing="1" id="H5K-oN-Ybp">
+                        <size key="itemSize" width="100" height="100"/>
+                        <size key="headerReferenceSize" width="1" height="1"/>
+                        <size key="footerReferenceSize" width="1" height="1"/>
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                     <connections>
@@ -37,8 +37,8 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="KH6-7z-Q6N" secondAttribute="bottom" id="2Pd-Xn-qCl"/>
-                <constraint firstItem="KH6-7z-Q6N" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="CEL-Yh-b6N"/>
-                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="KH6-7z-Q6N" secondAttribute="trailing" id="Hd6-0G-FQd"/>
+                <constraint firstItem="KH6-7z-Q6N" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="10" id="CEL-Yh-b6N"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="KH6-7z-Q6N" secondAttribute="trailing" constant="10" id="Hd6-0G-FQd"/>
                 <constraint firstItem="KH6-7z-Q6N" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="Joj-hC-GRu"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>

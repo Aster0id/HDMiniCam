@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13142" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12042"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -9,13 +11,77 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="KHJCollectionViewCell_three">
-            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new_header_icon" translatesAutoresizingMaskIntoConstraints="NO" id="1jh-om-nmi">
+                        <rect key="frame" x="0.0" y="10" width="100" height="56.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="1jh-om-nmi" secondAttribute="height" multiplier="16:9" id="kHp-kw-WTE"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15:24" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0uS-Lk-cen">
+                        <rect key="frame" x="0.0" y="66.5" width="100" height="33.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="album_icon_play" translatesAutoresizingMaskIntoConstraints="NO" id="m26-eN-jOQ">
+                        <rect key="frame" x="35" y="23" width="30" height="30"/>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zbQ-16-dbC">
+                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                        <connections>
+                            <action selector="btnAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="hJp-ch-wVN"/>
+                        </connections>
+                    </button>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ugA-TE-wCZ">
+                        <rect key="frame" x="70" y="5" width="25" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="Sv4-6j-IiR"/>
+                            <constraint firstAttribute="height" constant="25" id="dSi-L6-lHs"/>
+                        </constraints>
+                        <state key="normal" image="delete_icon_red"/>
+                        <connections>
+                            <action selector="delelte:" destination="gTV-IL-0wX" eventType="touchUpInside" id="jpe-ox-cR4"/>
+                        </connections>
+                    </button>
+                </subviews>
             </view>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="zbQ-16-dbC" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="0Ox-wn-351"/>
+                <constraint firstAttribute="trailing" secondItem="1jh-om-nmi" secondAttribute="trailing" id="ALt-i7-Zuh"/>
+                <constraint firstItem="0uS-Lk-cen" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="C5c-Lx-fg9"/>
+                <constraint firstItem="1jh-om-nmi" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="OeS-VF-X6y"/>
+                <constraint firstAttribute="bottom" secondItem="0uS-Lk-cen" secondAttribute="bottom" id="SGn-LP-tFT"/>
+                <constraint firstItem="m26-eN-jOQ" firstAttribute="centerX" secondItem="1jh-om-nmi" secondAttribute="centerX" id="TGR-OI-9Fz"/>
+                <constraint firstAttribute="bottom" secondItem="zbQ-16-dbC" secondAttribute="bottom" id="Tse-yq-nyH"/>
+                <constraint firstItem="ugA-TE-wCZ" firstAttribute="trailing" secondItem="1jh-om-nmi" secondAttribute="trailing" constant="-5" id="VC0-Ux-nj3"/>
+                <constraint firstAttribute="trailing" secondItem="0uS-Lk-cen" secondAttribute="trailing" id="dre-YY-mUp"/>
+                <constraint firstAttribute="trailing" secondItem="zbQ-16-dbC" secondAttribute="trailing" id="fq5-mM-S30"/>
+                <constraint firstItem="zbQ-16-dbC" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="kjW-mk-rr5"/>
+                <constraint firstItem="0uS-Lk-cen" firstAttribute="top" secondItem="1jh-om-nmi" secondAttribute="bottom" id="rN8-2j-FfP"/>
+                <constraint firstItem="1jh-om-nmi" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="uyx-Yp-Kh4"/>
+                <constraint firstItem="ugA-TE-wCZ" firstAttribute="top" secondItem="1jh-om-nmi" secondAttribute="top" constant="-5" id="y6i-VC-HaJ"/>
+                <constraint firstItem="m26-eN-jOQ" firstAttribute="centerY" secondItem="1jh-om-nmi" secondAttribute="centerY" id="zYS-nD-NXk"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
+            <size key="customSize" width="158" height="106"/>
+            <connections>
+                <outlet property="deleteBtn" destination="ugA-TE-wCZ" id="rQb-AR-2bK"/>
+                <outlet property="videoImgView" destination="1jh-om-nmi" id="Ag5-pS-6DW"/>
+                <outlet property="videoTimeLab" destination="0uS-Lk-cen" id="vQG-LR-3PG"/>
+            </connections>
+            <point key="canvasLocation" x="-68.115942028985515" y="95.758928571428569"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="album_icon_play" width="30" height="30"/>
+        <image name="delete_icon_red" width="64" height="64"/>
+        <image name="new_header_icon" width="600" height="337"/>
+    </resources>
 </document>

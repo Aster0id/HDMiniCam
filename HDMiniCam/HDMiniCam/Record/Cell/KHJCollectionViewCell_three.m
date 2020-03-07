@@ -15,4 +15,18 @@
     // Initialization code
 }
 
+- (IBAction)btnAction:(id)sender
+{
+    if (_delegate && [_delegate respondsToSelector:@selector(chooseItemWith:)]) {
+        [_delegate chooseItemWith:self.tag - FLAG_TAG];
+    }
+}
+
+- (IBAction)delelte:(id)sender
+{
+    if (_delegate && [_delegate respondsToSelector:@selector(deleteItemWith:)]) {
+        [_delegate deleteItemWith:self.tag - FLAG_TAG];
+    }
+}
+
 @end

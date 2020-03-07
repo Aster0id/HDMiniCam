@@ -39,9 +39,8 @@
     return self;
 }
 
-/*
- 获取当前用户文件夹下所有视频和图片文件
- */
+#pragma mark - 获取当前用户文件夹下所有视频和图片文件
+
 - (NSArray *)getAllFile
 {
     NSArray *files = [fileManager subpathsOfDirectoryAtPath:docPath error:nil];
@@ -103,7 +102,8 @@
     return videoPath;
 }
 
-/* 获取视频或图片的名称 */
+#pragma mark - 获取视频或图片的名称
+
 - (NSString *)getVideoNameWithType:(NSString *)fileType deviceID:(NSString *)deviceID
 {
     // 获取年月日
@@ -146,7 +146,8 @@
     return todayDic;
 }
 
-// 取得一个目录下得所有图片文件名
+#pragma mark - 取得一个目录下得所有图片文件名
+
 - (NSArray *)getPictureArray_with_deviceID:(NSString *)deviceID
 {
     NSArray *files = [fileManager subpathsAtPath:[self getTakeCameraDocPath_deviceID:@""]];
@@ -154,7 +155,8 @@
     return reversedArray;
 }
 
-// 取得一个目录下得所有mp4视频文件名
+#pragma mark - 取得一个目录下得所有mp4视频文件名
+
 - (NSArray *)getmp4VideoArray_with_deviceID:(NSString *)deviceID
 {
     NSArray *files = [fileManager subpathsAtPath:[self getTakeVideoDocPath_with_deviceID:deviceID]];
@@ -172,15 +174,17 @@
     return reversedArray;
 }
 
-// 读取某个文件
--(NSData *)getVideoData:(NSString *)path
+#pragma mark - 读取某个文件
+
+- (NSData *)getVideoData:(NSString *)path
 {
     
     NSData *data = [fileManager contentsAtPath:path];
     return  data;
 }
 
-//删除文件
+#pragma mark - 删除文件
+
 - (BOOL)DeleateFileWithPath:(NSString *)path
 {
     // 删除文件/文件夹

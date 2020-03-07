@@ -43,9 +43,15 @@
 {
     [super viewDidLoad];
     self.titleLab.text = self.info.deviceName;
-    self.videoList = [[[KHJHelpCameraData sharedModel] getmp4VideoArray_with_deviceID:self.info.deviceID] copy];
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
-    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.videoList = [[[KHJHelpCameraData sharedModel] getmp4VideoArray_with_deviceID:self.info.deviceID] copy];
+    [self.dateList removeAllObjects];
+    [self.dateList_num removeAllObjects];
     WeakSelf
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         

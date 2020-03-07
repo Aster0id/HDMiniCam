@@ -8,12 +8,17 @@
 
 #import "KHJRecordListVC_Three.h"
 #import "KHJCollectionViewCell_three.h"
+#import <AVKit/AVKit.h>
 
-@interface KHJRecordListVC_Three ()
+@interface KHJRecordListVC_Three ()<KHJCollectionViewCell_threeDelegate>
 
 {
     __weak IBOutlet UICollectionView *collectionView;
+    BOOL delete;
+    BOOL isDeleting;
+    UIButton *rightBtn;
 }
+
 @property (nonatomic, strong) NSMutableArray *videoList;
 
 @end
@@ -31,10 +36,56 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.titleLab.text = self.info.deviceName;
-    self.videoList = [[[KHJHelpCameraData sharedModel] getmp4VideoArray_with_deviceID:self.info.deviceID] copy];
+    [self customizeApperance];
+    [self customizeDataSource];
+}
+
+- (void)customizeApperance
+{
+    self.titleLab.text = self.date;
+    [self addRightButton];
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     [self addCollectionView];
+}
+
+- (void)customizeDataSource
+{
+    WeakSelf
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSArray *arr = [[[KHJHelpCameraData sharedModel] getmp4VideoArray_with_deviceID:self.info.deviceID] copy];
+        for (int i = 0; i < arr.count; i++) {
+            NSString *videoUrl = arr[i];
+            if ([videoUrl containsString:weakSelf.date]) {
+                [weakSelf.videoList addObject:videoUrl];
+            }
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self->collectionView reloadData];
+        });
+    });
+}
+
+- (void)addRightButton
+{
+    rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    rightBtn.frame = CGRectMake(0,0,44,44);
+    [rightBtn setTitle:KHJLocalizedString(@"编辑", nil) forState:UIControlStateNormal];
+    [rightBtn setTitleColor:KHJUtility.appMainColor forState:UIControlStateNormal];
+    [rightBtn addTarget:self action:@selector(editAction) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem  = rightItem;
+}
+
+- (void)editAction
+{
+    delete = !delete;
+    if (delete) {
+        [rightBtn setTitle:KHJLocalizedString(@"完成", nil) forState:UIControlStateNormal];
+    }
+    else {
+        [rightBtn setTitle:KHJLocalizedString(@"编辑", nil) forState:UIControlStateNormal];
+    }
+    [collectionView reloadData];
 }
 
 - (void)backAction
@@ -45,9 +96,8 @@
 - (void)addCollectionView
 {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-    layout.itemSize = CGSizeMake(100, 70);
+    layout.itemSize = CGSizeMake((SCREEN_WIDTH - 40)/3.0, (SCREEN_WIDTH - 40)/3.0);
     layout.minimumLineSpacing = 10;
-    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     collectionView.collectionViewLayout = layout;
     collectionView.showsVerticalScrollIndicator = NO;
     collectionView.showsHorizontalScrollIndicator = NO;
@@ -59,16 +109,107 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 10;
+    return self.videoList.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *identifierCell = @"KHJPicture_oneCell";
+    static NSString *identifierCell = @"KHJCollectionViewCell_three";
     KHJCollectionViewCell_three *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifierCell forIndexPath:indexPath];
+    cell.layer.borderWidth = 1;
+    cell.layer.borderColor = UIColorFromRGB(0xf5f5f5).CGColor;
+    
+    cell.delegate = self;
+    cell.deleteBtn.hidden = !delete;
     cell.tag = indexPath.row + FLAG_TAG;
+    NSString *name = self.videoList[indexPath.row];
+    NSString *path = [[KHJHelpCameraData sharedModel] getTakeVideoDocPath_with_deviceID:self.info.deviceID];
+    NSString *dir = KHJString(@"%@/%@",path,name);
+    
+    NSDictionary *infoDict = [self getFileInfo:dir];
+    CLog(@"infoDict = %@",infoDict);
+    NSDate *start   = infoDict[NSFileCreationDate];
+    NSDate *end     = infoDict[NSFileModificationDate];
+    
+    long long startTimestamp    = [self getDateTimeTOMilliSeconds:start];
+    long long endTimestamp      = [self getDateTimeTOMilliSeconds:end];
+    long long time = endTimestamp - startTimestamp;
+    
+    int hour = (int)time / 3600;
+    int min  = (int)(time - hour * 3600) / 60;
+    int sec  = (int)(time - hour * 3600 - min * 60);
+    if (hour > 0) {
+        cell.videoTimeLab.text = KHJString(@"%02d:%02d:%02d", hour, min, sec);
+    }
+    else {
+        cell.videoTimeLab.text = KHJString(@"%02d:%02d", min, sec);
+    }
     return cell;
 }
 
+- (NSDictionary*)getFileInfo:(NSString *)path
+{
+    NSError *error;
+    NSDictionary *reslut =  [[NSFileManager defaultManager] attributesOfItemAtPath:path error:&error];
+    if (error) {
+        NSLog(@"getFileInfo Failed:%@",[error localizedDescription]);
+    }
+    return reslut;
+}
+
+- (long long)getDateTimeTOMilliSeconds:(NSDate *)datetime
+{
+    NSTimeInterval interval = [datetime timeIntervalSince1970];
+    NSLog(@"转换的时间戳 = %f",interval);
+    long long totalMilliseconds = interval;
+    NSLog(@"totalMilliseconds = %llu",totalMilliseconds);
+    return totalMilliseconds;
+}
+
+#pragma mark - KHJCollectionViewCell_threeDelegate
+
+- (void)chooseItemWith:(NSInteger)row
+{
+    if (isDeleting) {
+        return;
+    }
+    NSString *name = self.videoList[row];
+    NSString *path = [[KHJHelpCameraData sharedModel] getTakeVideoDocPath_with_deviceID:self.info.deviceID];
+    AVPlayerViewController * av = [[AVPlayerViewController alloc] init];
+    av.player = [AVPlayer playerWithURL:[NSURL fileURLWithPath:KHJString(@"%@/%@",path,name)]];
+    [self presentViewController:av animated:YES completion:^{}];
+}
+
+- (void)deleteItemWith:(NSInteger)row
+{
+    if (isDeleting) {
+        return;
+    }
+    isDeleting = YES;
+    [[KHJHub shareHub] showText:@"删除中" addToView:[[UIApplication sharedApplication] keyWindow]];
+    NSString *name = self.videoList[row];
+    NSString *path = [[KHJHelpCameraData sharedModel] getTakeVideoDocPath_with_deviceID:self.info.deviceID];
+    NSString *dir = KHJString(@"%@/%@",path,name);
+    BOOL success = [[KHJHelpCameraData sharedModel] DeleateFileWithPath:dir];
+    
+    if (success) {
+        [self.videoList removeObjectAtIndex:row];
+        [collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:row inSection:0]]];
+        
+        NSInteger tag = 0;
+        for (KHJCollectionViewCell_three *cell in collectionView.visibleCells) {
+            cell.tag = tag + FLAG_TAG;
+            CLog(@"cell.tag = %ld",(long)tag);
+            tag++;
+        }
+        isDeleting = NO;
+        [KHJHub shareHub].hud.hidden = YES;
+    }
+    else {
+        [self.view makeToast:KHJLocalizedString(@"删除失败", nil)];
+        isDeleting = NO;
+        [KHJHub shareHub].hud.hidden = YES;
+    }
+}
 
 @end
