@@ -106,13 +106,55 @@ typedef enum
 	DEV_TYPE_INVALID,//无效类型
 }DEV_TYPE_e;
 
+typedef enum
+{
+	IPCNET_H264E_NALU_BSLICE = 0,                            /*B SLICE types*/
+    IPCNET_H264E_NALU_PSLICE = 1,                         /*P SLICE types*/
+    IPCNET_H264E_NALU_ISLICE = 2,                            /*I SLICE types*/
+    IPCNET_H264E_NALU_IDRSLICE = 5,                       /*IDR SLICE types*/
+    IPCNET_H264E_NALU_SEI    = 6,                         /*SEI types*/
+    IPCNET_H264E_NALU_SPS    = 7,                         /*SPS types*/
+    IPCNET_H264E_NALU_PPS    = 8,                         /*PPS types*/
+	IPCNET_H264E_NALU_BUTT = 10,
+
+	IPCNET_JPEGE_PACK_ECS = 10+5-4,                            /*ECS types*/
+    IPCNET_JPEGE_PACK_APP = 10+6-4,                            /*APP types*/
+    IPCNET_JPEGE_PACK_VDO = 10+7-4,                            /*VDO types*/
+    IPCNET_JPEGE_PACK_PIC = 10+8-4,                            /*PIC types*/
+    IPCNET_JPEGE_PACK_DCF = 10+9-4,                            /*DCF types*/
+    IPCNET_JPEGE_PACK_DCF_PIC = 10+10-4,                       /*DCF PIC types*/
+    IPCNET_JPEGE_PACK_BUTT=19,
+
+	IPCNET_AUDIO_ADPCM = 20,
+	IPCNET_AUDIO_G711A,
+	IPCNET_AUDIO_G711U,
+	IPCNET_AUDIO_G726,
+	IPCNET_AUDIO_AMR,
+	IPCNET_AUDIO_AAC,//25
+	IPCNET_AUDIO_PCM,
+	IPCNET_AUDIO_BUTT = 30,
+
+	IPCNET_JPEG = 31,
+	IPCNET_JPEG_BUTT = 34,
+
+	IPCNET_H265E_NALU_BSLICE = 50+0,                             /*B SLICE types*/
+    IPCNET_H265E_NALU_PSLICE = 50+1,                          /*P SLICE types*/
+    IPCNET_H265E_NALU_ISLICE = 50+2,                             /*I SLICE types*/
+    IPCNET_H265E_NALU_IDRSLICE = 50+19,                       /*IDR SLICE types*/
+    IPCNET_H265E_NALU_VPS    = 50+32,                         /*VPS types*/
+    IPCNET_H265E_NALU_SPS    = 50+33,                         /*SPS types*/
+    IPCNET_H265E_NALU_PPS    = 50+34,                         /*PPS types*/
+    IPCNET_H265E_NALU_SEI    = 50+39,                         /*SEI types*/
+	IPCNET_H265E_NALU_BUTT,
+}VideoAudioCodeType_e;
+
 //事件回调，用于上报每个连接所发生的事件
 struct IPCNetEventHandler{
 	//onStatus 状态上报回调，status请参考SEP2P_Error.h
 	void (*onStatus)(const char* uuid,int status);
-	//onVideoData 视频数据回调接口，用于接收设备发送的视频，图片等数据
+	//onVideoData 视频数据回调接口，用于接收设备发送的视频，图片等数据, type请参考VideoAudioCodeType_e
 	void (*onVideoData)(const char* uuid,int type,unsigned char*data,int len,long timestamp);
-	//onAudioData 音频数据回调接口，用于接收设备发送的音频
+	//onAudioData 音频数据回调接口，用于接收设备发送的音频, type请参考VideoAudioCodeType_e
 	void (*onAudioData)(const char* uuid,int type,unsigned char*data,int len,long timestamp);
 	//onJSONString 包含内容的状态上报接口，一般是命令反馈，也有报警上报，msg_type类型请查看JSONStructProtocal.h中IPCNET*定义
 	void (*onJSONString)(const char* uuid,int msg_type,const char* jsonstr);
@@ -231,7 +273,10 @@ int __declspec(dllexport) _stdcall IPCNetStartAudioR(const char* uuid,OnCmdResul
 int __declspec(dllexport) _stdcall IPCNetStopAudio(const char* uuid);
 int __declspec(dllexport) _stdcall IPCNetStopAudioR(const char* uuid,OnCmdResult_t r);
 //请求设备端开启扬声器，准备接收音频数据并播放
-#define IPCNetStartTalk(x) IPCNetStartTalkR(x,0)
+//type: audio encode type, no used yet, set to IPCNET_AUDIO_G711A
+//type: 是音频编码类型，目前未使用，填 IPCNET_AUDIO_G711A
+//type: 如果设备指定编码其他格式，请改成其他格式，默认是 IPCNET_AUDIO_G711A
+#define IPCNetStartTalk(x,y) IPCNetStartTalkR(x,y,0)
 int __declspec(dllexport) _stdcall IPCNetStartTalkR(const char* uuid,int type,OnCmdResult_t r);
 #define IPCNetStopTalk(x) IPCNetStopTalkR(x,0)
 int __declspec(dllexport) _stdcall IPCNetStopTalkR(const char* uuid,OnCmdResult_t r);
@@ -253,9 +298,15 @@ int __declspec(dllexport) _stdcall IPCNetChangeDevPwdR(const char* uuid,const ch
 int __declspec(dllexport) _stdcall IPCNetRestoreToFactorySetting(const char* uuid);
 int __declspec(dllexport) _stdcall IPCNetRestoreToFactorySettingR(const char* uuid,OnCmdResult_t r);
 
+typedef enum{
+	IPCNET_RESL_STD_DEF = 0,//standard definition, 标清
+	IPCNET_RESL_HIGH_DEF = 1,//high definition, 高清
+	IPCNET_RESL_4K_DEF = 2,//4K ultra definition, 4K超清
+}IPCNetResolution_t;
 //设置设备分辨率
 //res为分辨率索引，0 标清，1 高清，2 4K超清
 //设置之前，先调用IPCNetGetResolution(R)获取支持的分辨率以及对应分辨率的索引
+//res参数请参考IPCNetResolution_t
 int __declspec(dllexport) _stdcall IPCNetSetResolution(const char* uuid,int res);
 int __declspec(dllexport) _stdcall IPCNetSetResolutionR(const char* uuid,int res,OnCmdResult_t r);
 int __declspec(dllexport) _stdcall IPCNetGetResolution(const char* uuid);
@@ -408,6 +459,7 @@ int __declspec(dllexport) _stdcall IPCNetSetMobileNetworkR(const char* uuid,int 
 int __declspec(dllexport) _stdcall IPCNetGetMobileNetwork(const char* uuid);
 int __declspec(dllexport) _stdcall IPCNetGetMobileNetworkR(const char* uuid,OnCmdResult_t r);
 
+//使用 IPCNetPicColorInfo_st 解析json
 int __declspec(dllexport) _stdcall IPCNetGetIRMode(const char* uuid);
 int __declspec(dllexport) _stdcall IPCNetGetIRModeR(const char* uuid,OnCmdResult_t r);
 int __declspec(dllexport) _stdcall IPCNetSetIRMode(const char* uuid,const char*json);
@@ -720,9 +772,26 @@ RecSess_t __declspec(dllexport) _stdcall IPCNetStartRecordLocalVideo(const char*
 //视频真正开始录制之前，需要输入PPS/SPS/VPS，也可以输入PPS/SPS/VPS与I帧复合的视频帧
 //最好第一帧是PPS/SPS/VPS与I帧复合的视频帧，这样录制的视频开始时间才是及时生效的，否则会等待PPS/SPS/VPS以及I帧的到来
 //I帧就是关键帧IDR
+//type请参考VideoAudioCodeType_e, type必须为视频帧
 int __declspec(dllexport) _stdcall IPCNetPutLocalRecordVideoFrame(RecSess_t session, int type, const char*data, int len, unsigned long long timestamp);
+//type请参考VideoAudioCodeType_e, type必须为音频帧
 int __declspec(dllexport) _stdcall IPCNetPutLocalRecordAudioFrame(RecSess_t session, int type, const char*data, int len, unsigned long long timestamp);
 void __declspec(dllexport) _stdcall IPCNetFinishLocalRecord(RecSess_t session);
+
+#ifndef __int8_t_defined
+#define __int8_t_defined
+typedef signed char             int8_t;
+typedef short int               int16_t;
+typedef int                     int32_t;
+#endif
+/***G711A to PCM***/
+int16_t __declspec(dllexport) _stdcall IPCNetALawDecode(int8_t number);
+/***PCM to G711A***/
+int8_t __declspec(dllexport) _stdcall IPCNetALawEncode(int16_t number);
+/***G711U to PCM***/
+int16_t __declspec(dllexport) _stdcall IPCNetMuLawDecode(int8_t number);
+/**PCM to G711u**/
+int8_t __declspec(dllexport) _stdcall IPCNetMuLawEncode(int16_t number);
 
 
 #ifdef __cplusplus

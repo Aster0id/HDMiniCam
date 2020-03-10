@@ -8,11 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "KHJTabBarBaseVC.h"
+// IPCA000015WAABW 84567
+// IPCA000002AINYZ admin
+// IPCA000008GAIWC admin
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) KHJTabBarBaseVC *tabVControll;
+
+/*
+ 是否允许转向
+ */
+@property (nonatomic,assign) BOOL setTurnScreen;
 
 @end
 

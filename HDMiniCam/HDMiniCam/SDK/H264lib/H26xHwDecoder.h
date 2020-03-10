@@ -26,13 +26,15 @@ typedef enum : NSUInteger {
 
 @protocol H26xHwDecoderDelegate <NSObject>
 
-- (void)getImageWith:(UIImage *)image imageSize:(CGSize)imageSize;
+- (void)getImageWith:(UIImage *_Nullable)image imageSize:(CGSize)imageSize deviceID:(NSString *_Nullable)deviceID;
 
 @end
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface H26xHwDecoder : NSObject
+
+@property (nonatomic, copy) NSString *deviceID;
 
 @property (nonatomic, strong) id<H26xHwDecoderDelegate> delegate;
 

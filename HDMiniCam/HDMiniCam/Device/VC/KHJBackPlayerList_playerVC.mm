@@ -111,7 +111,7 @@ extern IPCNetRecordCfg_st recordCfg;
 
 #pragma MARK - H26xHwDecoderDelegate
 
-- (void)getImageWith:(UIImage *)image imageSize:(CGSize)imageSize
+- (void)getImageWith:(UIImage * _Nullable)image imageSize:(CGSize)imageSize deviceID:(NSString *)deviceID
 {
     playerImageView.image = image;
 }

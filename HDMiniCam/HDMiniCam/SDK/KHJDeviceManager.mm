@@ -22,6 +22,9 @@ const char *mCurViewPath_date;
 // 录像配置信息    - 结构体 - 用户获取视频路径
 IPCNetRecordCfg_st recordCfg;
 
+// 彩色/黑色      - 结构体 - 获取当前色彩信息，只用修改type就可以进行黑白/彩色切换
+IPCNetPicColorInfo_st picColorCfg;
+
 static int mNextStartIndex=0;
 static int mTotalNum=0;
 static RemoteDirInfo_t*mRemoteRootDirInfo,mSelectedRemoteDirInfo;
@@ -41,7 +44,7 @@ void OnGetCmdResult(int cmd,const char*uuid,const char*json)
     NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
     CLog(@"dict = %@",dict);
     int ret = [dict[@"ret"] intValue];
-    if (ret >= 0 && ret <= 100) {
+    if (ret >= 0) {
         switch (cmd) {
             case 1495:
 #pragma MARK - 修改饱和度、锐度、亮度
@@ -258,7 +261,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
     int ret = IPCNetStartIPCNetSession(deviceID.UTF8String, password.UTF8String, &netHandle);
     CLog(@"设备登录，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -273,7 +276,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
     int ret = IPCNetStopIPCNetSession(deviceID.UTF8String);
     CLog(@"设备断开，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -290,7 +293,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
     int ret = IPCNetStartVideo(deviceID.UTF8String, quality);
     CLog(@"开始获取视频，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -305,7 +308,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
     int ret = IPCNetStopVideo(deviceID.UTF8String);
     CLog(@"停止获取视频，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -320,7 +323,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
     int ret = IPCNetStartAudio(deviceID.UTF8String);
     CLog(@"开始获取音频，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -335,25 +338,23 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
     int ret = IPCNetStopAudio(deviceID.UTF8String);
     CLog(@"停止获取音频，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
 }
 
-
 /// 开启设备扬声器，准备接收音频数据并播放
 /// @param deviceID 设备id
 /// @param resultBlock 回调
 - (void)startTalk_with_deviceID:(NSString *)deviceID
-                           type:(int)type
                     resultBlock:(resultBlock)resultBlock
 {
-//    int ret = IPCNetStartTalkR(deviceID.UTF8String, type, OnGetCmdResult);
-//    CLog(@"开始获取视频，ret = %d",ret);
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//       resultBlock(ret);
-//    });
+    int ret = IPCNetStartTalk(deviceID.UTF8String, IPCNET_AUDIO_G711A);
+    CLog(@"开启设备扬声器，准备接收音频数据并播放，ret = %d",ret);
+    dispatch_async(dispatch_get_main_queue(), ^{
+       resultBlock(ret);
+    });
 }
 
 /// 关闭设备扬声器
@@ -362,11 +363,11 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
 - (void)stopTalk_with_deviceID:(NSString *)deviceID
                    resultBlock:(resultBlock)resultBlock
 {
-//    int ret = IPCNetStopAudio(deviceID.UTF8String);
-//    CLog(@"关闭设备扬声器，ret = %d",ret);
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//       resultBlock(ret);
-//    });
+    int ret = IPCNetStopTalk(deviceID.UTF8String);
+    CLog(@"关闭设备扬声器，ret = %d",ret);
+    dispatch_async(dispatch_get_main_queue(), ^{
+       resultBlock(ret);
+    });
 }
 
 #pragma mark - 发送音频数据 不知道怎么使用这个接口
@@ -433,7 +434,7 @@ void OnSetPlaybackAudioVideoDataCallBackCmdResult(const char*uuid,int type,unsig
     int ret = IPCNetStartPlaybackR(deviceID.UTF8String, path.UTF8String, OnStartPlaybackCmdResult);
     CLog(@"开始视频回放，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -453,7 +454,7 @@ void OnStartPlaybackCmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetStopPlaybackR(deviceID.UTF8String, OnGetCmdResult);
     CLog(@"停止视频回放，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -550,7 +551,7 @@ void OnStartPlaybackCmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetRestoreToFactorySetting(deviceID.UTF8String);
     CLog(@"恢复设备出厂设置，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -565,7 +566,7 @@ void OnStartPlaybackCmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetRebootDevice(deviceID.UTF8String);
     CLog(@"重启设备，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -580,7 +581,7 @@ void OnStartPlaybackCmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetGetWiFiR(deviceID.UTF8String, OnGetDeviceWiFi_CmdResult);
     CLog(@"获取设备Wi-Fi，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -605,7 +606,7 @@ void OnGetDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetSetWiFi(deviceID.UTF8String, ssid.UTF8String, password.UTF8String, encType.UTF8String);
     CLog(@"设置设备Wi-Fi，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -620,7 +621,7 @@ void OnGetDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetSearchWiFiR(deviceID.UTF8String, OnSearchDeviceWiFi_CmdResult);
     CLog(@"搜索附近Wi-Fi列表，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -639,7 +640,7 @@ void OnSearchDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetSearchDevice(OnSearchDeviceResult);
     CLog(@"搜索附近的设备，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -652,7 +653,7 @@ void OnSearchDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetStopSearchDevice();
     CLog(@"停止搜索附近的设备，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -678,7 +679,7 @@ void OnSearchDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetGetDevInfo(deviceID.UTF8String);
     CLog(@"获取设备端信息，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -695,7 +696,7 @@ void OnSearchDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetChangeDevPwd(deviceID.UTF8String, password.UTF8String);
     CLog(@"修改设备密码，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -712,7 +713,7 @@ void OnSearchDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetGetOSDR(deviceID.UTF8String, json.UTF8String, OnGetCmdResult);
     CLog(@"获取OSD，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -729,7 +730,7 @@ void OnSearchDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetSetOSDR(deviceID.UTF8String, json.UTF8String, OnGetCmdResult);
     CLog(@"设置OSD，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -752,7 +753,7 @@ void OnSearchDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetGetRecordConfR(deviceID.UTF8String, str.c_str(), OnGetRecordConfCmdResult);
     CLog(@"获取录像配置，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -815,7 +816,7 @@ void OnGetRecordConfCmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetListRemoteDirInfoR(deviceID.UTF8String, json.UTF8String, OnListRemoteDirInfoCmdResult);
     CLog(@"获取远程目录信息，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -836,7 +837,7 @@ void OnGetRecordConfCmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetListRemoteDirInfoR(deviceID.UTF8String, jsonbuff, OnGetRemoteDirInfo_timeLine_CmdResult);
     CLog(@"获取时间轴数据的远程目录信息，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -865,7 +866,7 @@ void OnGetRemoteDirInfo_timeLine_CmdResult(int cmd,const char*uuid,const char*js
     int ret = IPCNetStartPlaybackAtTimeR(deviceID.UTF8String, vi, date, time, OnStarPlayback_timeLine_CmdResult);
     CLog(@"播放时间轴回放视频，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -900,7 +901,7 @@ void OnGetRecTimePeriodCmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetListRemotePageFileR(deviceID.UTF8String, path.UTF8String, OnGetCmdResult);
     CLog(@"获取远程 Page 文件，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -917,7 +918,7 @@ void OnGetRecTimePeriodCmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetDeleteRemoteFileR(deviceID.UTF8String, path.UTF8String, OnDeleteRemoteFileCmdResult);
     CLog(@"删除远程文件，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -1101,7 +1102,7 @@ void OnDeleteRemoteFileCmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetSetWiFiAPInfoR(deviceID.UTF8String, json.UTF8String, OnSetWiFiAPInfoCmdResult);
     CLog(@"设设置设备热点，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -1112,7 +1113,7 @@ void OnSetWiFiAPInfoCmdResult(int cmd,const char*uuid,const char*json)
     NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
     CLog(@"dict = %@",dict);
     int ret = [dict[@"ret"] intValue];
-    if (ret >= 0 && ret <= 100) {
+    if (ret >= 0) {
         
     }
     else {
@@ -1131,7 +1132,7 @@ void OnSetWiFiAPInfoCmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetGetAlarmR(deviceID.UTF8String, OnGetCmdResult);
     CLog(@"获取设备报警信息，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -1148,7 +1149,7 @@ void OnSetWiFiAPInfoCmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetSetAlarmR(deviceID.UTF8String, json.UTF8String, OnGetCmdResult);
     CLog(@"设置设备报警，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -1160,29 +1161,91 @@ void OnSetWiFiAPInfoCmdResult(int cmd,const char*uuid,const char*json)
 - (void)getQualityLevel_with_deviceID:(NSString *)deviceID
                           resultBlock:(resultBlock)resultBlock
 {
-//    int ret = IPCNetGetResolutionR(deviceID.UTF8String, OnGetCmdResult);
-//    CLog(@"获取清晰度，ret = %d",ret);
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//       resultBlock(ret);
-//    });
+    int ret = IPCNetGetResolutionR(deviceID.UTF8String, OnGetQualityLevelCmdResult);
+    CLog(@"获取清晰度，ret = %d",ret);
+    dispatch_async(dispatch_get_main_queue(), ^{
+       resultBlock(ret);
+    });
+}
+
+void OnGetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
+{
+    NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
+    CLog(@"dict = %@",dict);
+    int ret = [dict[@"ret"] intValue];
+    if (ret >= 0) {
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"OnSetQualityLevelCmdResult_noti_key" object:nil];
+//        });
+    }
+    else {
+        CLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
+    }
 }
 
 /// 设置清晰度
 /// @param deviceID 设备id
-/// @param level 清晰度级别
+/// @param level 清晰度级别 0 标清，1 高清，2 4K超清
 /// @param resultBlock 回调
 - (void)setQualityLevel_with_deviceID:(NSString *)deviceID
                                 level:(int)level
                           resultBlock:(resultBlock)resultBlock
 {
-    int ret = IPCNetSetResolutionR(deviceID.UTF8String, level, OnGetCmdResult);
+    int ret = IPCNetSetResolutionR(deviceID.UTF8String, level, OnSetQualityLevelCmdResult);
     CLog(@"设置清晰度，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
 }
+
+void OnSetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
+{
+    NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
+    CLog(@"dict = %@",dict);
+    int ret = [dict[@"ret"] intValue];
+    if (ret >= 0) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"OnSetQualityLevelCmdResult_noti_key" object:nil];
+        });
+    }
+    else {
+        CLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
+    }
+}
+
+///// 获取色度
+///// @param deviceID 设备id
+///// @param resultBlock 回调
+//- (void)getColorLevel_with_deviceID:(NSString *)deviceID
+//                        resultBlock:(resultBlock)resultBlock
+//{
+//    int ret = IPCNetGetHueR(deviceID.UTF8String, OnGetSaturationLevelCmdResult);
+//    CLog(@"获取色度，ret = %d",ret);
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//       if (ret >= 0) {
+//           resultBlock(ret);
+//       }
+//    });
+//}
+//
+///// 设置色度
+///// @param deviceID 设备id
+///// @param level 对比度级别
+///// @param resultBlock 回调
+//- (void)setColorLevel_with_deviceID:(NSString *)deviceID
+//                              level:(int)level
+//                        resultBlock:(resultBlock)resultBlock
+//{
+//    int ret = IPCNetSetHueR(deviceID.UTF8String, level, OnSetSaturationLevelCmdResult);
+//    CLog(@"设置色度，ret = %d",ret);
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//       if (ret >= 0) {
+//           resultBlock(ret);
+//       }
+//    });
+//}
 
 /// 获取亮度
 /// @param deviceID 设备id
@@ -1190,10 +1253,10 @@ void OnSetWiFiAPInfoCmdResult(int cmd,const char*uuid,const char*json)
 - (void)getBrightnessLevel_with_deviceID:(NSString *)deviceID
                              resultBlock:(resultBlock)resultBlock
 {
-    int ret = IPCNetGetBrightnessR(deviceID.UTF8String, OnGetCmdResult);
+    int ret = IPCNetGetBrightnessR(deviceID.UTF8String, OnGetSaturationLevelCmdResult);
     CLog(@"获取亮度，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -1207,10 +1270,10 @@ void OnSetWiFiAPInfoCmdResult(int cmd,const char*uuid,const char*json)
                                    level:(int)level
                              resultBlock:(resultBlock)resultBlock
 {
-    int ret = IPCNetSetBrightnessR(deviceID.UTF8String, level, OnGetCmdResult);
+    int ret = IPCNetSetBrightnessR(deviceID.UTF8String, level, OnSetSaturationLevelCmdResult);
     CLog(@"设置亮度，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -1222,10 +1285,10 @@ void OnSetWiFiAPInfoCmdResult(int cmd,const char*uuid,const char*json)
 - (void)getCompareColoLevel_with_deviceID:(NSString *)deviceID
                               resultBlock:(resultBlock)resultBlock
 {
-    int ret = IPCNetGetContrastR(deviceID.UTF8String, OnGetCmdResult);
+    int ret = IPCNetGetContrastR(deviceID.UTF8String, OnGetSaturationLevelCmdResult);
     CLog(@"获取对比度，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -1239,42 +1302,10 @@ void OnSetWiFiAPInfoCmdResult(int cmd,const char*uuid,const char*json)
                                      level:(int)level
                                resultBlock:(resultBlock)resultBlock
 {
-    int ret = IPCNetSetContrastR(deviceID.UTF8String, level, OnGetCmdResult);
+    int ret = IPCNetSetContrastR(deviceID.UTF8String, level, OnSetSaturationLevelCmdResult);
     CLog(@"设置对比度，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
-           resultBlock(ret);
-       }
-    });
-}
-
-/// 获取色度
-/// @param deviceID 设备id
-/// @param resultBlock 回调
-- (void)getColorLevel_with_deviceID:(NSString *)deviceID
-                        resultBlock:(resultBlock)resultBlock
-{
-    int ret = IPCNetGetHueR(deviceID.UTF8String, OnGetCmdResult);
-    CLog(@"获取色度，ret = %d",ret);
-    dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
-           resultBlock(ret);
-       }
-    });
-}
-
-/// 设置色度
-/// @param deviceID 设备id
-/// @param level 对比度级别
-/// @param resultBlock 回调
-- (void)setColorLevel_with_deviceID:(NSString *)deviceID
-                              level:(int)level
-                        resultBlock:(resultBlock)resultBlock
-{
-    int ret = IPCNetSetHueR(deviceID.UTF8String, level, OnGetCmdResult);
-    CLog(@"设置色度，ret = %d",ret);
-    dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -1286,11 +1317,11 @@ void OnSetWiFiAPInfoCmdResult(int cmd,const char*uuid,const char*json)
 - (void)getSaturationLevel_with_deviceID:(NSString *)deviceID
                              resultBlock:(resultBlock)resultBlock
 {
-//    int ret = IPCNetGetSaturationR(deviceID.UTF8String, OnGetCmdResult);
-//    CLog(@"获取饱和度，ret = %d",ret);
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//       resultBlock(ret);
-//    });
+    int ret = IPCNetGetSaturationR(deviceID.UTF8String, OnGetSaturationLevelCmdResult);
+    CLog(@"获取饱和度，ret = %d",ret);
+    dispatch_async(dispatch_get_main_queue(), ^{
+       resultBlock(ret);
+    });
 }
 
 /// 设置饱和度
@@ -1301,10 +1332,10 @@ void OnSetWiFiAPInfoCmdResult(int cmd,const char*uuid,const char*json)
                                    level:(int)level
                              resultBlock:(resultBlock)resultBlock
 {
-    int ret = IPCNetSetSaturationR(deviceID.UTF8String, level, OnGetCmdResult);
+    int ret = IPCNetSetSaturationR(deviceID.UTF8String, level, OnSetSaturationLevelCmdResult);
     CLog(@"设置饱和度，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -1316,10 +1347,10 @@ void OnSetWiFiAPInfoCmdResult(int cmd,const char*uuid,const char*json)
 - (void)getAcutanceLevel_with_deviceID:(NSString *)deviceID
                            resultBlock:(resultBlock)resultBlock
 {
-    int ret = IPCNetGetAcutanceR(deviceID.UTF8String, OnGetCmdResult);
+    int ret = IPCNetGetAcutanceR(deviceID.UTF8String, OnGetSaturationLevelCmdResult);
     CLog(@"获取锐度，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -1333,10 +1364,10 @@ void OnSetWiFiAPInfoCmdResult(int cmd,const char*uuid,const char*json)
                                  level:(int)level
                            resultBlock:(resultBlock)resultBlock
 {
-    int ret = IPCNetSetAcutanceR(deviceID.UTF8String, level, OnGetCmdResult);
+    int ret = IPCNetSetAcutanceR(deviceID.UTF8String, level, OnSetSaturationLevelCmdResult);
     CLog(@"设置锐度，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -1348,32 +1379,159 @@ void OnSetWiFiAPInfoCmdResult(int cmd,const char*uuid,const char*json)
 - (void)setDefault_with_deviceID:(NSString *)deviceID
                      resultBlock:(resultBlock)resultBlock
 {
-    int ret = IPCNetSetCameraColorSettingDefaultR(deviceID.UTF8String, OnGetCmdResult);
+    int ret = IPCNetSetCameraColorSettingDefault(deviceID.UTF8String);
     CLog(@"恢复图像默认设置（图像异常时可用），ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
 }
 
+/// 获取色彩/黑白模式
+/// @param deviceID 设备id
+/// @param resultBlock 回调
+- (void)getIRModel_with_deviceID:(NSString *)deviceID
+                     resultBlock:(resultBlock)resultBlock
+{
+    int ret = IPCNetGetIRModeR(deviceID.UTF8String, OnGetIRModeCmdResult);
+    CLog(@"获取色彩/黑白模式，ret = %d",ret);
+    dispatch_async(dispatch_get_main_queue(), ^{
+       if (ret >= 0) {
+           resultBlock(ret);
+       }
+    });
+}
+
+void OnGetIRModeCmdResult(int cmd,const char*uuid,const char*json)
+{
+    Log("%s cmd:%d uuid:%s json:%s\n",__func__,cmd, uuid, json);
+    NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
+    CLog(@"dict = %@",dict);
+    int ret = [dict[@"ret"] intValue];
+    if (ret >= 0) {
+        JSONObject jsdata(json);//解析json
+        picColorCfg.parseJSON(jsdata);
+        IPCNetReleaseCmdResource(cmd,uuid,OnGetIRModeCmdResult);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"OnGetIRModeCmdResult_noti_key" object:nil];
+        });
+    }
+    else {
+        CLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
+    }
+}
+
+/// 切换 色彩/黑白模式
+/// @param deviceID 设备id
+/// @param type type == 0 彩色画面/ type == 1 黑白画面
+/// @param resultBlock 回调
+- (void)setIRModel_with_deviceID:(NSString *)deviceID
+                            type:(int)type
+                     resultBlock:(resultBlock)resultBlock
+{
+    String str;
+    picColorCfg.Type = type;
+    picColorCfg.toJSONString(str);
+    int ret = IPCNetSetIRModeR(deviceID.UTF8String, str.c_str(), OnSetIRModeCmdResult);
+    CLog(@"获取色彩/黑白模式，ret = %d",ret);
+    dispatch_async(dispatch_get_main_queue(), ^{
+       if (ret >= 0) {
+           resultBlock(ret);
+       }
+    });
+}
+
+void OnSetIRModeCmdResult(int cmd,const char*uuid,const char*json)
+{
+   NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
+   CLog(@"dict = %@",dict);
+   int ret = [dict[@"ret"] intValue];
+   if (ret >= 0) {
+       dispatch_async(dispatch_get_main_queue(), ^{
+           [[NSNotificationCenter defaultCenter] postNotificationName:@"OnSetIRModeCmdResult_noti_key" object:nil];
+       });
+   }
+   else {
+       CLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
+   }
+}
+
+///// 获取当前画面翻转
+///// @param deviceID 设备id
+///// @param resultBlock 回调
+//- (void)getFilp_with_deviceID:(NSString *)deviceID
+//                  resultBlock:(resultBlock)resultBlock
+//{
+//    int ret = IPCNetGetFlipMirrorR(deviceID.UTF8String, OnSetSaturationLevelCmdResult);
+//    CLog(@"画面翻转，ret = %d",ret);
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//       if (ret >= 0) {
+//           resultBlock(ret);
+//       }
+//    });
+//}
+
 /// 画面翻转
 /// @param deviceID 设备id
-/// @param flip 翻转
-/// @param mirror 镜像
+/// @param flip 翻转 1
+/// @param mirror 镜像 1
 /// @param resultBlock 回调
 - (void)setFilp_with_deviceID:(NSString *)deviceID
                          flip:(int)flip
                        mirror:(int)mirror
                   resultBlock:(resultBlock)resultBlock
 {
-    int ret = IPCNetSetFlipMirrorR(deviceID.UTF8String, flip, mirror, OnGetCmdResult);
+    int ret = IPCNetSetFlipMirrorR(deviceID.UTF8String, flip, mirror, OnSetFilpCmdResult);
     CLog(@"画面翻转，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
+}
+
+void OnSetFilpCmdResult(int cmd,const char*uuid,const char*json)
+{
+    NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
+    CLog(@"dict = %@",dict);
+    int ret = [dict[@"ret"] intValue];
+    if (ret >= 0) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"OnSetFilpCmdResult_noti_key" object:nil];
+        });
+    }
+    else {
+        CLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
+    }
+}
+
+void OnGetSaturationLevelCmdResult(int cmd,const char*uuid,const char*json)
+{
+    NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
+    CLog(@"dict = %@",dict);
+    int ret = [dict[@"ret"] intValue];
+    if (ret >= 0) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"OnGetSaturationLevelCmdResult_noti_key" object:dict[@"CamCfg.info"]];
+    }
+    else {
+        CLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
+    }
+}
+
+void OnSetSaturationLevelCmdResult(int cmd,const char*uuid,const char*json)
+{
+    NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
+    CLog(@"dict = %@",dict);
+    int ret = [dict[@"ret"] intValue];
+    if (ret >= 0) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"OnSetSaturationLevelCmdResult_noti_key" object:nil];
+        });
+    }
+    else {
+        CLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
+    }
 }
 
 /// 获取设备时间
@@ -1385,7 +1543,7 @@ void OnSetWiFiAPInfoCmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetGetTimeR(deviceID.UTF8String, OnGetCmdResult);
     CLog(@"获取设备时间，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });
@@ -1402,7 +1560,7 @@ void OnSetWiFiAPInfoCmdResult(int cmd,const char*uuid,const char*json)
     int ret = IPCNetSetTimeR(deviceID.UTF8String, time, OnGetCmdResult);
     CLog(@"设置设备时间，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
-       if (ret >= 0 && ret <= 100) {
+       if (ret >= 0) {
            resultBlock(ret);
        }
     });

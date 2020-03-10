@@ -50,29 +50,6 @@
         [self.locationManager requestWhenInUseAuthorization];
     }
     [self initHomeView];
-    
-//    NSLog(@"syncConcurrentMethod---begin");
-//
-//    dispatch_queue_t queue= dispatch_queue_create("test.queue", DISPATCH_QUEUE_SERIAL);
-//
-//    dispatch_sync(queue, ^{
-//        for (int i = 0; i < 20; ++i) {
-//            NSLog(@"1------%@",[NSThread currentThread]);
-//        }
-//    });
-//    dispatch_sync(queue, ^{
-//        for (int i = 0; i < 20; ++i) {
-//            NSLog(@"2------%@",[NSThread currentThread]);
-//        }
-//    });
-//    dispatch_sync(queue, ^{
-//        for (int i = 0; i < 20; ++i) {
-//            NSLog(@"3------%@",[NSThread currentThread]);
-//        }
-//    });
-//
-//    NSLog(@"syncConcurrentMethod---end");
-    
     return YES;
 }
 
@@ -99,9 +76,9 @@
     KHJBaseNavigationController *recordNavi = [[KHJBaseNavigationController  alloc] initWithRootViewController:vc3];
     recordNavi.tabBarItem.title = KHJLocalizedString(@"录像", nil);
     
-    KHJAlarmListVC *vc4 = [[KHJAlarmListVC alloc] init];
-    KHJBaseNavigationController *alarmListNavi = [[KHJBaseNavigationController  alloc] initWithRootViewController:vc4];
-    alarmListNavi.tabBarItem.title = KHJLocalizedString(@"报警", nil);
+//    KHJAlarmListVC *vc4 = [[KHJAlarmListVC alloc] init];
+//    KHJBaseNavigationController *alarmListNavi = [[KHJBaseNavigationController  alloc] initWithRootViewController:vc4];
+//    alarmListNavi.tabBarItem.title = KHJLocalizedString(@"报警", nil);
 
     [deviceListNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:KHJUtility.appMainColor}
                                              forState:UIControlStateSelected];
@@ -118,20 +95,21 @@
     [recordNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.blackColor}
                                          forState:UIControlStateNormal];
     
-    [alarmListNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:KHJUtility.appMainColor,}
-                                            forState:UIControlStateSelected];
-    [alarmListNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.blackColor,}
-                                            forState:UIControlStateNormal];
+//    [alarmListNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:KHJUtility.appMainColor,}
+//                                            forState:UIControlStateSelected];
+//    [alarmListNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.blackColor,}
+//                                            forState:UIControlStateNormal];
     
-    [tabbar setViewControllers:@[deviceListNavi, pictureNavi, recordNavi, alarmListNavi]];
-    
+//    [tabbar setViewControllers:@[deviceListNavi, pictureNavi, recordNavi, alarmListNavi]];
+    [tabbar setViewControllers:@[deviceListNavi, pictureNavi, recordNavi]];
+
     //设置tabar图像
     pictureNavi.tabBarItem.image = [KHJIMAGE(@"picture_n") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     pictureNavi.tabBarItem.selectedImage = [KHJIMAGE(@"picture_s") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] ;
     recordNavi.tabBarItem.image = [KHJIMAGE(@"record_n") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     recordNavi.tabBarItem.selectedImage = [KHJIMAGE(@"record_s") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    alarmListNavi.tabBarItem.image = [KHJIMAGE(@"alarm_n") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    alarmListNavi.tabBarItem.selectedImage = [KHJIMAGE(@"alarm_s") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    alarmListNavi.tabBarItem.image = [KHJIMAGE(@"alarm_n") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    alarmListNavi.tabBarItem.selectedImage = [KHJIMAGE(@"alarm_s") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     deviceListNavi.tabBarItem.image = [KHJIMAGE(@"video_n") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     deviceListNavi.tabBarItem.selectedImage = [KHJIMAGE(@"video_s") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
@@ -163,6 +141,31 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - 监听手机 “横屏、竖屏” 状态
+
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(nullable UIWindow *)window
+{
+    if (self.setTurnScreen)  {
+        /* 横屏 */
+        return UIInterfaceOrientationMaskLandscape;
+    }
+    else {
+        /* 竖屏 */
+        return UIInterfaceOrientationMaskPortrait;
+    }
+}
+
+// 是否支持设备自动旋转
+
+- (BOOL)shouldAutorotate
+{
+    if (self.setTurnScreen == YES) {
+        //为1的话,支持旋转
+        return YES;
+    }
+    return NO;
 }
 
 

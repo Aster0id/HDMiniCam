@@ -6,6 +6,9 @@
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
+#import "AppDelegate.h"
+#import "UIDevice+TFDevice.h"
+
 #import "KHJDeviceListVC.h"
 #import "KHJDeviceListCell.h"
 //
@@ -14,7 +17,7 @@
 #import "KHJDeviceInfo.h"
 #import "KHJAddDeviceListVC.h"
 #import "KHJSearchDeviceVC.h"
-#import "KHJMutliScreenVC.h"
+#import "KHJMutilScreenVC_2.h"
 #import "KHJVideoPlayer_hp_VC.h"
 #import "KHJVideoPlayer_sp_VC.h"
 #import "KHJVideoPlayer_hf_VC.h"
@@ -70,16 +73,34 @@
 
 - (IBAction)more:(id)sender
 {
-    KHJMutliScreenVC *vc = [[KHJMutliScreenVC alloc] init];
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 
 - (IBAction)search:(id)sender
 {
-    KHJSearchDeviceVC *vc = [[KHJSearchDeviceVC alloc] init];
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+    NSMutableArray *list = [NSMutableArray array];
+    NSArray *passDeviceList = [self.deviceList copy];
+    WeakSelf
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        for (int i = 0; i < passDeviceList.count; i++) {
+            KHJDeviceInfo *info = passDeviceList[i];
+            if ([info.deviceStatus isEqualToString:@"0"]) {
+                [list addObject:info.deviceID];
+            }
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            /* 显示多个视频 */
+            AppDelegate *appDelegate    = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            appDelegate.setTurnScreen   = YES;
+            [UIDevice switchNewOrientation:UIInterfaceOrientationLandscapeRight];
+            [weakSelf.navigationController setNavigationBarHidden:YES animated:YES];
+            KHJMutilScreenVC_2 *vc = [[KHJMutilScreenVC_2 alloc] init];
+            vc.list = [list copy];
+            vc.hidesBottomBarWhenPushed = YES;
+            [UITabBar appearance].translucent = YES;
+            [weakSelf.navigationController pushViewController:vc animated:YES];
+        });
+    });
 }
 
 #pragma mark - UITableViewDelegate && UITableViewDataSource
@@ -251,6 +272,58 @@
             *stop = YES;
         }
     }];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIViewController *vc = [self getCurrentUIVC];
+        NSString *string = NSStringFromClass(vc.class);
+        if ([string isEqualToString:@"KHJMutilScreenVC_2"]) {
+            CLog(@"vc.name ========== %@",string);
+        }
+    });
+}
+
+- (UIViewController *)getCurrentUIVC
+{
+    UIViewController  *superVC = [self getCurrentVC];
+    if ([superVC isKindOfClass:[UITabBarController class]]) {
+        
+        UIViewController  *tabSelectVC = ((UITabBarController*)superVC).selectedViewController;
+        
+        if ([tabSelectVC isKindOfClass:[UINavigationController class]]) {
+            
+            return ((UINavigationController*)tabSelectVC).viewControllers.lastObject;
+        }
+        return tabSelectVC;
+    }else
+        if ([superVC isKindOfClass:[UINavigationController class]]) {
+            
+            return ((UINavigationController*)superVC).viewControllers.lastObject;
+        }
+    return superVC;
+}
+
+- (UIViewController *)getCurrentVC
+{
+    UIViewController *result = nil;
+    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+    if (window.windowLevel != UIWindowLevelNormal) {
+        NSArray *windows = [[UIApplication sharedApplication] windows];
+        for(UIWindow * tmpWin in windows) {
+            if (tmpWin.windowLevel == UIWindowLevelNormal) {
+                window = tmpWin;
+                break;
+            }
+        }
+    }
+    UIView *frontView = [[window subviews] objectAtIndex:0];
+    id nextResponder = [frontView nextResponder];
+    
+    if ([nextResponder isKindOfClass:[UIViewController class]])
+        result = nextResponder;
+    else
+        result = window.rootViewController;
+    
+    return result;
 }
 
 @end

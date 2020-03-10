@@ -22,13 +22,16 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xxe-Cr-X2t">
                     <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设备列表" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5mp-Nj-j3H">
-                            <rect key="frame" x="153" y="11.666666666666664" width="69" height="21"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设备列表" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5mp-Nj-j3H">
+                            <rect key="frame" x="97.666666666666686" y="11.666666666666664" width="180" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="180" id="htX-JD-avI"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="moreScreen_blue" translatesAutoresizingMaskIntoConstraints="NO" id="wkM-mj-nYR">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="moreScreen_blue" translatesAutoresizingMaskIntoConstraints="NO" id="wkM-mj-nYR">
                             <rect key="frame" x="19" y="11" width="22" height="22"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="22" id="QPM-iS-knQ"/>
@@ -38,10 +41,10 @@
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add_blue" translatesAutoresizingMaskIntoConstraints="NO" id="QXq-Qq-QIo">
                             <rect key="frame" x="342.66666666666669" y="11.666666666666666" width="20.666666666666686" height="20.666666666666671"/>
                         </imageView>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search_blue" translatesAutoresizingMaskIntoConstraints="NO" id="mo7-2O-xXy">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="moreScreen_blue" translatesAutoresizingMaskIntoConstraints="NO" id="mo7-2O-xXy">
                             <rect key="frame" x="298.66666666666669" y="11.666666666666666" width="20.666666666666686" height="20.666666666666671"/>
                         </imageView>
-                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6dt-sB-k72" userLabel="more">
+                        <button opaque="NO" alpha="0.0" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6dt-sB-k72" userLabel="more">
                             <rect key="frame" x="0.0" y="0.0" width="60" height="44"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="60" id="ENe-Yn-ARc"/>
@@ -132,6 +135,5 @@
     <resources>
         <image name="add_blue" width="32" height="32"/>
         <image name="moreScreen_blue" width="38.333332061767578" height="32"/>
-        <image name="search_blue" width="32" height="32"/>
     </resources>
 </document>

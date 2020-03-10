@@ -75,7 +75,6 @@ typedef void(^playBackVideoOrAudioDataRetultBlock)(const char*uuid,int type,unsi
 /// @param deviceID 设备id
 /// @param resultBlock 回调
 - (void)startTalk_with_deviceID:(NSString *)deviceID
-                           type:(int)type
                     resultBlock:(resultBlock)resultBlock;
 
 /// 关闭设备扬声器
@@ -542,7 +541,27 @@ typedef void(^playBackVideoOrAudioDataRetultBlock)(const char*uuid,int type,unsi
 - (void)setDefault_with_deviceID:(NSString *)deviceID
                      resultBlock:(resultBlock)resultBlock;
 
+/// 获取色彩/黑白模式
+/// @param deviceID 设备id
+/// @param resultBlock 回调
+- (void)getIRModel_with_deviceID:(NSString *)deviceID
+                     resultBlock:(resultBlock)resultBlock;
+
+/// 切换 色彩/黑白模式
+/// @param deviceID 设备id
+/// @param type type == 0 彩色画面/ type == 1 黑白画面
+/// @param resultBlock 回调
+- (void)setIRModel_with_deviceID:(NSString *)deviceID
+                            type:(int)type
+                     resultBlock:(resultBlock)resultBlock;
+
 #pragma mark - 设备画面翻转
+
+///// 获取当前画面翻转
+///// @param deviceID 设备id
+///// @param resultBlock 回调
+//- (void)getFilp_with_deviceID:(NSString *)deviceID
+//                  resultBlock:(resultBlock)resultBlock;
 
 /// 画面翻转
 /// @param deviceID 设备id

@@ -154,7 +154,6 @@
 		AB52C11823FC14A300C921F1 /* KHJDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52C11723FC14A300C921F1 /* KHJDataBase.m */; };
 		AB52C11B23FC153400C921F1 /* KHJDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52C11A23FC153400C921F1 /* KHJDeviceInfo.m */; };
 		AB52C11E23FD3B3200C921F1 /* KHJErrorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52C11D23FD3B3200C921F1 /* KHJErrorManager.m */; };
-		AB5462C8240CA66A00A096ED /* libIPCNetManager_old.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5462C5240CA66900A096ED /* libIPCNetManager_old.a */; };
 		AB5462C9240CA66A00A096ED /* liblibgpac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5462C6240CA66900A096ED /* liblibgpac.a */; };
 		AB5462CA240CA66A00A096ED /* libfaac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5462C7240CA66A00A096ED /* libfaac.a */; };
 		AB5462CE240FA0A900A096ED /* KHJRecordListVC_Two.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5462CC240FA0A900A096ED /* KHJRecordListVC_Two.m */; };
@@ -165,6 +164,11 @@
 		AB5462D9240FB4FA00A096ED /* KHJRecordListVC_Three.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5462D7240FB4FA00A096ED /* KHJRecordListVC_Three.xib */; };
 		AB5462E2240FB91000A096ED /* KHJCollectionViewCell_three.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5462E0240FB91000A096ED /* KHJCollectionViewCell_three.m */; };
 		AB5462E3240FB91000A096ED /* KHJCollectionViewCell_three.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5462E1240FB91000A096ED /* KHJCollectionViewCell_three.xib */; };
+		AB5462FA2416453900A096ED /* KHJMutilScreenVC_2.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5462F82416453900A096ED /* KHJMutilScreenVC_2.m */; };
+		AB5462FB2416453900A096ED /* KHJMutilScreenVC_2.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5462F92416453900A096ED /* KHJMutilScreenVC_2.xib */; };
+		AB54630324172A9C00A096ED /* XBAudioTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5462FD24172A9B00A096ED /* XBAudioTool.m */; };
+		AB54630424172A9C00A096ED /* XBAudioUnitRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5462FF24172A9B00A096ED /* XBAudioUnitRecorder.m */; };
+		AB54630524172A9C00A096ED /* XBAudioUnitPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB54630224172A9C00A096ED /* XBAudioUnitPlayer.m */; };
 		AB5911DC23D0141A0060F05C /* KHJRecordListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5911DA23D0141A0060F05C /* KHJRecordListCell.m */; };
 		AB5911DD23D0141A0060F05C /* KHJRecordListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5911DB23D0141A0060F05C /* KHJRecordListCell.xib */; };
 		AB597B39240154D500F04F84 /* libIOTCAPIs_P2PTunnel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB597B35240154D400F04F84 /* libIOTCAPIs_P2PTunnel.a */; };
@@ -430,7 +434,7 @@
 		AB4EFA6323F6B0BE00D584E7 /* SEP2P_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEP2P_API.h; sourceTree = "<group>"; };
 		AB4EFA6423F6B0BE00D584E7 /* cJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cJSON.h; sourceTree = "<group>"; };
 		AB4EFA6523F6B0BE00D584E7 /* SEP2P_Error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEP2P_Error.h; sourceTree = "<group>"; };
-		AB4EFA6623F6B0BE00D584E7 /* IPCNetManagerInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPCNetManagerInterface.h; sourceTree = "<group>"; };
+		AB4EFA6623F6B0BE00D584E7 /* IPCNetManagerInterface_olc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPCNetManagerInterface_olc.h; sourceTree = "<group>"; };
 		AB4EFA6723F6B0BE00D584E7 /* JSONStructProtocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONStructProtocal.h; sourceTree = "<group>"; };
 		AB4EFA6823F6B0BE00D584E7 /* SEP2P_Type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEP2P_Type.h; sourceTree = "<group>"; };
 		AB4EFA6923F6B0BE00D584E7 /* sepcam_protocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sepcam_protocal.h; sourceTree = "<group>"; };
@@ -450,7 +454,6 @@
 		AB52C11A23FC153400C921F1 /* KHJDeviceInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJDeviceInfo.m; sourceTree = "<group>"; };
 		AB52C11C23FD3B3200C921F1 /* KHJErrorManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJErrorManager.h; sourceTree = "<group>"; };
 		AB52C11D23FD3B3200C921F1 /* KHJErrorManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJErrorManager.m; sourceTree = "<group>"; };
-		AB5462C5240CA66900A096ED /* libIPCNetManager_old.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIPCNetManager_old.a; sourceTree = "<group>"; };
 		AB5462C6240CA66900A096ED /* liblibgpac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibgpac.a; sourceTree = "<group>"; };
 		AB5462C7240CA66A00A096ED /* libfaac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfaac.a; sourceTree = "<group>"; };
 		AB5462CB240FA0A900A096ED /* KHJRecordListVC_Two.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJRecordListVC_Two.h; sourceTree = "<group>"; };
@@ -465,6 +468,17 @@
 		AB5462DF240FB91000A096ED /* KHJCollectionViewCell_three.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJCollectionViewCell_three.h; sourceTree = "<group>"; };
 		AB5462E0240FB91000A096ED /* KHJCollectionViewCell_three.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJCollectionViewCell_three.m; sourceTree = "<group>"; };
 		AB5462E1240FB91000A096ED /* KHJCollectionViewCell_three.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJCollectionViewCell_three.xib; sourceTree = "<group>"; };
+		AB5462F72416453900A096ED /* KHJMutilScreenVC_2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJMutilScreenVC_2.h; sourceTree = "<group>"; };
+		AB5462F82416453900A096ED /* KHJMutilScreenVC_2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJMutilScreenVC_2.m; sourceTree = "<group>"; };
+		AB5462F92416453900A096ED /* KHJMutilScreenVC_2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJMutilScreenVC_2.xib; sourceTree = "<group>"; };
+		AB5462FC24172A9B00A096ED /* Header_audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Header_audio.h; sourceTree = "<group>"; };
+		AB5462FD24172A9B00A096ED /* XBAudioTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBAudioTool.m; sourceTree = "<group>"; };
+		AB5462FE24172A9B00A096ED /* XBAudioTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBAudioTool.h; sourceTree = "<group>"; };
+		AB5462FF24172A9B00A096ED /* XBAudioUnitRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBAudioUnitRecorder.m; sourceTree = "<group>"; };
+		AB54630024172A9B00A096ED /* XBAudioUnitRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBAudioUnitRecorder.h; sourceTree = "<group>"; };
+		AB54630124172A9C00A096ED /* XBAudioUnitPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBAudioUnitPlayer.h; sourceTree = "<group>"; };
+		AB54630224172A9C00A096ED /* XBAudioUnitPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBAudioUnitPlayer.m; sourceTree = "<group>"; };
+		AB54630624172B8A00A096ED /* IPCNetManagerInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPCNetManagerInterface.h; sourceTree = "<group>"; };
 		AB5911D923D0141A0060F05C /* KHJRecordListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJRecordListCell.h; sourceTree = "<group>"; };
 		AB5911DA23D0141A0060F05C /* KHJRecordListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJRecordListCell.m; sourceTree = "<group>"; };
 		AB5911DB23D0141A0060F05C /* KHJRecordListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJRecordListCell.xib; sourceTree = "<group>"; };
@@ -513,7 +527,6 @@
 				AB597B3C240154D500F04F84 /* libIOTCAPIs_P2PTunnelT.a in Frameworks */,
 				AB597B3A240154D500F04F84 /* libIOTCAPIs_ALLT.a in Frameworks */,
 				AB597B39240154D500F04F84 /* libIOTCAPIs_P2PTunnel.a in Frameworks */,
-				AB5462C8240CA66A00A096ED /* libIPCNetManager_old.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -838,9 +851,9 @@
 		AB20E60423CEBEBF00D2861C /* Device */ = {
 			isa = PBXGroup;
 			children = (
+				AB20E61C23CED03F00D2861C /* VC */,
 				AB32D4B223F53BCA008AFD1F /* View */,
 				AB20E61D23CED04800D2861C /* Cell */,
-				AB20E61C23CED03F00D2861C /* VC */,
 			);
 			path = Device;
 			sourceTree = "<group>";
@@ -897,6 +910,9 @@
 				AB30DA4223D05B0F005BD2A1 /* KHJAddDeviceListVC.h */,
 				AB30DA4323D05B0F005BD2A1 /* KHJAddDeviceListVC.m */,
 				AB30DA4423D05B0F005BD2A1 /* KHJAddDeviceListVC.xib */,
+				AB5462F72416453900A096ED /* KHJMutilScreenVC_2.h */,
+				AB5462F82416453900A096ED /* KHJMutilScreenVC_2.m */,
+				AB5462F92416453900A096ED /* KHJMutilScreenVC_2.xib */,
 				AB30DA6723D14CDF005BD2A1 /* KHJMutliScreenVC.h */,
 				AB30DA6823D14CDF005BD2A1 /* KHJMutliScreenVC.m */,
 				AB30DA6923D14CDF005BD2A1 /* KHJMutliScreenVC.xib */,
@@ -1090,7 +1106,8 @@
 				AB4EFA6423F6B0BE00D584E7 /* cJSON.h */,
 				AB4EFA6223F6B0BE00D584E7 /* JSONObject.hpp */,
 				AB4EFA6723F6B0BE00D584E7 /* JSONStructProtocal.h */,
-				AB4EFA6623F6B0BE00D584E7 /* IPCNetManagerInterface.h */,
+				AB54630624172B8A00A096ED /* IPCNetManagerInterface.h */,
+				AB4EFA6623F6B0BE00D584E7 /* IPCNetManagerInterface_olc.h */,
 			);
 			path = includes;
 			sourceTree = "<group>";
@@ -1098,15 +1115,14 @@
 		AB4EFA6A23F6B0BE00D584E7 /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				AB5462C7240CA66A00A096ED /* libfaac.a */,
 				AB597B37240154D500F04F84 /* libIOTCAPIs_ALL.a */,
 				AB597B36240154D500F04F84 /* libIOTCAPIs_ALLT.a */,
 				AB597B35240154D400F04F84 /* libIOTCAPIs_P2PTunnel.a */,
 				AB597B38240154D500F04F84 /* libIOTCAPIs_P2PTunnelT.a */,
 				AB4EFA7223F6B40000D584E7 /* libFBP2P.a */,
-				AB4EFA7123F6B40000D584E7 /* libIPCNetManager.a */,
-				AB5462C7240CA66A00A096ED /* libfaac.a */,
-				AB5462C5240CA66900A096ED /* libIPCNetManager_old.a */,
 				AB5462C6240CA66900A096ED /* liblibgpac.a */,
+				AB4EFA7123F6B40000D584E7 /* libIPCNetManager.a */,
 			);
 			path = libs;
 			sourceTree = "<group>";
@@ -1150,6 +1166,13 @@
 				93FC9F7524057033000B9B51 /* H26xHwDecoder.m */,
 				93FC9F7724057033000B9B51 /* list.h */,
 				93FC9F7424057033000B9B51 /* types.h */,
+				AB5462FC24172A9B00A096ED /* Header_audio.h */,
+				AB5462FE24172A9B00A096ED /* XBAudioTool.h */,
+				AB5462FD24172A9B00A096ED /* XBAudioTool.m */,
+				AB54630124172A9C00A096ED /* XBAudioUnitPlayer.h */,
+				AB54630224172A9C00A096ED /* XBAudioUnitPlayer.m */,
+				AB54630024172A9B00A096ED /* XBAudioUnitRecorder.h */,
+				AB5462FF24172A9B00A096ED /* XBAudioUnitRecorder.m */,
 			);
 			path = H264lib;
 			sourceTree = "<group>";
@@ -1260,6 +1283,7 @@
 				AB32D4B123F4F476008AFD1F /* KHJVideoPlayer_hf_VC.xib in Resources */,
 				AB597B4624027BC900F04F84 /* KHJBackPlayListCell.xib in Resources */,
 				93A30C5C23D298C5009A0F4C /* KHJTimeZoneConfigVC.xib in Resources */,
+				AB5462FB2416453900A096ED /* KHJMutilScreenVC_2.xib in Resources */,
 				AB52C11523FBEB0100C921F1 /* KHJAddDeviceListCell.xib in Resources */,
 				93C33B6C23CE20B400B44E5F /* TZAssetCell.xib in Resources */,
 				AB30DA7C23D164AE005BD2A1 /* KHJDeviceConfCell.xib in Resources */,
@@ -1365,7 +1389,9 @@
 				93C33B6123CE20B400B44E5F /* TZAssetCell.m in Sources */,
 				AB20E62123CED07300D2861C /* KHJDeviceListCell.m in Sources */,
 				AB52C11B23FC153400C921F1 /* KHJDeviceInfo.m in Sources */,
+				AB5462FA2416453900A096ED /* KHJMutilScreenVC_2.m in Sources */,
 				AB5D784A23F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.mm in Sources */,
+				AB54630524172A9C00A096ED /* XBAudioUnitPlayer.m in Sources */,
 				93C33B4C23CE20B400B44E5F /* SGQRCodeAlbumManager.m in Sources */,
 				93A30C5623D298B3009A0F4C /* KHJlampConfigVC.m in Sources */,
 				AB597B4524027BC900F04F84 /* KHJBackPlayListCell.m in Sources */,
@@ -1399,6 +1425,7 @@
 				93C33B5323CE20B400B44E5F /* ZQAlterField.m in Sources */,
 				93C33B4B23CE20B400B44E5F /* SGQRCodeGenerateManager.m in Sources */,
 				AB30DA4B23D060F2005BD2A1 /* KHJOnlineVC.m in Sources */,
+				AB54630324172A9C00A096ED /* XBAudioTool.m in Sources */,
 				93C33B5823CE20B400B44E5F /* UIWindow+LJWPresentViewController.m in Sources */,
 				AB32D4C123F54E7A008AFD1F /* KHJVideoModel.m in Sources */,
 				AB5462CE240FA0A900A096ED /* KHJRecordListVC_Two.m in Sources */,
@@ -1439,6 +1466,7 @@
 				93C33B6823CE20B400B44E5F /* TZPhotoPreviewCell.m in Sources */,
 				AB5462D8240FB4FA00A096ED /* KHJRecordListVC_Three.m in Sources */,
 				93A30C4723D29862009A0F4C /* KHJAlarmConfigVC.m in Sources */,
+				AB54630424172A9C00A096ED /* XBAudioUnitRecorder.m in Sources */,
 				93C33A7323CE1D0800B44E5F /* CreateTwoCode.m in Sources */,
 				AB30DA5F23D1470F005BD2A1 /* KHJSearchDeviceVC.m in Sources */,
 				AB30DA6523D1482F005BD2A1 /* KHJSearchDeviceCell.m in Sources */,

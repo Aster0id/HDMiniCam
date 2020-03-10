@@ -178,7 +178,6 @@ static void didDecompress(void *decompressionOutputRefCon, void *sourceFrameRefC
         NSLog(@"%@", [NSString stringWithFormat:@"Init H264 hardware decoder fail: %d", (int)status]);
         return NO;
     }
-    
     return YES;
 }
  
@@ -257,7 +256,7 @@ static int exitFlag = -1;
     mPpsSize = 0;
     mSeiSize = 0;
 }
- 
+
 - (CGSize)decodeH264VideoData:(uint8_t *)videoData videoSize:(NSInteger)videoSize videoType:(VideoEncodeFormat)videoType
 {
     //NSLog(@"decodeH264VideoData 第一步：视频解码出图片");
@@ -332,10 +331,17 @@ static int exitFlag = -1;
                         
                         if (frameFlag != HWVideoFrameType_UNKNOWN) {
                             self.image = [self pixelBufferToImage:pixelBuffer];
-                            if (_delegate && [_delegate respondsToSelector:@selector(getImageWith:imageSize:)]) {
+                            if (_delegate && [_delegate respondsToSelector:@selector(getImageWith:imageSize:deviceID:)]) {
                                 WeakSelf
                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                    [weakSelf.delegate getImageWith:self.image imageSize:imageSize];
+                                    if (self.deviceID.length > 0) {
+                                        // 多屏
+                                        [weakSelf.delegate getImageWith:self.image imageSize:imageSize deviceID:self.deviceID];
+                                    }
+                                    else {
+                                        // 竖屏
+                                        [weakSelf.delegate getImageWith:self.image imageSize:imageSize deviceID:@""];
+                                    }
                                 });
                             }
                         }

@@ -35,9 +35,12 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M0q-NL-i17">
                                     <rect key="frame" x="0.0" y="0.0" width="204.5" height="406.5"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MHF-Tm-xx5">
+                                        <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MHF-Tm-xx5">
                                             <rect key="frame" x="86.5" y="187.5" width="32" height="32"/>
                                             <state key="normal" image="add_icon_gray"/>
+                                            <connections>
+                                                <action selector="addDeviceBtnAction:" destination="-1" eventType="touchUpInside" id="2U9-fx-CpX"/>
+                                            </connections>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L03-ZA-ZaO">
                                             <rect key="frame" x="0.0" y="0.0" width="204.5" height="40"/>
@@ -112,9 +115,12 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A3p-em-UiD">
                                     <rect key="frame" x="0.0" y="411.5" width="204.5" height="406.5"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EOk-fm-dQa">
+                                        <button opaque="NO" tag="30" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EOk-fm-dQa">
                                             <rect key="frame" x="86.5" y="187.5" width="32" height="32"/>
                                             <state key="normal" image="add_icon_gray"/>
+                                            <connections>
+                                                <action selector="addDeviceBtnAction:" destination="-1" eventType="touchUpInside" id="JiB-fJ-0wv"/>
+                                            </connections>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6ro-DF-Omp">
                                             <rect key="frame" x="0.0" y="0.0" width="204.5" height="40"/>
@@ -194,9 +200,12 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LM7-VK-kbN">
                                     <rect key="frame" x="0.0" y="0.0" width="204.5" height="406.5"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j4X-cN-6Df">
+                                        <button opaque="NO" tag="20" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j4X-cN-6Df">
                                             <rect key="frame" x="86.5" y="187.5" width="32" height="32"/>
                                             <state key="normal" image="add_icon_gray"/>
+                                            <connections>
+                                                <action selector="addDeviceBtnAction:" destination="-1" eventType="touchUpInside" id="YzW-Sr-wcz"/>
+                                            </connections>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cGQ-7S-8jA">
                                             <rect key="frame" x="0.0" y="0.0" width="204.5" height="40"/>
@@ -271,9 +280,12 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5GF-1Z-uf2">
                                     <rect key="frame" x="0.0" y="411.5" width="204.5" height="406.5"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJp-Yt-pOt">
+                                        <button opaque="NO" tag="40" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJp-Yt-pOt">
                                             <rect key="frame" x="86.5" y="187.5" width="32" height="32"/>
                                             <state key="normal" image="add_icon_gray"/>
+                                            <connections>
+                                                <action selector="addDeviceBtnAction:" destination="-1" eventType="touchUpInside" id="jd3-fB-gdP"/>
+                                            </connections>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KIb-gB-qQR">
                                             <rect key="frame" x="0.0" y="0.0" width="204.5" height="40"/>

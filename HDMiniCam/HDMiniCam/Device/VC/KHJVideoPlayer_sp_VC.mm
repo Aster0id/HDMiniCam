@@ -11,7 +11,8 @@
 #import "KHJVideoPlayer_hf_VC.h"
 #import "KHJMutliScreenVC.h"
 #import "KHJDeviceManager.h"
-
+//
+#import "JSONStructProtocal.h"
 //
 #import "PlayLocalMusic.h"
 #import <Photos/Photos.h>
@@ -19,8 +20,14 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 
 // 是否直播录屏
-extern KHJLiveRecordType liveRecordType;
 extern NSString *liveRecordVideoPath;
+extern KHJLiveRecordType liveRecordType;
+// 彩色/黑白画面
+extern IPCNetPicColorInfo_st picColorCfg;
+// 监听
+extern XBAudioUnitPlayer *audioPlayer;
+// 对讲
+extern XBAudioUnitRecorder *audioRecorder;
 
 @interface KHJVideoPlayer_sp_VC ()<H26xHwDecoderDelegate>
 {
@@ -39,6 +46,7 @@ extern NSString *liveRecordVideoPath;
     __weak IBOutlet UIButton *recordBtn;
     __weak IBOutlet UIView *recordTimeView;
     __weak IBOutlet UILabel *recordTimeLab;
+    int qualityLevel;
     __weak IBOutlet UILabel *qualityLab;
     
     __weak IBOutlet UIImageView *oneImgView;
@@ -66,29 +74,9 @@ extern NSString *liveRecordVideoPath;
 @property (nonatomic, strong) NSMutableDictionary *_1497_body;
 @property (nonatomic, strong) NSMutableDictionary *change_1497_body;
 
-// 音频处理模块
-// 音频会话（AudioSession）:其用于管理与获取iOS设备音频的硬件信息，并且是以单例的形式存在。
-@property (nonatomic, strong) AVAudioSession *audioSession;
-
 @end
 
 @implementation KHJVideoPlayer_sp_VC
-
-- (AVAudioSession *)audioSession
-{
-    if (!_audioSession) {
-        _audioSession = [AVAudioSession sharedInstance];
-        // 根据我们需要硬件设备提供的能力来设置类别：
-        [_audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
-        // 设置I/O的Buffer,Buffer越小则说明延迟越低：
-        NSTimeInterval bufferDuration = 0.002;
-        [_audioSession setPreferredIOBufferDuration:bufferDuration error:nil];
-        double hwSampleRate = 44100.0;
-        [_audioSession setPreferredSampleRate:hwSampleRate error:nil];
-        [_audioSession setActive:YES error:nil];
-    }
-    return _audioSession;
-}
 
 - (NSMutableDictionary *)_1497_body
 {
@@ -115,35 +103,19 @@ extern NSString *liveRecordVideoPath;
 - (void)customizeDataSource
 {
     [self addNoti];
+    self.sp_deviceID = self.deviceID;
     sliderControl.continuous = NO;
     tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
     [playerImageView addGestureRecognizer:tap];
     [self startVideo];
 }
 
-- (void)createAudioUnit
-{
-    // 设置音频I/O口 --> AudioComponentDescription
-//    OSStatus status;
-//    AudioComponentDescription  desc;
-//    desc.componentType         = kAudioUnitType_Output;         //音频输出
-//    desc.componentSubType      = kAudioUnitSubType_RemoteIO;    //输出通道
-//    desc.componentFlags        = 0;                             //默认“0”
-//    desc.componentFlagsMask    = 0;                             //默认“0”
-//    desc.componentManufacturer = kAudioUnitManufacturer_Apple;  //制造商信息
-    
-    // 寻找音频组件 --> AudioComponent
-//    AudioComponent inputComponent = AudioComponentFindNext(NULL, &desc);    //找音频部件
-    
-    // 建立音频组件 --> AudioComponentInstance
-//    status = AudioComponentInstanceNew(inputComponent, &au_player);         //实现这个部件单元
-}
-
 - (void)startVideo
 {
     [activeView startAnimating];
+    qualityLevel = 0;
+    qualityLab.text = KHJLocalizedString(@"标清", nil);
     [[KHJDeviceManager sharedManager] startGetVideo_with_deviceID:self.deviceID quality:1 resultBlock:^(NSInteger code) {}];
-    [[KHJDeviceManager sharedManager] startGetAudio_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -155,18 +127,16 @@ extern NSString *liveRecordVideoPath;
 - (void)getVideoStatus
 {
     /// 获取当前视频的分辨率
-    [[KHJDeviceManager sharedManager] getQualityLevel_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {
-        CLog(@"___code = %ld",(long)code);
-    }];
-    /// 刷新_1497_body
-    [[KHJDeviceManager sharedManager] getSaturationLevel_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {
-        CLog(@"code = %ld",(long)code);
-    }];
+    [[KHJDeviceManager sharedManager] getQualityLevel_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
+    /// 获取饱和度、亮度、对比度、锐度
+    [[KHJDeviceManager sharedManager] getSaturationLevel_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
+    /// 获取色彩/黑白模式
+    [[KHJDeviceManager sharedManager] getIRModel_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
 }
 
 #pragma MARK - H26xHwDecoderDelegate
 
-- (void)getImageWith:(UIImage *)image imageSize:(CGSize)imageSize
+- (void)getImageWith:(UIImage * _Nullable)image imageSize:(CGSize)imageSize deviceID:(NSString *)deviceID
 {
     if (activeView.isAnimating) {
         [activeView stopAnimating];
@@ -176,20 +146,94 @@ extern NSString *liveRecordVideoPath;
 
 - (void)addNoti
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(get_1497_body:) name:noti_1497_KEY object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(get_1495_body) name:noti_1495_KEY object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"OnSetFilpCmdResult_noti_key" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"OnSetIRModeCmdResult_noti_key" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"OnGetIRModeCmdResult_noti_key" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"OnSetQualityLevelCmdResult_noti_key" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"OnGetSaturationLevelCmdResult_noti_key" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"OnSetSaturationLevelCmdResult_noti_key" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OnSetSaturationLevelCmdResult)
+                                                 name:@"OnSetSaturationLevelCmdResult_noti_key"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OnGetSaturationLevelCmdResult:)
+                                                 name:@"OnGetSaturationLevelCmdResult_noti_key"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OnGetIRModeCmdResult)
+                                                 name:@"OnGetIRModeCmdResult_noti_key"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OnSetIRModeCmdResult)
+                                                 name:@"OnSetIRModeCmdResult_noti_key"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OnSetFilpCmdResult)
+                                                 name:@"OnSetFilpCmdResult_noti_key"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OnSetQualityLevelCmdResult)
+                                                 name:@"OnSetQualityLevelCmdResult_noti_key"
+                                               object:nil];
 }
 
-- (void)get_1495_body
+- (void)OnSetQualityLevelCmdResult
+{
+    // 0 标清，1 高清，2 4K超清
+    if (qualityLevel == 0) {
+        qualityLab.text = KHJLocalizedString(@"标清", nil);
+    }
+    else if (qualityLevel == 1) {
+        qualityLab.text = KHJLocalizedString(@"高清", nil);
+    }
+    else if (qualityLevel == 2) {
+        qualityLab.text = KHJLocalizedString(@"4K超清", nil);
+    }
+}
+
+- (void)OnSetFilpCmdResult
+{
+    [self.view makeToast:@"切换成功"];
+}
+
+// 获取 彩色/黑色 画面
+- (void)OnGetIRModeCmdResult
+{
+    if (picColorCfg.Type == 0) {
+        CLog(@"彩色画面");
+    }
+    else {
+        CLog(@"黑白画面");
+    }
+}
+
+- (void)OnSetIRModeCmdResult
+{
+    if (picColorCfg.Type == 0) {
+        [self.view makeToast:@"彩色画面切换成功"];
+    }
+    else {
+        [self.view makeToast:@"黑白画面切换成功"];
+    }
+}
+
+- (void)OnSetSaturationLevelCmdResult
 {
     if (self.change_1497_body.count > 0) {
         NSString *key = self.change_1497_body.allKeys.firstObject;
         NSString *value = self.change_1497_body.allValues.firstObject;
         [self._1497_body setValue:value forKey:key];
+        if ([key isEqualToString:@"Saturtion"]) {
+            [self.view makeToast:@"色彩饱和度 设置成功"];
+        }
+        else if ([key isEqualToString:@"Brightness"]) {
+            [self.view makeToast:@"亮度 设置成功"];
+        }
+        else if ([key isEqualToString:@"Acutance"]) {
+            [self.view makeToast:@"亮度 设置成功"];
+        }
+        else if ([key isEqualToString:@"Contrast"]) {
+            [self.view makeToast:@"对比度 设置成功"];
+        }
     }
 }
 
-- (void)get_1497_body:(NSNotification *)noti
+- (void)OnGetSaturationLevelCmdResult:(NSNotification *)noti
 {
     self._1497_body = [NSMutableDictionary dictionaryWithDictionary:(NSDictionary *)noti.object];
 }
@@ -209,6 +253,8 @@ extern NSString *liveRecordVideoPath;
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [self stopTalk];
+    [self stopListen];
     liveRecordType = KHJLiveRecordType_Normal;
     [[KHJDeviceManager sharedManager] stopGetVideo_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
     [[KHJDeviceManager sharedManager] stopGetAudio_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
@@ -256,11 +302,6 @@ extern NSString *liveRecordVideoPath;
         }
     }
     else if (sender.tag == 40) {
-        // 多屏
-        KHJMutliScreenVC *vc = [[KHJMutliScreenVC alloc] init];
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-    else if (sender.tag == 50) {
         // 标清
         sender.selected = !sender.selected;
         [self gotoChangeQuality];
@@ -273,23 +314,25 @@ extern NSString *liveRecordVideoPath;
         // 监听
         sender.selected = !sender.selected;
         if (sender.selected) {
+            [self startListen];
             oneImgView.highlighted = YES;
         }
         else {
+            [self stopListen];
             oneImgView.highlighted = NO;
         }
-        [self gotoListen];
     }
     else if (sender.tag == 20) {
         // 对讲
         sender.selected = !sender.selected;
         if (sender.selected) {
+            [self startTalk];
             twoImgView.highlighted = YES;
         }
         else {
+            [self stopTalk];
             twoImgView.highlighted = NO;
         }
-        [self gotoTalk];
     }
     else if (sender.tag == 30) {
         // 截图
@@ -330,7 +373,9 @@ extern NSString *liveRecordVideoPath;
     UIAlertAction *config3 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"对比度", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:4];
     }];
-    UIAlertAction *config4 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"彩色/黑白", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    
+    NSString *picColor = picColorCfg.Type == 0 ? @"切换至黑白画面" : @"切换至彩色画面";
+    UIAlertAction *config4 = [UIAlertAction actionWithTitle:picColor style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:5];
     }];
     UIAlertAction *config5 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"垂直镜像", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -360,17 +405,6 @@ extern NSString *liveRecordVideoPath;
 {
     NSArray *arr = @[@"色彩饱和度",@"亮度",@"锐度",@"对比度",@"彩色/黑白",@"垂直镜像",@"水平镜像",@"恢复默认值"];
     sliderNameLab.text = arr[index - 1];
-    
-    /**
-    Acutance = 128;
-    Brightness = 117;
-    Chroma = 128;
-    Contrast = 139;
-    Saturtion = 160;
-    SetDefault = 0;
-    ViCh = 0;
-    */
-    
     if (index == 1 || index == 2 || index == 3 || index == 4) {
         slideView.hidden = NO;
         if ([sliderNameLab.text isEqualToString:@"色彩饱和度"]) {
@@ -394,6 +428,37 @@ extern NSString *liveRecordVideoPath;
             sliderPercentLab.text = KHJString(@"%d%%",(int)(percent*100));
         }
     }
+    else if (index == 5) {
+        CLog(@"彩色/黑白");
+        int type = 0;
+        if (picColorCfg.Type == 0) {
+            type = 1;
+        }
+        else {
+            type = 0;
+        }
+        [[KHJDeviceManager sharedManager] setIRModel_with_deviceID:self.deviceID type:type resultBlock:^(NSInteger code) {}];
+    }
+    else if (index == 6) {
+        CLog(@"垂直镜像");
+        [[KHJDeviceManager sharedManager] setFilp_with_deviceID:self.deviceID flip:1 mirror:0 resultBlock:^(NSInteger code) {}];
+    }
+    else if (index == 7) {
+        CLog(@"水平镜像");
+        [[KHJDeviceManager sharedManager] setFilp_with_deviceID:self.deviceID flip:0 mirror:1 resultBlock:^(NSInteger code) {}];
+    }
+    else if (index == 8) {
+        CLog(@"恢复默认值");
+        WeakSelf
+        [[KHJDeviceManager sharedManager] setDefault_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {
+            if (code >= 0) {
+                [weakSelf.view makeToast:@"设备已恢复默认值"];
+            }
+            else {
+                [weakSelf.view makeToast:@"恢复失败，请重试！"];
+            }
+        }];
+    }
     else {
         slideView.hidden = YES;
     }
@@ -404,7 +469,7 @@ extern NSString *liveRecordVideoPath;
     int persent = (int)(sender.value*100);
     int value = persent*2.55;
     sliderPercentLab.text = KHJString(@"%d%%",persent);
-    
+    [self.change_1497_body removeAllObjects];
     if ([sliderNameLab.text isEqualToString:@"色彩饱和度"]) {
         [self.change_1497_body setValue:KHJString(@"%d",value) forKey:@"Saturtion"];
         [[KHJDeviceManager sharedManager] setSaturationLevel_with_deviceID:self.deviceID level:value resultBlock:^(NSInteger code) {}];
@@ -453,16 +518,20 @@ extern NSString *liveRecordVideoPath;
 {
     UIAlertController *alertview = [UIAlertController alertControllerWithTitle:@"设置画面清晰度" message:nil preferredStyle:UIAlertControllerStyleAlert];
     WeakSelf
-    UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"4K超清", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"4K超清", nil)
+                                                     style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf setQualityWith:2];
     }];
-    UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"高清", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"高清", nil)
+                                                      style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf setQualityWith:1];
     }];
-    UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"标清", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"标清", nil)
+                                                      style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf setQualityWith:0];
     }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil)
+                                                     style:UIAlertActionStyleCancel handler:nil];
 
     [alertview addAction:config];
     [alertview addAction:config1];
@@ -471,28 +540,43 @@ extern NSString *liveRecordVideoPath;
     [self presentViewController:alertview animated:YES completion:nil];
 }
 
-- (void)setQualityWith:(int)res
+- (void)setQualityWith:(int)level
 {
-    [[KHJDeviceManager sharedManager] setQualityLevel_with_deviceID:self.deviceID level:res resultBlock:^(NSInteger code) {
-        CLog(@"code = %ld",(long)code);
-    }];
+    // 0 标清，1 高清，2 4K超清
+    qualityLevel = level;
+    [[KHJDeviceManager sharedManager] setQualityLevel_with_deviceID:self.deviceID level:qualityLevel resultBlock:^(NSInteger code) {}];
 }
 
 #pragma mark - 监听
 
-- (void)gotoListen
+- (void)startListen
 {
-    
+    [[KHJDeviceManager sharedManager] startGetAudio_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
+    [audioPlayer start];
+}
+
+- (void)stopListen
+{
+    [audioPlayer stop];
+    [[KHJDeviceManager sharedManager] stopGetAudio_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
 }
 
 #pragma mark - 对讲
 
-- (void)gotoTalk
+- (void)startTalk
 {
-    
+    [[KHJDeviceManager sharedManager] startTalk_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
+    [audioRecorder start];
+}
+
+- (void)stopTalk
+{
+    [audioRecorder stop];
+    [[KHJDeviceManager sharedManager] stopTalk_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
 }
 
 #pragma mark - 截图
+
 - (void)takePhoto
 {
     //播放拍照声音
@@ -525,13 +609,17 @@ extern NSString *liveRecordVideoPath;
     UIGraphicsEndImageContext();
     return image;
 }
+
 - (void)loadImageFinished:(UIImage *)image
 {
     PHAuthorizationStatus status =  [PHPhotoLibrary authorizationStatus];
    if (status == PHAuthorizationStatusRestricted || status == PHAuthorizationStatusDenied) {
-       UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"请您先去设置允许APP访问您的相册 设置>隐私>相册"
+       UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示"
+                                                                                message:@"请您先去设置允许APP访问您的相册 设置>隐私>相册"
                                                                          preferredStyle:(UIAlertControllerStyleAlert)];
-       UIAlertAction *action = [UIAlertAction actionWithTitle:@"我知道了" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+       UIAlertAction *action = [UIAlertAction actionWithTitle:@"我知道了"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction * _Nonnull action) {
            
        }];
        [alertController addAction:action];

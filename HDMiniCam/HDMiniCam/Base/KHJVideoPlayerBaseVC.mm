@@ -13,17 +13,31 @@
 #include "IPCNetManagerInterface.h"
 
 H26xHwDecoder *h264Decode;
+
+// 初始化多屏解码器
+BOOL isMutliDecorder;
+NSMutableArray *mutliDeviceIDList;
+H26xHwDecoder *h264Decode1;
+H26xHwDecoder *h264Decode2;
+H26xHwDecoder *h264Decode3;
+H26xHwDecoder *h264Decode4;
+
 // 是否直播录屏
 KHJLiveRecordType liveRecordType;
 // 直播录屏保存路径
 NSString *liveRecordVideoPath;
-
+// 直播录屏会话
 RecSess_t gVideoRecordSession = NULL;
 dispatch_queue_t recordQueue = dispatch_queue_create("recordQueue", DISPATCH_QUEUE_SERIAL);
 
 @interface KHJVideoPlayerBaseVC ()<H26xHwDecoderDelegate>
 
 @end
+
+// 监听
+XBAudioUnitPlayer *audioPlayer;
+// 对讲
+XBAudioUnitRecorder *audioRecorder;
 
 @implementation KHJVideoPlayerBaseVC
 
@@ -32,9 +46,27 @@ dispatch_queue_t recordQueue = dispatch_queue_create("recordQueue", DISPATCH_QUE
     [super viewDidLoad];
     h264Decode = [[H26xHwDecoder alloc] init];
     h264Decode.delegate = self;
+    mutliDeviceIDList = [NSMutableArray array];
 }
 
-- (void)getImageWith:(UIImage * _Nullable)image imageSize:(CGSize)imageSize
+/// 创建 监听对象 + 对讲对象
+- (void)setSp_deviceID:(NSString *)sp_deviceID
+{
+    if (sp_deviceID.length > 0) {
+        audioPlayer = nil;
+        audioRecorder = nil;
+        // 初始化 - 监听播放器
+        audioPlayer = [[XBAudioUnitPlayer alloc] initWithRate:XBAudioRate_8k bit:XBAudioBit_16 channel:XBAudioChannel_1];
+        audioPlayer.mUUID = sp_deviceID;
+        audioPlayer.codeType = IPCNET_AUDIO_ENCODE_TYPE_G711A;
+        // 初始化 - 对讲录音
+        audioRecorder = [[XBAudioUnitRecorder alloc] initWithRate:XBAudioRate_8k bit:XBAudioBit_16 channel:XBAudioChannel_1];
+        strcpy(audioRecorder.mUUID, sp_deviceID.UTF8String);
+        audioRecorder.codeType = IPCNET_AUDIO_ENCODE_TYPE_G711A;
+    }
+}
+
+- (void)getImageWith:(UIImage * _Nullable)image imageSize:(CGSize)imageSize deviceID:(NSString *)deviceID
 {
     CLog(@"KHJVideoPlayerBaseVC.getImageWith");
 }
@@ -101,51 +133,75 @@ void onStatus(const char* uuid,int status)
 void onVideoData(const char* uuid,int type,unsigned char*data,int len,long timestamp)
 {
     // 子线程回调
-//    NSLog(@"onVideoData uuid:%s type:%d len:%d timestamp:%ld\n\n",uuid,type,len,timestamp);
-    [h264Decode decodeH26xVideoData:data videoSize:len frameType:type timestamp:timestamp];
-    if (liveRecordType == KHJLiveRecordType_Recording) {
-//        CLog(@"正在直播录屏 path = %@",liveRecordVideoPath);
-        dispatch_sync(recordQueue, ^{
-            NSLog(@"串形 异步  111 ");
-            if (gVideoRecordSession) {
-                if (type >= 20 && type < 30) {
-                    // Audio
-                    int ret = IPCNetPutLocalRecordAudioFrame(gVideoRecordSession, type, (const char *)data, len, timestamp);
-                    if (ret == 0) {
-                        CLog(@"输入 Audio 数据");
-                    }
-                }
-                else {
-                    // Video
-                    int ret = IPCNetPutLocalRecordVideoFrame(gVideoRecordSession, type, (const char *)data, len, timestamp);
-                    if (ret == 0) {
-                        CLog(@"输入 视频 数据");
-                    }
-                }
+    // NSLog(@"onVideoData uuid:%s type:%d len:%d timestamp:%ld\n\n",uuid,type,len,timestamp);
+    if (isMutliDecorder) {
+        // 多屏解码器
+        NSInteger index = [mutliDeviceIDList indexOfObject:KHJString(@"%s",uuid)];
+        // CLog(@"uuid = %s, index = %ld",uuid,(long)index);
+        switch (index) {
+            case 0:
+            {
+                h264Decode1.deviceID = KHJString(@"%s",uuid);
+                [h264Decode1 decodeH26xVideoData:data videoSize:len frameType:type timestamp:timestamp];
             }
-            else {
-                if (type >= 20 && type < 30) {
-                    // Audio
-                    
-                }
-                else {
-                    if (type >= 0 && type < 20) {
-                        // Video 264
-                        gVideoRecordSession = IPCNetStartRecordLocalVideo(liveRecordVideoPath.UTF8String, IPCNET_VIDEO_ENCODE_TYPE_H264, 30, IPCNET_AUDIO_ENCODE_TYPE_G711A, 8000, 2, 1);
+                break;
+            case 1:
+            {
+                h264Decode2.deviceID = KHJString(@"%s",uuid);
+                [h264Decode2 decodeH26xVideoData:data videoSize:len frameType:type timestamp:timestamp];
+            }
+                break;
+            case 2:
+            {
+                h264Decode3.deviceID = KHJString(@"%s",uuid);
+                [h264Decode3 decodeH26xVideoData:data videoSize:len frameType:type timestamp:timestamp];
+            }
+                break;
+            case 3:
+            {
+                h264Decode4.deviceID = KHJString(@"%s",uuid);
+                [h264Decode4 decodeH26xVideoData:data videoSize:len frameType:type timestamp:timestamp];
+            }
+                break;
+            default:
+                break;
+        }
+    }
+    else {
+        // 竖屏解码器
+        [h264Decode decodeH26xVideoData:data videoSize:len frameType:type timestamp:timestamp];
+        if (liveRecordType == KHJLiveRecordType_Recording) {
+            // CLog(@"正在直播录屏 path = %@",liveRecordVideoPath);
+            dispatch_sync(recordQueue, ^{
+                if (gVideoRecordSession) {
+                    if (type >= 20 && type < 30) {
+                        int ret = IPCNetPutLocalRecordAudioFrame(gVideoRecordSession, type, (const char *)data, len, timestamp);
+                        if (ret == 0) CLog(@"输入 Audio 数据");
                     }
                     else {
-                        // Video 265
-                        gVideoRecordSession = IPCNetStartRecordLocalVideo(liveRecordVideoPath.UTF8String, IPCNET_VIDEO_ENCODE_TYPE_H265, 30, IPCNET_AUDIO_ENCODE_TYPE_G711A, 8000, 2, 1);
+                        int ret = IPCNetPutLocalRecordVideoFrame(gVideoRecordSession, type, (const char *)data, len, timestamp);
+                        if (ret == 0) CLog(@"输入 视频 数据");
                     }
                 }
-            }
-        });
-    }
-    else if (liveRecordType == KHJLiveRecordType_stopRecoding) {
-        CLog(@"停止直播录屏 path = %@",liveRecordVideoPath);
-        liveRecordType = KHJLiveRecordType_Normal;
-        IPCNetFinishLocalRecord(gVideoRecordSession);
-        gVideoRecordSession = NULL;
+                else {
+                    if (type >= 20 && type < 30) {
+                        // Audio
+                    }
+                    else {
+                        if (type >= 0 && type < 20)
+                            gVideoRecordSession = IPCNetStartRecordLocalVideo(liveRecordVideoPath.UTF8String, IPCNET_VIDEO_ENCODE_TYPE_H264, 30, IPCNET_AUDIO_ENCODE_TYPE_G711A, 8000, 2, 1);
+                        else
+                            gVideoRecordSession = IPCNetStartRecordLocalVideo(liveRecordVideoPath.UTF8String, IPCNET_VIDEO_ENCODE_TYPE_H265, 30, IPCNET_AUDIO_ENCODE_TYPE_G711A, 8000, 2, 1);
+                    }
+                }
+            });
+        }
+        else if (liveRecordType == KHJLiveRecordType_stopRecoding) {
+            // CLog(@"停止直播录屏 path = %@",liveRecordVideoPath);
+            liveRecordType = KHJLiveRecordType_Normal;
+            IPCNetFinishLocalRecord(gVideoRecordSession);
+            gVideoRecordSession = NULL;
+        }
     }
 }
 
@@ -159,7 +215,8 @@ void onAudioData(const char* uuid,int type,unsigned char*data,int len,long times
 {
     // 子线程回调
 //    CLog(@"onAudioData = %@",[NSThread currentThread]);
-//    NSLog(@" \n onAudioData 设备id = %s \n type = %d  \n length = %d  \n timestamp = %ld",uuid,type,len,timestamp);
+    NSLog(@" \n onAudioData 设备id = %s \n type = %d  \n length = %d  \n timestamp = %ld",uuid,type,len,timestamp);
+    [audioPlayer playThisAudioData:(uint8_t *)data audioSize:len frameType:type timestamp:timestamp];
 }
 
 /// 返回的json数据
@@ -197,6 +254,32 @@ void onJSONString(const char* uuid,int msg_type,const char* jsonstr)
     }
 }
 
+#pragma mark - 多屏
 
+- (void)setInitMutliDecorder:(BOOL)initMutliDecorder
+{
+    if (initMutliDecorder) {
+        isMutliDecorder = YES;
+        h264Decode1 = [[H26xHwDecoder alloc] init];
+        h264Decode2 = [[H26xHwDecoder alloc] init];
+        h264Decode3 = [[H26xHwDecoder alloc] init];
+        h264Decode4 = [[H26xHwDecoder alloc] init];
+        h264Decode1.delegate = self;
+        h264Decode2.delegate = self;
+        h264Decode3.delegate = self;
+        h264Decode4.delegate = self;
+    }
+    else {
+        isMutliDecorder = NO;
+        [h264Decode1 releaseH26xHwDecoder];
+        [h264Decode2 releaseH26xHwDecoder];
+        [h264Decode3 releaseH26xHwDecoder];
+        [h264Decode4 releaseH26xHwDecoder];
+        h264Decode1 = nil;
+        h264Decode2 = nil;
+        h264Decode3 = nil;
+        h264Decode4 = nil;
+    }
+}
 
 @end
