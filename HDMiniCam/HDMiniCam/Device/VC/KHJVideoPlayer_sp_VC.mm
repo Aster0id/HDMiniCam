@@ -258,6 +258,7 @@ extern XBAudioUnitRecorder *audioRecorder;
     liveRecordType = KHJLiveRecordType_Normal;
     [[KHJDeviceManager sharedManager] stopGetVideo_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
     [[KHJDeviceManager sharedManager] stopGetAudio_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
+    [self sp_releaseDecoder];
     [super viewWillDisappear:animated];
 }
 

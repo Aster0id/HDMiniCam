@@ -18,6 +18,7 @@ typedef void(^onVideoImageBlock)(UIImage *image, CGSize imageSize);
 @interface KHJVideoPlayerBaseVC : UIViewController
 
 @property (nonatomic, copy) NSString *sp_deviceID;
+- (void)sp_releaseDecoder;
 
 @property (nonatomic, strong) UIButton *leftBtn;
 @property (nonatomic, strong) UILabel  *titleLab;

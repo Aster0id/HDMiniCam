@@ -178,6 +178,7 @@ static void didDecompress(void *decompressionOutputRefCon, void *sourceFrameRefC
         NSLog(@"%@", [NSString stringWithFormat:@"Init H264 hardware decoder fail: %d", (int)status]);
         return NO;
     }
+    
     return YES;
 }
  
@@ -218,6 +219,9 @@ static int exitFlag = -1;
     //[mNSThread release];
 	mNSThread=NULL;
 	
+	//delete all the package
+	NSLog(@"All the video package should be delete here to free memory on list");
+	
     [self removeH26xHwDecoder];
     [self releaseSliceInfo];
     
@@ -227,6 +231,14 @@ static int exitFlag = -1;
     }
 	
 	pthread_mutex_destroy(&mVideoFramePackageListLock);
+	
+	VideoFramePackage *afp=NULL;
+	struct list_head *s,*n;
+	list_for_each_safe(s, n, &mVideoFramePackageList) {
+		afp = list_entry(s, VideoFramePackage, list);
+		list_del(&afp->list);
+		free(afp);
+	}
 }
  
 - (void)releaseSliceInfo
@@ -256,7 +268,7 @@ static int exitFlag = -1;
     mPpsSize = 0;
     mSeiSize = 0;
 }
-
+ 
 - (CGSize)decodeH264VideoData:(uint8_t *)videoData videoSize:(NSInteger)videoSize videoType:(VideoEncodeFormat)videoType
 {
     //NSLog(@"decodeH264VideoData 第一步：视频解码出图片");
@@ -334,14 +346,7 @@ static int exitFlag = -1;
                             if (_delegate && [_delegate respondsToSelector:@selector(getImageWith:imageSize:deviceID:)]) {
                                 WeakSelf
                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                    if (self.deviceID.length > 0) {
-                                        // 多屏
-                                        [weakSelf.delegate getImageWith:self.image imageSize:imageSize deviceID:self.deviceID];
-                                    }
-                                    else {
-                                        // 竖屏
-                                        [weakSelf.delegate getImageWith:self.image imageSize:imageSize deviceID:@""];
-                                    }
+                                    [weakSelf.delegate getImageWith:self.image imageSize:imageSize deviceID:self.deviceID];
                                 });
                             }
                         }

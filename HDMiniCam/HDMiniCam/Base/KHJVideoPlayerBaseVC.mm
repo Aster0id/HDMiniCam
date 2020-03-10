@@ -282,4 +282,9 @@ void onJSONString(const char* uuid,int msg_type,const char* jsonstr)
     }
 }
 
+- (void)sp_releaseDecoder
+{
+    [h264Decode releaseH26xHwDecoder];
+}
+
 @end
