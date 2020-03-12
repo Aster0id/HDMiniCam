@@ -56,6 +56,16 @@
     if (ret == 0) {
         wifiListArr = result[@"NetWork.WirelessSearch"][@"Aplist"];
         dispatch_async(dispatch_get_main_queue(), ^{
+            NSMutableArray *array = [NSMutableArray arrayWithArray:self->wifiListArr];
+            [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSDictionary *body = (NSDictionary *)obj;
+                NSString *wifi = body[@"SSID"];
+                if ([wifi isEqualToString:self->wifiName.text]) {
+                    [array removeObject:body];
+                    *stop = YES;
+                }
+            }];
+            self->wifiListArr = [array mutableCopy];
             [self->contentTBV reloadData];
         });
     }
@@ -83,11 +93,13 @@
     cell.tag = indexPath.row + FLAG_TAG;
     WeakSelf
     NSDictionary *body = wifiListArr[indexPath.row];
-    cell.block = ^(int row) {
+    cell.block = ^(NSInteger row) {
         CLog(@"row = %ld",(long)row);
         [weakSelf changewifi:body];
     };
     cell.name.text = body[@"SSID"];
+    cell.safeLab.text = KHJString(@"安全性：%@",body[@"EncType"]);
+    cell.stronglyLab.text = KHJString(@"信号强度：%@",body[@"RSSI"]);
     return cell;
 }
 

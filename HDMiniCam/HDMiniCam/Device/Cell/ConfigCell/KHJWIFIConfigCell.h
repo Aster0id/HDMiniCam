@@ -10,11 +10,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void(^KHJWIFIConfigCellBlock)(int);
+typedef void(^KHJWIFIConfigCellBlock)(NSInteger);
 
 @interface KHJWIFIConfigCell : KHJBaseCell
 
 @property (weak, nonatomic) IBOutlet UILabel *name;
+@property (weak, nonatomic) IBOutlet UILabel *safeLab;
+@property (weak, nonatomic) IBOutlet UILabel *stronglyLab;
+
 @property (nonatomic, copy) KHJWIFIConfigCellBlock block;
 
 @end

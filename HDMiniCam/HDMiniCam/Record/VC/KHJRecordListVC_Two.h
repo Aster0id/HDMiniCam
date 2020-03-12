@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface KHJRecordListVC_Two : KHJBaseVC
 
 @property (nonatomic, strong) KHJDeviceInfo *info;
+@property (nonatomic, assign) NSInteger currentIndex;
 
 @end
 

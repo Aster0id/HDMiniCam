@@ -49,7 +49,12 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.videoList = [[[KHJHelpCameraData sharedModel] getmp4VideoArray_with_deviceID:self.info.deviceID] copy];
+    if (self.currentIndex == 0) {
+        self.videoList = [[[KHJHelpCameraData sharedModel] getmp4VideoArray_with_deviceID:self.info.deviceID] copy];
+    }
+    else if (self.currentIndex == 1) {
+        self.videoList = [[[KHJHelpCameraData sharedModel] getmp4_rebackPlay_VideoArray_with_deviceID:self.info.deviceID] copy];
+    }
     [self.dateList removeAllObjects];
     [self.dateList_num removeAllObjects];
     WeakSelf
@@ -107,6 +112,7 @@
     KHJRecordListVC_Three *vc = [[KHJRecordListVC_Three alloc] init];
     vc.date = self.dateList[row];
     vc.info = self.info;
+    vc.currentIndex = self.currentIndex;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

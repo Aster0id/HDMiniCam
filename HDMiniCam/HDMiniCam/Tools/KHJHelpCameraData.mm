@@ -91,13 +91,26 @@
 
 #pragma mark - 获取视频文件夹路径 NSFileManager
 
+// 直播录屏保存地址
 - (NSString *)getTakeVideoDocPath_with_deviceID:(NSString *)deviceID
 {
-    NSString *videoPath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Video/%@",deviceID]];   // 关联账户 account 文件夹
+    NSString *videoPath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Video/%@",deviceID]];
     BOOL isDir = NO;
     BOOL existed = [fileManager fileExistsAtPath:videoPath isDirectory:&isDir];
     if (!(isDir == YES && existed == YES)) {
-        [fileManager createDirectoryAtPath:videoPath withIntermediateDirectories:YES attributes:nil error:nil];  // 创建路径
+        [fileManager createDirectoryAtPath:videoPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    return videoPath;
+}
+
+// 回放录屏保存地址
+- (NSString *)getTakeVideo_rebackPlay_DocPath_with_deviceID:(NSString *)deviceID
+{
+    NSString *videoPath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"RebackPlayVideo/%@",deviceID]];
+    BOOL isDir = NO;
+    BOOL existed = [fileManager fileExistsAtPath:videoPath isDirectory:&isDir];
+    if (!(isDir == YES && existed == YES)) {
+        [fileManager createDirectoryAtPath:videoPath withIntermediateDirectories:YES attributes:nil error:nil];
     }
     return videoPath;
 }
@@ -174,11 +187,27 @@
     return reversedArray;
 }
 
+- (NSArray *)getmp4_rebackPlay_VideoArray_with_deviceID:(NSString *)deviceID
+{
+    NSArray *files = [fileManager subpathsAtPath:[self getTakeVideo_rebackPlay_DocPath_with_deviceID:deviceID]];
+    NSMutableArray *file = [files mutableCopy];
+    if ([deviceID isEqualToString:@""]) {
+        [files enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSString *name = (NSString *)obj;
+            if (![name containsString:@"mp4"]) {
+                [file removeObject:obj];
+            }
+        }];
+    }
+    // 倒序输出，最新的在最前面
+    NSArray *reversedArray = [[file reverseObjectEnumerator] allObjects];
+    return reversedArray;
+}
+
 #pragma mark - 读取某个文件
 
 - (NSData *)getVideoData:(NSString *)path
 {
-    
     NSData *data = [fileManager contentsAtPath:path];
     return  data;
 }

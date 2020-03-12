@@ -13,6 +13,8 @@
 
 // 设备列表
 extern NSMutableArray *mutliDeviceIDList;
+// 当前解码类型
+extern KHJDecorderType currentDecorderType;
 
 @interface KHJMutilScreenVC_2 ()<H26xHwDecoderDelegate>
 {
@@ -35,6 +37,7 @@ extern NSMutableArray *mutliDeviceIDList;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    currentDecorderType = KHJDecorderType_mutli;
     if (mutliDeviceIDList) {
         [mutliDeviceIDList addObject:@""];
         [mutliDeviceIDList addObject:@""];
@@ -76,6 +79,7 @@ extern NSMutableArray *mutliDeviceIDList;
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    currentDecorderType = KHJDecorderType_none;
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
     /* 显示多个视频 */
     AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;

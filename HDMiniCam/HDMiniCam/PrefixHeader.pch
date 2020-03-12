@@ -65,4 +65,17 @@ typedef enum : NSUInteger {
     KHJLiveRecordType_stopRecoding,
 } KHJLiveRecordType;
 
+typedef enum : NSUInteger {
+    KHJRebackPlayRecordType_Normal = 0,
+    KHJRebackPlayRecordType_Recording,
+    KHJRebackPlayRecordType_stopRecoding,
+} KHJRebackPlayRecordType;
+
+typedef enum : NSUInteger {
+    KHJDecorderType_none = 0,
+    KHJDecorderType_live,
+    KHJDecorderType_mutli,
+    KHJDecorderType_reback,
+} KHJDecorderType;
+
 #endif /* PrefixHeader_pch */

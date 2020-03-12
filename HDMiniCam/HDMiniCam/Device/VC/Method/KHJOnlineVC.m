@@ -18,8 +18,6 @@
     __weak IBOutlet UIView *uidView;
     __weak IBOutlet UITextField *password;
     __weak IBOutlet UIView *passwordView;
-
-    
 }
 @end
 
@@ -90,7 +88,6 @@
         [[KHJDataBase sharedDataBase] addDeviceInfo_with_deviceInfo:deviceInfo resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
             if (code == 1) {
                 [weakSelf.view makeToast:KHJString(@"设备：\"%@\"，添加成功",info.deviceID)];
-                [[KHJDeviceManager sharedManager] connect_with_deviceID:info.deviceID password:info.devicePassword resultBlock:^(NSInteger code) {}];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [weakSelf.navigationController popToRootViewControllerAnimated:YES];
                     [[NSNotificationCenter defaultCenter] postNotificationName:noti_addDevice_KEY object:nil];
@@ -109,7 +106,6 @@
                 [[KHJDataBase sharedDataBase] addDeviceInfo_with_deviceInfo:deviceInfo resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
                     if (code == 1) {
                         [weakSelf.view makeToast:KHJString(@"设备：\"%@\"，添加成功",info.deviceID)];
-                        [[KHJDeviceManager sharedManager] connect_with_deviceID:info.deviceID password:info.devicePassword resultBlock:^(NSInteger code) {}];
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                             [weakSelf.navigationController popToRootViewControllerAnimated:YES];
                             [[NSNotificationCenter defaultCenter] postNotificationName:noti_addDevice_KEY object:nil];

@@ -28,6 +28,8 @@
     UIView *currentView;
     UIImageView *currentIMGV;
     ///
+    
+    NSInteger currentIndex;
 }
 
 @property (nonatomic, strong) NSMutableArray *deviceList;
@@ -73,20 +75,25 @@
 {
     if (sender.tag == 20) {
         // 查看手机录制的视频列表
+        currentIndex = 0;
         [self changeCurrentSatus:naviOne imageView:naviOneIMGV];
     }
     else if (sender.tag == 30) {
         // 查看摄像头录制的视频列表
+        currentIndex = 1;
         [self changeCurrentSatus:naviTwo imageView:naviTwoIMGV];
     }
     else if (sender.tag == 40) {
         // 查看正在下载的视频列表
+        currentIndex = 2;
         [self changeCurrentSatus:naviThree imageView:naviThreeIMGV];
     }
     else if (sender.tag == 50) {
         // 查看已下载的视频列表
+        currentIndex = 3;
         [self changeCurrentSatus:naviFour imageView:naviFourIMGV];
     }
+    [contentTBV reloadData];
 }
 
 #pragma mark - UITableViewDelegate && UITableViewDataSource
@@ -107,8 +114,14 @@
     KHJDeviceInfo *info = self.deviceList[indexPath.row];
     cell.idLab.text = info.deviceName;
     cell.nameLab.text = info.deviceID;
-    NSArray *list = [[KHJHelpCameraData sharedModel] getmp4VideoArray_with_deviceID:info.deviceID];
-    cell.numberLab.text = KHJString(@"共 %d 个",(int)list.count);
+    if (currentIndex == 0) {
+        NSArray *list = [[KHJHelpCameraData sharedModel] getmp4VideoArray_with_deviceID:info.deviceID];
+        cell.numberLab.text = KHJString(@"共 %d 个",(int)list.count);
+    }
+    else if (currentIndex == 1) {
+        NSArray *list = [[KHJHelpCameraData sharedModel] getmp4_rebackPlay_VideoArray_with_deviceID:info.deviceID];
+        cell.numberLab.text = KHJString(@"共 %d 个",(int)list.count);
+    }
     return cell;
 }
 
@@ -154,6 +167,7 @@
     CLog(@"contentWith Row = %ld",(long)row);
     KHJRecordListVC_Two *vc = [[KHJRecordListVC_Two alloc] init];
     vc.info = self.deviceList[row];
+    vc.currentIndex = currentIndex;
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }

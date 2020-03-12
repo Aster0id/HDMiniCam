@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)gotoVideoWithIndex:(NSInteger)index;
 - (void)gotoSetupWithIndex:(NSInteger)index;
-- (void)reConnectWithIndex:(NSInteger)index;
+- (void)reConnectWithIndex:(NSString *)deviceID;
 
 @end
 

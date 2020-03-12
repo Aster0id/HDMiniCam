@@ -85,6 +85,7 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
     NSDictionary *body = self.listArr[deleteIndex];
     [self.listArr removeObjectAtIndex:deleteIndex];
     [contentList deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:deleteIndex inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+    [contentList reloadData];
     [self.view makeToast:KHJString(@"%@,删除成功",body[@"name"])];
 }
 

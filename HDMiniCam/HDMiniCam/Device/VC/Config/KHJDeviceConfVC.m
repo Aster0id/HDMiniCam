@@ -37,21 +37,21 @@
     iconArr = @[KHJIMAGE(@"config_alarm"),
                 KHJIMAGE(@"config_wifi"),
                 KHJIMAGE(@"config_sd"),
-                KHJIMAGE(@"config_lamp"),
+//                KHJIMAGE(@"config_lamp"),
                 KHJIMAGE(@"config_time"),
                 KHJIMAGE(@"config_changepassword"),
                 KHJIMAGE(@"config_restart"),
-                KHJIMAGE(@"config_reboot"),
-                KHJIMAGE(@"config_app")];
+                KHJIMAGE(@"config_reboot")];
+//                KHJIMAGE(@"config_app")];
     titleArr = @[KHJLocalizedString(@"报警配置", nil),
                  KHJLocalizedString(@"Wi-Fi连接配置", nil),
                  KHJLocalizedString(@"SD卡录像设置", nil),
-                 KHJLocalizedString(@"杂项设置", nil),
+//                 KHJLocalizedString(@"杂项设置", nil),
                  KHJLocalizedString(@"时间设置", nil),
                  KHJLocalizedString(@"修改访问密码", nil),
                  KHJLocalizedString(@"重启设备", nil),
-                 KHJLocalizedString(@"恢复出厂设置", nil),
-                 KHJLocalizedString(@"APP密码", nil)];
+                 KHJLocalizedString(@"恢复出厂设置", nil)];
+//                 KHJLocalizedString(@"APP密码", nil)];
 }
 
 - (void)backAction
@@ -108,20 +108,20 @@
         KHJSDCardConfigVC *vc = [[KHJSDCardConfigVC alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
-    else if (row == 3) {
-        KHJlampConfigVC *vc = [[KHJlampConfigVC alloc] init];
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-    else if (row == 4){
+//    else if (row == 3) {
+//        KHJlampConfigVC *vc = [[KHJlampConfigVC alloc] init];
+//        [self.navigationController pushViewController:vc animated:YES];
+//    }
+    else if (row == 3){
         KHJTimeZoneConfigVC *vc = [[KHJTimeZoneConfigVC alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
-    else if (row == 5) {
+    else if (row == 4) {
         KHJChangePasswordVC *vc = [[KHJChangePasswordVC alloc] init];
         vc.isFinderPassword = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }
-    else if (row == 6) {
+    else if (row == 5) {
         UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:KHJLocalizedString(@"确定要重启设备吗？", nil) preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *delete = [UIAlertAction actionWithTitle:KHJLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
@@ -131,7 +131,7 @@
         [alertview addAction:cancel];
         [self presentViewController:alertview animated:YES completion:nil];
     }
-    else if (row == 7) {
+    else if (row == 6) {
         UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:KHJLocalizedString(@"确定恢复出厂设置吗？", nil) preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *delete = [UIAlertAction actionWithTitle:KHJLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
@@ -141,11 +141,11 @@
         [alertview addAction:cancel];
         [self presentViewController:alertview animated:YES completion:nil];
     }
-    else if (row == 8) {
-        KHJChangePasswordVC *vc = [[KHJChangePasswordVC alloc] init];
-        vc.isFinderPassword = NO;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+//    else if (row == 7) {
+//        KHJChangePasswordVC *vc = [[KHJChangePasswordVC alloc] init];
+//        vc.isFinderPassword = NO;
+//        [self.navigationController pushViewController:vc animated:YES];
+//    }
 }
 
 

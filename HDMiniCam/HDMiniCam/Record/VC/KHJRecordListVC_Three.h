@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *date;
 @property (nonatomic, strong) KHJDeviceInfo *info;
+@property (nonatomic, assign) NSInteger currentIndex;
 
 @end
 

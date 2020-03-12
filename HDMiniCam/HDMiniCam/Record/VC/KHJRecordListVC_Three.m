@@ -52,9 +52,15 @@
 {
     WeakSelf
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        NSArray *arr = [[[KHJHelpCameraData sharedModel] getmp4VideoArray_with_deviceID:self.info.deviceID] copy];
-        for (int i = 0; i < arr.count; i++) {
-            NSString *videoUrl = arr[i];
+        NSArray *array = [NSArray array];
+        if (self.currentIndex == 0) {
+            array = [[[KHJHelpCameraData sharedModel] getmp4VideoArray_with_deviceID:self.info.deviceID] copy];
+        }
+        else if (self.currentIndex == 1) {
+            array = [[[KHJHelpCameraData sharedModel] getmp4_rebackPlay_VideoArray_with_deviceID:self.info.deviceID] copy];
+        }
+        for (int i = 0; i < array.count; i++) {
+            NSString *videoUrl = array[i];
             if ([videoUrl containsString:weakSelf.date]) {
                 [weakSelf.videoList addObject:videoUrl];
             }
@@ -123,11 +129,16 @@
     cell.deleteBtn.hidden = !delete;
     cell.tag = indexPath.row + FLAG_TAG;
     NSString *name = self.videoList[indexPath.row];
-    NSString *path = [[KHJHelpCameraData sharedModel] getTakeVideoDocPath_with_deviceID:self.info.deviceID];
-    NSString *dir = KHJString(@"%@/%@",path,name);
     
+    NSString *path = @"";
+    if (self.currentIndex == 0) {
+        path = [[KHJHelpCameraData sharedModel] getTakeVideoDocPath_with_deviceID:self.info.deviceID];
+    }
+    else if (self.currentIndex == 1) {
+        path = [[KHJHelpCameraData sharedModel] getTakeVideo_rebackPlay_DocPath_with_deviceID:self.info.deviceID];
+    }
+    NSString *dir   = KHJString(@"%@/%@",path,name);
     NSDictionary *infoDict = [self getFileInfo:dir];
-    CLog(@"infoDict = %@",infoDict);
     NSDate *start   = infoDict[NSFileCreationDate];
     NSDate *end     = infoDict[NSFileModificationDate];
     
@@ -174,7 +185,13 @@
         return;
     }
     NSString *name = self.videoList[row];
-    NSString *path = [[KHJHelpCameraData sharedModel] getTakeVideoDocPath_with_deviceID:self.info.deviceID];
+    NSString *path = @"";
+    if (self.currentIndex == 0) {
+        path = [[KHJHelpCameraData sharedModel] getTakeVideoDocPath_with_deviceID:self.info.deviceID];
+    }
+    else if (self.currentIndex == 1) {
+        path = [[KHJHelpCameraData sharedModel] getTakeVideo_rebackPlay_DocPath_with_deviceID:self.info.deviceID];
+    }
     AVPlayerViewController * av = [[AVPlayerViewController alloc] init];
     av.player = [AVPlayer playerWithURL:[NSURL fileURLWithPath:KHJString(@"%@/%@",path,name)]];
     [self presentViewController:av animated:YES completion:^{}];
@@ -188,7 +205,13 @@
     isDeleting = YES;
     [[KHJHub shareHub] showText:@"删除中" addToView:[[UIApplication sharedApplication] keyWindow]];
     NSString *name = self.videoList[row];
-    NSString *path = [[KHJHelpCameraData sharedModel] getTakeVideoDocPath_with_deviceID:self.info.deviceID];
+    NSString *path = @"";
+    if (self.currentIndex == 0) {
+        path = [[KHJHelpCameraData sharedModel] getTakeVideoDocPath_with_deviceID:self.info.deviceID];
+    }
+    else if (self.currentIndex == 1) {
+        path = [[KHJHelpCameraData sharedModel] getTakeVideo_rebackPlay_DocPath_with_deviceID:self.info.deviceID];
+    }
     NSString *dir = KHJString(@"%@/%@",path,name);
     BOOL success = [[KHJHelpCameraData sharedModel] DeleateFileWithPath:dir];
     

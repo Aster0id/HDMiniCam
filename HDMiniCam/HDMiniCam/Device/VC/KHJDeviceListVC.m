@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "UIDevice+TFDevice.h"
-
 #import "KHJDeviceListVC.h"
 #import "KHJDeviceListCell.h"
 //
@@ -29,11 +28,20 @@
     __weak IBOutlet UITableView *contentTBV;
 }
 
+@property (nonatomic, strong) NSMutableDictionary *ensureDeviceBody;
 @property (nonatomic, strong) NSMutableArray *deviceList;
 
 @end
 
 @implementation KHJDeviceListVC
+
+- (NSMutableDictionary *)ensureDeviceBody
+{
+    if (!_ensureDeviceBody) {
+        _ensureDeviceBody = [NSMutableDictionary dictionary];
+    }
+    return _ensureDeviceBody;
+}
 
 - (NSMutableArray *)deviceList
 {
@@ -46,7 +54,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    CLog(@"11111111111")
+    [self.deviceList addObjectsFromArray:[[KHJDataBase sharedDataBase] getAllDeviceInfo]];
     [self addDeviceNoti];
     [self reloadNewDeviceList];
 }
@@ -59,8 +67,25 @@
 
 - (void)reloadNewDeviceList
 {
-    [self.deviceList removeAllObjects];
-    [self.deviceList addObjectsFromArray:[[KHJDataBase sharedDataBase] getAllDeviceInfo]];
+    NSArray *subDeviceList = [self.deviceList copy];
+    NSArray *array = [[KHJDataBase sharedDataBase] getAllDeviceInfo];
+    WeakSelf
+    [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        KHJDeviceInfo *info = (KHJDeviceInfo *)obj;
+        __block BOOL isExit = NO;
+        [subDeviceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            KHJDeviceInfo *subInfo = (KHJDeviceInfo *)obj;
+            if ([info.deviceID isEqualToString:subInfo.deviceID]) {
+                isExit = YES;
+                *stop = YES;
+            }
+        }];
+        if (!isExit) {
+            [weakSelf.deviceList addObject:info];
+            [[KHJDeviceManager sharedManager] connect_with_deviceID:info.deviceID
+                                                           password:info.devicePassword resultBlock:^(NSInteger code) {}];
+        }
+    }];
     [contentTBV reloadData];
 }
 
@@ -142,7 +167,6 @@
     else {
         cell.status.text = @"连接中...";
     }
-    
     cell.delegate = self;
     cell.tag = indexPath.row + FLAG_TAG;
     return cell;
@@ -182,25 +206,81 @@
     }
 }
 
-- (void)reConnectWithIndex:(NSInteger)index
+- (void)reConnectWithIndex:(NSString *)deviceID
 {
-    KHJDeviceInfo *info = self.deviceList[index];
-    if ([info.deviceStatus isEqualToString:@"0"]) {
+    __block NSInteger index = 0;
+    [self.deviceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        KHJDeviceInfo *deviceInfo = (KHJDeviceInfo *)obj;
+        if ([deviceID isEqualToString:deviceInfo.deviceID]) {
+            index = idx;
+            *stop = YES;
+        }
+    }];
+    
+    KHJDeviceInfo *deviceInfo = self.deviceList[index];
+    if ([deviceInfo.deviceStatus isEqualToString:@"0"]) {
         // 在线，弹出设置框
-        [self showSetupWith:info];
+        [self showSetupWith:deviceInfo];
     }
-    else if ([info.deviceStatus isEqualToString:@"-6"]) {
+    else if ([deviceInfo.deviceStatus isEqualToString:@"-6"]) {
         // 离线，重连
-        [[KHJDeviceManager sharedManager] disconnect_with_deviceID:info.deviceID resultBlock:^(NSInteger code) {
-            [[KHJDeviceManager sharedManager] connect_with_deviceID:info.deviceID password:info.devicePassword resultBlock:^(NSInteger code) {}];
+        [[KHJDeviceManager sharedManager] disconnect_with_deviceID:deviceInfo.deviceID resultBlock:^(NSInteger code) {
+            [[KHJDeviceManager sharedManager] connect_with_deviceID:deviceInfo.deviceID password:deviceInfo.devicePassword resultBlock:^(NSInteger code) {}];
         }];
     }
-    else if ([info.deviceStatus isEqualToString:@"-26"]) {
+    else if ([deviceInfo.deviceStatus isEqualToString:@"-26"]) {
         // 密码错误，弹出设置框
-        [self showSetupWith:info];
+        [self showSetupWith:deviceInfo];
     }
     else {
-        // 连接中
+        
+        NSArray *keyArr   = self.ensureDeviceBody.allKeys;
+        NSArray *valueArr = self.ensureDeviceBody.allValues;
+        
+        if ([keyArr containsObject:deviceInfo.deviceID]) {
+            NSInteger index = [keyArr indexOfObject:deviceInfo.deviceID];
+            NSInteger value = [valueArr[index] integerValue];
+            value++;
+            if (value >= 2) {
+                // 连接中
+                WeakSelf
+                UIAlertController *alertview = [UIAlertController alertControllerWithTitle:@"如果设备连接时间过长，请前往确认设备ID和密码是否正确"
+                                                                                   message:nil
+                                                                            preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"前往", nil)
+                                                                 style:UIAlertActionStyleDefault
+                                                               handler:^(UIAlertAction * _Nonnull action) {
+                    KHJOnlineVC *vc = [[KHJOnlineVC alloc] init];
+                    vc.deviceInfo = deviceInfo;
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [weakSelf.navigationController pushViewController:vc animated:YES];
+                }];
+                UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"删除设备", nil)
+                                                                  style:UIAlertActionStyleDefault
+                                                                handler:^(UIAlertAction * _Nonnull action) {
+                    [[KHJDataBase sharedDataBase] deleteDeviceInfo_with_deviceInfo:deviceInfo resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
+                        if ([weakSelf.deviceList containsObject:deviceInfo]) {
+                            NSInteger index = [weakSelf.deviceList indexOfObject:deviceInfo];
+                            [weakSelf.deviceList removeObject:deviceInfo];
+                            [self->contentTBV deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+                            [weakSelf.view makeToast:KHJLocalizedString(@"设备删除成功", nil)];
+                        }
+                    }];
+                }];
+                UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil)
+                                                                 style:UIAlertActionStyleCancel
+                                                               handler:nil];
+                [alertview addAction:config];
+                [alertview addAction:config1];
+                [alertview addAction:cancel];
+                [self presentViewController:alertview animated:YES completion:nil];
+            }
+            [self.ensureDeviceBody setValue:@(value) forKey:deviceInfo.deviceID];
+        }
+        else {
+            [self.view makeToast:KHJString(@"%@ 正在重连..",deviceInfo.deviceID)];
+            [self.ensureDeviceBody setValue:@(0) forKey:deviceInfo.deviceID];
+        }
     }
 }
 
@@ -267,19 +347,12 @@
             // 设备状态不保存在数据库，只临时赋值给对象
             info.deviceStatus = deviceStatus;
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self->contentTBV reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+                [self->contentTBV reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]]
+                                        withRowAnimation:UITableViewRowAnimationNone];
             });
             *stop = YES;
         }
     }];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIViewController *vc = [self getCurrentUIVC];
-        NSString *string = NSStringFromClass(vc.class);
-        if ([string isEqualToString:@"KHJMutilScreenVC_2"]) {
-            CLog(@"vc.name ========== %@",string);
-        }
-    });
 }
 
 - (UIViewController *)getCurrentUIVC

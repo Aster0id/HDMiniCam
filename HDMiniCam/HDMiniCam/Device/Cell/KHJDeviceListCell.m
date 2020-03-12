@@ -35,7 +35,7 @@
     }
     else {
         if (_delegate && [_delegate respondsToSelector:@selector(reConnectWithIndex:)]) {
-            [_delegate reConnectWithIndex:self.tag - FLAG_TAG];
+            [_delegate reConnectWithIndex:self.idd.text];
         }
     }
 }

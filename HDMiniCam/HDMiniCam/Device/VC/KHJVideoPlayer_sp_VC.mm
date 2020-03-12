@@ -18,7 +18,11 @@
 #import <Photos/Photos.h>
 #import <Photos/PHPhotoLibrary.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "AppDelegate.h"
+#import "UIDevice+TFDevice.h"
 
+//  当前解码类型
+extern KHJDecorderType currentDecorderType;
 // 是否直播录屏
 extern NSString *liveRecordVideoPath;
 extern KHJLiveRecordType liveRecordType;
@@ -31,6 +35,21 @@ extern XBAudioUnitRecorder *audioRecorder;
 
 @interface KHJVideoPlayer_sp_VC ()<H26xHwDecoderDelegate>
 {
+    __weak IBOutlet UIView *hpNaviView;
+    __weak IBOutlet UIButton *hpBackBtn;
+    __weak IBOutlet UILabel *hpTitleLab;
+    __weak IBOutlet UIButton *hpQualityBtn;
+    __weak IBOutlet UIView *hpStackBackView;
+    __weak IBOutlet UIStackView *hpStackView;
+    __weak IBOutlet UIButton *hpListenBtn;
+    __weak IBOutlet UIButton *hpTalkBtn;
+    __weak IBOutlet UIButton *hpRecordBtn;
+    __weak IBOutlet UIButton *spListenBtn;
+    __weak IBOutlet UIButton *spTalkBtn;
+    
+    __weak IBOutlet UIView *naviView;
+    __weak IBOutlet UILabel *spTitleLab;
+    __weak IBOutlet NSLayoutConstraint *naviViewCH;
     __weak IBOutlet UIView *slideView;
     __weak IBOutlet UILabel *sliderNameLab;
     __weak IBOutlet UILabel *sliderPercentLab;
@@ -40,7 +59,6 @@ extern XBAudioUnitRecorder *audioRecorder;
     __weak IBOutlet UIView *centerView;
     __weak IBOutlet UIView *bottomView;
     
-    BOOL startRecord;
     NSTimer *recordTimer;
     NSInteger recordTimes;
     __weak IBOutlet UIButton *recordBtn;
@@ -69,6 +87,7 @@ extern XBAudioUnitRecorder *audioRecorder;
     
     UITapGestureRecognizer *tap;
     __weak IBOutlet UIActivityIndicatorView *activeView;
+    BOOL isHengping;
 }
 
 @property (nonatomic, strong) NSMutableDictionary *_1497_body;
@@ -102,6 +121,9 @@ extern XBAudioUnitRecorder *audioRecorder;
 
 - (void)customizeDataSource
 {
+    currentDecorderType = KHJDecorderType_live;
+    spTitleLab.text = self.deviceInfo.deviceName;
+    hpTitleLab.text = self.deviceInfo.deviceName;
     [self addNoti];
     self.sp_deviceID = self.deviceID;
     sliderControl.continuous = NO;
@@ -122,6 +144,53 @@ extern XBAudioUnitRecorder *audioRecorder;
 {
     [super viewDidAppear:animated];
     [self getVideoStatus];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
+}
+
+- (void)orientChange:(NSNotification *)notification
+{
+    UIDeviceOrientation orient = [UIDevice currentDevice].orientation;
+    if (orient == UIDeviceOrientationPortrait) {
+        NSLog(@"竖屏");
+        if (isHengping) {
+            isHengping = NO;
+            AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            appDelegate.setTurnScreen = NO;//关闭横屏仅允许竖屏
+            [UIDevice switchNewOrientation:UIInterfaceOrientationPortrait];
+            naviView.alpha = 1;
+            hpBackBtn.alpha = 0;
+            hpNaviView.alpha = 0;
+            hpTitleLab.alpha = 0;
+            hpQualityBtn.alpha = 0;
+            hpStackView.alpha = 0;
+            hpStackBackView.alpha = 0;
+            slideView.hidden = YES;
+            centerView.hidden = NO;
+            bottomView.hidden = NO;
+            naviViewCH.constant = 44;
+        }
+    }
+    else if (orient == UIDeviceOrientationLandscapeLeft || orient == UIDeviceOrientationLandscapeRight) {
+        NSLog(@"横屏");
+        if (!isHengping) {
+            isHengping = YES;
+            // 全屏
+            naviView.alpha = 0;
+            hpBackBtn.alpha = 1;
+            hpNaviView.alpha = 1;
+            hpTitleLab.alpha = 1;
+            hpQualityBtn.alpha = 0.25;
+            hpStackView.alpha = 1;
+            hpStackBackView.alpha = 0.25;
+            slideView.hidden = YES;
+            centerView.hidden = YES;
+            bottomView.hidden = YES;
+            naviViewCH.constant = 0;
+            AppDelegate *appDelegate    = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            appDelegate.setTurnScreen   = YES;
+            [UIDevice switchNewOrientation:UIInterfaceOrientationLandscapeRight];
+        }
+    }
 }
 
 - (void)getVideoStatus
@@ -240,8 +309,18 @@ extern XBAudioUnitRecorder *audioRecorder;
 
 - (void)tapAction
 {
-    if (!slideView.hidden) {
-        slideView.hidden = YES;
+    if (isHengping) {
+        hpBackBtn.hidden = !hpBackBtn.hidden;
+        hpNaviView.hidden = !hpNaviView.hidden;
+        hpTitleLab.hidden = !hpTitleLab.hidden;
+        hpQualityBtn.hidden = !hpQualityBtn.hidden;
+        hpStackView.hidden = !hpStackView.hidden;
+        hpStackBackView.hidden = !hpStackBackView.hidden;
+    }
+    else {
+        if (!slideView.hidden) {
+            slideView.hidden = YES;
+        }
     }
 }
 
@@ -253,6 +332,7 @@ extern XBAudioUnitRecorder *audioRecorder;
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    currentDecorderType = KHJDecorderType_none;
     [self stopTalk];
     [self stopListen];
     liveRecordType = KHJLiveRecordType_Normal;
@@ -279,14 +359,104 @@ extern XBAudioUnitRecorder *audioRecorder;
         vc.deviceID = self.deviceID;
         [self.navigationController pushViewController:vc animated:YES];
     }
+    else if (sender.tag == 60) {
+        isHengping = NO;
+        AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        appDelegate.setTurnScreen = NO;//关闭横屏仅允许竖屏
+        [UIDevice switchNewOrientation:UIInterfaceOrientationPortrait];
+        naviView.alpha = 1;
+        hpBackBtn.alpha = 0;
+        hpNaviView.alpha = 0;
+        hpTitleLab.alpha = 0;
+        hpQualityBtn.alpha = 0;
+        hpStackView.alpha = 0;
+        hpStackBackView.alpha = 0;
+        slideView.hidden = YES;
+        centerView.hidden = NO;
+        bottomView.hidden = NO;
+        naviViewCH.constant = 44;
+    }
+}
+
+- (IBAction)hpSixBtnAction:(UIButton *)sender
+{
+    if (sender.tag == 0) {
+        // 监听
+        hpListenBtn.selected = !hpListenBtn.selected;
+        spListenBtn.selected = hpListenBtn.selected;
+        if (hpListenBtn.selected) {
+            [self startListen];
+            oneImgView.highlighted = YES;
+        }
+        else {
+            [self stopListen];
+            oneImgView.highlighted = NO;
+        }
+    }
+    else if (sender.tag == 1) {
+        // 对讲
+        hpTalkBtn.selected = !hpTalkBtn.selected;
+        spTalkBtn.selected = hpTalkBtn.selected;
+        if (hpTalkBtn.selected) {
+            [self startTalk];
+            twoImgView.highlighted = YES;
+        }
+        else {
+            [self stopTalk];
+            twoImgView.highlighted = NO;
+        }
+    }
+    else if (sender.tag == 2) {
+        // 拍照
+        [self takePhoto];
+    }
+    else if (sender.tag == 3) {
+        // 录像
+        hpRecordBtn.selected = !hpRecordBtn.selected;
+        recordBtn.selected = hpRecordBtn.selected;
+        if (hpRecordBtn.selected) {
+            [self gotoStartRecord];
+        }
+        else {
+            [self gotoStopRecord];
+        }
+    }
+    else if (sender.tag == 4) {
+        // 垂直镜像
+        [[KHJDeviceManager sharedManager] setFilp_with_deviceID:self.deviceID
+                                                           flip:1
+                                                         mirror:0
+                                                    resultBlock:^(NSInteger code) {}];
+    }
+    else if (sender.tag == 5) {
+        // 水平镜像
+        [[KHJDeviceManager sharedManager] setFilp_with_deviceID:self.deviceID
+                                                           flip:0
+                                                         mirror:1
+                                                    resultBlock:^(NSInteger code) {}];
+    }
 }
 
 - (IBAction)fiveBtn:(UIButton *)sender
 {
     if (sender.tag == 10) {
         // 全屏
-        KHJVideoPlayer_hp_VC *vc = [[KHJVideoPlayer_hp_VC alloc] init];
-        [self.navigationController pushViewController:vc animated:YES];
+        naviView.alpha = 0;
+        hpBackBtn.alpha = 1;
+        hpNaviView.alpha = 1;
+        hpTitleLab.alpha = 1;
+        hpQualityBtn.alpha = 0.25;
+        hpStackView.alpha = 1;
+        hpStackBackView.alpha = 0.25;
+        slideView.hidden = YES;
+        centerView.hidden = YES;
+        bottomView.hidden = YES;
+        naviViewCH.constant = 0;
+
+        isHengping = YES;
+        AppDelegate *appDelegate    = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        appDelegate.setTurnScreen   = YES;
+        [UIDevice switchNewOrientation:UIInterfaceOrientationLandscapeRight];
     }
     else if (sender.tag == 20) {
         // 设置
@@ -294,8 +464,9 @@ extern XBAudioUnitRecorder *audioRecorder;
     }
     else if (sender.tag == 30) {
         // 录像
-        sender.selected = !sender.selected;
-        if (sender.selected) {
+        recordBtn.selected = !recordBtn.selected;
+        hpRecordBtn.selected = recordBtn.selected;
+        if (recordBtn.selected) {
             [self gotoStartRecord];
         }
         else {
@@ -313,8 +484,10 @@ extern XBAudioUnitRecorder *audioRecorder;
 {
     if (sender.tag == 10) {
         // 监听
-        sender.selected = !sender.selected;
-        if (sender.selected) {
+        spListenBtn.selected = !spListenBtn.selected;
+        hpListenBtn.selected = spListenBtn.selected;
+        
+        if (spListenBtn.selected) {
             [self startListen];
             oneImgView.highlighted = YES;
         }
@@ -325,8 +498,9 @@ extern XBAudioUnitRecorder *audioRecorder;
     }
     else if (sender.tag == 20) {
         // 对讲
-        sender.selected = !sender.selected;
-        if (sender.selected) {
+        spTalkBtn.selected = !spTalkBtn.selected;
+        hpTalkBtn.selected = spTalkBtn.selected;
+        if (spTalkBtn.selected) {
             [self startTalk];
             twoImgView.highlighted = YES;
         }
@@ -375,7 +549,7 @@ extern XBAudioUnitRecorder *audioRecorder;
         [weakSelf chooseSetupWith:4];
     }];
     
-    NSString *picColor = picColorCfg.Type == 0 ? @"切换至黑白画面" : @"切换至彩色画面";
+    NSString *picColor = picColorCfg.Type == 0 ? @"切换至彩色画面" : @"切换至黑白画面";
     UIAlertAction *config4 = [UIAlertAction actionWithTitle:picColor style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:5];
     }];
@@ -494,7 +668,6 @@ extern XBAudioUnitRecorder *audioRecorder;
 /// 开始录像
 - (void)gotoStartRecord
 {
-    startRecord = YES;
     recordTimeView.hidden = NO;
     [self fireTimer];
     
@@ -506,7 +679,6 @@ extern XBAudioUnitRecorder *audioRecorder;
 /// 停止录像
 - (void)gotoStopRecord
 {
-    startRecord = NO;
     recordTimeView.hidden = YES;
     // 结束直播录屏，停止截取数据
     liveRecordVideoPath = @"";

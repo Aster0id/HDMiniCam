@@ -20,13 +20,13 @@
 - (NSString *)getTakeCameraDocPath_deviceID:(NSString *)deviceID;
 #pragma mark - 视频的保存文件夹路径
 - (NSString *)getTakeVideoDocPath_with_deviceID:(NSString *)deviceID;
-
+- (NSString *)getTakeVideo_rebackPlay_DocPath_with_deviceID:(NSString *)deviceID;
 #pragma mark - 取得一个目录下得所有图片文件名
 - (NSArray *)getPictureArray_with_deviceID:(NSString *)deviceID;
 
 #pragma mark - 取得一个目录下得所有mp4视频文件名
 - (NSArray *)getmp4VideoArray_with_deviceID:(NSString *)deviceID;
-
+- (NSArray *)getmp4_rebackPlay_VideoArray_with_deviceID:(NSString *)deviceID;
 #pragma mark - 获取视频或图片的名称
 - (NSString *)getVideoNameWithType:(NSString *)fileType deviceID:(NSString *)deviceID;
 
