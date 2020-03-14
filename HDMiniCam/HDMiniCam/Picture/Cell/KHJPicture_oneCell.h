@@ -10,13 +10,21 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void(^KHJPictureCellBlock)(NSInteger);
+@protocol KHJPicture_oneCellDelegate <NSObject>
+
+- (void)longPressWith:(NSString *)path;
+
+@end
+
+typedef void(^KHJPictureCellBlock)(NSString *);
 
 @interface KHJPicture_oneCell : UICollectionViewCell
 
+@property (nonatomic, copy) NSString *path;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIButton *btn;
 @property (nonatomic, copy) KHJPictureCellBlock block;
+@property (nonatomic, strong) id<KHJPicture_oneCellDelegate> delegate;
 
 @end
 

@@ -30,7 +30,7 @@ typedef enum{
 @property (nonatomic,assign) BOOL isSDDataSource;
 
 #pragma mark --- 获取时间轴指向的时间
-
+- (void)updateTime:(NSTimeInterval)time;
 //更新时间轴
 - (void)updateCurrentInterval:(NSTimeInterval)tTime;
 //横竖屏切换

@@ -10,13 +10,26 @@
 
 @implementation KHJPicture_oneCell
 
-- (void)awakeFromNib {
+- (void)awakeFromNib
+{
     [super awakeFromNib];
-    // Initialization code
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressAction:)];
+    [self addGestureRecognizer:longPress];
 }
-- (IBAction)chooseIcon:(id)sender {
+
+- (void)longPressAction:(UILongPressGestureRecognizer *)longPress
+{
+    if (longPress.state == UIGestureRecognizerStateBegan) {
+        if (_delegate && [_delegate respondsToSelector:@selector(longPressWith:)]) {
+            [_delegate longPressWith:self.path];
+        }
+    }
+}
+
+- (IBAction)chooseIcon:(id)sender
+{
     if (_block) {
-        _block(self.tag - FLAG_TAG);
+        _block(self.path);
     }
 }
 

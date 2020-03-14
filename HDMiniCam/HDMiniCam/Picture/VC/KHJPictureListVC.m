@@ -12,7 +12,7 @@
 //#import "AISDCard_VideoPlayerVC.h"
 //#import "AIDeviceManager.h"
 
-@interface KHJPictureListVC ()<UIScrollViewDelegate, UICollectionViewDataSource>
+@interface KHJPictureListVC ()<UIScrollViewDelegate, UICollectionViewDataSource,KHJPicture_oneCellDelegate>
 {
     NSInteger scrollHeight;//scroll高度
     NSInteger totalNumber;//总共所有的视频或者图片个数
@@ -381,16 +381,6 @@
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - chooseDevice
-
-- (void)chooseDevice
-{
-    CLog(@"筛选设备");
-    KHJHadBindDeviceVC *vc = [[KHJHadBindDeviceVC alloc] init];
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
 - (void)addCollectionView
 {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
@@ -415,11 +405,15 @@
 {
     static NSString *identifierCell = @"KHJPicture_oneCell";
     KHJPicture_oneCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifierCell forIndexPath:indexPath];
+    cell.delegate = self;
     cell.tag = indexPath.row + FLAG_TAG;
     WeakSelf
-    cell.block = ^(NSInteger row) {
+    cell.block = ^(NSString *path) {
+        NSInteger row = [self->imagePathArr indexOfObject:path];
+        weakSelf.currentIndex = row;
         [weakSelf.scroll_one setContentOffset:CGPointMake(row*SCREEN_WIDTH, 0) animated:YES];
     };
+    cell.path = imagePathArr[indexPath.row];
     NSString *path = KHJString(@"%@/%@",[[KHJHelpCameraData sharedModel] getTakeCameraDocPath_deviceID:@""],imagePathArr[indexPath.row]);
     UIImage *image = [[UIImage alloc] initWithContentsOfFile:path];
     cell.imageView.image = image;
@@ -428,10 +422,126 @@
 
 - (IBAction)chooseDevice:(id)sender
 {
-    CLog(@"选择设备");
-    KHJHadBindDeviceVC *vc = [[KHJHadBindDeviceVC alloc] init];
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+    [self shareClick];
+}
+
+- (void)shareClick
+{
+    NSString *path = KHJString(@"%@/%@",[[KHJHelpCameraData sharedModel] getTakeCameraDocPath_deviceID:@""],imagePathArr[_currentIndex]);
+    NSURL *urlToShare = [NSURL fileURLWithPath:path];
+    NSArray *activityItems = [[NSArray alloc] initWithObjects:urlToShare,nil];
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:activityItems applicationActivities:nil];
+    //不出现在活动项目
+    activityVC.excludedActivityTypes = @[UIActivityTypePrint,
+                                         UIActivityTypeCopyToPasteboard,
+                                         UIActivityTypeAssignToContact,
+                                         UIActivityTypeSaveToCameraRoll,
+                                         UIActivityTypeAddToReadingList];
+    UIActivityViewControllerCompletionWithItemsHandler myBlock = ^(UIActivityType activityType, BOOL completed, NSArray * returnedItems, NSError * activityError) {
+        CLog(@"activityType :%@", activityType);
+        if (completed){
+            CLog(@"completed");
+        }
+        else {
+            CLog(@"cancel");
+        }
+    };
+    
+    // 初始化completionHandler，当post结束之后（无论是done还是cancell）该blog都会被调用
+    activityVC.completionWithItemsHandler = myBlock;
+    UIViewController * rootVc = [UIApplication sharedApplication].keyWindow.rootViewController;
+    [rootVc presentViewController:activityVC animated:TRUE completion:nil];
+}
+
+
+#pragma mark - KHJPicture_oneCellDelegate
+
+- (void)longPressWith:(NSString *)path
+{
+    NSInteger row = [imagePathArr indexOfObject:path];
+    CLog(@"长按 row = %ld",row);
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"是否删除该图片？", nil) message:@""
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel
+                                                   handler:nil];
+    WeakSelf
+    UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * _Nonnull action) {
+        [weakSelf deletePic:row];
+    }];
+    [alertview addAction:cancel];
+    [alertview addAction:defult];
+    [self presentViewController:alertview animated:YES completion:nil];
+}
+
+- (void)deletePic:(NSInteger)row
+{
+    NSString *path = KHJString(@"%@/%@",[[KHJHelpCameraData sharedModel] getTakeCameraDocPath_deviceID:@""],imagePathArr[row]);
+    if ([[KHJHelpCameraData sharedModel] DeleateFileWithPath:path]) {
+        [self deleteImageWith:row];
+        [collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:row inSection:0]]];
+    }
+}
+
+- (void)deleteImageWith:(NSInteger)row
+{
+    [imagePathArr removeObjectAtIndex:row];
+    WeakSelf
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        if (self->imagePathArr.count > 0) {
+            NSMutableArray *arr1 = [NSMutableArray array];
+            for (NSString *imagePth  in self->imagePathArr) {
+                NSString *imageName  = [[[imagePth componentsSeparatedByString:@"/"].lastObject componentsSeparatedByString:@"-"].lastObject componentsSeparatedByString:@"."][0];
+                [arr1 addObject:imageName];
+            }
+            NSArray *array = [[KHJCalculate bubbleDescendingOrderSortWithArray:arr1] mutableCopy];
+            NSArray *array2 = [self->imagePathArr copy];
+            [self->imagePathArr removeAllObjects];
+            [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSString *string = KHJString(@"%@",obj);
+                [array2 enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if ([obj containsString:string]) {
+                        [self->imagePathArr addObject:obj];
+                        *stop = YES;
+                    }
+                }];
+            }];
+            [arr1 removeAllObjects];
+            for (NSString *imagePth  in self->imagePathArr) {
+                NSArray *aa  = [imagePth componentsSeparatedByString:@"/"];
+                NSString *imageName = @"";
+                if (aa.count == 3) {
+                    imageName = KHJString(@"%@/%@",aa[1],aa[2]);
+                }
+                else {
+                    imageName = imagePth;
+                }
+                [arr1 addObject:imageName];
+            }
+            self->imagePathArr = [arr1 mutableCopy];
+            self->totalNumber = arr1.count;
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (self->imagePathArr.count == row) {
+                    weakSelf.currentIndex = row - 1;
+                }
+                else {
+                    weakSelf.currentIndex = row;
+                }
+                [weakSelf showImageViewAtIndex:weakSelf.currentIndex];
+                [weakSelf setShowPage];
+                [self->collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:weakSelf.currentIndex inSection:0]
+                                             atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+            });
+        }
+        else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                for (AIPhotoZoom *zoom in self.scroll_one.subviews) {
+                    [zoom removeFromSuperview];
+                }
+            });
+        }
+    });
 }
 
 @end

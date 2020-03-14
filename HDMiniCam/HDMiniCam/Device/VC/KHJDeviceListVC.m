@@ -9,7 +9,9 @@
 #import "AppDelegate.h"
 #import "UIDevice+TFDevice.h"
 #import "KHJDeviceListVC.h"
+#import "KHJOnlineVC.h"
 #import "KHJDeviceListCell.h"
+#import "KHJWIFIConfigVC.h"
 //
 #import "KHJDeviceManager.h"
 //
@@ -17,18 +19,25 @@
 #import "KHJAddDeviceListVC.h"
 #import "KHJSearchDeviceVC.h"
 #import "KHJMutilScreenVC_2.h"
-#import "KHJVideoPlayer_hp_VC.h"
 #import "KHJVideoPlayer_sp_VC.h"
-#import "KHJVideoPlayer_hf_VC.h"
-#import "KHJOnlineVC.h"
 #import "KHJDeviceConfVC.h"
+#import <SystemConfiguration/CaptiveNetwork.h>
 
-@interface KHJDeviceListVC ()<UITableViewDelegate, UITableViewDataSource, KHJDeviceListCellDelegate>
+NSString *wifiName;
+typedef enum : NSUInteger {
+    hotPointType_no = 0,
+    hotPointType_once,
+    hotPointType_more,
+} hotPointType;
+
+@interface KHJDeviceListVC ()<UITableViewDelegate, UITableViewDataSource, KHJDeviceListCellDelegate, KHJVideoPlayer_sp_VCDelegate>
 {
+    hotPointType hotPoint;
     __weak IBOutlet UITableView *contentTBV;
 }
 
 @property (nonatomic, strong) NSMutableDictionary *ensureDeviceBody;
+@property (nonatomic, strong) NSMutableDictionary *offlinedDeviceBody;
 @property (nonatomic, strong) NSMutableArray *deviceList;
 
 @end
@@ -41,6 +50,14 @@
         _ensureDeviceBody = [NSMutableDictionary dictionary];
     }
     return _ensureDeviceBody;
+}
+
+- (NSMutableDictionary *)offlinedDeviceBody
+{
+    if (!_offlinedDeviceBody) {
+        _offlinedDeviceBody = [NSMutableDictionary dictionary];
+    }
+    return _offlinedDeviceBody;
 }
 
 - (NSMutableArray *)deviceList
@@ -62,11 +79,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self getPhoneWifi];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)reloadNewDeviceList
 {
+
     NSArray *subDeviceList = [self.deviceList copy];
     NSArray *array = [[KHJDataBase sharedDataBase] getAllDeviceInfo];
     WeakSelf
@@ -81,9 +100,23 @@
             }
         }];
         if (!isExit) {
-            [weakSelf.deviceList addObject:info];
-            [[KHJDeviceManager sharedManager] connect_with_deviceID:info.deviceID
-                                                           password:info.devicePassword resultBlock:^(NSInteger code) {}];
+            if (hotPoint != hotPointType_no) {
+                if ([wifiName hasPrefix:info.deviceID]) {
+                    CLog(@"wifiName = %@, info.deviceID = %@",wifiName,info.deviceID);
+                    [weakSelf.deviceList addObject:info];
+                    [[KHJDeviceManager sharedManager] connect_with_deviceID:info.deviceID
+                                                                   password:info.devicePassword resultBlock:^(NSInteger code) {}];
+                }
+                else {
+                    CLog(@"非本机 ----------- info.deviceID = %@",info.deviceID);
+                    [weakSelf.deviceList addObject:info];
+                }
+            }
+            else {
+                [weakSelf.deviceList addObject:info];
+                [[KHJDeviceManager sharedManager] connect_with_deviceID:info.deviceID
+                                                               password:info.devicePassword resultBlock:^(NSInteger code) {}];
+            }
         }
     }];
     [contentTBV reloadData];
@@ -91,9 +124,41 @@
 
 - (IBAction)add:(id)sender
 {
-    KHJAddDeviceListVC *vc = [[KHJAddDeviceListVC alloc] init];
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"添加设备", nil) message:@""
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel
+                                                   handler:nil];
+    WeakSelf
+    UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(@"设备配网", nil) style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * _Nonnull action) {
+        if ([wifiName hasPrefix:@"IPC"]) {
+            KHJAddDeviceListVC *vc = [[KHJAddDeviceListVC alloc] init];
+            vc.isSameRouter = NO;
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else {
+            [weakSelf changeToDeviceHotpoint];
+        }
+    }];
+    UIAlertAction *defult1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"添加已配网的设备", nil) style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * _Nonnull action) {
+        KHJOnlineVC *vc = [[KHJOnlineVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }];
+    UIAlertAction *defult2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"局域网下搜索设备", nil) style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * _Nonnull action) {
+        KHJAddDeviceListVC *vc = [[KHJAddDeviceListVC alloc] init];
+        vc.isSameRouter = YES;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }];
+    [alertview addAction:cancel];
+    [alertview addAction:defult];
+    [alertview addAction:defult1];
+    [alertview addAction:defult2];
+    [self presentViewController:alertview animated:YES completion:nil];
 }
 
 - (IBAction)more:(id)sender
@@ -149,20 +214,18 @@
     KHJDeviceInfo *info = [[KHJDeviceInfo alloc] init];
     info = self.deviceList[indexPath.row];
     
+    cell.deviceID = info.deviceID;
     cell.idd.text = info.deviceID;
     cell.name.text = info.deviceName;
     
-    cell.smalIMGV.highlighted = NO;
     if ([info.deviceStatus isEqualToString:@"0"]) {
         cell.status.text = @"在线";
-        cell.smalIMGV.highlighted = YES;
     }
     else if ([info.deviceStatus isEqualToString:@"-6"]) {
         cell.status.text = @"离线";
     }
     else if ([info.deviceStatus isEqualToString:@"-26"]) {
         cell.status.text = @"密码错误";
-        cell.smalIMGV.highlighted = YES;
     }
     else {
         cell.status.text = @"连接中...";
@@ -174,9 +237,18 @@
 
 #pragma mark - KHJDeviceListCell
 
-- (void)gotoSetupWithIndex:(NSInteger)index
+- (void)gotoSetupWithIndex:(NSString *)deviceID
 {
-    CLog(@"进入第 %ld 个设置界面",index);
+    __block NSInteger index = 0;
+    [self.deviceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        KHJDeviceInfo *deviceInfo = (KHJDeviceInfo *)obj;
+        if ([deviceID isEqualToString:deviceInfo.deviceID]) {
+            index = idx;
+            *stop = YES;
+        }
+    }];
+    KHJDeviceInfo *deviceInfo = self.deviceList[index];
+    [self showSetupWith:deviceInfo];
 }
 
 - (void)gotoVideoWithIndex:(NSInteger)index
@@ -185,9 +257,11 @@
     KHJDeviceInfo *info = self.deviceList[index];
     if ([info.deviceStatus isEqualToString:@"0"]) {
         KHJVideoPlayer_sp_VC *vc = [[KHJVideoPlayer_sp_VC alloc] init];
-        vc.deviceInfo = info;
-        vc.deviceID = info.deviceID;
-        vc.password = info.devicePassword;
+        vc.delegate     = self;
+        vc.deviceInfo   = info;
+        vc.row          = index;
+        vc.deviceID     = info.deviceID;
+        vc.password     = info.devicePassword;
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }
@@ -203,84 +277,6 @@
     }
     else {
 
-    }
-}
-
-- (void)reConnectWithIndex:(NSString *)deviceID
-{
-    __block NSInteger index = 0;
-    [self.deviceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        KHJDeviceInfo *deviceInfo = (KHJDeviceInfo *)obj;
-        if ([deviceID isEqualToString:deviceInfo.deviceID]) {
-            index = idx;
-            *stop = YES;
-        }
-    }];
-    
-    KHJDeviceInfo *deviceInfo = self.deviceList[index];
-    if ([deviceInfo.deviceStatus isEqualToString:@"0"]) {
-        // 在线，弹出设置框
-        [self showSetupWith:deviceInfo];
-    }
-    else if ([deviceInfo.deviceStatus isEqualToString:@"-6"]) {
-        // 离线，重连
-        [[KHJDeviceManager sharedManager] disconnect_with_deviceID:deviceInfo.deviceID resultBlock:^(NSInteger code) {
-            [[KHJDeviceManager sharedManager] connect_with_deviceID:deviceInfo.deviceID password:deviceInfo.devicePassword resultBlock:^(NSInteger code) {}];
-        }];
-    }
-    else if ([deviceInfo.deviceStatus isEqualToString:@"-26"]) {
-        // 密码错误，弹出设置框
-        [self showSetupWith:deviceInfo];
-    }
-    else {
-        
-        NSArray *keyArr   = self.ensureDeviceBody.allKeys;
-        NSArray *valueArr = self.ensureDeviceBody.allValues;
-        
-        if ([keyArr containsObject:deviceInfo.deviceID]) {
-            NSInteger index = [keyArr indexOfObject:deviceInfo.deviceID];
-            NSInteger value = [valueArr[index] integerValue];
-            value++;
-            if (value >= 2) {
-                // 连接中
-                WeakSelf
-                UIAlertController *alertview = [UIAlertController alertControllerWithTitle:@"如果设备连接时间过长，请前往确认设备ID和密码是否正确"
-                                                                                   message:nil
-                                                                            preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"前往", nil)
-                                                                 style:UIAlertActionStyleDefault
-                                                               handler:^(UIAlertAction * _Nonnull action) {
-                    KHJOnlineVC *vc = [[KHJOnlineVC alloc] init];
-                    vc.deviceInfo = deviceInfo;
-                    vc.hidesBottomBarWhenPushed = YES;
-                    [weakSelf.navigationController pushViewController:vc animated:YES];
-                }];
-                UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"删除设备", nil)
-                                                                  style:UIAlertActionStyleDefault
-                                                                handler:^(UIAlertAction * _Nonnull action) {
-                    [[KHJDataBase sharedDataBase] deleteDeviceInfo_with_deviceInfo:deviceInfo resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
-                        if ([weakSelf.deviceList containsObject:deviceInfo]) {
-                            NSInteger index = [weakSelf.deviceList indexOfObject:deviceInfo];
-                            [weakSelf.deviceList removeObject:deviceInfo];
-                            [self->contentTBV deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
-                            [weakSelf.view makeToast:KHJLocalizedString(@"设备删除成功", nil)];
-                        }
-                    }];
-                }];
-                UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil)
-                                                                 style:UIAlertActionStyleCancel
-                                                               handler:nil];
-                [alertview addAction:config];
-                [alertview addAction:config1];
-                [alertview addAction:cancel];
-                [self presentViewController:alertview animated:YES completion:nil];
-            }
-            [self.ensureDeviceBody setValue:@(value) forKey:deviceInfo.deviceID];
-        }
-        else {
-            [self.view makeToast:KHJString(@"%@ 正在重连..",deviceInfo.deviceID)];
-            [self.ensureDeviceBody setValue:@(0) forKey:deviceInfo.deviceID];
-        }
     }
 }
 
@@ -301,6 +297,16 @@
                 [weakSelf.deviceList removeObject:deviceInfo];
                 [self->contentTBV deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
                 [weakSelf.view makeToast:KHJLocalizedString(@"设备删除成功", nil)];
+                
+                
+                NSString *path_document = NSHomeDirectory();
+                NSString *pString = [NSString stringWithFormat:@"/Documents/%@.png",deviceInfo.deviceID];
+                NSString *imagePath = [path_document stringByAppendingString:pString];
+                NSString *screenShotPath = [[KHJHelpCameraData sharedModel] get_screenShot_DocPath_deviceID:deviceInfo.deviceID];
+                NSString *recordScreenShotPath = [[KHJHelpCameraData sharedModel] get_recordVideo_screenShot_DocPath_deviceID:deviceInfo.deviceID];
+                [[KHJHelpCameraData sharedModel] DeleateFileWithPath:imagePath];
+                [[KHJHelpCameraData sharedModel] DeleateFileWithPath:screenShotPath];
+                [[KHJHelpCameraData sharedModel] DeleateFileWithPath:recordScreenShotPath];
             }
         }];
     }];
@@ -333,6 +339,87 @@
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getDeviceStatus:) name:noti_onStatus_KEY object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadNewDeviceList) name:noti_addDevice_KEY object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNewDeviceTellUser:) name:@"addNewDevice_noti_key" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getPhoneWifi) name: UIApplicationWillEnterForegroundNotification object:nil];
+}
+
+#pragma makr - 进入前台
+
+- (void)getPhoneWifi
+{
+    WeakSelf
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();
+        for (NSString *item in ifs) {
+            NSDictionary *info = [NSDictionary dictionaryWithDictionary:(__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)item)];
+            wifiName = info[@"SSID"];
+            if ([wifiName hasPrefix:@"IPC_"]) {
+                CLog(@"wifiName ============ %@",wifiName);
+                if (self->hotPoint == hotPointType_no) {
+                    self->hotPoint = hotPointType_once;
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+                        KHJAddDeviceListVC *vc = [[KHJAddDeviceListVC alloc] init];
+                        vc.hidesBottomBarWhenPushed = YES;
+                        [weakSelf.navigationController pushViewController:vc animated:YES];
+                    });
+                }
+                else if (self->hotPoint == hotPointType_once) {
+                    self->hotPoint = hotPointType_more;
+                }
+                else {
+                    [weakSelf.view makeToast:KHJString(@"手机已连接 %@ 的设备热点",wifiName)];
+                }
+            }
+            else {
+                self->hotPoint = hotPointType_no;
+            }
+        }
+    });
+}
+
+- (void)addNewDeviceTellUser:(NSNotification *)noti
+{
+    if ([wifiName hasPrefix:@"IPC"]) {
+        KHJDeviceInfo *info = (KHJDeviceInfo *)noti.object;
+        UIAlertController *alertview = [UIAlertController alertControllerWithTitle:@"" message:KHJLocalizedString(@"提示", nil)
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(KHJString(@"给设备 \" %@ \" 配网",info.deviceID), nil) style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+            KHJWIFIConfigVC *vc = [[KHJWIFIConfigVC alloc] init];
+            vc.deviceInfo = info;
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }];
+        [alertview addAction:defult];
+        [self presentViewController:alertview animated:YES completion:nil];
+    }
+}
+
+- (void)changeToDeviceHotpoint
+{
+    NSURL *url = [self prefsUrlWithQuery:@{@"root": @"WIFI"}];
+    if (@available(iOS 10.0, *)) {
+        [[UIApplication sharedApplication] openURL:url];
+    }
+    else {
+        if ([[UIApplication sharedApplication] canOpenURL:url]) {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    }
+}
+
+- (NSURL *)prefsUrlWithQuery:(NSDictionary *)query
+{
+    NSData *data = [[NSData alloc] initWithBase64EncodedString:@"QXBwLVByZWZz" options:0];
+    NSString *scheme = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSMutableString *url = [NSMutableString stringWithString:scheme];
+    for (int i = 0; i < query.allKeys.count; i ++) {
+        NSString *key = [query.allKeys objectAtIndex:i];
+        NSString *value = [query valueForKey:key];
+        [url appendFormat:@"%@%@=%@", (i == 0 ? @":" : @"?"), key, value];
+    }
+    return [NSURL URLWithString:url];
 }
 
 - (void)getDeviceStatus:(NSNotification *)noti
@@ -341,18 +428,24 @@
     NSString *deviceID = KHJString(@"%@",body[@"deviceID"]);
     NSString *deviceStatus = KHJString(@"%@",body[@"deviceStatus"]);
     
-    [self.deviceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        KHJDeviceInfo *info = (KHJDeviceInfo *)obj;
-        if ([info.deviceID isEqualToString:deviceID]) {
-            // 设备状态不保存在数据库，只临时赋值给对象
-            info.deviceStatus = deviceStatus;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self->contentTBV reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]]
-                                        withRowAnimation:UITableViewRowAnimationNone];
-            });
-            *stop = YES;
-        }
-    }];
+    if ([wifiName hasPrefix:@"IPC"]) {
+        CLog(@"当前连接的是热点");
+    }
+    else {
+        CLog(@"当前连接的是正常Wi-Fi");
+        [self.deviceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            KHJDeviceInfo *info = (KHJDeviceInfo *)obj;
+            if ([info.deviceID isEqualToString:deviceID]) {
+                // 设备状态不保存在数据库，只临时赋值给对象
+                info.deviceStatus = deviceStatus;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self->contentTBV reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]]
+                                            withRowAnimation:UITableViewRowAnimationNone];
+                });
+                *stop = YES;
+            }
+        }];
+    }
 }
 
 - (UIViewController *)getCurrentUIVC
@@ -397,6 +490,15 @@
         result = window.rootViewController;
     
     return result;
+}
+
+#pragma mark - KHJVideoPlayer_sp_VCDelegate
+
+- (void)loadCellPic:(NSInteger)row
+{
+    KHJDeviceListCell *cell = [contentTBV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
+    KHJDeviceInfo *info = self.deviceList[row];
+    cell.deviceID = info.deviceID;
 }
 
 @end

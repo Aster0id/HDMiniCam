@@ -9,6 +9,7 @@
 #import "KHJRecordListVC.h"
 #import "KHJRecordListCell.h"
 #import "KHJRecordListVC_Two.h"
+#import "KHJVideoPlayer_hf_VC.h"
 
 @interface KHJRecordListVC ()<UITableViewDelegate, UITableViewDataSource, KHJRecordListCellDelegate>
 
@@ -119,8 +120,7 @@
         cell.numberLab.text = KHJString(@"共 %d 个",(int)list.count);
     }
     else if (currentIndex == 1) {
-        NSArray *list = [[KHJHelpCameraData sharedModel] getmp4_rebackPlay_VideoArray_with_deviceID:info.deviceID];
-        cell.numberLab.text = KHJString(@"共 %d 个",(int)list.count);
+        cell.numberLab.text = @"";
     }
     return cell;
 }
@@ -165,11 +165,21 @@
 - (void)contentWith:(NSInteger)row
 {
     CLog(@"contentWith Row = %ld",(long)row);
-    KHJRecordListVC_Two *vc = [[KHJRecordListVC_Two alloc] init];
-    vc.info = self.deviceList[row];
-    vc.currentIndex = currentIndex;
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+    KHJDeviceInfo *info = self.deviceList[row];
+    if (currentIndex == 0) {
+        KHJRecordListVC_Two *vc = [[KHJRecordListVC_Two alloc] init];
+        vc.info = info;
+        vc.currentIndex = currentIndex;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else if (currentIndex == 1) {
+        // 预置点
+        KHJVideoPlayer_hf_VC *vc = [[KHJVideoPlayer_hf_VC alloc] init];
+        vc.deviceID = info.deviceID;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 @end

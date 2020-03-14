@@ -11,6 +11,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KHJAddDeviceListVC">
             <connections>
                 <outlet property="contentTBV" destination="UgE-H0-s8M" id="vwy-DY-q62"/>
+                <outlet property="stackView" destination="PR6-Ec-umn" id="KrC-H3-xOx"/>
+                <outlet property="stackViewCH" destination="Ot6-UG-jLi" id="v3F-c1-SMN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

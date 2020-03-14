@@ -100,8 +100,11 @@
     }
     cell.delegate = self;
     cell.tag = FLAG_TAG + indexPath.row;
+    cell.date = self.dateList[indexPath.row];
     cell.timeLab.text = KHJString(@"拍摄时间：%@",self.dateList[indexPath.row]);
     cell.numLab.text = KHJString(@"共 %@ 个",self.dateList_num[indexPath.row]);
+    
+    cell.deviceID = self.info.deviceID;
     return cell;
 }
 

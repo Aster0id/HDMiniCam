@@ -75,7 +75,9 @@ extern IPCNetRecordCfg_st recordCfg;
 
 - (void)getImageWith:(UIImage * _Nullable)image imageSize:(CGSize)imageSize deviceID:(NSString *)deviceID
 {
-    playerImageView.image = image;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self->playerImageView.image = image;
+    });
 }
 
 - (NSMutableArray *)videoList
@@ -169,6 +171,8 @@ extern IPCNetRecordCfg_st recordCfg;
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 weakSelf.zfTimeView.timesArr = weakSelf.videoList;
+                CLog(@"currentTimeInterval ==================================================================== %f",weakSelf.currentTimeInterval);
+
                 [weakSelf.zfTimeView updateCurrentInterval:weakSelf.currentTimeInterval];
             });
         });
@@ -297,10 +301,12 @@ extern IPCNetRecordCfg_st recordCfg;
         [self.view makeToast:@"当前没有视频！"];
     }
     else {
-        KHJVideoModel *info = self.videoList[index];
-        [self.view makeToast:KHJString(@"当前第 %ld 个视频，总共 %ld 个视频", index, self.videoList.count)];
+//        [self.view makeToast:KHJString(@"当前第 %ld 个视频，总共 %ld 个视频", index, self.videoList.count)];
         int date_int = [[dateLAB.text stringByReplacingOccurrencesOfString:@"_" withString:@""] intValue];
-        int timestamp_int = [[[KHJCalculate getTimesFromUTC:info.startTime] stringByReplacingOccurrencesOfString:@":" withString:@""] intValue];
+        NSDateFormatter *formatterShow = [[NSDateFormatter alloc]init];
+        [formatterShow setDateFormat:@"HHmmss"];
+        NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:date];
+        int timestamp_int = [[formatterShow stringFromDate:date1] intValue];
         // 播放回放视频
         [[KHJDeviceManager sharedManager] starPlayback_timeLine_with_deviceID:self.deviceID vi:0 date:date_int time:timestamp_int resultBlock:^(NSInteger code) {}];
     }
@@ -441,8 +447,11 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
                                 length:(int)length
                             timeStamps:(long)timeStamps
 {
-    
-    [h264Decode decodeH26xVideoData:data videoSize:length frameType:dataType timestamp:timeStamps];
+    [self.zfTimeView updateTime:timeStamps/1000 + self.zeroTimeInterval];
+//    [self.zfTimeView updateCurrentInterval:timeStamps/1000 + self.zeroTimeInterval];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [self->h264Decode decodeH26xVideoData:data videoSize:length frameType:dataType timestamp:timeStamps];
+    });
     
     if (rebackPlayRecordType == KHJRebackPlayRecordType_Recording) {
          CLog(@"正在回放录屏 rebackPlayRecordVideoPath = %@",rebackPlayRecordVideoPath);

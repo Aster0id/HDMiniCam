@@ -14,11 +14,20 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol KHJVideoPlayer_sp_VCDelegate <NSObject>
+
+- (void)loadCellPic:(NSInteger)row;
+
+@end
+
 @interface KHJVideoPlayer_sp_VC : KHJVideoPlayerBaseVC
+
+@property (nonatomic, assign) NSInteger row;
 
 @property (nonatomic, copy) NSString *deviceID;
 @property (nonatomic, copy) NSString *password;
 @property (nonatomic, strong) KHJDeviceInfo *deviceInfo;
+@property (nonatomic, strong) id<KHJVideoPlayer_sp_VCDelegate> delegate;
 
 @end
 

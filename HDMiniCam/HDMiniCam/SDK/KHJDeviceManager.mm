@@ -69,37 +69,6 @@ void OnDownloadDataCallBack(const char*uuid,const char *file,const char*data,int
 //    CLog(@"dict = %@",dict);
 }
 
-void OnSearchDeviceResult(struct DevInfo *device)
-{
-    /**
-     struct DevInfo
-     {
-         char mTocken;          //设置为A
-         char mUUID[64];        //设备UUID
-         char mCHCK[16];        //设备UUID校验码/检查码
-         char mIP[128];         //设备IP
-         char mSockIP[128];     //发送此消息的sock IP
-         char mMAC[128];        // 设备MAC
-         char mSoftVer[64];     //软件版本
-         char mHwVer[64];       //硬件版本
-         int mIndex;
-         char mNetMask[32];     //子网掩码
-         char mGateway[128];    //网关
-         char mDNS1[128];       //dns1
-         char mDNS2[128];       //dns2
-         unsigned short nPort;  //设备端口
-         char mDevName[128];    //设备名称
-         char mUserName[128];   //修改时会对用户认证
-         char mPassword[128];   //修改时会对用户认证
-         int mDevType;          //设备类型，参见DEV_TYPE_e
-         char mFlashID[128];    //设备唯一ID
-         bool mFlashValid;      //设备是否校验
-         char mIPv4Addr[128];
-     };
-     */
-    CLog(@"device 11111111111111111111111111111111111111 = %@",device);
-}
-
 void OnListRemoteDirInfoCmdResult(int cmd,const char*uuid,const char*json);
 void get_sdcard_files_list(const char *uuid, const char *dir)
 {
@@ -646,6 +615,17 @@ void OnSearchDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
     });
 }
 
+void OnSearchDeviceResult(struct DevInfo *device)
+{
+    NSString *uuid = KHJString(@"%s",device->mUUID);
+    NSString *name = KHJString(@"%s",device->mDevName);
+    NSMutableDictionary *body = [NSMutableDictionary dictionary];
+    [body setValue:uuid forKey:@"deviceID"];
+    [body setValue:name forKey:@"deviceName"];
+    [body setValue:@"admin" forKey:@"devicePassword"];// admin 原始密码
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"OnSearchDeviceResult_noti_key" object:body];
+}
+
 /// 停止搜索附近的设备
 /// @param resultBlock 回调
 - (void)stopSearchDevice_with_resultBlock:(resultBlock)resultBlock
@@ -847,7 +827,7 @@ void OnGetRemoteDirInfo_timeLine_CmdResult(int cmd,const char*uuid,const char*js
 {
     NSDictionary *backPlay_result = [KHJUtility cString_changto_ocStringWith:json];
     NSArray *result_array = backPlay_result[@"RecInfo"][@"period"];
-//    CLog(@"result_array.count = %ld",(long)result_array.count);
+    CLog(@"OnGetRemoteDirInfo_timeLine_CmdResult = %ld",(long)result_array.count);
     [[NSNotificationCenter defaultCenter] postNotificationName:noti_timeLineInfo_1075_KEY object:result_array];
 }
 

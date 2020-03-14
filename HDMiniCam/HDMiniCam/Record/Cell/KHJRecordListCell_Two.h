@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KHJRecordListCell_Two : KHJBaseCell
 
+@property (nonatomic, copy) NSString *deviceID;
+@property (nonatomic, copy) NSString *date;
 @property (weak, nonatomic) IBOutlet UIImageView *picImgView;
 @property (weak, nonatomic) IBOutlet UILabel *timeLab;
 @property (weak, nonatomic) IBOutlet UILabel *numLab;

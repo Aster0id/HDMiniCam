@@ -18,6 +18,13 @@
 
 #pragma mark - 获取图片路径 存储的时候加上设备uid标记是哪一台设备的
 - (NSString *)getTakeCameraDocPath_deviceID:(NSString *)deviceID;
+/// 视频截图
+/// @param deviceID 设备id
+- (NSString *)get_screenShot_DocPath_deviceID:(NSString *)deviceID;
+/// 视频每日录屏的截图保存的文件夹路径
+/// @param deviceID 设备id
+- (NSString *)get_recordVideo_screenShot_DocPath_deviceID:(NSString *)deviceID;
+
 #pragma mark - 视频的保存文件夹路径
 - (NSString *)getTakeVideoDocPath_with_deviceID:(NSString *)deviceID;
 - (NSString *)getTakeVideo_rebackPlay_DocPath_with_deviceID:(NSString *)deviceID;

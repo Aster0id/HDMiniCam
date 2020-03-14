@@ -14,10 +14,13 @@
 #import "KHJOnlineVC.h"
 #import "KHJWiFiVC.h"
 
+extern NSString *wifiName;
+
 @interface KHJAddDeviceListVC ()<UITableViewDataSource>
 {
     __weak IBOutlet UITableView *contentTBV;
-    NSString *wifiName;
+    __weak IBOutlet UIStackView *stackView;
+    __weak IBOutlet NSLayoutConstraint *stackViewCH;
 }
 
 @property (nonatomic, strong) NSMutableArray *deviceList;
@@ -38,23 +41,32 @@
 {
     [super viewDidLoad];
     [self addNoti];
-    WeakSelf
-    [[KHJDeviceManager sharedManager] startSearchDevice_with_resultBlock:^(NSInteger code) {
-        NSMutableDictionary *body = [NSMutableDictionary dictionary];
-        [body setValue:@"deviceName" forKey:@"deviceName"];
-        [body setValue:@"deviceID" forKey:@"deviceID"];
-        [body setValue:@"devicePassword" forKey:@"devicePassword"];
-        [weakSelf.deviceList addObject:body];
-        [self->contentTBV reloadData];
-    }];
     self.titleLab.text = KHJLocalizedString(@"添加设备", nil);
+    [[KHJDeviceManager sharedManager] startSearchDevice_with_resultBlock:^(NSInteger code) {}];
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getSearchDeviceResult:) name:@"OnSearchDeviceResult_noti_key" object:nil];
+    if (self.isSameRouter) {
+        stackView.hidden = YES;
+        stackViewCH.constant = 0;
+    }
+}
+
+- (void)getSearchDeviceResult:(NSNotification *)noti
+{
+    WeakSelf
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSDictionary *body = (NSDictionary *)noti.object;
+        if (![weakSelf.deviceList containsObject:body]) {
+            [weakSelf.deviceList addObject:(NSDictionary *)noti.object];
+            [self->contentTBV reloadData];
+        }
+    });
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self fetchSSIDInfo];
+    [self getPhoneWifi];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
@@ -120,6 +132,10 @@
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [weakSelf.navigationController popToRootViewControllerAnimated:YES];
                     [[NSNotificationCenter defaultCenter] postNotificationName:noti_addDevice_KEY object:nil];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        // 添加设备成功，发送通知到到设备列表，提示用户去连接可使用wifi
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"addNewDevice_noti_key" object:deviceInfo];
+                    });
                 });
             }
         }];
@@ -139,19 +155,28 @@
 
 - (void)EnterForeground
 {
-    [self fetchSSIDInfo];
+    WeakSelf
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [weakSelf getPhoneWifi];
+    });
 }
 
-- (void)fetchSSIDInfo
+- (void)getPhoneWifi
 {
+    if (self.isSameRouter) {
+        [[KHJDeviceManager sharedManager] stopSearchDevice_with_resultBlock:^(NSInteger code) {
+            [[KHJDeviceManager sharedManager] startSearchDevice_with_resultBlock:^(NSInteger code) {}];
+        }];
+        return;
+    }
     NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();
     for (NSString *item in ifs) {
         NSDictionary *info = [NSDictionary dictionaryWithDictionary:(__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)item)];
         wifiName = info[@"SSID"];
         if (![wifiName hasPrefix:@"IPC_"]) {
-
+            
             UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"请前往手机设置界面,设置手机连接的wifi", nil) message:@""
-                                                                        preferredStyle:UIAlertControllerStyleAlert];
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel
                                                            handler:nil];
             WeakSelf
@@ -164,7 +189,12 @@
             [self presentViewController:alertview animated:YES completion:nil];
             
         }
-        CLog(@"wifiName ============ %@",wifiName);
+        else {
+            CLog(@"wifiName ============ %@",wifiName);
+            [[KHJDeviceManager sharedManager] stopSearchDevice_with_resultBlock:^(NSInteger code) {
+                [[KHJDeviceManager sharedManager] startSearchDevice_with_resultBlock:^(NSInteger code) {}];
+            }];
+        }
     }
 }
 

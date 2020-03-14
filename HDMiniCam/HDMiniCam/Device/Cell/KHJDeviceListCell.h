@@ -13,20 +13,19 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol KHJDeviceListCellDelegate <NSObject>
 
 - (void)gotoVideoWithIndex:(NSInteger)index;
-- (void)gotoSetupWithIndex:(NSInteger)index;
-- (void)reConnectWithIndex:(NSString *)deviceID;
+- (void)gotoSetupWithIndex:(NSString *)deviceID;
 
 @end
 
 @interface KHJDeviceListCell : KHJBaseCell
 
-@property (nonatomic, assign) BOOL connected;
-
 @property (weak, nonatomic) IBOutlet UIImageView *bigIMGV;
-@property (weak, nonatomic) IBOutlet UIImageView *smalIMGV;
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *status;
 @property (weak, nonatomic) IBOutlet UILabel *idd;
+
+@property (nonatomic, copy) NSString *deviceID;
+
 @property (nonatomic, weak) id<KHJDeviceListCellDelegate> delegate;
 
 @end

@@ -15,6 +15,15 @@
     // Initialization code
 }
 
+- (void)setDeviceID:(NSString *)deviceID
+{
+    _deviceID = deviceID;
+    NSString *path_document = NSHomeDirectory();
+    NSString *pString       = KHJString(@"/Documents/%@.png",deviceID);
+    NSString *imagePath     = [path_document stringByAppendingString:pString];
+    self.bigIMGV.image      = [UIImage imageWithContentsOfFile:imagePath];
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
@@ -27,16 +36,10 @@
     }
 }
 
-- (IBAction)btn2:(id)sender{
-    if (self.connected){
-        if (_delegate && [_delegate respondsToSelector:@selector(gotoSetupWithIndex:)]) {
-            [_delegate gotoSetupWithIndex:self.tag - FLAG_TAG];
-        }
-    }
-    else {
-        if (_delegate && [_delegate respondsToSelector:@selector(reConnectWithIndex:)]) {
-            [_delegate reConnectWithIndex:self.idd.text];
-        }
+- (IBAction)btn2:(id)sender
+{
+    if (_delegate && [_delegate respondsToSelector:@selector(gotoSetupWithIndex:)]) {
+        [_delegate gotoSetupWithIndex:self.deviceID];
     }
 }
 

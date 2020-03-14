@@ -138,6 +138,8 @@
         path = [[KHJHelpCameraData sharedModel] getTakeVideo_rebackPlay_DocPath_with_deviceID:self.info.deviceID];
     }
     NSString *dir   = KHJString(@"%@/%@",path,name);
+    cell.videoImgView.image = [self getScreenShotImageFromVideoPath:dir];
+    
     NSDictionary *infoDict = [self getFileInfo:dir];
     NSDate *start   = infoDict[NSFileCreationDate];
     NSDate *end     = infoDict[NSFileModificationDate];
@@ -156,6 +158,25 @@
         cell.videoTimeLab.text = KHJString(@"%02d:%02d", min, sec);
     }
     return cell;
+}
+
+
+/// 获取视频预览图
+/// @param filePath 视频路径
+- (UIImage *)getScreenShotImageFromVideoPath:(NSString *)filePath
+{
+    UIImage *shotImage;
+    NSURL *fileURL      = [NSURL fileURLWithPath:filePath];
+    AVURLAsset *asset   = [[AVURLAsset alloc] initWithURL:fileURL options:nil];
+    AVAssetImageGenerator *gen = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    gen.appliesPreferredTrackTransform = YES;
+    CMTime time = CMTimeMakeWithSeconds(0.0, 600);
+    NSError *error = nil;
+    CMTime actualTime;
+    CGImageRef image = [gen copyCGImageAtTime:time actualTime:&actualTime error:&error];
+    shotImage = [[UIImage alloc] initWithCGImage:image];
+    CGImageRelease(image);
+    return shotImage;
 }
 
 - (NSDictionary*)getFileInfo:(NSString *)path

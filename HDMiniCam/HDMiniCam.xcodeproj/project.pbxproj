@@ -128,10 +128,6 @@
 		AB30DA6023D1470F005BD2A1 /* KHJSearchDeviceVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB30DA5E23D1470F005BD2A1 /* KHJSearchDeviceVC.xib */; };
 		AB30DA6523D1482F005BD2A1 /* KHJSearchDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB30DA6323D1482F005BD2A1 /* KHJSearchDeviceCell.m */; };
 		AB30DA6623D1482F005BD2A1 /* KHJSearchDeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB30DA6423D1482F005BD2A1 /* KHJSearchDeviceCell.xib */; };
-		AB30DA6A23D14CDF005BD2A1 /* KHJMutliScreenVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB30DA6823D14CDF005BD2A1 /* KHJMutliScreenVC.m */; };
-		AB30DA6B23D14CDF005BD2A1 /* KHJMutliScreenVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB30DA6923D14CDF005BD2A1 /* KHJMutliScreenVC.xib */; };
-		AB30DA6F23D15C4D005BD2A1 /* KHJVideoPlayer_hp_VC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB30DA6D23D15C4D005BD2A1 /* KHJVideoPlayer_hp_VC.m */; };
-		AB30DA7023D15C4D005BD2A1 /* KHJVideoPlayer_hp_VC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB30DA6E23D15C4D005BD2A1 /* KHJVideoPlayer_hp_VC.xib */; };
 		AB30DA7523D163A4005BD2A1 /* KHJDeviceConfVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB30DA7323D163A4005BD2A1 /* KHJDeviceConfVC.m */; };
 		AB30DA7623D163A4005BD2A1 /* KHJDeviceConfVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB30DA7423D163A4005BD2A1 /* KHJDeviceConfVC.xib */; };
 		AB30DA7B23D164AE005BD2A1 /* KHJDeviceConfCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB30DA7923D164AE005BD2A1 /* KHJDeviceConfCell.m */; };
@@ -405,12 +401,6 @@
 		AB30DA6223D1482F005BD2A1 /* KHJSearchDeviceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJSearchDeviceCell.h; sourceTree = "<group>"; };
 		AB30DA6323D1482F005BD2A1 /* KHJSearchDeviceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJSearchDeviceCell.m; sourceTree = "<group>"; };
 		AB30DA6423D1482F005BD2A1 /* KHJSearchDeviceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJSearchDeviceCell.xib; sourceTree = "<group>"; };
-		AB30DA6723D14CDF005BD2A1 /* KHJMutliScreenVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJMutliScreenVC.h; sourceTree = "<group>"; };
-		AB30DA6823D14CDF005BD2A1 /* KHJMutliScreenVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJMutliScreenVC.m; sourceTree = "<group>"; };
-		AB30DA6923D14CDF005BD2A1 /* KHJMutliScreenVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJMutliScreenVC.xib; sourceTree = "<group>"; };
-		AB30DA6C23D15C4D005BD2A1 /* KHJVideoPlayer_hp_VC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJVideoPlayer_hp_VC.h; sourceTree = "<group>"; };
-		AB30DA6D23D15C4D005BD2A1 /* KHJVideoPlayer_hp_VC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJVideoPlayer_hp_VC.m; sourceTree = "<group>"; };
-		AB30DA6E23D15C4D005BD2A1 /* KHJVideoPlayer_hp_VC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJVideoPlayer_hp_VC.xib; sourceTree = "<group>"; };
 		AB30DA7223D163A4005BD2A1 /* KHJDeviceConfVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJDeviceConfVC.h; sourceTree = "<group>"; };
 		AB30DA7323D163A4005BD2A1 /* KHJDeviceConfVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJDeviceConfVC.m; sourceTree = "<group>"; };
 		AB30DA7423D163A4005BD2A1 /* KHJDeviceConfVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJDeviceConfVC.xib; sourceTree = "<group>"; };
@@ -893,9 +883,6 @@
 				AB5D784723F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.h */,
 				AB5D784823F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.mm */,
 				AB5D784923F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.xib */,
-				AB30DA6C23D15C4D005BD2A1 /* KHJVideoPlayer_hp_VC.h */,
-				AB30DA6D23D15C4D005BD2A1 /* KHJVideoPlayer_hp_VC.m */,
-				AB30DA6E23D15C4D005BD2A1 /* KHJVideoPlayer_hp_VC.xib */,
 				AB32D4AD23F4F476008AFD1F /* KHJVideoPlayer_hf_VC.h */,
 				AB32D4AE23F4F476008AFD1F /* KHJVideoPlayer_hf_VC.mm */,
 				AB32D4AF23F4F476008AFD1F /* KHJVideoPlayer_hf_VC.xib */,
@@ -911,9 +898,6 @@
 				AB5462F72416453900A096ED /* KHJMutilScreenVC_2.h */,
 				AB5462F82416453900A096ED /* KHJMutilScreenVC_2.m */,
 				AB5462F92416453900A096ED /* KHJMutilScreenVC_2.xib */,
-				AB30DA6723D14CDF005BD2A1 /* KHJMutliScreenVC.h */,
-				AB30DA6823D14CDF005BD2A1 /* KHJMutliScreenVC.m */,
-				AB30DA6923D14CDF005BD2A1 /* KHJMutliScreenVC.xib */,
 				AB30DA7123D16342005BD2A1 /* Config */,
 				AB30DA4723D060A2005BD2A1 /* Method */,
 			);
@@ -1265,7 +1249,6 @@
 				AB30DA6623D1482F005BD2A1 /* KHJSearchDeviceCell.xib in Resources */,
 				93A30C4D23D29889009A0F4C /* KHJWIFIConfigVC.xib in Resources */,
 				93C33B7623CE20B400B44E5F /* navi_back@2x.png in Resources */,
-				AB30DA7023D15C4D005BD2A1 /* KHJVideoPlayer_hp_VC.xib in Resources */,
 				AB20E60923CEBEE500D2861C /* KHJDeviceListVC.xib in Resources */,
 				93A30C5723D298B3009A0F4C /* KHJlampConfigVC.xib in Resources */,
 				93A30C6623D43378009A0F4C /* KHJWIFIConfigCell.xib in Resources */,
@@ -1276,7 +1259,6 @@
 				93C33B5123CE20B400B44E5F /* ZQAlterField.xib in Resources */,
 				93C33B7423CE20B400B44E5F /* TableViewArrow@2x.png in Resources */,
 				93C33B7723CE20B400B44E5F /* photo_original_def@2x.png in Resources */,
-				AB30DA6B23D14CDF005BD2A1 /* KHJMutliScreenVC.xib in Resources */,
 				93C33B7223CE20B400B44E5F /* photo_original_sel@2x.png in Resources */,
 				AB32D4B123F4F476008AFD1F /* KHJVideoPlayer_hf_VC.xib in Resources */,
 				AB597B4624027BC900F04F84 /* KHJBackPlayListCell.xib in Resources */,
@@ -1379,7 +1361,6 @@
 				AB30DA4523D05B0F005BD2A1 /* KHJAddDeviceListVC.m in Sources */,
 				AB5911DC23D0141A0060F05C /* KHJRecordListCell.m in Sources */,
 				AB764975240617A300D6DE1C /* KHJVideoPlayerBaseVC.mm in Sources */,
-				AB30DA6A23D14CDF005BD2A1 /* KHJMutliScreenVC.m in Sources */,
 				93C33B5A23CE20B400B44E5F /* KHJToast.m in Sources */,
 				93A30C5123D2989E009A0F4C /* KHJSDCardConfigVC.m in Sources */,
 				AB20E61A23CEBF4900D2861C /* KHJAlarmListVC.m in Sources */,
@@ -1468,7 +1449,6 @@
 				93C33A7323CE1D0800B44E5F /* CreateTwoCode.m in Sources */,
 				AB30DA5F23D1470F005BD2A1 /* KHJSearchDeviceVC.m in Sources */,
 				AB30DA6523D1482F005BD2A1 /* KHJSearchDeviceCell.m in Sources */,
-				AB30DA6F23D15C4D005BD2A1 /* KHJVideoPlayer_hp_VC.m in Sources */,
 				93A30C4C23D29889009A0F4C /* KHJWIFIConfigVC.m in Sources */,
 				93C33A4523CE1D0800B44E5F /* KHJNetWorkingManager.mm in Sources */,
 				93C33B6323CE20B400B44E5F /* TZAssetModel.m in Sources */,
@@ -1648,7 +1628,7 @@
 				CODE_SIGN_ENTITLEMENTS = HDMiniCam/HDMiniCam.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 5M2ZZVKCB5;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = HDMiniCam/PrefixHeader.pch;
@@ -1678,7 +1658,7 @@
 				CODE_SIGN_ENTITLEMENTS = HDMiniCam/HDMiniCam.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 5M2ZZVKCB5;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = HDMiniCam/PrefixHeader.pch;

@@ -300,13 +300,18 @@
     return  (inter * intervalValue)/(6.0*60.0);
 }
 
+- (void)updateTime:(NSTimeInterval)time
+{
+    currentInterval = time;
+    NSString *timeStr = [self currentShowTimeStr];
+    self->timeLab.text = timeStr;
+}
+
 //更新时间轴
 - (void)updateCurrentInterval:(NSTimeInterval)tTime
 {
-     currentInterval = tTime;
-     dispatch_async(dispatch_get_main_queue(), ^{
-        [self refresh];
-    });
+    currentInterval = tTime;
+    [self refresh];
 }
 
 //绘图
@@ -315,9 +320,9 @@
     //计算 x = 0时对应的时间戳
     float centerX = rect.size.width/2.0;
     /* 屏幕显示区域，最小的时间戳 */
-    NSTimeInterval leftInterval = currentInterval - centerX * [self secondsOfIntervalValue];
+    NSTimeInterval leftInterval = self->currentInterval - centerX * [self secondsOfIntervalValue];
     /* 屏幕显示区域，最大的世界戳 */
-    NSTimeInterval rightInterval = currentInterval + centerX * [self secondsOfIntervalValue];
+    NSTimeInterval rightInterval = self->currentInterval + centerX * [self secondsOfIntervalValue];
     if (leftInterval >= rightInterval) {
         return;
     }
@@ -325,10 +330,10 @@
     if (self.timesArr.count != 0) {
         //数组很大的时候，需要2分查找
         for (KHJVideoModel *tInfo in self.timesArr) {
-            
+
             NSTimeInterval start = tInfo.startTime;
             NSTimeInterval end = tInfo.startTime + tInfo.durationTime;
-            
+
             if ((start > leftInterval && start < rightInterval) ||
                 (end > leftInterval && end < rightInterval ) ||
                 (start < leftInterval && end > rightInterval) ) {
@@ -360,11 +365,11 @@
             }
         }
     }
-    
+
     //左边第一个刻度对应的x值和时间戳
     float x;
     NSTimeInterval interval;
-    if (scaleType == ScaleTypeBig) {
+    if (self->scaleType == ScaleTypeBig) {
         float a = leftInterval/(60.0*6.0);
         interval = (((int)a) + 1) * (60.0 * 6.0);
         x = (interval - leftInterval) / [self secondsOfIntervalValue];
@@ -378,7 +383,7 @@
     //画线
     while (x >= 0 && x <= rect.size.width) {
         int b;
-        if (scaleType == ScaleTypeBig) {
+        if (self->scaleType == ScaleTypeBig) {
             b = 60 * 6;
         }
         else {
@@ -394,17 +399,128 @@
             [self drawDownBigScale:x context:contex height:rect.size.height];
             [self drawText:x interval:interval context:contex height:rect.size.height];
         }
-        x = x + intervalValue;
+        x = x + self->intervalValue;
         interval = interval + b;
     }
 
-    [self drawCenterLine:rect.size.width/2 context:contex height:rect.size.height];//画中线，
-    //画上下底线
+    [self drawCenterLine:rect.size.width/2 context:contex height:rect.size.height];
     [self drawBottomLine:rect.size.height context:contex width:rect.size.width];
     [self drawTopLine:rect.size.height context:contex width:rect.size.width];
-    
+
     NSString *timeStr = [self currentShowTimeStr];
-    timeLab.text = timeStr;
+    self->timeLab.text = timeStr;
+
+//    WeakSelf
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//        //计算 x = 0时对应的时间戳
+//        float centerX = rect.size.width/2.0;
+//        /* 屏幕显示区域，最小的时间戳 */
+//        NSTimeInterval leftInterval = self->currentInterval - centerX * [weakSelf secondsOfIntervalValue];
+//        /* 屏幕显示区域，最大的世界戳 */
+//        NSTimeInterval rightInterval = self->currentInterval + centerX * [weakSelf secondsOfIntervalValue];
+//        if (leftInterval >= rightInterval) {
+//            return;
+//        }
+//        CGContextRef contex = UIGraphicsGetCurrentContext();
+//        if (weakSelf.timesArr.count != 0) {
+//            //数组很大的时候，需要2分查找
+//            for (KHJVideoModel *tInfo in weakSelf.timesArr) {
+//
+//                NSTimeInterval start = tInfo.startTime;
+//                NSTimeInterval end = tInfo.startTime + tInfo.durationTime;
+//
+//                if ((start > leftInterval && start < rightInterval) ||
+//                    (end > leftInterval && end < rightInterval ) ||
+//                    (start < leftInterval && end > rightInterval) ) {
+//                    //计算起始位置对应的x值
+//                    float startX = (start - leftInterval)/[weakSelf secondsOfIntervalValue];
+//                    //计算时间长度对应的宽度
+//                    float length = (end - start)/[weakSelf secondsOfIntervalValue] + 0.5;
+//                    if (tInfo.recType == 0 || tInfo.recType == 1) {//灰色
+//                        dispatch_async(dispatch_get_main_queue(), ^{
+//                            [weakSelf drawColorRect:startX Context:contex length:length withColor:UIColor.lightGrayColor];
+//                        });
+//                    }
+//                    else if(tInfo.recType == 2) {//2移动侦测
+//                        dispatch_async(dispatch_get_main_queue(), ^{
+//                            [weakSelf drawColorRect:startX Context:contex length:length withColor:UIColor.orangeColor];
+//                        });
+//                    }
+//                    else if(tInfo.recType == 4) {
+//                        //4是声音侦测
+//                        dispatch_async(dispatch_get_main_queue(), ^{
+//                            [weakSelf drawColorRect:startX Context:contex length:length withColor:KHJRGB(0x2a, 0xb9, 0xb7)];
+//                        });
+//                    }
+//                    else if(tInfo.recType ==6 ){
+//                        //6移动和声音
+//                        dispatch_async(dispatch_get_main_queue(), ^{
+//                            [weakSelf drawColorRect:startX Context:contex length:length withColor:UIColor.redColor];
+//                        });
+//                    }
+//                    else {
+//                        // 人脸人形检测（默认的报警类型）
+//                        dispatch_async(dispatch_get_main_queue(), ^{
+//                            [weakSelf drawColorRect:startX Context:contex length:length withColor:UIColor.orangeColor];
+//                        });
+//                    }
+//                }
+//                else {
+//    //                CLog(@"时间区域显示不正常！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
+//                }
+//            }
+//        }
+//
+//        //左边第一个刻度对应的x值和时间戳
+//        float x;
+//        NSTimeInterval interval;
+//        if (self->scaleType == ScaleTypeBig) {
+//            float a = leftInterval/(60.0*6.0);
+//            interval = (((int)a) + 1) * (60.0 * 6.0);
+//            x = (interval - leftInterval) / [self secondsOfIntervalValue];
+//        }
+//        else {
+//            float a = leftInterval/(60.0);
+//            interval = (((int)a) + 1) * (60.0);
+//            x = (interval - leftInterval) / [self secondsOfIntervalValue];
+//        }
+//
+//        //画线
+//        while (x >= 0 && x <= rect.size.width) {
+//            int b;
+//            if (self->scaleType == ScaleTypeBig) {
+//                b = 60 * 6;
+//            }
+//            else {
+//                b = 60;
+//            }
+//            int rem = ((int)interval) % (b * 5);
+//            if (rem != 0) {//小刻度
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    [weakSelf drawUpSmallScale:x context:contex height:rect.size.height];
+//                    [weakSelf drawDownSmallScale:x context:contex height:rect.size.height];
+//                });
+//            }
+//            else {//大刻度
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    [weakSelf drawUpBigScale:x context:contex height:rect.size.height];
+//                    [weakSelf drawDownBigScale:x context:contex height:rect.size.height];
+//                    [weakSelf drawText:x interval:interval context:contex height:rect.size.height];
+//                });
+//            }
+//            x = x + self->intervalValue;
+//            interval = interval + b;
+//        }
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [weakSelf drawCenterLine:rect.size.width/2 context:contex height:rect.size.height];
+//            [weakSelf drawBottomLine:rect.size.height context:contex width:rect.size.width];
+//            [weakSelf drawTopLine:rect.size.height context:contex width:rect.size.width];
+//        });
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            NSString *timeStr = [self currentShowTimeStr];
+//            self->timeLab.text = timeStr;
+//        });
+//    });
 }
 
 #pragma mark - 计算0点所在屏幕的位置
@@ -430,39 +546,66 @@
 
 - (void)drawUpSmallScale:(float)x context:(CGContextRef)context height:(float)height
 {
-    int mm = [self getLeftPointFromZero];
-    CGFloat ff = [self getNeedWidth];
+    int mm      = [self getLeftPointFromZero];
+    CGFloat ff  = [self getNeedWidth];
     
     if (x < mm || (int)x >= (int)ff) {
         return;
     }
-    // 创建一个新的空图形路径。
+    
     CGContextBeginPath(context);
     CGContextMoveToPoint(context, x-0.5, 17);
     CGContextAddLineToPoint(context, x-0.5, 27);
     CGContextSetLineWidth(context, 1.0);
     CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
     CGContextStrokePath(context);
+//    WeakSelf
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        int mm = [weakSelf getLeftPointFromZero];
+//        CGFloat ff = [weakSelf getNeedWidth];
+//
+//        if (x < mm || (int)x >= (int)ff) {
+//            return;
+//        }
+//
+//        CGContextBeginPath(context);
+//        CGContextMoveToPoint(context, x-0.5, 17);
+//        CGContextAddLineToPoint(context, x-0.5, 27);
+//        CGContextSetLineWidth(context, 1.0);
+//        CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
+//        CGContextStrokePath(context);
+//    });
 }
 
 - (void)drawDownSmallScale:(float)x context:(CGContextRef)context height:(float)height
 {
     int mm = [self getLeftPointFromZero];
     CGFloat ff = [self getNeedWidth];
-    
+
     if (x < mm || (int)x >= (int)ff) {
         return;
     }
-    // 创建一个新的空图形路径。
     CGContextBeginPath(context);
     CGContextMoveToPoint(context, x-0.5, CGRectGetHeight(self.frame) - 0.9);
     CGContextAddLineToPoint(context, x-0.5, CGRectGetHeight(self.frame) - 10.9);
-    // 设置图形的线宽
     CGContextSetLineWidth(context, 1.0);
-    // 设置图形描边颜色
     CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
-    // 根据当前路径，宽度及颜色绘制线
     CGContextStrokePath(context);
+//    WeakSelf
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        int mm = [weakSelf getLeftPointFromZero];
+//        CGFloat ff = [weakSelf getNeedWidth];
+//
+//        if (x < mm || (int)x >= (int)ff) {
+//            return;
+//        }
+//        CGContextBeginPath(context);
+//        CGContextMoveToPoint(context, x-0.5, CGRectGetHeight(self.frame) - 0.9);
+//        CGContextAddLineToPoint(context, x-0.5, CGRectGetHeight(self.frame) - 10.9);
+//        CGContextSetLineWidth(context, 1.0);
+//        CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
+//        CGContextStrokePath(context);
+//    });
 }
 
 #pragma mark --- 画大刻度
@@ -472,19 +615,30 @@
     int mm = [self getLeftPointFromZero];
     CGFloat ff = [self getNeedWidth];
 
-    if (x < mm || (int)x>(int)ff) {
+    if (x < mm || (int)x > (int)ff) {
         return;
     }
-    // 创建一个新的空图形路径。
     CGContextBeginPath(ctx);
     CGContextMoveToPoint(ctx, x-0.5, 17);
     CGContextAddLineToPoint(ctx, x-0.5, 35);
-    // 设置图形的线宽
     CGContextSetLineWidth(ctx, 1.0);
-    // 设置图形描边颜色
     CGContextSetStrokeColorWithColor(ctx, [UIColor grayColor].CGColor);
-    // 根据当前路径，宽度及颜色绘制线
     CGContextStrokePath(ctx);
+//    WeakSelf
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        int mm = [weakSelf getLeftPointFromZero];
+//        CGFloat ff = [weakSelf getNeedWidth];
+//
+//        if (x < mm || (int)x > (int)ff) {
+//            return;
+//        }
+//        CGContextBeginPath(ctx);
+//        CGContextMoveToPoint(ctx, x-0.5, 17);
+//        CGContextAddLineToPoint(ctx, x-0.5, 35);
+//        CGContextSetLineWidth(ctx, 1.0);
+//        CGContextSetStrokeColorWithColor(ctx, [UIColor grayColor].CGColor);
+//        CGContextStrokePath(ctx);
+//    });
 }
 
 - (void)drawDownBigScale:(float)x context:(CGContextRef)ctx height:(float)height
@@ -492,59 +646,68 @@
     int mm = [self getLeftPointFromZero];
     CGFloat ff = [self getNeedWidth];
     
-    if (x < mm || (int)x>(int)ff) {
+    if (x < mm || (int)x > (int)ff) {
         return;
     }
-    // 创建一个新的空图形路径。
+    
     CGContextBeginPath(ctx);
     CGContextMoveToPoint(ctx, x-0.5, height - 0.9 - 18);
     CGContextAddLineToPoint(ctx, x-0.5, height - 0.9);
-    // 设置图形的线宽
     CGContextSetLineWidth(ctx, 1.0);
-    // 设置图形描边颜色
     CGContextSetStrokeColorWithColor(ctx, [UIColor grayColor].CGColor);
-    // 根据当前路径，宽度及颜色绘制线
     CGContextStrokePath(ctx);
+//    WeakSelf
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        int mm = [weakSelf getLeftPointFromZero];
+//        CGFloat ff = [weakSelf getNeedWidth];
+//
+//        if (x < mm || (int)x > (int)ff) {
+//            return;
+//        }
+//
+//        CGContextBeginPath(ctx);
+//        CGContextMoveToPoint(ctx, x-0.5, height - 0.9 - 18);
+//        CGContextAddLineToPoint(ctx, x-0.5, height - 0.9);
+//        CGContextSetLineWidth(ctx, 1.0);
+//        CGContextSetStrokeColorWithColor(ctx, [UIColor grayColor].CGColor);
+//        CGContextStrokePath(ctx);
+//    });
 }
 
 #pragma mark --- 画中间线
 
 - (void)drawCenterLine:(float)x context:(CGContextRef)ctx height:(float)height
 {
-    // 创建一个新的空图形路径。
-    CGContextBeginPath(ctx);
-    CGContextMoveToPoint(ctx, x - 0.5, 17);
-    CGContextAddLineToPoint(ctx, x - 0.5, height - 0.9);
-    // 设置图形的线宽
-    CGContextSetLineWidth(ctx, 1.0);
-    // 设置图形描边颜色
-    CGContextSetStrokeColorWithColor(ctx, [UIColor redColor].CGColor);
-    // 根据当前路径，宽度及颜色绘制线
-    CGContextStrokePath(ctx);
+//    dispatch_async(dispatch_get_main_queue(), ^{
+        CGContextBeginPath(ctx);
+        CGContextMoveToPoint(ctx, x - 0.5, 17);
+        CGContextAddLineToPoint(ctx, x - 0.5, height - 0.9);
+        CGContextSetLineWidth(ctx, 1.0);
+        CGContextSetStrokeColorWithColor(ctx, [UIColor redColor].CGColor);
+        CGContextStrokePath(ctx);
 
-    // 上三角
-    CGContextRef upContext = UIGraphicsGetCurrentContext();
-    CGPoint sPoints[3];
-    sPoints[0] = CGPointMake(x - 5.0 - 0.5, 17);
-    sPoints[1] = CGPointMake(x + 5.0 - 0.5, 17);
-    sPoints[2] = CGPointMake(x - 0.5, 17 + 5.0);
-    
-    CGContextSetFillColorWithColor(upContext, [UIColor redColor].CGColor);//填充颜色
-    CGContextAddLines(upContext, sPoints, 3);//添加线
-    CGContextClosePath(upContext);//封起来
-    CGContextDrawPath(upContext, kCGPathFill);
-    
-    // 下三角
-    CGContextRef downContext = UIGraphicsGetCurrentContext();
-    CGPoint downPoints[3];
-    downPoints[0] = CGPointMake(x - 5.0 - 0.5, height - 0.9);
-    downPoints[1] = CGPointMake(x + 5.0 - 0.5, height - 0.9);
-    downPoints[2] = CGPointMake(x - 0.5, height - 0.9 - 5.0);
-    
-    CGContextSetFillColorWithColor(downContext, [UIColor redColor].CGColor);//填充颜色
-    CGContextAddLines(downContext, downPoints, 3);//添加线
-    CGContextClosePath(downContext);//封起来
-    CGContextDrawPath(downContext, kCGPathFill);
+        CGContextRef upContext = UIGraphicsGetCurrentContext();
+        CGPoint sPoints[3];
+        sPoints[0] = CGPointMake(x - 5.0 - 0.5, 17);
+        sPoints[1] = CGPointMake(x + 5.0 - 0.5, 17);
+        sPoints[2] = CGPointMake(x - 0.5, 17 + 5.0);
+        
+        CGContextSetFillColorWithColor(upContext, [UIColor redColor].CGColor);
+        CGContextAddLines(upContext, sPoints, 3);
+        CGContextClosePath(upContext);
+        CGContextDrawPath(upContext, kCGPathFill);
+        
+        CGContextRef downContext = UIGraphicsGetCurrentContext();
+        CGPoint downPoints[3];
+        downPoints[0] = CGPointMake(x - 5.0 - 0.5, height - 0.9);
+        downPoints[1] = CGPointMake(x + 5.0 - 0.5, height - 0.9);
+        downPoints[2] = CGPointMake(x - 0.5, height - 0.9 - 5.0);
+        
+        CGContextSetFillColorWithColor(downContext, [UIColor redColor].CGColor);
+        CGContextAddLines(downContext, downPoints, 3);
+        CGContextClosePath(downContext);
+        CGContextDrawPath(downContext, kCGPathFill);
+//    });
     
 }
 
@@ -579,62 +742,91 @@
 #pragma mark --- 画底部横线
 - (void)drawBottomLine:(float)y context:(CGContextRef)ctx width:(float)width
 {
-    int nn= [self  getRightPointFrom24];
+    int nn = [self getRightPointFrom24];
     int mm = [self getLeftPointFromZero];
-    // 创建一个新的空图形路径。
+
     CGContextBeginPath(ctx);
     CGContextMoveToPoint(ctx, mm, CGRectGetHeight(self.frame) - 0.9);
-    if(nn >=0){//右侧截断
+    if(nn >= 0) {
         CGContextAddLineToPoint(ctx, width, CGRectGetHeight(self.frame) - 0.9);
     }
     else {
         CGFloat ff = [self getNeedWidth];
         CGContextAddLineToPoint(ctx, ff, CGRectGetHeight(self.frame) - 0.9);
     }
-    // 设置图形的线宽
     CGContextSetLineWidth(ctx, 1.0);
-    // 设置图形描边颜色
     CGContextSetStrokeColorWithColor(ctx, [UIColor grayColor].CGColor);
-    // 根据当前路径，宽度及颜色绘制线
     CGContextStrokePath(ctx);
+//    WeakSelf
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        int nn = [weakSelf getRightPointFrom24];
+//        int mm = [weakSelf getLeftPointFromZero];
+//
+//        CGContextBeginPath(ctx);
+//        CGContextMoveToPoint(ctx, mm, CGRectGetHeight(weakSelf.frame) - 0.9);
+//        if(nn >= 0) {
+//            CGContextAddLineToPoint(ctx, width, CGRectGetHeight(weakSelf.frame) - 0.9);
+//        }
+//        else {
+//            CGFloat ff = [weakSelf getNeedWidth];
+//            CGContextAddLineToPoint(ctx, ff, CGRectGetHeight(weakSelf.frame) - 0.9);
+//        }
+//        CGContextSetLineWidth(ctx, 1.0);
+//        CGContextSetStrokeColorWithColor(ctx, [UIColor grayColor].CGColor);
+//        CGContextStrokePath(ctx);
+//    });
 }
 
 #pragma mark --- 画顶部横线
 - (void)drawTopLine:(float)y context:(CGContextRef)ctx width:(float)width
 {
-    int nn= [self  getRightPointFrom24];
+    int nn = [self getRightPointFrom24];
     int mm = [self getLeftPointFromZero];
-
-    // 创建一个新的空图形路径。
+    
     CGContextBeginPath(ctx);
     CGContextMoveToPoint(ctx, mm, 17);
     if (nn >= 0) {
-        //右侧截断
         CGContextAddLineToPoint(ctx, width, 17);
     }
     else {
         CGFloat ff = [self getNeedWidth];
         CGContextAddLineToPoint(ctx, ff, 17);
     }
-    // 设置图形的线宽
     CGContextSetLineWidth(ctx, 1.0);
-    // 设置图形描边颜色
     CGContextSetStrokeColorWithColor(ctx, [UIColor grayColor].CGColor);
-    // 根据当前路径，宽度及颜色绘制线
     CGContextStrokePath(ctx);
+//    WeakSelf
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        int nn = [weakSelf getRightPointFrom24];
+//        int mm = [weakSelf getLeftPointFromZero];
+//
+//        CGContextBeginPath(ctx);
+//        CGContextMoveToPoint(ctx, mm, 17);
+//        if (nn >= 0) {
+//            CGContextAddLineToPoint(ctx, width, 17);
+//        }
+//        else {
+//            CGFloat ff = [weakSelf getNeedWidth];
+//            CGContextAddLineToPoint(ctx, ff, 17);
+//        }
+//        CGContextSetLineWidth(ctx, 1.0);
+//        CGContextSetStrokeColorWithColor(ctx, [UIColor grayColor].CGColor);
+//        CGContextStrokePath(ctx);
+//    });
 }
 
 #pragma mark --> 在刻度上标记文本
+
 - (void)drawText:(float)x interval:(NSTimeInterval)interval context:(CGContextRef)ctx height:(float)height
 {
-    int mm = [self getLeftPointFromZero];
-    CGFloat ff = [self getNeedWidth];
+    int mm      = [self getLeftPointFromZero];
+    CGFloat ff  = [self getNeedWidth];
 
     if (x < mm || (int)x > (int)ff) {
         return;
     }
     NSString *text = nil;
-    if((int)x == (int)ff){
+    if ((int)x == (int)ff){
         text = @"23:59";
     }
     else {
@@ -643,9 +835,31 @@
     CGContextSetRGBFillColor(ctx, 1, 0, 0, 1);
     UIFont *font = [UIFont fontWithName:@"Helvetica Neue" size:12.f];
     NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc]init];
-    paragraph.alignment = NSTextAlignmentCenter;//居中
-    [text drawInRect:CGRectMake(x-17, height/2.0, 34, 12)
+    paragraph.alignment = NSTextAlignmentCenter;
+    [text drawInRect:CGRectMake(x - 17, height/2.0, 34, 12)
       withAttributes:@{NSFontAttributeName:font,NSForegroundColorAttributeName:[UIColor blueColor],NSParagraphStyleAttributeName:paragraph}];
+//    WeakSelf
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        int mm = [weakSelf getLeftPointFromZero];
+//        CGFloat ff = [weakSelf getNeedWidth];
+//
+//        if (x < mm || (int)x > (int)ff) {
+//            return;
+//        }
+//        NSString *text = nil;
+//        if ((int)x == (int)ff){
+//            text = @"23:59";
+//        }
+//        else {
+//            text = [weakSelf timeWithInterval:interval];
+//        }
+//        CGContextSetRGBFillColor(ctx, 1, 0, 0, 1);
+//        UIFont *font = [UIFont fontWithName:@"Helvetica Neue" size:12.f];
+//        NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc]init];
+//        paragraph.alignment = NSTextAlignmentCenter;
+//        [text drawInRect:CGRectMake(x - 17, height/2.0, 34, 12)
+//          withAttributes:@{NSFontAttributeName:font,NSForegroundColorAttributeName:[UIColor blueColor],NSParagraphStyleAttributeName:paragraph}];
+//    });
 }
 
 #pragma mark --- 时间戳转 显示的时刻文字
@@ -679,39 +893,49 @@
 #pragma mark --- 绿色色块
 - (void)drawColorRect:(float)x Context:(CGContextRef)ctx length:(float)length withColor:(UIColor *)mColor
 {
-    // 创建一个新的空图形路径。
     CGContextBeginPath(ctx);
     CGContextMoveToPoint(ctx, x, 17);
     CGContextAddLineToPoint(ctx, x+length, 17);
     CGContextAddLineToPoint(ctx, x+length,CGRectGetHeight(self.frame) - 0.9);
     CGContextAddLineToPoint(ctx, x, CGRectGetHeight(self.frame) - 0.9);
-    // 关闭并终止当前路径的子路径，并在当前点和子路径的起点之间追加一条线
     CGContextClosePath(ctx);
-    // 设置当前视图填充色(浅灰色)
     CGContextSetFillColorWithColor(ctx, mColor.CGColor);
-    // 绘制当前路径区域
     CGContextFillPath(ctx);
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        CGContextBeginPath(ctx);
+//        CGContextMoveToPoint(ctx, x, 17);
+//        CGContextAddLineToPoint(ctx, x+length, 17);
+//        CGContextAddLineToPoint(ctx, x+length,CGRectGetHeight(self.frame) - 0.9);
+//        CGContextAddLineToPoint(ctx, x, CGRectGetHeight(self.frame) - 0.9);
+//        CGContextClosePath(ctx);
+//        CGContextSetFillColorWithColor(ctx, mColor.CGColor);
+//        CGContextFillPath(ctx);
+//    });
 }
 
 #pragma mark --- 红色色块
 - (void)drawRedRect:(float)x Context:(CGContextRef)ctx length:(float)length
 {
-    // 创建一个新的空图形路径。
     CGContextBeginPath(ctx);
     CGFloat y = self.frame.size.height;
     CGContextMoveToPoint(ctx, x, 16);
     CGContextAddLineToPoint(ctx, x+length, 16);
     CGContextAddLineToPoint(ctx, x+length,y- 27.0);
     CGContextAddLineToPoint(ctx, x, y -27.0);
-    // 关闭并终止当前路径的子路径，并在当前点和子路径的起点之间追加一条线
     CGContextClosePath(ctx);
-    // 设置当前视图填充色(浅灰色)
-    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:233.0/255.0
-                                                        green:64.0/255.0
-                                                         blue:73.0/255.0
-                                                        alpha:1.0].CGColor);
-    // 绘制当前路径区域
+    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:233.0/255.0 green:64.0/255.0 blue:73.0/255.0 alpha:1.0].CGColor);
     CGContextFillPath(ctx);
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        CGContextBeginPath(ctx);
+//        CGFloat y = self.frame.size.height;
+//        CGContextMoveToPoint(ctx, x, 16);
+//        CGContextAddLineToPoint(ctx, x+length, 16);
+//        CGContextAddLineToPoint(ctx, x+length,y- 27.0);
+//        CGContextAddLineToPoint(ctx, x, y -27.0);
+//        CGContextClosePath(ctx);
+//        CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:233.0/255.0 green:64.0/255.0 blue:73.0/255.0 alpha:1.0].CGColor);
+//        CGContextFillPath(ctx);
+//    });
 }
 
 @end

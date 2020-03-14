@@ -57,7 +57,8 @@
     NSMutableArray *tempA = [NSMutableArray array];
     for (id st  in tFiles) {
         if ([st isKindOfClass:[NSString class]]){
-            if ([st containsString:@".png"] || [st containsString:@".mp4"] ||[st containsString:@".jpg"]) {
+//            if ([st containsString:@".png"] || [st containsString:@".mp4"] ||[st containsString:@".jpg"]) {
+            if ([st containsString:@".jpg"]) {
                 [tempA addObject:st];
             }
         }
@@ -87,6 +88,32 @@
         [fileManager createDirectoryAtPath:picPath withIntermediateDirectories:YES attributes:nil error:nil];  // 创建路径
     }
     return picPath;
+}
+
+/// 视频每日最后一张截图保存的文件夹路径
+/// @param deviceID 设备id
+- (NSString *)get_screenShot_DocPath_deviceID:(NSString *)deviceID 
+{
+    NSString *screenShotPath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Date_ScreenShot/%@",deviceID]];
+    BOOL isDir = NO;
+    BOOL existed = [fileManager fileExistsAtPath:screenShotPath isDirectory:&isDir];
+    if (!(isDir == YES && existed == YES)) {
+        [fileManager createDirectoryAtPath:screenShotPath withIntermediateDirectories:YES attributes:nil error:nil];  // 创建路径
+    }
+    return screenShotPath;
+}
+
+/// 视频每日录屏的截图保存的文件夹路径
+/// @param deviceID 设备id
+- (NSString *)get_recordVideo_screenShot_DocPath_deviceID:(NSString *)deviceID
+{
+    NSString *screenShotPath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Date_ScreenShot/%@/recordScreenShot",deviceID]];
+    BOOL isDir = NO;
+    BOOL existed = [fileManager fileExistsAtPath:screenShotPath isDirectory:&isDir];
+    if (!(isDir == YES && existed == YES)) {
+        [fileManager createDirectoryAtPath:screenShotPath withIntermediateDirectories:YES attributes:nil error:nil];  // 创建路径
+    }
+    return screenShotPath;
 }
 
 #pragma mark - 获取视频文件夹路径 NSFileManager

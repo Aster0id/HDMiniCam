@@ -7,12 +7,19 @@
 //
 
 #import "KHJRecordListCell_Two.h"
+#import "KHJHelpCameraData.h"
 
 @implementation KHJRecordListCell_Two
 
-- (void)awakeFromNib {
+- (void)awakeFromNib
+{
     [super awakeFromNib];
-    // Initialization code
+}
+
+- (void)setDeviceID:(NSString *)deviceID
+{
+    NSString *imagePath     = [[[KHJHelpCameraData sharedModel] get_screenShot_DocPath_deviceID:deviceID] stringByAppendingPathComponent:KHJString(@"%@.png",self.date)];
+    self.picImgView.image   = [UIImage imageWithContentsOfFile:imagePath];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

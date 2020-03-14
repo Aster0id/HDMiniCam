@@ -11,6 +11,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KHJWIFIConfigVC">
             <connections>
                 <outlet property="contentTBV" destination="uIk-bd-2vM" id="DVT-or-7fN"/>
+                <outlet property="topView" destination="KkA-dU-BF7" id="98B-ao-8S5"/>
+                <outlet property="topViewCH" destination="3cD-uQ-mxo" id="PHb-R4-FsL"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="wifiName" destination="Eaj-gO-vyb" id="jQX-RF-Ycz"/>
             </connections>

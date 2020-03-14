@@ -10,11 +10,14 @@
 #import "KHJWIFIConfigCell.h"
 #import "ZQAlterField.h"
 #import "KHJDeviceManager.h"
+#import <SystemConfiguration/CaptiveNetwork.h>
 
 @interface KHJWIFIConfigVC ()<UITableViewDelegate, UITableViewDataSource>
 {
     NSArray *wifiListArr;
     UIView *back_groundView;
+    __weak IBOutlet UIView *topView;
+    __weak IBOutlet NSLayoutConstraint *topViewCH;
     __weak IBOutlet UILabel *wifiName;
     __weak IBOutlet UITableView *contentTBV;
 }
@@ -28,8 +31,31 @@
     [super viewDidLoad];
     self.titleLab.text = KHJLocalizedString(@"wifi设置", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
-    [[KHJDeviceManager sharedManager] getDeviceWiFi_with_deviceID:self.deviceInfo.deviceID resultBlock:^(NSInteger code) {}];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OnGetDeviceWiFi_CmdResult:) name:noti_OnGetDeviceWiFi_CmdResult_KEY object:nil];
+    [[KHJDeviceManager sharedManager] getDeviceWiFi_with_deviceID:self.deviceInfo.deviceID
+                                                      resultBlock:^(NSInteger code) {}];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(OnGetDeviceWiFi_CmdResult:)
+                                                 name:noti_OnGetDeviceWiFi_CmdResult_KEY
+                                               object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self getPhoneWifi];
+}
+
+- (void)getPhoneWifi
+{
+    NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();
+    for (NSString *item in ifs) {
+        NSDictionary *info = [NSDictionary dictionaryWithDictionary:(__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)item)];
+        NSString *wifiName = info[@"SSID"];
+        if ([wifiName hasPrefix:@"IPC_"]) {
+            topView.hidden = YES;
+            topViewCH.constant = 0;
+        }
+    }
 }
 
 - (void)OnGetDeviceWiFi_CmdResult:(NSNotification *)noti

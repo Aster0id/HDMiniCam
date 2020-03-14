@@ -7,9 +7,7 @@
 //
 
 #import "KHJVideoPlayer_sp_VC.h"
-#import "KHJVideoPlayer_hp_VC.h"
 #import "KHJVideoPlayer_hf_VC.h"
-#import "KHJMutliScreenVC.h"
 #import "KHJDeviceManager.h"
 //
 #import "JSONStructProtocal.h"
@@ -345,7 +343,11 @@ extern XBAudioUnitRecorder *audioRecorder;
 - (IBAction)topBtn:(UIButton *)sender
 {
     if (sender.tag == 10) {
+        [self saveImage];
         [self.navigationController popViewControllerAnimated:YES];
+        if (_delegate && [_delegate respondsToSelector:@selector(loadCellPic:)]) {
+            [_delegate loadCellPic:self.row];
+        }
     }
     else if (sender.tag == 20) {
         // 上下控制
@@ -670,7 +672,6 @@ extern XBAudioUnitRecorder *audioRecorder;
 {
     recordTimeView.hidden = NO;
     [self fireTimer];
-    
     // 直播录屏，截取数据
     liveRecordType = KHJLiveRecordType_Recording;
     liveRecordVideoPath = [[[KHJHelpCameraData sharedModel] getTakeVideoDocPath_with_deviceID:self.deviceID] stringByAppendingPathComponent:[[KHJHelpCameraData sharedModel] getVideoNameWithType:@"mp4" deviceID:self.deviceID]];
@@ -768,7 +769,7 @@ extern XBAudioUnitRecorder *audioRecorder;
     if (is) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadPictureVC_noti" object:nil];
         [self loadImageFinished:[[UIImage alloc] initWithContentsOfFile:savedImagePath]];
-        [[KHJHub shareHub] showText:KHJLocalizedString(@"PhotoSuccess", nil) addToView:self.view];
+//        [[KHJHub shareHub] showText:KHJLocalizedString(@"PhotoSuccess", nil) addToView:self.view];
     }
     else {
         [[KHJHub shareHub] showText:KHJLocalizedString(@"PhotoFail", nil) addToView:self.view];
@@ -837,5 +838,57 @@ extern XBAudioUnitRecorder *audioRecorder;
     }
 }
 
+#pragma mark - 截图
+
+- (void)saveImage
+{
+    UIImage *screenImage = [self screenshot_imageView:playerImageView];
+    NSString *path_document = NSHomeDirectory();
+    NSString *pString = [NSString stringWithFormat:@"/Documents/%@.png",self.deviceInfo.deviceID];
+    NSString *imagePath = [path_document stringByAppendingString:pString];
+    //把图片直接保存到指定的路径（同时应该把图片的路径imagePath存起来，下次就可以直接用来取）
+    [UIImagePNGRepresentation(screenImage) writeToFile:imagePath atomically:YES];
+    
+    #pragma  mark - 获取当天的日期：年/月/日
+    NSDate *today = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSCalendarUnit unit = kCFCalendarUnitYear|kCFCalendarUnitMonth|kCFCalendarUnitDay;
+    NSDateComponents *components = [calendar components:unit fromDate:today];
+    NSString *year = KHJString(@"%ld", (long)[components year]);
+    NSString *month = KHJString(@"%02ld", (long)[components month]);
+    NSString *day = KHJString(@"%02ld", (long)[components day]);
+    NSString *imagePath1 = [[[KHJHelpCameraData sharedModel] get_screenShot_DocPath_deviceID:self.deviceInfo.deviceID] stringByAppendingPathComponent:KHJString(@"%@%@%@.png",year,month,day)];
+    [UIImagePNGRepresentation(screenImage) writeToFile:imagePath1 atomically:YES];
+}
+
+- (UIImage *)screenshot_imageView:(UIImageView *)imageView
+{
+    UIGraphicsBeginImageContextWithOptions(imageView.bounds.size,YES,[UIScreen mainScreen].scale);
+    [imageView drawViewHierarchyInRect:imageView.bounds afterScreenUpdates:NO];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
+- (NSDictionary *)getTodayDate
+{
+    NSDate *today = [NSDate date];
+    /* 日历类 */
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    /* 日历构成的格式 */
+    NSCalendarUnit unit = kCFCalendarUnitYear|kCFCalendarUnitMonth|kCFCalendarUnitDay;
+    /* 获取对应的时间点 */
+    NSDateComponents *components = [calendar components:unit fromDate:today];
+    
+    NSString *year = [NSString stringWithFormat:@"%ld", (long)[components year]];
+    NSString *month = [NSString stringWithFormat:@"%02ld", (long)[components month]];
+    NSString *day = [NSString stringWithFormat:@"%02ld", (long)[components day]];
+    
+    NSMutableDictionary *todayDic = [[NSMutableDictionary alloc] init];
+    [todayDic setObject:year forKey:@"year"];
+    [todayDic setObject:month forKey:@"month"];
+    [todayDic setObject:day forKey:@"day"];
+    return todayDic;
+}
 
 @end

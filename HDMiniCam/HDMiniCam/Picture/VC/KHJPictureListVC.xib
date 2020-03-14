@@ -77,20 +77,18 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chooseDevice" translatesAutoresizingMaskIntoConstraints="NO" id="7rG-MF-gKG">
-                            <rect key="frame" x="327.5" y="4.5" width="35" height="35"/>
+                        <button hidden="YES" opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vh8-Y6-DTl" userLabel="add">
+                            <rect key="frame" x="315" y="4" width="60" height="40"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="35" id="2Le-ET-m6D"/>
-                                <constraint firstAttribute="width" constant="35" id="bQF-78-oPq"/>
-                            </constraints>
-                        </imageView>
-                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vh8-Y6-DTl" userLabel="add">
-                            <rect key="frame" x="315" y="0.0" width="60" height="44"/>
-                            <constraints>
-                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="SCl-3Q-Ufh"/>
                                 <constraint firstAttribute="width" constant="60" id="V6y-IE-oom"/>
-                                <constraint firstAttribute="height" constant="44" id="sSt-Pf-6zX"/>
+                                <constraint firstAttribute="height" constant="40" id="sSt-Pf-6zX"/>
                             </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="分享">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
                             <connections>
                                 <action selector="chooseDevice:" destination="-1" eventType="touchUpInside" id="wnb-h4-zeL"/>
                             </connections>
@@ -109,8 +107,6 @@
                         <constraint firstAttribute="trailing" secondItem="vh8-Y6-DTl" secondAttribute="trailing" id="OwS-BU-ek7"/>
                         <constraint firstItem="vQh-P0-G0o" firstAttribute="centerY" secondItem="jL3-TR-BEf" secondAttribute="centerY" id="Pes-Ig-Af0"/>
                         <constraint firstAttribute="height" constant="44" id="dHs-rZ-NGa"/>
-                        <constraint firstItem="vh8-Y6-DTl" firstAttribute="centerX" secondItem="7rG-MF-gKG" secondAttribute="centerX" id="f9z-tx-iqB"/>
-                        <constraint firstItem="vh8-Y6-DTl" firstAttribute="centerY" secondItem="7rG-MF-gKG" secondAttribute="centerY" id="hnm-jw-9uy"/>
                         <constraint firstAttribute="trailing" secondItem="dIA-5I-IXe" secondAttribute="trailing" id="jlx-Kk-wcs"/>
                         <constraint firstItem="vQh-P0-G0o" firstAttribute="centerX" secondItem="jL3-TR-BEf" secondAttribute="centerX" id="vto-Y0-O6V"/>
                         <constraint firstAttribute="bottom" secondItem="dIA-5I-IXe" secondAttribute="bottom" id="wB7-P0-pyf"/>
@@ -184,7 +180,6 @@
         </view>
     </objects>
     <resources>
-        <image name="chooseDevice" width="64" height="64"/>
         <image name="deletePic_white_ai360" width="44" height="44"/>
     </resources>
 </document>
