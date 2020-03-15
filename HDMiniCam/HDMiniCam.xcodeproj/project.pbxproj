@@ -1628,8 +1628,8 @@
 				CODE_SIGN_ENTITLEMENTS = HDMiniCam/HDMiniCam.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
-				DEVELOPMENT_TEAM = 5M2ZZVKCB5;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VNCC3G6TV4;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = HDMiniCam/PrefixHeader.pch;
 				INFOPLIST_FILE = HDMiniCam/Info.plist;
@@ -1642,7 +1642,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/HDMiniCam/SDK/libs",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.khj.HDMiniCam;
+				PRODUCT_BUNDLE_IDENTIFIER = com.khj.HDCamView;
 				PRODUCT_NAME = HDCamView;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1658,8 +1658,8 @@
 				CODE_SIGN_ENTITLEMENTS = HDMiniCam/HDMiniCam.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
-				DEVELOPMENT_TEAM = 5M2ZZVKCB5;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VNCC3G6TV4;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = HDMiniCam/PrefixHeader.pch;
 				INFOPLIST_FILE = HDMiniCam/Info.plist;
@@ -1672,7 +1672,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/HDMiniCam/SDK/libs",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.khj.HDMiniCam;
+				PRODUCT_BUNDLE_IDENTIFIER = com.khj.HDCamView;
 				PRODUCT_NAME = HDCamView;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
