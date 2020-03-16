@@ -11,6 +11,9 @@
 #import "ZFTimeLine.h"
 #import "NSDate+JLZero.h"
 #import "KHJBackPlayListVC.h"
+// 
+#import "TuyaTimeLineModel.h"
+#import "TYCameraTimeLineScrollView.h"
 //
 #import "JKUIPickDate.h"
 #import "KHJVideoModel.h"
@@ -21,7 +24,11 @@ typedef void(^runloopBlock)(void);
 // 当前解码类型
 extern IPCNetRecordCfg_st recordCfg;
 
-@interface KHJVideoPlayer_hf_VC ()<ZFTimeLineDelegate,KHJBackPlayListVCSaveListDelegate,H26xHwDecoderDelegate>
+@interface KHJVideoPlayer_hf_VC ()
+<ZFTimeLineDelegate,
+KHJBackPlayListVCSaveListDelegate,
+H26xHwDecoderDelegate,
+TYCameraTimeLineScrollViewDelegate>
 {
     __weak IBOutlet UILabel *nameLab;
     __weak IBOutlet UIView *reconnectView;
@@ -66,6 +73,7 @@ extern IPCNetRecordCfg_st recordCfg;
 @property (nonatomic, strong) NSMutableArray *videoList;
 
 @property (nonatomic, copy) ZFTimeLine *zfTimeView;
+@property (nonatomic, strong) TYCameraTimeLineScrollView *timeLineView;
 
 @end
 
@@ -97,6 +105,17 @@ extern IPCNetRecordCfg_st recordCfg;
     return _zfTimeView;
 }
 
+- (TYCameraTimeLineScrollView *)timeLineView
+{
+    if (_timeLineView == nil) {
+        _timeLineView = [[TYCameraTimeLineScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 80)];
+        _timeLineView.delegate = self;
+        _timeLineView.spacePerUnit = 100;
+        _timeLineView.showShortLine = YES;
+    }
+    return _timeLineView;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -113,7 +132,8 @@ extern IPCNetRecordCfg_st recordCfg;
     h264Decode = [[H26xHwDecoder alloc] init];
     h264Decode.delegate = self;
     
-    [timeLineContent addSubview:self.zfTimeView];
+//    [timeLineContent addSubview:self.zfTimeView];
+    [timeLineContent addSubview:self.timeLineView];
     NSDate *date = [NSDate date];
     self.currentTimeInterval = [date timeIntervalSince1970];
     self.todayTimeInterval = [NSDate getZeroWithTimeInterverl:self.currentTimeInterval];
@@ -170,10 +190,14 @@ extern IPCNetRecordCfg_st recordCfg;
                 [weakSelf.videoList addObject:model];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-                weakSelf.zfTimeView.timesArr = weakSelf.videoList;
+                
+                CLog(@"weakSelf.videoList = %@",weakSelf.videoList);
                 CLog(@"currentTimeInterval ==================================================================== %f",weakSelf.currentTimeInterval);
-
-                [weakSelf.zfTimeView updateCurrentInterval:weakSelf.currentTimeInterval];
+                
+//                weakSelf.zfTimeView.timesArr = weakSelf.videoList;
+//                CLog(@"currentTimeInterval ==================================================================== %f",weakSelf.currentTimeInterval);
+//
+//                [weakSelf.zfTimeView updateCurrentInterval:weakSelf.currentTimeInterval];
             });
         });
     }];
@@ -447,7 +471,7 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
                                 length:(int)length
                             timeStamps:(long)timeStamps
 {
-    [self.zfTimeView updateTime:timeStamps/1000 + self.zeroTimeInterval];
+//    [self.zfTimeView updateTime:timeStamps/1000 + self.zeroTimeInterval];
 //    [self.zfTimeView updateCurrentInterval:timeStamps/1000 + self.zeroTimeInterval];
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [self->h264Decode decodeH26xVideoData:data videoSize:length frameType:dataType timestamp:timeStamps];
@@ -566,5 +590,69 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
     }
 }
 
+#pragma mark - TYCameraTimeLineScrollViewDelegate
+
+- (void)timeLineViewWillBeginDraging:(TYCameraTimeLineScrollView *)timeLineView
+{
+//    [self.tuyaCamera stopPlayback];
+//    CLog(@"开始拖拽 ============================= %f",timeLineView.currentTime);
+}
+
+- (void)timeLineViewDidEndDraging:(TYCameraTimeLineScrollView *)timeLineView
+{
+//    CLog(@"结束拖拽 currentTime ================= %f",timeLineView.currentTime);
+//    if (!indicatorView.animating) {
+//        indicatorView.hidden = NO;
+//        [indicatorView startAnimating];
+//    }
+}
+
+- (void)timeLineView:(TYCameraTimeLineScrollView *)timeLineView didEndScrollingAtTime:(NSTimeInterval)timeInterval
+            inSource:(id<TYCameraTimeLineViewSource>)source
+{
+//    CLog(@"didEndScrollingAtTime timeInterval = %f",timeInterval);
+//    self.currentTimeInterval = _zeroTimeInterval + timeInterval;
+//
+//    NSDictionary *dict          = self.dictArr[self.index];
+//    NSInteger currentEndTime    = [dict[@"endTime"] integerValue] - _zoreTimeStamp;
+//    if (_currentTimeStamp < currentEndTime) {
+//        [self dragPlayRebackVideo:dict currentTime:_currentTimeStamp index:self.index];
+//    }
+//    else {
+//
+//        WeakSelf
+//        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//
+//            BOOL canPlay = NO;
+//            for (int i = 0; i < weakSelf.dictArr.count; i++) {
+//
+//                NSDictionary *dict          = weakSelf.dictArr[i];
+//                NSInteger startTimeStamp    = [dict[@"startTime"] integerValue];
+//                NSInteger endTimeStamp      = [dict[@"endTime"] integerValue];
+//
+//                if (weakSelf.currentTimeStamp < endTimeStamp && weakSelf.currentTimeStamp > startTimeStamp) {
+//                    canPlay = YES;
+//                    CLog(@"正在播放，第%d段视频",i);
+//                    [weakSelf dragPlayRebackVideo:dict currentTime:weakSelf.currentTimeStamp index:(NSInteger)i];
+//                    break;
+//                }
+//            }
+//
+//            if (!canPlay) {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//
+//                    if (self->indicatorView.animating) {
+//                        self->indicatorView.hidden = YES;
+//                        [self->indicatorView stopAnimating];
+//                    }
+//                    [weakSelf enableAllControl:NO];
+//                    [weakSelf.tuyaCamera.videoView tuya_clear];
+//                    [weakSelf.view makeToast:KHJLocalizedString(@"TuyaNoVideoPlay", nil)];
+//
+//                });
+//            }
+//        });
+//    }
+}
 
 @end
