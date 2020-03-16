@@ -13,7 +13,7 @@
 #import "KHJBackPlayListVC.h"
 // 
 #import "TuyaTimeLineModel.h"
-#import "TYCameraTimeLineScrollView.h"
+#import "TYCameraTimeLineScrollView_old.h"
 //
 #import "JKUIPickDate.h"
 #import "KHJVideoModel.h"
@@ -28,7 +28,7 @@ extern IPCNetRecordCfg_st recordCfg;
 <ZFTimeLineDelegate,
 KHJBackPlayListVCSaveListDelegate,
 H26xHwDecoderDelegate,
-TYCameraTimeLineScrollViewDelegate>
+TYCameraTimeLineScrollView_oldDelegate>
 {
     __weak IBOutlet UILabel *nameLab;
     __weak IBOutlet UIView *reconnectView;
@@ -73,7 +73,7 @@ TYCameraTimeLineScrollViewDelegate>
 @property (nonatomic, strong) NSMutableArray *videoList;
 
 @property (nonatomic, copy) ZFTimeLine *zfTimeView;
-@property (nonatomic, strong) TYCameraTimeLineScrollView *timeLineView;
+@property (nonatomic, strong) TYCameraTimeLineScrollView_old *timeLineView;
 
 @end
 
@@ -105,10 +105,10 @@ TYCameraTimeLineScrollViewDelegate>
     return _zfTimeView;
 }
 
-- (TYCameraTimeLineScrollView *)timeLineView
+- (TYCameraTimeLineScrollView_old *)timeLineView
 {
     if (_timeLineView == nil) {
-        _timeLineView = [[TYCameraTimeLineScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 80)];
+        _timeLineView = [[TYCameraTimeLineScrollView_old alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 80)];
         _timeLineView.delegate = self;
         _timeLineView.spacePerUnit = 100;
         _timeLineView.showShortLine = YES;
@@ -132,8 +132,8 @@ TYCameraTimeLineScrollViewDelegate>
     h264Decode = [[H26xHwDecoder alloc] init];
     h264Decode.delegate = self;
     
-//    [timeLineContent addSubview:self.zfTimeView];
-    [timeLineContent addSubview:self.timeLineView];
+    [timeLineContent addSubview:self.zfTimeView];
+//    [timeLineContent addSubview:self.timeLineView];
     NSDate *date = [NSDate date];
     self.currentTimeInterval = [date timeIntervalSince1970];
     self.todayTimeInterval = [NSDate getZeroWithTimeInterverl:self.currentTimeInterval];
@@ -164,38 +164,80 @@ TYCameraTimeLineScrollViewDelegate>
                 int type                = [body[@"type"] intValue];
                 NSString *startString   = KHJString(@"%06d",[body[@"start"] intValue]);
                 NSString *endString     = KHJString(@"%06d",[body[@"end"] intValue]);
+
                 int startHour   = [[startString substringWithRange:NSMakeRange(0, 2)] intValue];
                 int startMin    = [[startString substringWithRange:NSMakeRange(2, 2)] intValue];
                 int startSec    = [[startString substringWithRange:NSMakeRange(4, 2)] intValue];
                 int startTimeInterval   = startHour * 3600 + startMin * 60 + startSec;
+
                 int endHour = [[endString substringWithRange:NSMakeRange(0, 2)] intValue];
                 int endMin  = [[endString substringWithRange:NSMakeRange(2, 2)] intValue];
                 int endSec  = [[endString substringWithRange:NSMakeRange(4, 2)] intValue];
                 int endTimeInterval = endHour * 3600 + endMin * 60 + endSec;
 
-                TuyaTimeLineModel *tuyaModel = [[TuyaTimeLineModel alloc] init];
-                tuyaModel.startTime = startTimeInterval + weakSelf.zeroTimeInterval;
-                tuyaModel.endTime = endTimeInterval + weakSelf.zeroTimeInterval;
-                tuyaModel.startDate = [KHJCalculate getYearFromUTC:tuyaModel.startTime];
-                tuyaModel.endDate = [KHJCalculate getYearFromUTC:tuyaModel.endTime];
+                KHJVideoModel *model = [[KHJVideoModel alloc] init];
+                model.startTime = startTimeInterval + weakSelf.zeroTimeInterval; // 起始时间
+                model.durationTime = endTimeInterval - startTimeInterval;// 视频时长
                 if (type == 0) {        // 正常录制
-                    tuyaModel.recType = 0;
+                    model.recType = 0;
                 }
                 else if (type == 1) {   // 移动检测录制
-                    tuyaModel.recType = 2;
+                    model.recType = 2;
                 }
                 else if (type == 3) {   // 声音检测录制
-                    tuyaModel.recType = 4;
+                    model.recType = 4;
                 }
-                [weakSelf.videoList addObject:tuyaModel];
+                [weakSelf.videoList addObject:model];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-                weakSelf.timeLineView.sourceModels = weakSelf.videoList;
-                weakSelf.timeLineView.zeroTime = weakSelf.zeroTimeInterval;
-                weakSelf.timeLineView.currentTime = weakSelf.currentTimeInterval - weakSelf.zeroTimeInterval;
+                weakSelf.zfTimeView.timesArr = weakSelf.videoList;
+                CLog(@"currentTimeInterval ==================================================================== %f",weakSelf.currentTimeInterval);
+
+                [weakSelf.zfTimeView updateCurrentInterval:weakSelf.currentTimeInterval];
             });
         });
     }];
+//    [self addMP4_tasks:^{
+//        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//            NSArray *backPlayList = [NSArray arrayWithArray:(NSArray *)noti.object];
+//
+//            for (int i = 0; i < backPlayList.count; i++) {
+//                NSDictionary *body = backPlayList[i];
+//                int type                = [body[@"type"] intValue];
+//                NSString *startString   = KHJString(@"%06d",[body[@"start"] intValue]);
+//                NSString *endString     = KHJString(@"%06d",[body[@"end"] intValue]);
+//                int startHour   = [[startString substringWithRange:NSMakeRange(0, 2)] intValue];
+//                int startMin    = [[startString substringWithRange:NSMakeRange(2, 2)] intValue];
+//                int startSec    = [[startString substringWithRange:NSMakeRange(4, 2)] intValue];
+//                int startTimeInterval   = startHour * 3600 + startMin * 60 + startSec;
+//                int endHour = [[endString substringWithRange:NSMakeRange(0, 2)] intValue];
+//                int endMin  = [[endString substringWithRange:NSMakeRange(2, 2)] intValue];
+//                int endSec  = [[endString substringWithRange:NSMakeRange(4, 2)] intValue];
+//                int endTimeInterval = endHour * 3600 + endMin * 60 + endSec;
+//
+//                TuyaTimeLineModel *tuyaModel = [[TuyaTimeLineModel alloc] init];
+//                tuyaModel.startTime = startTimeInterval + weakSelf.zeroTimeInterval;
+//                tuyaModel.endTime = endTimeInterval + weakSelf.zeroTimeInterval;
+//                tuyaModel.startDate = [KHJCalculate getYearFromUTC:tuyaModel.startTime];
+//                tuyaModel.endDate = [KHJCalculate getYearFromUTC:tuyaModel.endTime];
+//                if (type == 0) {        // 正常录制
+//                    tuyaModel.recType = 0;
+//                }
+//                else if (type == 1) {   // 移动检测录制
+//                    tuyaModel.recType = 2;
+//                }
+//                else if (type == 3) {   // 声音检测录制
+//                    tuyaModel.recType = 4;
+//                }
+//                [weakSelf.videoList addObject:tuyaModel];
+//            }
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                weakSelf.timeLineView.sourceModels = weakSelf.videoList;
+//                weakSelf.timeLineView.zeroTime = weakSelf.zeroTimeInterval;
+//                weakSelf.timeLineView.currentTime = weakSelf.currentTimeInterval - weakSelf.zeroTimeInterval;
+//            });
+//        });
+//    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -466,9 +508,9 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
                                 length:(int)length
                             timeStamps:(long)timeStamps
 {
-    self.timeLineView.zeroTime = self.zeroTimeInterval;
-    self.timeLineView.currentTime = self.currentTimeInterval - self.zeroTimeInterval;
-//    [self.zfTimeView updateTime:timeStamps/1000 + self.zeroTimeInterval];
+//    self.timeLineView.zeroTime = self.zeroTimeInterval;
+//    self.timeLineView.currentTime = timeStamps/1000;
+    [self.zfTimeView updateTime:timeStamps/1000 + self.zeroTimeInterval];
 //    [self.zfTimeView updateCurrentInterval:timeStamps/1000 + self.zeroTimeInterval];
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [self->h264Decode decodeH26xVideoData:data videoSize:length frameType:dataType timestamp:timeStamps];
@@ -586,9 +628,9 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
     }
 }
 
-#pragma mark - TYCameraTimeLineScrollViewDelegate
+#pragma mark - TYCameraTimeLineScrollView_oldDelegate
 
-- (void)timeLineViewWillBeginDraging:(TYCameraTimeLineScrollView *)timeLineView
+- (void)timeLineViewWillBeginDraging:(TYCameraTimeLineScrollView_old *)timeLineView
 {
     if (isRebackPlaying == YES) {
         CLog(@"开始拖拽 ============================= %f",timeLineView.currentTime);
@@ -598,7 +640,7 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
     }
 }
 
-- (void)timeLineViewDidEndDraging:(TYCameraTimeLineScrollView *)timeLineView
+- (void)timeLineViewDidEndDraging:(TYCameraTimeLineScrollView_old *)timeLineView
 {
     CLog(@"结束拖拽 currentTime ================= %f",timeLineView.currentTime);
     if (!self.activityView.animating) {
@@ -607,7 +649,7 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
     }
 }
 
-- (void)timeLineView:(TYCameraTimeLineScrollView *)timeLineView didEndScrollingAtTime:(NSTimeInterval)timeInterval
+- (void)timeLineView:(TYCameraTimeLineScrollView_old *)timeLineView didEndScrollingAtTime:(NSTimeInterval)timeInterval
             inSource:(id<TYCameraTimeLineViewSource>)source
 {
     self.currentTimeInterval        = _zeroTimeInterval + timeInterval;

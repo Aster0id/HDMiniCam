@@ -1,25 +1,16 @@
 //
-//  TYCameraTimeLineScrollView.m
+//  TYCameraTimeLineScrollView_old.m
 //  TYCameraBussinessLibrary
 //
 //  Created by 傅浪 on 2018/9/22.
 //
 
-#import "TYCameraTimeLineScrollView.h"
+#import "TYCameraTimeLineScrollView_old.h"
 
 #define SECS_DAY 86400
 #define SCALE_STEP 0.15
-#define OriginHeight 20
 
-@interface TYCameraTimeLineScrollView ()
-
-{
-    NSInteger longHeight;
-    NSInteger shortHeight;
-    NSDateFormatter *formatterShow;
-}
-
-@property (nonatomic, strong) UILabel *timeLab;
+@interface TYCameraTimeLineScrollView_old ()
 
 @property (nonatomic, strong) NSArray *timeUnits;
 
@@ -27,44 +18,25 @@
 
 @end
 
-@implementation TYCameraTimeLineScrollView
-
-- (UILabel *)timeLab
-{
-    if (!_timeLab) {
-        _timeLab = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2.0 - 50, 0, 100, OriginHeight)];
-        _timeLab.font = [UIFont systemFontOfSize:14];
-        _timeLab.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:_timeLab];
-    }
-    return _timeLab;
-}
+@implementation TYCameraTimeLineScrollView_old
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        
-        formatterShow = [[NSDateFormatter alloc]init];
-        [formatterShow setDateFormat:@"HH:mm:ss"];
-        
         _displayLayer = [[TYAsyncDisplayLayer alloc] init];
         _displayLayer.displayDelegate = self;
         [self.layer addSublayer:_displayLayer];
         _secsPerUnit = 600;
-        _markLineColor = [[UIColor grayColor] colorWithAlphaComponent:0.8];
+        _markLineColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
         _viewWidth = CGRectGetWidth(frame);
-        longHeight = 20;
-        shortHeight = 12;
-        _contentHeight = CGRectGetHeight(frame) - OriginHeight;
-        _timeStringTop = _contentHeight/2.0 - 6 + OriginHeight;
+        _contentHeight = CGRectGetHeight(frame);
+        _timeStringTop = _contentHeight - 12;
         
-        _gradientColors = @[(__bridge id)UIColor.lightGrayColor.CGColor];
+        _gradientColors = @[(__bridge id)UIColorFromRGB_alpha(0x4F67EE, 0.3).CGColor, (__bridge id)UIColorFromRGB_alpha(0x4D68FF, 0.04).CGColor];
         [self updateContentWidth];
         
-        _timeBarHeight = 0;
-        
         _measureLine = [[UIView alloc] initWithFrame:CGRectZero];
-        _measureLine.backgroundColor = UIColor.redColor;
+        _measureLine.backgroundColor = UIColorFromRGB(0x516AEE);
         
         [self addSubview:_measureLine];
         
@@ -76,8 +48,7 @@
     return self;
 }
 
-- (void)layoutSubviews
-{
+- (void)layoutSubviews {
     [super layoutSubviews];
     _viewWidth = CGRectGetWidth(self.frame);
     _contentHeight = CGRectGetHeight(self.frame) - self.timeBarHeight;
@@ -87,17 +58,17 @@
     _displayLayer.position = CGPointMake(CGRectGetWidth(self.frame) / 2, CGRectGetHeight(self.frame) / 2);
     [_displayLayer setNeedsDisplay];
     
-    _measureLine.frame = CGRectMake(CGRectGetWidth(self.frame)/2 - 0.5, OriginHeight, 1, _contentHeight - OriginHeight);
+    _measureLine.frame = CGRectMake(CGRectGetWidth(self.frame)/2-0.5, self.timeBarHeight, 1, _contentHeight);
 }
 
 - (void)asyncDisplayLayer:(TYAsyncDisplayLayer *)layer drawRect:(CGRect)rect inContext:(CGContextRef)ctx isCancelled:(BOOL (^)(void))isCancelled
 {
     // 背景颜色
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    NSArray *gradientColors = @[(__bridge id)UIColorFromRGB_alpha(0xffffff, 1).CGColor];
+    NSArray *gradientColors = @[(__bridge id)UIColorFromRGB(0x1D1D1D).CGColor, (__bridge id)UIColorFromRGB(0x000000).CGColor];
     CGFloat locations[] = {0.0, 1.0};
     CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)gradientColors, locations);
-    CGContextDrawLinearGradient(ctx, gradient, CGPointMake(0, OriginHeight), CGPointMake(0, rect.size.height), 0);
+    CGContextDrawLinearGradient(ctx, gradient, CGPointMake(0, 0), CGPointMake(0, rect.size.height), 0);
     CGColorSpaceRelease(colorSpace);
     CGGradientRelease(gradient);
     
@@ -112,10 +83,18 @@
             if (isCancelled()) { return; }
             id<TYCameraTimeLineViewSource> sourceModel = self.sourceModels[i];
             CGFloat x = sourceModel.startTimeIntervalSinceCurrentDay / _secsPerUnit * _spacePerUnit + _viewWidth / 2 - _offset;
+//            CLog(@"++++++++++++++++++++++++++++++   x = %f",x);
             CGFloat width = (sourceModel.stopTimeIntervalSinceCurrentDay - sourceModel.startTimeIntervalSinceCurrentDay) / _secsPerUnit * _spacePerUnit;
+//            CLog(@"++++++++++++++++++++++++++++++   sourceModel.stopTimeIntervalSinceCurrentDay = %f",sourceModel.stopTimeIntervalSinceCurrentDay);
+//            CLog(@"++++++++++++++++++++++++++++++   sourceModel.startTimeIntervalSinceCurrentDay = %f",sourceModel.startTimeIntervalSinceCurrentDay);
+//            CLog(@"++++++++++++++++++++++++++++++   _secsPerUnit = %ld",(long)_secsPerUnit);
+//            CLog(@"++++++++++++++++++++++++++++++   _spacePerUnit = %f",_spacePerUnit);
+//            CLog(@"++++++++++++++++++++++++++++++   width = %f",width);
             UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRect:CGRectMake(x, rect.size.height - _contentHeight, width, _contentHeight)];
-            CGPoint startPoint  = CGPointMake((x + width)/2, rect.size.height - _contentHeight + OriginHeight);
-            CGPoint endPoint    = CGPointMake((x + width)/2, rect.size.height);
+            CGPoint startPoint = CGPointMake((x+width)/2, rect.size.height - _contentHeight);
+//            CLog(@"++++++++++++++++++++++++++++++   startPoint.x = %f, startPoint.y = %f",startPoint.x,startPoint.y);
+            CGPoint endPoint = CGPointMake((x+width)/2, rect.size.height);
+//            CLog(@"++++++++++++++++++++++++++++++   endPoint.x = %f, endPoint.y = %f",endPoint.x,endPoint.y);
             CGContextSaveGState(ctx); {
                 CGContextAddPath(ctx, bezierPath.CGPath);
                 CGContextClip(ctx);
@@ -129,26 +108,14 @@
     // 时间刻度，长刻度线
     CGFloat numOfLine = ceil((_offset - _viewWidth / 2) / _spacePerUnit);
     CGFloat lineX = numOfLine * _spacePerUnit + _viewWidth / 2 - _offset;
-    CGFloat lineY = OriginHeight;
-    while (lineX < _viewWidth) {
-        CGContextMoveToPoint(ctx, lineX, lineY);
-        CGContextAddLineToPoint(ctx, lineX, longHeight + lineY);
-        NSTimeInterval timeInterval = numOfLine * _secsPerUnit;
-        NSString *timeString = [self ty_timeString:timeInterval];
-        [timeString drawAtPoint:CGPointMake(lineX - 12, _timeStringTop) withAttributes:self.timeStringAttributes];
-        numOfLine ++;
-        lineX += _spacePerUnit;
-    }
-    CGContextSetLineWidth(ctx, 1);
-    [self.markLineColor setStroke];
-    CGContextStrokePath(ctx);
-    
-    numOfLine = ceil((_offset - _viewWidth / 2) / _spacePerUnit);
-    lineX = numOfLine * _spacePerUnit + _viewWidth / 2 - _offset;
-    lineY = rect.size.height - longHeight;
+    CGFloat lineY = rect.size.height - _contentHeight;
     while (lineX < _viewWidth) {
         CGContextMoveToPoint(ctx, lineX, lineY);
         CGContextAddLineToPoint(ctx, lineX, rect.size.height);
+        NSTimeInterval timeInterval = numOfLine * _secsPerUnit;
+        NSString *timeString = [self ty_timeString:timeInterval];
+        [timeString drawAtPoint:CGPointMake(lineX-12, _timeStringTop) withAttributes:self.timeStringAttributes];
+        numOfLine ++;
         lineX += _spacePerUnit;
     }
     CGContextSetLineWidth(ctx, 1);
@@ -159,34 +126,14 @@
     // 时间刻度，短刻度线
     CGFloat space = self.spacePerUnit / 5;
     lineX = ceil((_offset - _viewWidth / 2) / space) * space;
-    lineY = OriginHeight;
+    lineY = _contentHeight / 4 + _timeBarHeight;
     while (lineX < _viewWidth + _offset) {
         if ((int)round(lineX / space) % 5 != 0) {
-            CGContextMoveToPoint(ctx, lineX - _offset + _viewWidth / 2, lineY);
-            CGContextAddLineToPoint(ctx, lineX - _offset + _viewWidth / 2, shortHeight + lineY);
+            CGContextMoveToPoint(ctx, lineX-_offset+_viewWidth / 2, lineY);
+            CGContextAddLineToPoint(ctx, lineX-_offset+_viewWidth / 2, rect.size.height - _contentHeight / 4);
         }
         lineX += space;
     }
-    CGContextStrokePath(ctx);
-    
-    // 时间刻度，短刻度线
-    lineX = ceil((_offset - _viewWidth / 2) / space) * space;
-    lineY = rect.size.height - shortHeight;
-    while (lineX < _viewWidth + _offset) {
-        if ((int)round(lineX / space) % 5 != 0) {
-            CGContextMoveToPoint(ctx, lineX - _offset + _viewWidth / 2, lineY);
-            CGContextAddLineToPoint(ctx, lineX - _offset + _viewWidth / 2, rect.size.height);
-        }
-        lineX += space;
-    }
-    CGContextStrokePath(ctx);
-    
-    // 时间刻度，短刻度线
-    CGContextMoveToPoint(ctx, 0, OriginHeight);
-    CGContextAddLineToPoint(ctx, _viewWidth, OriginHeight);
-    CGContextStrokePath(ctx);
-    CGContextMoveToPoint(ctx, 0, _contentHeight);
-    CGContextAddLineToPoint(ctx, _viewWidth, _contentHeight);
     CGContextStrokePath(ctx);
 }
 
@@ -214,20 +161,10 @@
     [_displayLayer setNeedsDisplay];
 }
 
-- (void)setCurrentTime:(NSTimeInterval)currentTime
-{
-    CLog(@"currentTime ========= %f",currentTime);
-    self.timeLab.text = [self showTimeWithInterval:currentTime + self.zeroTime];
-    CLog(@"self.timeLab.text ========= %@",self.timeLab.text);
+- (void)setCurrentTime:(NSTimeInterval)currentTime {
     _currentTime = currentTime;
     _offset = _currentTime / _secsPerUnit * _spacePerUnit;
     [_displayLayer setNeedsDisplay];
-}
-
-- (NSString *)showTimeWithInterval:(NSTimeInterval)interval
-{
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval];
-    return [formatterShow stringFromDate:date];
 }
 
 - (void)scrollToTime:(NSTimeInterval)time animated:(BOOL)animated {
@@ -358,13 +295,21 @@
 
 - (NSRange)rangeOfDisplayedSources
 {
+    CLog(@"___rangeOfDisplayedSources___");
     NSTimeInterval min = (_offset - _viewWidth / 2) / _spacePerUnit * _secsPerUnit;
     NSTimeInterval max = (_offset + _viewWidth / 2) / _spacePerUnit * _secsPerUnit;
     NSInteger startIndex = -1;
     NSInteger endIndex = -1;
     
     for (NSInteger i = 0; i < self.sourceModels.count; i++) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            CLog(@"self.sourceModels.count = %lu",(unsigned long)self.sourceModels.count);
+        });
         id<TYCameraTimeLineViewSource> sourceModel = [self.sourceModels objectAtIndex:i];
+//        CLog(@"min = %f",min);
+//        CLog(@"max = %f",max);
+//        CLog(@"sourceModel.stopTimeIntervalSinceCurrentDay = %f",sourceModel.stopTimeIntervalSinceCurrentDay);
+        CLog(@"sourceModel.startTimeIntervalSinceCurrentDay = %f",sourceModel.startTimeIntervalSinceCurrentDay);
         if (sourceModel.stopTimeIntervalSinceCurrentDay > min && sourceModel.startTimeIntervalSinceCurrentDay < max) {
             startIndex = i;
             break;
@@ -439,8 +384,7 @@
     if (!_timeStringAttributes) {
         _timeStringAttributes = @{
             NSFontAttributeName: [UIFont systemFontOfSize:9],
-            NSForegroundColorAttributeName: [UIColor blueColor]
-//            NSForegroundColorAttributeName: UIColorFromRGB(0x99A0B4)
+            NSForegroundColorAttributeName: UIColorFromRGB(0x99A0B4)
             };
     }
     return _timeStringAttributes;
