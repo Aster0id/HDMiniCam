@@ -3,48 +3,49 @@
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "20x20@2x.png",
+      "filename" : "app40.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "iphone",
       "size" : "20x20",
+      "idiom" : "iphone",
+      "filename" : "app60.png",
       "scale" : "3x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "29x29@2x-1.png",
+      "filename" : "app58.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "29x29@3x.png",
+      "filename" : "app87.png",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "40x40@2x.png",
+      "filename" : "app80.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "40x40@3x.png",
+      "filename" : "app120.png",
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "40x40@3x-1.png",
+      "filename" : "app120的副本.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "60x60@3x.png",
+      "filename" : "app180.png",
       "scale" : "3x"
     },
     {

@@ -44,6 +44,7 @@
 @property (nonatomic, strong) NSArray *gradientColors;
 
 @property (nonatomic, assign) NSTimeInterval currentTime;
+@property (nonatomic, assign) NSTimeInterval zeroTime;
 
 @property (nonatomic, assign) CGFloat timeBarHeight;
 

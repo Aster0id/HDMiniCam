@@ -164,40 +164,35 @@ TYCameraTimeLineScrollViewDelegate>
                 int type                = [body[@"type"] intValue];
                 NSString *startString   = KHJString(@"%06d",[body[@"start"] intValue]);
                 NSString *endString     = KHJString(@"%06d",[body[@"end"] intValue]);
-
                 int startHour   = [[startString substringWithRange:NSMakeRange(0, 2)] intValue];
                 int startMin    = [[startString substringWithRange:NSMakeRange(2, 2)] intValue];
                 int startSec    = [[startString substringWithRange:NSMakeRange(4, 2)] intValue];
                 int startTimeInterval   = startHour * 3600 + startMin * 60 + startSec;
-
                 int endHour = [[endString substringWithRange:NSMakeRange(0, 2)] intValue];
                 int endMin  = [[endString substringWithRange:NSMakeRange(2, 2)] intValue];
                 int endSec  = [[endString substringWithRange:NSMakeRange(4, 2)] intValue];
                 int endTimeInterval = endHour * 3600 + endMin * 60 + endSec;
 
-                KHJVideoModel *model = [[KHJVideoModel alloc] init];
-                model.startTime = startTimeInterval + weakSelf.zeroTimeInterval; // 起始时间
-                model.durationTime = endTimeInterval - startTimeInterval;// 视频时长
+                TuyaTimeLineModel *tuyaModel = [[TuyaTimeLineModel alloc] init];
+                tuyaModel.startTime = startTimeInterval + weakSelf.zeroTimeInterval;
+                tuyaModel.endTime = endTimeInterval + weakSelf.zeroTimeInterval;
+                tuyaModel.startDate = [KHJCalculate getYearFromUTC:tuyaModel.startTime];
+                tuyaModel.endDate = [KHJCalculate getYearFromUTC:tuyaModel.endTime];
                 if (type == 0) {        // 正常录制
-                    model.recType = 0;
+                    tuyaModel.recType = 0;
                 }
                 else if (type == 1) {   // 移动检测录制
-                    model.recType = 2;
+                    tuyaModel.recType = 2;
                 }
                 else if (type == 3) {   // 声音检测录制
-                    model.recType = 4;
+                    tuyaModel.recType = 4;
                 }
-                [weakSelf.videoList addObject:model];
+                [weakSelf.videoList addObject:tuyaModel];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-                
-                CLog(@"weakSelf.videoList = %@",weakSelf.videoList);
-                CLog(@"currentTimeInterval ==================================================================== %f",weakSelf.currentTimeInterval);
-                
-//                weakSelf.zfTimeView.timesArr = weakSelf.videoList;
-//                CLog(@"currentTimeInterval ==================================================================== %f",weakSelf.currentTimeInterval);
-//
-//                [weakSelf.zfTimeView updateCurrentInterval:weakSelf.currentTimeInterval];
+                weakSelf.timeLineView.sourceModels = weakSelf.videoList;
+                weakSelf.timeLineView.zeroTime = weakSelf.zeroTimeInterval;
+                weakSelf.timeLineView.currentTime = weakSelf.currentTimeInterval - weakSelf.zeroTimeInterval;
             });
         });
     }];
@@ -471,6 +466,8 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
                                 length:(int)length
                             timeStamps:(long)timeStamps
 {
+    self.timeLineView.zeroTime = self.zeroTimeInterval;
+    self.timeLineView.currentTime = self.currentTimeInterval - self.zeroTimeInterval;
 //    [self.zfTimeView updateTime:timeStamps/1000 + self.zeroTimeInterval];
 //    [self.zfTimeView updateCurrentInterval:timeStamps/1000 + self.zeroTimeInterval];
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -528,7 +525,6 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
 - (void)gotoStopRecord
 {
     [self stopRecordTimer];
-    isRebackPlaying = NO;
     recordTimeView.hidden = YES;
     // 结束回放录屏，停止截取数据
     rebackPlayRecordVideoPath = @"";
@@ -594,64 +590,79 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
 
 - (void)timeLineViewWillBeginDraging:(TYCameraTimeLineScrollView *)timeLineView
 {
-//    [self.tuyaCamera stopPlayback];
-//    CLog(@"开始拖拽 ============================= %f",timeLineView.currentTime);
+    if (isRebackPlaying == YES) {
+        CLog(@"开始拖拽 ============================= %f",timeLineView.currentTime);
+        [[KHJDeviceManager sharedManager] stopPlayback_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {
+            self->isRebackPlaying = NO;
+        }];
+    }
 }
 
 - (void)timeLineViewDidEndDraging:(TYCameraTimeLineScrollView *)timeLineView
 {
-//    CLog(@"结束拖拽 currentTime ================= %f",timeLineView.currentTime);
-//    if (!indicatorView.animating) {
-//        indicatorView.hidden = NO;
-//        [indicatorView startAnimating];
-//    }
+    CLog(@"结束拖拽 currentTime ================= %f",timeLineView.currentTime);
+    if (!self.activityView.animating) {
+        self.activityView.hidden = NO;
+        [self.activityView startAnimating];
+    }
 }
 
 - (void)timeLineView:(TYCameraTimeLineScrollView *)timeLineView didEndScrollingAtTime:(NSTimeInterval)timeInterval
             inSource:(id<TYCameraTimeLineViewSource>)source
 {
-//    CLog(@"didEndScrollingAtTime timeInterval = %f",timeInterval);
-//    self.currentTimeInterval = _zeroTimeInterval + timeInterval;
-//
-//    NSDictionary *dict          = self.dictArr[self.index];
-//    NSInteger currentEndTime    = [dict[@"endTime"] integerValue] - _zoreTimeStamp;
-//    if (_currentTimeStamp < currentEndTime) {
-//        [self dragPlayRebackVideo:dict currentTime:_currentTimeStamp index:self.index];
+    self.currentTimeInterval        = _zeroTimeInterval + timeInterval;
+//    TuyaTimeLineModel *tuyaModel    = self.videoList[self.currentIndex];
+//    if (_currentTimeInterval < tuyaModel.endTime) {
+//        //
+//        int date_int = [[dateLAB.text stringByReplacingOccurrencesOfString:@"_" withString:@""] intValue];
+//        NSDateFormatter *formatterShow = [[NSDateFormatter alloc]init];
+//        [formatterShow setDateFormat:@"HHmmss"];
+//        NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:_currentTimeInterval];
+//        int timestamp_int = [[formatterShow stringFromDate:date1] intValue];
+//        // 播放回放视频
+//        WeakSelf
+//        [[KHJDeviceManager sharedManager] starPlayback_timeLine_with_deviceID:self.deviceID vi:0 date:date_int time:timestamp_int resultBlock:^(NSInteger code) {
+//            [weakSelf.view makeToast:KHJString(@"正在播放，第%ld段视频 ------------------------",(long)weakSelf.currentIndex)];
+//        }];
 //    }
 //    else {
-//
-//        WeakSelf
-//        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//
-//            BOOL canPlay = NO;
-//            for (int i = 0; i < weakSelf.dictArr.count; i++) {
-//
-//                NSDictionary *dict          = weakSelf.dictArr[i];
-//                NSInteger startTimeStamp    = [dict[@"startTime"] integerValue];
-//                NSInteger endTimeStamp      = [dict[@"endTime"] integerValue];
-//
-//                if (weakSelf.currentTimeStamp < endTimeStamp && weakSelf.currentTimeStamp > startTimeStamp) {
-//                    canPlay = YES;
-//                    CLog(@"正在播放，第%d段视频",i);
-//                    [weakSelf dragPlayRebackVideo:dict currentTime:weakSelf.currentTimeStamp index:(NSInteger)i];
-//                    break;
-//                }
-//            }
-//
-//            if (!canPlay) {
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//
-//                    if (self->indicatorView.animating) {
-//                        self->indicatorView.hidden = YES;
-//                        [self->indicatorView stopAnimating];
-//                    }
-//                    [weakSelf enableAllControl:NO];
-//                    [weakSelf.tuyaCamera.videoView tuya_clear];
-//                    [weakSelf.view makeToast:KHJLocalizedString(@"TuyaNoVideoPlay", nil)];
-//
-//                });
-//            }
-//        });
+        WeakSelf
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+
+            BOOL canPlay = NO;
+            for (int i = 0; i < weakSelf.videoList.count; i++) {
+
+                TuyaTimeLineModel *tuyaModel    = weakSelf.videoList[i];
+                NSInteger startTimeStamp        = tuyaModel.startTime;
+                NSInteger endTimeStamp          = tuyaModel.endTime;
+                if (weakSelf.currentTimeInterval < endTimeStamp && weakSelf.currentTimeInterval > startTimeStamp) {
+                    canPlay = YES;
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        weakSelf.currentIndex = i;
+                        int date_int = [[self->dateLAB.text stringByReplacingOccurrencesOfString:@"_" withString:@""] intValue];
+                        NSDateFormatter *formatterShow = [[NSDateFormatter alloc]init];
+                        [formatterShow setDateFormat:@"HHmmss"];
+                        NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:weakSelf.currentTimeInterval];
+                        int timestamp_int = [[formatterShow stringFromDate:date1] intValue];
+                        // 播放回放视频
+                        [[KHJDeviceManager sharedManager] starPlayback_timeLine_with_deviceID:self.deviceID vi:0 date:date_int time:timestamp_int resultBlock:^(NSInteger code) {
+                            [weakSelf.view makeToast:KHJString(@"正在播放，第%d段视频",i)];
+                        }];
+                    });
+                    break;
+                }
+            }
+
+            if (!canPlay) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (weakSelf.activityView.animating) {
+                        weakSelf.activityView.hidden = YES;
+                        [weakSelf.activityView stopAnimating];
+                    }
+                    [weakSelf.view makeToast:KHJLocalizedString(@"无视频可播放", nil)];
+                });
+            }
+        });
 //    }
 }
 

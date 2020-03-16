@@ -175,16 +175,17 @@
     NSString *currentDateString = [format stringFromDate:newDate];
     return currentDateString;
 }
-//// 时间戳转字符串，获取年、月、日
-//+ (NSString *)getYearFromUTC:(NSTimeInterval)timeInterval
-//{
-//    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-//    [format setDateFormat:@"yyyy-MM-dd"];
-//    NSDate *newDate = [[NSDate alloc] initWithTimeIntervalSince1970:timeInterval];
-//    NSString *currentDateString = [format stringFromDate:newDate];
-//    return currentDateString;
-//}
-//
+
+// 时间戳转字符串，获取年、月、日
++ (NSString *)getYearFromUTC:(NSTimeInterval)timeInterval
+{
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"yyyy-MM-dd"];
+    NSDate *newDate = [[NSDate alloc] initWithTimeIntervalSince1970:timeInterval];
+    NSString *currentDateString = [format stringFromDate:newDate];
+    return currentDateString;
+}
+
 
 + (NSString *)nextDay:(NSString *) dateString
 {

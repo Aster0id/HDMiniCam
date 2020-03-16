@@ -45,6 +45,8 @@
 //+ (NSInteger)getUTCTime:(NSString *)string;
 // 时间戳转字符串，获取、时、分、秒
 + (NSString *)getTimesFromUTC:(NSTimeInterval)timeInterval;
+// 时间戳转字符串，获取年、月、日
++ (NSString *)getYearFromUTC:(NSTimeInterval)timeInterval;
 //// 邮箱验证
 //+ (BOOL)isAvailableEmail:(NSString *)email;
 //// 手机号验证

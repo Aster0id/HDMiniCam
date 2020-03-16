@@ -12,6 +12,7 @@
 #import "KHJPictureListVC.h"
 #import "KHJRecordListVC.h"
 #import "KHJAlarmListVC.h"
+#import "KHJVideoPlayer_hf_VC.h"
 #pragma mark - ios13 开启地理位置权限，获取Wi-Fi名称
 #import <CoreLocation/CoreLocation.h>
 #import "KHJDeviceManager.h"

@@ -1065,8 +1065,6 @@
 				AB32D4B323F53BE4008AFD1F /* ZFTimeLine.m */,
 				AB32D4BF23F54E7A008AFD1F /* KHJVideoModel.h */,
 				AB32D4C023F54E7A008AFD1F /* KHJVideoModel.m */,
-				AB32D4C223F54FDF008AFD1F /* TuyaTimeLineModel.h */,
-				AB32D4C323F54FE0008AFD1F /* TuyaTimeLineModel.m */,
 				AB482747241F0EDB008970A0 /* TuyaTimeLineView */,
 			);
 			path = View;
@@ -1075,6 +1073,8 @@
 		AB482747241F0EDB008970A0 /* TuyaTimeLineView */ = {
 			isa = PBXGroup;
 			children = (
+				AB32D4C223F54FDF008AFD1F /* TuyaTimeLineModel.h */,
+				AB32D4C323F54FE0008AFD1F /* TuyaTimeLineModel.m */,
 				AB48274A241F0EDB008970A0 /* TYCameraTimeLineScrollView.h */,
 				AB482748241F0EDB008970A0 /* TYCameraTimeLineScrollView.m */,
 				AB48274B241F0EDB008970A0 /* TYCameraTimeLineViewSource.h */,
@@ -1650,8 +1650,8 @@
 				CODE_SIGN_ENTITLEMENTS = HDMiniCam/HDMiniCam.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
-				DEVELOPMENT_TEAM = 5M2ZZVKCB5;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VNCC3G6TV4;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = HDMiniCam/PrefixHeader.pch;
 				INFOPLIST_FILE = HDMiniCam/Info.plist;
@@ -1664,7 +1664,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/HDMiniCam/SDK/libs",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.khj.HDMiniCam;
+				PRODUCT_BUNDLE_IDENTIFIER = com.khj.HDCamView;
 				PRODUCT_NAME = HDCamView;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1680,8 +1680,8 @@
 				CODE_SIGN_ENTITLEMENTS = HDMiniCam/HDMiniCam.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
-				DEVELOPMENT_TEAM = 5M2ZZVKCB5;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VNCC3G6TV4;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = HDMiniCam/PrefixHeader.pch;
 				INFOPLIST_FILE = HDMiniCam/Info.plist;
@@ -1694,7 +1694,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/HDMiniCam/SDK/libs",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.khj.HDMiniCam;
+				PRODUCT_BUNDLE_IDENTIFIER = com.khj.HDCamView;
 				PRODUCT_NAME = HDCamView;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
