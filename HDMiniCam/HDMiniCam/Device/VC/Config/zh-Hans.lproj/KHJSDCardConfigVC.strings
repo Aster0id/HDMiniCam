@@ -1,0 +1,30 @@
+
+/* Class = "UITextField"; placeholder = "0"; ObjectID = "As5-7Y-C02"; */
+"As5-7Y-C02.placeholder" = "0";
+
+/* Class = "UILabel"; text = "1-60 分"; ObjectID = "BcM-QN-3RU"; */
+"BcM-QN-3RU.text" = "1-60 分";
+
+/* Class = "UILabel"; text = "每个文件长度(分钟)"; ObjectID = "dWd-uG-OwE"; */
+"dWd-uG-OwE.text" = "每个文件长度(分钟)";
+
+/* Class = "UILabel"; text = "720P"; ObjectID = "fnz-yB-H3t"; */
+"fnz-yB-H3t.text" = "720P";
+
+/* Class = "UILabel"; text = "未检测到SD卡"; ObjectID = "i9L-T1-VCe"; */
+"i9L-T1-VCe.text" = "未检测到SD卡";
+
+/* Class = "UILabel"; text = "分辨率"; ObjectID = "iOO-Re-QkU"; */
+"iOO-Re-QkU.text" = "分辨率";
+
+/* Class = "UIButton"; normalTitle = "取消"; ObjectID = "mcl-tV-gyH"; */
+"mcl-tV-gyH.normalTitle" = "取消";
+
+/* Class = "UIButton"; normalTitle = "确定"; ObjectID = "rbs-HZ-F2C"; */
+"rbs-HZ-F2C.normalTitle" = "确定";
+
+/* Class = "UIButton"; normalTitle = "格式化"; ObjectID = "ur9-qi-n4M"; */
+"ur9-qi-n4M.normalTitle" = "格式化";
+
+/* Class = "UILabel"; text = "循环录像"; ObjectID = "z6f-sa-8dy"; */
+"z6f-sa-8dy.text" = "循环录像";

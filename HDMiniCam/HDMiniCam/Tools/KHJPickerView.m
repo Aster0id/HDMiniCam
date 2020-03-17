@@ -1,17 +1,14 @@
 //
-//  KHJPickerView.m
-//  TimeLineView
+//  KHJPickerView.h
+//  HDMiniCam
 //
-//  Created by hezewen on 2018/9/6.
-//  Copyright © 2018年 zengjia. All rights reserved.
+//  Created by khj888 on 2020/1/16.
+//  Copyright © 2020 王涛. All rights reserved.
 //
 
 #import "KHJPickerView.h"
-#import "JKUIPickDate.h"
+#import "KHJPickerDate.h"
 #import "KHJCalculate.h"
-
-//#define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
-//#define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
 
 @interface KHJPickerView()
 {
@@ -131,7 +128,7 @@
 }
 - (void)setPiker//日期选择
 {
-    JKUIPickDate *pickdate = [JKUIPickDate setDate];
+    KHJPickerDate *pickdate = [KHJPickerDate setDate];
     __weak typeof(showButton) weekShowButton = showButton;
     WeakSelf
     [pickdate passvalue:^(NSString *str) {

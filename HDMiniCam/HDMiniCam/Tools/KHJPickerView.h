@@ -1,9 +1,9 @@
 //
 //  KHJPickerView.h
-//  TimeLineView
+//  HDMiniCam
 //
-//  Created by hezewen on 2018/9/6.
-//  Copyright © 2018年 zengjia. All rights reserved.
+//  Created by khj888 on 2020/1/16.
+//  Copyright © 2020 王涛. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

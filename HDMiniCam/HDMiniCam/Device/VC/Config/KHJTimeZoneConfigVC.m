@@ -55,144 +55,144 @@
 
 - (void)chooseTimeZone
 {
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"title", nil)
-                                                                       message:KHJLocalizedString(@"选择时区", nil)
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"选择时区", nil)
+                                                                       message:nil
                                                                 preferredStyle:UIAlertControllerStyleAlert];
     WeakSelf
-    UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT-11:00) 中途岛、萨摩亚", nil)
+    UIAlertAction *config = [UIAlertAction actionWithTitle:KHJString(@"(GMT-11:00) %@",KHJLocalizedString(@"中途岛、萨摩亚", nil))
                                                      style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * _Nonnull action) {
-                                                       [weakSelf setTimeZoneWith:0 title:@"(GMT-11:00) 中途岛、萨摩亚"];
+                                                       [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-11:00) %@",KHJLocalizedString(@"中途岛、萨摩亚", nil))];
     }];
-    UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT-10:00) 夏威夷", nil)
+    UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-10:00) %@",KHJLocalizedString(@"夏威夷", nil), nil)
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT-10:00) 夏威夷"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-10:00) %@",KHJLocalizedString(@"夏威夷", nil), nil)];
     }];
-    UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT-09:00) 阿拉斯加", nil)
+    UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-09:00) %@",KHJLocalizedString(@"阿拉斯加", nil), nil)
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT-09:00) 阿拉斯加"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-09:00) %@",KHJLocalizedString(@"阿拉斯加", nil), nil)];
                                                     }];
-    UIAlertAction *config3 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT-08:00) 太平洋标准时间", nil)
+    UIAlertAction *config3 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-08:00) %@",KHJLocalizedString(@"太平洋标准时间", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT-08:00) 太平洋标准时间"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-08:00) %@",KHJLocalizedString(@"太平洋标准时间", nil))];
                                                     }];
-    UIAlertAction *config4 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT-07:00) 山地时间(美国和加拿大)", nil)
+    UIAlertAction *config4 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-07:00) %@",KHJLocalizedString(@"山地时间(美国和加拿大)", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT-07:00) 山地时间(美国和加拿大)"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-07:00) %@",KHJLocalizedString(@"山地时间(美国和加拿大)", nil))];
                                                     }];
-    UIAlertAction *config5 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT-06:00) 中央时间", nil)
+    UIAlertAction *config5 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-06:00) %@",KHJLocalizedString(@"中央时间", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT-06:00) 中央时间"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-06:00) %@",KHJLocalizedString(@"中央时间", nil))];
                                                     }];
-    UIAlertAction *config6 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT-05:00) 东部时间", nil)
+    UIAlertAction *config6 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-05:00)%@",KHJLocalizedString(@"东部时间", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT-05:00) 东部时间"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-05:00)%@",KHJLocalizedString(@"东部时间", nil))];
                                                     }];
-    UIAlertAction *config7 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT-04:00) 大西洋标准时间，西巴西", nil)
+    UIAlertAction *config7 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-04:00)%@",KHJLocalizedString(@"大西洋标准时间，西巴西", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT-04:00) 大西洋标准时间，西巴西"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-04:00)%@",KHJLocalizedString(@"大西洋标准时间，西巴西", nil))];
                                                     }];
-    UIAlertAction *config8 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT-03:30) 纽芬兰", nil)
+    UIAlertAction *config8 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-03:30)%@",KHJLocalizedString(@"纽芬兰", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT-03:30) 纽芬兰"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-03:30)%@",KHJLocalizedString(@"纽芬兰", nil))];
                                                     }];
-    UIAlertAction *config9 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT-03:00) 东巴西、格陵兰", nil)
+    UIAlertAction *config9 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-03:00)%@",KHJLocalizedString(@"东巴西、格陵兰", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT-03:00) 东巴西、格陵兰"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-03:00)%@",KHJLocalizedString(@"东巴西、格陵兰", nil))];
                                                     }];
-    UIAlertAction *confi10 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT-02:00) 中大西洋", nil)
+    UIAlertAction *confi10 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-02:00)%@",KHJLocalizedString(@"中大西洋", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT-02:00) 中大西洋"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-02:00)%@",KHJLocalizedString(@"中大西洋", nil))];
                                                     }];
-    UIAlertAction *confi11 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT-01:00) 亚速尔群岛", nil)
+    UIAlertAction *confi11 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-01:00)%@",KHJLocalizedString(@"亚速尔群岛", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT-01:00) 亚速尔群岛"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-01:00)%@",KHJLocalizedString(@"亚速尔群岛", nil))];
                                                     }];
-    UIAlertAction *confi12 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT) 甘比亚、赖比瑞亚、摩洛哥", nil)
+    UIAlertAction *confi12 = [UIAlertAction actionWithTitle:KHJString(@"(GMT)%@",KHJLocalizedString(@"甘比亚、赖比瑞亚、摩洛哥", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT) 甘比亚、赖比瑞亚、摩洛哥"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT)%@",KHJLocalizedString(@"甘比亚、赖比瑞亚、摩洛哥", nil))];
                                                     }];
-    UIAlertAction *confi13 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT+01:00) 捷克、N", nil)
+    UIAlertAction *confi13 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+01:00) %@",KHJLocalizedString(@"捷克、N", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT+01:00) 捷克、N"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+01:00) %@",KHJLocalizedString(@"捷克、N", nil))];
                                                     }];
-    UIAlertAction *confi14 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT+02:00) 希腊、乌克兰、土耳其", nil)
+    UIAlertAction *confi14 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+02:00) %@",KHJLocalizedString(@"希腊、乌克兰、土耳其", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT+02:00) 希腊、乌克兰、土耳其"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+02:00) %@",KHJLocalizedString(@"希腊、乌克兰、土耳其", nil))];
                                                     }];
-    UIAlertAction *confi15 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT+03:00) 伊拉克、约旦、科威特", nil)
+    UIAlertAction *confi15 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+03:00) %@",KHJLocalizedString(@"伊拉克、约旦、科威特", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT+03:00) 伊拉克、约旦、科威特"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+03:00) %@",KHJLocalizedString(@"伊拉克、约旦、科威特", nil))];
                                                     }];
-    UIAlertAction *confi16 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT+03:30) 莫斯科冬令时间", nil)
+    UIAlertAction *confi16 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+03:30) %@",KHJLocalizedString(@"莫斯科冬令时间", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT+03:30) 莫斯科冬令时间"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+03:30) %@",KHJLocalizedString(@"莫斯科冬令时间", nil))];
                                                     }];
-    UIAlertAction *confi17 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT+04:00) 亚美尼亚", nil)
+    UIAlertAction *confi17 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+04:00) %@",KHJLocalizedString(@"亚美尼亚", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT+04:00) 亚美尼亚"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+04:00) %@",KHJLocalizedString(@"亚美尼亚", nil))];
                                                     }];
-    UIAlertAction *confi18 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT+05:00) 巴基斯坦、俄罗斯", nil)
+    UIAlertAction *confi18 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+05:00) %@",KHJLocalizedString(@"巴基斯坦、俄罗斯", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT+05:00) 巴基斯坦、俄罗斯"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+05:00) %@",KHJLocalizedString(@"巴基斯坦、俄罗斯", nil))];
                                                     }];
-    UIAlertAction *confi19 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT+05:30) 印度、孟买、加尔各答", nil)
+    UIAlertAction *confi19 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+05:30) %@",KHJLocalizedString(@"印度、孟买、加尔各答", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT+05:30) 印度、孟买、加尔各答"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+05:30) %@",KHJLocalizedString(@"印度、孟买、加尔各答", nil))];
                                                     }];
-    UIAlertAction *confi20 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT+06:00) 孟加拉、俄罗斯", nil)
+    UIAlertAction *confi20 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+06:00) %@",KHJLocalizedString(@"孟加拉、俄罗斯", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT+06:00) 孟加拉、俄罗斯"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+06:00) %@",KHJLocalizedString(@"孟加拉、俄罗斯", nil))];
                                                     }];
-    UIAlertAction *confi21 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT+07:00) 泰国、俄罗斯", nil)
+    UIAlertAction *confi21 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+07:00) %@",KHJLocalizedString(@"泰国、俄罗斯", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT+07:00) 泰国、俄罗斯"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+07:00) %@",KHJLocalizedString(@"泰国、俄罗斯", nil))];
                                                     }];
-    UIAlertAction *confi22 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT+08:00) 北京、台北、新加坡", nil)
+    UIAlertAction *confi22 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+08:00) %@",KHJLocalizedString(@"北京、台北、新加坡", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT+08:00) 北京、台北、新加坡"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+08:00) %@",KHJLocalizedString(@"北京、台北、新加坡", nil))];
                                                     }];
-    UIAlertAction *confi23 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT+09:00) 日本、韩国", nil)
+    UIAlertAction *confi23 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+09:00) %@",KHJLocalizedString(@"日本、韩国", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT+09:00) 日本、韩国"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+09:00) %@",KHJLocalizedString(@"日本、韩国", nil))];
                                                     }];
-    UIAlertAction *confi24 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT+10:00) 关岛、俄罗斯", nil)
+    UIAlertAction *confi24 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+10:00) %@",KHJLocalizedString(@"关岛、俄罗斯", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT+10:00) 关岛、俄罗斯"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+10:00) %@",KHJLocalizedString(@"关岛、俄罗斯", nil))];
                                                     }];
-    UIAlertAction *confi25 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT+11:00) 索罗门群岛", nil)
+    UIAlertAction *confi25 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+11:00) %@",KHJLocalizedString(@"索罗门群岛", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT+11:00) 索罗门群岛"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+11:00) %@",KHJLocalizedString(@"索罗门群岛", nil))];
                                                     }];
-    UIAlertAction *confi26 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"(GMT+12:00) 奥克兰、惠灵顿、裴济", nil)
+    UIAlertAction *confi26 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+12:00) %@",KHJLocalizedString(@"奥克兰、惠灵顿、裴济", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:@"(GMT+12:00) 奥克兰、惠灵顿、裴济"];
+                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+12:00) %@",KHJLocalizedString(@"奥克兰、惠灵顿、裴济", nil))];
                                                     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil)
                                                      style:UIAlertActionStyleCancel

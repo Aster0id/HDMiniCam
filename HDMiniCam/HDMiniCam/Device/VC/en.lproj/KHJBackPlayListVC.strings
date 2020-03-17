@@ -1,0 +1,24 @@
+
+/* Class = "UIButton"; normalTitle = "刷新"; ObjectID = "3dH-9p-bBc"; */
+"3dH-9p-bBc.normalTitle" = "Refresh";
+
+/* Class = "UILabel"; text = "录像开始时间："; ObjectID = "54t-Uq-EKn"; */
+"54t-Uq-EKn.text" = "Recording start time:";
+
+/* Class = "UILabel"; text = "文件大小："; ObjectID = "8Of-MZ-psD"; */
+"8Of-MZ-psD.text" = "File size:";
+
+/* Class = "UILabel"; text = "共 0 个"; ObjectID = "HzZ-Rv-S4N"; */
+"HzZ-Rv-S4N.text" = "";
+
+/* Class = "UILabel"; text = "录像时长："; ObjectID = "P1U-45-q71"; */
+"P1U-45-q71.text" = "Video duration:";
+
+/* Class = "UIButton"; normalTitle = "返回"; ObjectID = "QRa-mj-mBP"; */
+"QRa-mj-mBP.normalTitle" = "return";
+
+/* Class = "UIButton"; normalTitle = "确定"; ObjectID = "ppP-mZ-BId"; */
+"ppP-mZ-BId.normalTitle" = "determine";
+
+/* Class = "UILabel"; text = "文件名："; ObjectID = "zid-f1-TGy"; */
+"zid-f1-TGy.text" = "file name:";

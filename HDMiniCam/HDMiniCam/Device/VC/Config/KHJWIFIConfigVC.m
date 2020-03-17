@@ -124,8 +124,8 @@
         [weakSelf changewifi:body];
     };
     cell.name.text = body[@"SSID"];
-    cell.safeLab.text = KHJString(@"安全性：%@",body[@"EncType"]);
-    cell.stronglyLab.text = KHJString(@"信号强度：%@",body[@"RSSI"]);
+    cell.safeLab.text = KHJString(@"%@：%@",KHJLocalizedString(@"安全性", nil),body[@"EncType"]);
+    cell.stronglyLab.text = KHJString(@"%@：%@",KHJLocalizedString(@"信号强度", nil),body[@"RSSI"]);
     return cell;
 }
 
@@ -133,7 +133,7 @@
 {
     WeakSelf
     ZQAlterField *alertView = [ZQAlterField alertView];
-    alertView.title = KHJString(@"%@%@",KHJLocalizedString(@"更改 Wi-Fi 为：", nil),body[@"SSID"]);
+    alertView.title = KHJString(@"%@：%@",KHJLocalizedString(@"更改 Wi-Fi 为", nil),body[@"SSID"]);
     alertView.placeholder = KHJLocalizedString(@"请输入 Wi-Fi 密码", nil);
     alertView.Maxlength = 50;
     alertView.ensureBgColor = KHJUtility.appMainColor;

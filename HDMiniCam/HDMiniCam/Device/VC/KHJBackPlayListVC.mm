@@ -86,7 +86,7 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
     [self.listArr removeObjectAtIndex:deleteIndex];
     [contentList deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:deleteIndex inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
     [contentList reloadData];
-    [self.view makeToast:KHJString(@"%@,删除成功",body[@"name"])];
+    [self.view makeToast:KHJString(@"%@,%@",body[@"name"],KHJLocalizedString(@"删除成功", nil))];
 }
 
 - (void)backAction
@@ -170,13 +170,13 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
         [[KHJDeviceManager sharedManager] deleteRemoteFile_with_deviceID:self.deviceID path:body[@"videoPath"] resultBlock:^(NSInteger code) {}];
     }];
     UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"详细文件信息", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self->fileNameLab.text = KHJString(@"文件名：%@",body[@"name"]);
-        self->fileSizeLab.text = KHJString(@"文件大小：%@M",sizeUnit);
+        self->fileNameLab.text = KHJString(@"%@：%@",KHJLocalizedString(@"文件名", nil),body[@"name"]);
+        self->fileSizeLab.text = KHJString(@"%@：%@M",KHJLocalizedString(@"文件大小", nil),sizeUnit);
         if (min > 0) {
-            self->fileDurationLab.text = KHJString(@"录像时长：%ld分%ld秒",(long)min,(long)sec);
+            self->fileDurationLab.text = KHJString(@"%@：%ld%@%ld%@",KHJLocalizedString(@"录像时长", nil),(long)min,KHJLocalizedString(@"分", nil),(long)sec,KHJLocalizedString(@"秒", nil));
         }
         else {
-            self->fileDurationLab.text = KHJString(@"录像时长：%ld秒",(long)sec);
+            self->fileDurationLab.text = KHJString(@"%@：%ld%@",KHJLocalizedString(@"录像时长", nil),(long)sec,KHJLocalizedString(@"秒", nil));
         }
         self->fileStartTimeLab.text = KHJString(@"%@-%@",weakSelf.date,times);
         [UIView animateWithDuration:0.25 animations:^{
@@ -314,7 +314,7 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
                     [weakSelf.delegate exitListData:NO];
                 }
             }
-            self->numLab.text = KHJString(@"共%ld个",weakSelf.listArr.count);
+            self->numLab.text = KHJString(@"%@%ld%@",KHJLocalizedString(@"共", nil),weakSelf.listArr.count,KHJLocalizedString(@"个", nil));
             [self->contentList reloadData];
         });
     });

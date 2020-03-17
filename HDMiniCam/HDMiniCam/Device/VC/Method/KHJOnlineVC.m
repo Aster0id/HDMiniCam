@@ -7,8 +7,8 @@
 //
 
 #import "KHJOnlineVC.h"
-#import "KHJQRCodeScanVC.h"
-#import "KHJDeviceManager.h"
+//#import "KHJQRCodeScanVC.h"
+//#import "KHJDeviceManager.h"
 
 @interface KHJOnlineVC ()
 {
@@ -49,22 +49,22 @@
 - (IBAction)qr:(id)sender
 {
     // 二维码扫描
-    KHJQRCodeScanVC *vc = [[KHJQRCodeScanVC alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+//    KHJQRCodeScanVC *vc = [[KHJQRCodeScanVC alloc] init];
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (IBAction)sure:(id)sender
 {
     if (name.text.length == 0) {
-        [self.view makeToast:@"请输入设备名称"];
+        [self.view makeToast:KHJLocalizedString(@"请输入设备名称", nil)];
         return;
     }
     if (uid.text.length == 0) {
-        [self.view makeToast:@"请输入设备id"];
+        [self.view makeToast:KHJLocalizedString(@"请输入设备id", nil)];
         return;
     }
     if (password.text.length == 0) {
-        [self.view makeToast:@"请输入设备密码"];
+        [self.view makeToast:KHJLocalizedString(@"请输入设备密码", nil)];
         return;
     }
     KHJDeviceInfo *deviceInfo = [[KHJDeviceInfo alloc] init];
@@ -87,7 +87,7 @@
         // 未添加的设备：直接添加
         [[KHJDataBase sharedDataBase] addDeviceInfo_with_deviceInfo:deviceInfo resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
             if (code == 1) {
-                [weakSelf.view makeToast:KHJString(@"设备：\"%@\"，添加成功",info.deviceID)];
+                [weakSelf.view makeToast:KHJString(@"%@：\"%@\"，%@",KHJLocalizedString(@"设备", nil),info.deviceID,KHJLocalizedString(@"添加成功", nil))];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [weakSelf.navigationController popToRootViewControllerAnimated:YES];
                     [[NSNotificationCenter defaultCenter] postNotificationName:noti_addDevice_KEY object:nil];
@@ -105,7 +105,7 @@
             [[KHJDataBase sharedDataBase] deleteDeviceInfo_with_deviceInfo:deviceInfo resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
                 [[KHJDataBase sharedDataBase] addDeviceInfo_with_deviceInfo:deviceInfo resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
                     if (code == 1) {
-                        [weakSelf.view makeToast:KHJString(@"设备：\"%@\"，添加成功",info.deviceID)];
+                        [weakSelf.view makeToast:KHJString(@"%@：\"%@\"，%@",KHJLocalizedString(@"设备", nil),info.deviceID,KHJLocalizedString(@"添加成功", nil))];
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                             [weakSelf.navigationController popToRootViewControllerAnimated:YES];
                             [[NSNotificationCenter defaultCenter] postNotificationName:noti_addDevice_KEY object:nil];

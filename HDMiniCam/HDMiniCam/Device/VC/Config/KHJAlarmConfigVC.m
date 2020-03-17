@@ -7,7 +7,7 @@
 //
 
 #import "KHJAlarmConfigVC.h"
-#import "HZWPicker.h"
+#import "KHJPicker.h"
 
 @interface KHJAlarmConfigVC ()
 {
@@ -47,7 +47,7 @@
     }
     else if (sender.tag == 20) {
         CLog(@"开始时间");
-        HZWPicker *pick = [[HZWPicker alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-250+44, SCREEN_WIDTH, 324)];
+        KHJPicker *pick = [[KHJPicker alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-250+44, SCREEN_WIDTH, 324)];
         pick.tKind = 0;
         [pick initSubViews:nil];
         pick.confirmBlock = ^(NSString *strings) {
@@ -56,7 +56,7 @@
     }
     else if (sender.tag == 30) {
         CLog(@"结束时间");
-        HZWPicker *pick = [[HZWPicker alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-250+44, SCREEN_WIDTH, 324)];
+        KHJPicker *pick = [[KHJPicker alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-250+44, SCREEN_WIDTH, 324)];
         pick.tKind = 0;
         [pick initSubViews:nil];
         pick.confirmBlock = ^(NSString *strings) {

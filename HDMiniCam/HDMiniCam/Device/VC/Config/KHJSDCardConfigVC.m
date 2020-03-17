@@ -54,8 +54,8 @@
 
 - (void)addFenBianLv
 {
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"title", nil)
-                                                                       message:KHJLocalizedString(@"分辨率", nil)
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"分辨率", nil)
+                                                                       message:nil
                                                                 preferredStyle:UIAlertControllerStyleAlert];
     WeakSelf
     UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"1080P", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

@@ -15,7 +15,7 @@
 #import "TuyaTimeLineModel.h"
 #import "TYCameraTimeLineScrollView_old.h"
 //
-#import "JKUIPickDate.h"
+#import "KHJPickerDate.h"
 #import "KHJVideoModel.h"
 #import "JSONStructProtocal.h"
 
@@ -359,7 +359,7 @@ TYCameraTimeLineScrollView_oldDelegate>
         return;
     }
     if (index == -1) {
-        [self.view makeToast:@"当前没有视频！"];
+        [self.view makeToast:KHJLocalizedString(@"当前没有视频！", nil)];
     }
     else {
 //        [self.view makeToast:KHJString(@"当前第 %ld 个视频，总共 %ld 个视频", index, self.videoList.count)];
@@ -603,7 +603,7 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
 
 - (void)chooseDate
 {
-    JKUIPickDate *pickdate = [JKUIPickDate setDate];
+    KHJPickerDate *pickdate = [KHJPickerDate setDate];
     WeakSelf
     [pickdate passvalue:^(NSString *date) {
         self->dateLAB.text = date;
@@ -688,7 +688,7 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
                         int timestamp_int = [[formatterShow stringFromDate:date1] intValue];
                         // 播放回放视频
                         [[KHJDeviceManager sharedManager] starPlayback_timeLine_with_deviceID:self.deviceID vi:0 date:date_int time:timestamp_int resultBlock:^(NSInteger code) {
-                            [weakSelf.view makeToast:KHJString(@"正在播放，第%d段视频",i)];
+//                            [weakSelf.view makeToast:KHJString(@"正在播放，第%d段视频",i)];
                         }];
                     });
                     break;

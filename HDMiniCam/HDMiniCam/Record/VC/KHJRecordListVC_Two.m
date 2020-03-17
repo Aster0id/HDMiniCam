@@ -101,8 +101,8 @@
     cell.delegate = self;
     cell.tag = FLAG_TAG + indexPath.row;
     cell.date = self.dateList[indexPath.row];
-    cell.timeLab.text = KHJString(@"拍摄时间：%@",self.dateList[indexPath.row]);
-    cell.numLab.text = KHJString(@"共 %@ 个",self.dateList_num[indexPath.row]);
+    cell.timeLab.text = KHJString(@"%@：%@", KHJLocalizedString(@"拍摄时间", nil),self.dateList[indexPath.row]);
+    cell.numLab.text = KHJString(@"%@ %@ $%@", KHJLocalizedString(@"共", nil),self.dateList_num[indexPath.row],KHJLocalizedString(@"个", nil));
     
     cell.deviceID = self.info.deviceID;
     return cell;

@@ -12,7 +12,7 @@
 //
 #import "JSONStructProtocal.h"
 //
-#import "PlayLocalMusic.h"
+#import "KHJPlayMusic.h"
 #import <Photos/Photos.h>
 #import <Photos/PHPhotoLibrary.h>
 #import <AssetsLibrary/AssetsLibrary.h>
@@ -255,7 +255,7 @@ extern XBAudioUnitRecorder *audioRecorder;
 
 - (void)OnSetFilpCmdResult
 {
-    [self.view makeToast:@"切换成功"];
+    [self.view makeToast:KHJLocalizedString(@"切换成功", nil)];
 }
 
 // 获取 彩色/黑色 画面
@@ -272,10 +272,10 @@ extern XBAudioUnitRecorder *audioRecorder;
 - (void)OnSetIRModeCmdResult
 {
     if (picColorCfg.Type == 0) {
-        [self.view makeToast:@"彩色画面切换成功"];
+        [self.view makeToast:KHJLocalizedString(@"切换成功", nil)];
     }
     else {
-        [self.view makeToast:@"黑白画面切换成功"];
+        [self.view makeToast:KHJLocalizedString(@"切换成功", nil)];
     }
 }
 
@@ -286,16 +286,16 @@ extern XBAudioUnitRecorder *audioRecorder;
         NSString *value = self.change_1497_body.allValues.firstObject;
         [self._1497_body setValue:value forKey:key];
         if ([key isEqualToString:@"Saturtion"]) {
-            [self.view makeToast:@"色彩饱和度 设置成功"];
+            [self.view makeToast:KHJLocalizedString(@"设置成功", nil)];
         }
         else if ([key isEqualToString:@"Brightness"]) {
-            [self.view makeToast:@"亮度 设置成功"];
+            [self.view makeToast:KHJLocalizedString(@"设置成功", nil)];
         }
         else if ([key isEqualToString:@"Acutance"]) {
-            [self.view makeToast:@"亮度 设置成功"];
+            [self.view makeToast:KHJLocalizedString(@"设置成功", nil)];
         }
         else if ([key isEqualToString:@"Contrast"]) {
-            [self.view makeToast:@"对比度 设置成功"];
+            [self.view makeToast:KHJLocalizedString(@"设置成功", nil)];
         }
     }
 }
@@ -536,7 +536,9 @@ extern XBAudioUnitRecorder *audioRecorder;
 
 - (void)gotoSetup
 {
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:@"画面设置" message:@"根据需求设置当前属性" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"画面设置", nil)
+                                                                       message:KHJLocalizedString(@"根据需求设置当前属性", nil)
+                                                                preferredStyle:UIAlertControllerStyleAlert];
     WeakSelf
     UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"色彩饱和度", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:1];
@@ -551,7 +553,7 @@ extern XBAudioUnitRecorder *audioRecorder;
         [weakSelf chooseSetupWith:4];
     }];
     
-    NSString *picColor = picColorCfg.Type == 0 ? @"切换至彩色画面" : @"切换至黑白画面";
+    NSString *picColor = picColorCfg.Type == 0 ? KHJLocalizedString(@"切换至彩色画面", nil) : KHJLocalizedString(@"切换至黑白画面", nil);
     UIAlertAction *config4 = [UIAlertAction actionWithTitle:picColor style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:5];
     }];
@@ -580,26 +582,35 @@ extern XBAudioUnitRecorder *audioRecorder;
 
 - (void)chooseSetupWith:(NSInteger)index
 {
-    NSArray *arr = @[@"色彩饱和度",@"亮度",@"锐度",@"对比度",@"彩色/黑白",@"垂直镜像",@"水平镜像",@"恢复默认值"];
+    NSArray *arr = @[
+    KHJLocalizedString(@"色彩饱和度", nil),
+    KHJLocalizedString(@"亮度", nil),
+    KHJLocalizedString(@"锐度", nil),
+    KHJLocalizedString(@"对比度", nil),
+    KHJLocalizedString(@"彩色/黑白", nil),
+    KHJLocalizedString(@"垂直镜像", nil),
+    KHJLocalizedString(@"水平镜像", nil),
+    KHJLocalizedString(@"恢复默认值", nil)];
+    
     sliderNameLab.text = arr[index - 1];
     if (index == 1 || index == 2 || index == 3 || index == 4) {
         slideView.hidden = NO;
-        if ([sliderNameLab.text isEqualToString:@"色彩饱和度"]) {
+        if ([sliderNameLab.text isEqualToString:KHJLocalizedString(@"色彩饱和度", nil)]) {
             float percent = [self._1497_body[@"Saturtion"] intValue]/255.0;
             sliderControl.value = percent;
             sliderPercentLab.text = KHJString(@"%d%%",(int)(percent*100));
         }
-        else if ([sliderNameLab.text isEqualToString:@"亮度"]) {
+        else if ([sliderNameLab.text isEqualToString:KHJLocalizedString(@"亮度", nil)]) {
             float percent = [self._1497_body[@"Brightness"] intValue]/255.0;
             sliderControl.value = percent;
             sliderPercentLab.text = KHJString(@"%d%%",(int)(percent*100));
         }
-        else if ([sliderNameLab.text isEqualToString:@"锐度"]) {
+        else if ([sliderNameLab.text isEqualToString:KHJLocalizedString(@"锐度", nil)]) {
             float percent = [self._1497_body[@"Acutance"] intValue]/255.0;
             sliderControl.value = percent;
             sliderPercentLab.text = KHJString(@"%d%%",(int)(percent*100));
         }
-        else if ([sliderNameLab.text isEqualToString:@"对比度"]) {
+        else if ([sliderNameLab.text isEqualToString:KHJLocalizedString(@"对比度", nil)]) {
             float percent = [self._1497_body[@"Contrast"] intValue]/255.0;
             sliderControl.value = percent;
             sliderPercentLab.text = KHJString(@"%d%%",(int)(percent*100));
@@ -629,10 +640,10 @@ extern XBAudioUnitRecorder *audioRecorder;
         WeakSelf
         [[KHJDeviceManager sharedManager] setDefault_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {
             if (code >= 0) {
-                [weakSelf.view makeToast:@"设备已恢复默认值"];
+                [weakSelf.view makeToast:KHJLocalizedString(@"设备已恢复默认值", nil)];
             }
             else {
-                [weakSelf.view makeToast:@"恢复失败，请重试！"];
+                [weakSelf.view makeToast:KHJLocalizedString(@"请重试！", nil)];
             }
         }];
     }
@@ -647,19 +658,19 @@ extern XBAudioUnitRecorder *audioRecorder;
     int value = persent*2.55;
     sliderPercentLab.text = KHJString(@"%d%%",persent);
     [self.change_1497_body removeAllObjects];
-    if ([sliderNameLab.text isEqualToString:@"色彩饱和度"]) {
+    if ([sliderNameLab.text isEqualToString:KHJLocalizedString(@"色彩饱和度", nil)]) {
         [self.change_1497_body setValue:KHJString(@"%d",value) forKey:@"Saturtion"];
         [[KHJDeviceManager sharedManager] setSaturationLevel_with_deviceID:self.deviceID level:value resultBlock:^(NSInteger code) {}];
     }
-    else if ([sliderNameLab.text isEqualToString:@"亮度"]) {
+    else if ([sliderNameLab.text isEqualToString:KHJLocalizedString(@"亮度", nil)]) {
         [self.change_1497_body setValue:KHJString(@"%d",value) forKey:@"Brightness"];
         [[KHJDeviceManager sharedManager] setBrightnessLevel_with_deviceID:self.deviceID level:value resultBlock:^(NSInteger code) {}];
     }
-    else if ([sliderNameLab.text isEqualToString:@"锐度"]) {
+    else if ([sliderNameLab.text isEqualToString:KHJLocalizedString(@"锐度", nil)]) {
         [self.change_1497_body setValue:KHJString(@"%d",value) forKey:@"Acutance"];
         [[KHJDeviceManager sharedManager] setAcutanceLevel_with_deviceID:self.deviceID level:value resultBlock:^(NSInteger code) {}];
     }
-    else if ([sliderNameLab.text isEqualToString:@"对比度"]) {
+    else if ([sliderNameLab.text isEqualToString:KHJLocalizedString(@"对比度", nil)]) {
         [self.change_1497_body setValue:KHJString(@"%d",value) forKey:@"Contrast"];
         [[KHJDeviceManager sharedManager] setCompareColorLevel_with_deviceID:self.deviceID level:value resultBlock:^(NSInteger code) {}];
     }
@@ -690,7 +701,7 @@ extern XBAudioUnitRecorder *audioRecorder;
 
 - (void)gotoChangeQuality
 {
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:@"设置画面清晰度" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"设置画面清晰度", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
     WeakSelf
     UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"4K超清", nil)
                                                      style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -756,7 +767,7 @@ extern XBAudioUnitRecorder *audioRecorder;
     //播放拍照声音
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"photoshutter" ofType:@"mp3"];
     NSURL *url = [NSURL fileURLWithPath:filePath];
-    [[PlayLocalMusic shareInstance] play:url repeates:0];
+    [[KHJPlayMusic shareInstance] play:url repeates:0];
     
     NSString *savedImagePath = [[[KHJHelpCameraData sharedModel] getTakeCameraDocPath_deviceID:self.deviceID] stringByAppendingPathComponent:[[KHJHelpCameraData sharedModel] getVideoNameWithType:@"jpg" deviceID:self.deviceID]];
     CLog(@"saveImagePath = %@",savedImagePath);
@@ -772,7 +783,7 @@ extern XBAudioUnitRecorder *audioRecorder;
 //        [[KHJHub shareHub] showText:KHJLocalizedString(@"PhotoSuccess", nil) addToView:self.view];
     }
     else {
-        [[KHJHub shareHub] showText:KHJLocalizedString(@"PhotoFail", nil) addToView:self.view];
+        [[KHJHub shareHub] showText:KHJLocalizedString(@"截图失败", nil) addToView:self.view];
     }
 }
 - (UIImage *)snapsHotView:(UIView *)view
@@ -788,10 +799,10 @@ extern XBAudioUnitRecorder *audioRecorder;
 {
     PHAuthorizationStatus status =  [PHPhotoLibrary authorizationStatus];
    if (status == PHAuthorizationStatusRestricted || status == PHAuthorizationStatusDenied) {
-       UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示"
-                                                                                message:@"请您先去设置允许APP访问您的相册 设置>隐私>相册"
+       UIAlertController *alertController = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"温馨提示", nil)
+                                                                                message:KHJLocalizedString(@"请您先去设置允许APP访问您的相册 设置>隐私>相册", nil)
                                                                          preferredStyle:(UIAlertControllerStyleAlert)];
-       UIAlertAction *action = [UIAlertAction actionWithTitle:@"我知道了"
+       UIAlertAction *action = [UIAlertAction actionWithTitle:KHJLocalizedString(@"我知道了", nil)
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction * _Nonnull action) {
            

@@ -13,7 +13,7 @@
 #import "KHJDataBase.h"
 
 //#import "MBProgressHUD.h"
-#import "KHJNetWorkingManager.h"
+#import "KHJHttpManager.h"
 #import "KHJCalculate.h"
 #import "KHJHelpCameraData.h"
 #import "KHJHub.h"
@@ -23,7 +23,6 @@
 #import "KHJToast.h"
 #import "Toast+UIView.h"
 #import "KHJPublicDefine.h"
-#import "KHJSaveManager.h"
 #import "UIImageView+WebCache.h"
 
 #import "NSString+FFToast.h"
@@ -35,7 +34,6 @@
 #import "UIViewController+LJWKeyboardHandlerHelper.h"
 
 #define Height_NavContentBar 44.0f
-#define SaveManager         [KHJSaveManager shareSaveManager]
 #define Height_StatusBar    ((IS_IPHONE_X==YES)?44.0f: 20.0f)
 #define Height_NavBar       ((IS_IPHONE_X==YES)?88.0f: 64.0f)
 #define Height_TabBar       ((IS_IPHONE_X==YES)?83.0f: 49.0f)
@@ -44,7 +42,6 @@
 
 #define WeakSelf __weak typeof(self) weakSelf = self;
 #define HDWindow [UIApplication sharedApplication].keyWindow
-#define HDLocalizedString(key,comment) [[NSBundle mainBundle] localizedStringForKey:(key)value:@"" table:nil]
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #define UIColorFromRGB_alpha(rgbValue, A) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:A]
 

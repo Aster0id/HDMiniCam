@@ -1,0 +1,27 @@
+
+/* Class = "UILabel"; text = "（GMT+08:00）北京、台北、新加坡"; ObjectID = "5Tm-je-lAs"; */
+"5Tm-je-lAs.text" = "（GMT+08:00）北京、台北、新加坡";
+
+/* Class = "UILabel"; text = "2020年01月20日 08:23:19"; ObjectID = "5x2-Y3-0JA"; */
+"5x2-Y3-0JA.text" = "2020年01月20日 08:23:19";
+
+/* Class = "UIButton"; normalTitle = "用APP同步时间"; ObjectID = "EUb-eL-ENP"; */
+"EUb-eL-ENP.normalTitle" = "Sync time with APP";
+
+/* Class = "UILabel"; text = "时间服务器"; ObjectID = "JO3-jU-Ou9"; */
+"JO3-jU-Ou9.text" = "Time server";
+
+/* Class = "UILabel"; text = "时区"; ObjectID = "Lml-N7-O4R"; */
+"Lml-N7-O4R.text" = "Time zone";
+
+/* Class = "UIButton"; normalTitle = "确定"; ObjectID = "UdE-Kv-pIq"; */
+"UdE-Kv-pIq.normalTitle" = "determine";
+
+/* Class = "UIButton"; normalTitle = "取消"; ObjectID = "YeY-0S-WYD"; */
+"YeY-0S-WYD.normalTitle" = "cancel";
+
+/* Class = "UILabel"; text = "time.nist.gov"; ObjectID = "dsF-uD-hfm"; */
+"dsF-uD-hfm.text" = "time.nist.gov";
+
+/* Class = "UILabel"; text = "当前时间"; ObjectID = "z23-Tb-wIN"; */
+"z23-Tb-wIN.text" = "current time";

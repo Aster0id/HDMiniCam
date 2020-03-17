@@ -65,7 +65,7 @@ extern KHJDecorderType currentDecorderType;
         dispatch_async(dispatch_get_main_queue(), ^{
             if (![weakSelf.deviceList containsObject:deviceID]) {
                 [weakSelf.deviceList addObject:deviceID];
-                [weakSelf.view makeToast:@"有新设备可以添加"];
+                [weakSelf.view makeToast:KHJLocalizedString(@"有新设备可以添加", nil)];
             }
         });
     }
@@ -124,7 +124,7 @@ extern KHJDecorderType currentDecorderType;
 {
     chooseIndex = sender.tag;
     NSArray *passDeviceList = [self.deviceList copy];
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:@"添加设备" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"添加设备", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
     WeakSelf
     for (int i = 0; i < passDeviceList.count; i++) {
         UIAlertAction *config = [UIAlertAction actionWithTitle:passDeviceList[i]

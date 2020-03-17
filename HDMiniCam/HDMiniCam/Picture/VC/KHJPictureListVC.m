@@ -334,9 +334,9 @@
 - (void)showAlert:(NSString *)pathStr
 {
     WeakSelf
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"deleteFile", nil) message:KHJLocalizedString(@"ensureDelete", nil) preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil];
-    UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(@"commit", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"删除文件", nil) message:KHJLocalizedString(@"确认删除吗？", nil) preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         BOOL ret = [[KHJHelpCameraData sharedModel] DeleateFileWithPath:pathStr];
         if (ret) {
@@ -347,12 +347,12 @@
             [self->imagePathArr removeObject:pathStr];
             [weakSelf setCurrentIndex];
             [[KHJToast share] showToastActionWithToastType:_SuccessType toastPostion:_CenterPostion tip:@""
-                                                   content:KHJLocalizedString(@"deleteSuccess", nil)];
+                                                   content:KHJLocalizedString(@"删除成功", nil)];
         }
         else {
             CLog(@"删除失败");
             [[KHJToast share] showToastActionWithToastType:_ErrorType toastPostion:_CenterPostion tip:KHJLocalizedString(@"tips", nil)
-                                                   content:KHJLocalizedString(@"deleteFail", nil)];
+                                                   content:KHJLocalizedString(@"删除失败", nil)];
         }
     }];
     [alertview addAction:cancel];

@@ -1,0 +1,39 @@
+
+/* Class = "UIButton"; normalTitle = "确认"; ObjectID = "0kc-PS-gFp"; */
+"0kc-PS-gFp.normalTitle" = "确认";
+
+/* Class = "UITextField"; placeholder = "请输入密码"; ObjectID = "CHE-ni-ae7"; */
+"CHE-ni-ae7.placeholder" = "请输入密码";
+
+/* Class = "UITextField"; text = "admin"; ObjectID = "CHE-ni-ae7"; */
+"CHE-ni-ae7.text" = "admin";
+
+/* Class = "UITextField"; placeholder = "请输入UID"; ObjectID = "E7Y-VU-ZSH"; */
+"E7Y-VU-ZSH.placeholder" = "请输入UID";
+
+/* Class = "UITextField"; text = "IPCA000002AINYZ"; ObjectID = "E7Y-VU-ZSH"; */
+"E7Y-VU-ZSH.text" = "IPCA000002AINYZ";
+
+/* Class = "UITextField"; placeholder = "请输入设备名称"; ObjectID = "IBe-XX-Hc9"; */
+"IBe-XX-Hc9.placeholder" = "请输入设备名称";
+
+/* Class = "UITextField"; text = "Cam"; ObjectID = "IBe-XX-Hc9"; */
+"IBe-XX-Hc9.text" = "Cam";
+
+/* Class = "UIButton"; normalTitle = "扫描二维码"; ObjectID = "UmT-bY-caj"; */
+"UmT-bY-caj.normalTitle" = "扫描二维码";
+
+/* Class = "UILabel"; text = "UID"; ObjectID = "W6J-Nm-k4e"; */
+"W6J-Nm-k4e.text" = "UID";
+
+/* Class = "UILabel"; text = "名称"; ObjectID = "gJk-CR-fh2"; */
+"gJk-CR-fh2.text" = "名称";
+
+/* Class = "UIButton"; normalTitle = "搜索局域网"; ObjectID = "i93-tv-XhQ"; */
+"i93-tv-XhQ.normalTitle" = "搜索局域网";
+
+/* Class = "UIButton"; normalTitle = "取消"; ObjectID = "iUJ-eF-cVj"; */
+"iUJ-eF-cVj.normalTitle" = "取消";
+
+/* Class = "UILabel"; text = "密码"; ObjectID = "jEu-G8-g0O"; */
+"jEu-G8-g0O.text" = "密码";

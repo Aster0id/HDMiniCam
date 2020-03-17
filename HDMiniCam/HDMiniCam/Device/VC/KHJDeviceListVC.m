@@ -219,16 +219,16 @@ typedef enum : NSUInteger {
     cell.name.text = info.deviceName;
     
     if ([info.deviceStatus isEqualToString:@"0"]) {
-        cell.status.text = @"在线";
+        cell.status.text = KHJLocalizedString(@"在线", nil);
     }
     else if ([info.deviceStatus isEqualToString:@"-6"]) {
-        cell.status.text = @"离线";
+        cell.status.text = KHJLocalizedString(@"离线", nil);
     }
     else if ([info.deviceStatus isEqualToString:@"-26"]) {
-        cell.status.text = @"密码错误";
+        cell.status.text = KHJLocalizedString(@"密码错误", nil);
     }
     else {
-        cell.status.text = @"连接中...";
+        cell.status.text = KHJLocalizedString(@"连接中...", nil);
     }
     cell.delegate = self;
     cell.tag = indexPath.row + FLAG_TAG;
@@ -368,7 +368,7 @@ typedef enum : NSUInteger {
                     self->hotPoint = hotPointType_more;
                 }
                 else {
-                    [weakSelf.view makeToast:KHJString(@"手机已连接 %@ 的设备热点",wifiName)];
+                    [weakSelf.view makeToast:KHJString(@"%@ %@ %@",KHJLocalizedString(@"手机已连接", nil),wifiName,KHJLocalizedString(@"的设备热点", nil))];
                 }
             }
             else {
@@ -384,7 +384,8 @@ typedef enum : NSUInteger {
         KHJDeviceInfo *info = (KHJDeviceInfo *)noti.object;
         UIAlertController *alertview = [UIAlertController alertControllerWithTitle:@"" message:KHJLocalizedString(@"提示", nil)
                                                                     preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(KHJString(@"给设备 \" %@ \" 配网",info.deviceID), nil) style:UIAlertActionStyleDefault
+        UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJString(@"%@ \" %@ \" %@",KHJLocalizedString(@"给设备", nil),info.deviceID,KHJLocalizedString(@"配网", nil))
+                                                         style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * _Nonnull action) {
             KHJWIFIConfigVC *vc = [[KHJWIFIConfigVC alloc] init];
             vc.deviceInfo = info;

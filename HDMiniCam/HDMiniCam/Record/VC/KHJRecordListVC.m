@@ -117,7 +117,7 @@
     cell.nameLab.text = info.deviceID;
     if (currentIndex == 0) {
         NSArray *list = [[KHJHelpCameraData sharedModel] getmp4VideoArray_with_deviceID:info.deviceID];
-        cell.numberLab.text = KHJString(@"共 %d 个",(int)list.count);
+        cell.numberLab.text = KHJString(@"%@ %d %@",KHJLocalizedString(@"共", nil),(int)list.count,KHJLocalizedString(@"个", nil));
     }
     else if (currentIndex == 1) {
         cell.numberLab.text = @"";
