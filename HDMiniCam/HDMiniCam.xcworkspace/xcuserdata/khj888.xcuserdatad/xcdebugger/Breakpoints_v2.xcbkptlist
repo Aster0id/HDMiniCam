@@ -243,38 +243,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CE446626-0C4A-4BD4-8FE1-AD92DF0825F7"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HDMiniCam/Device/VC/KHJVideoPlayer_sp_VC.mm"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "506"
-            endingLineNumber = "506"
-            landmarkName = "-eightBtn:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1B01044D-EE19-4158-BAF0-2578F3F4CD90"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HDMiniCam/Device/VC/KHJVideoPlayer_sp_VC.mm"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "510"
-            endingLineNumber = "510"
-            landmarkName = "-eightBtn:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "9CD03FE9-047F-499B-B246-2506EFEE1081"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -282,8 +250,8 @@
             filePath = "HDMiniCam/Device/VC/KHJVideoPlayer_sp_VC.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "403"
-            endingLineNumber = "403"
+            startingLineNumber = "387"
+            endingLineNumber = "387"
             landmarkName = "-hpSixBtnAction:"
             landmarkType = "7">
          </BreakpointContent>
@@ -298,8 +266,8 @@
             filePath = "HDMiniCam/Device/VC/KHJVideoPlayer_sp_VC.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "408"
-            endingLineNumber = "408"
+            startingLineNumber = "392"
+            endingLineNumber = "392"
             landmarkName = "-hpSixBtnAction:"
             landmarkType = "7">
          </BreakpointContent>
@@ -323,118 +291,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "93884DB3-34BD-472E-8FC9-62660DDE1844"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HDMiniCam/Picture/VC/KHJPictureListVC.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "531"
-            endingLineNumber = "531"
-            landmarkName = "-deleteImageWith:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "AC2F0ADF-F8FB-4A5E-BEA6-1E03A380FF36"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HDMiniCam/Picture/VC/KHJPictureListVC.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "522"
-            endingLineNumber = "522"
-            landmarkName = "-deleteImageWith:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "53C512A2-F428-41EC-8176-586811BA1E18"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HDMiniCam/Picture/VC/KHJPictureListVC.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "526"
-            endingLineNumber = "526"
-            landmarkName = "-deleteImageWith:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "6FB843CD-00B0-4547-9EB8-6DB4B61D1D34"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HDMiniCam/Picture/VC/KHJPictureListVC.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "529"
-            endingLineNumber = "529"
-            landmarkName = "-deleteImageWith:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "242A09BD-7220-412A-825D-896686B9F14C"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HDMiniCam/Picture/VC/KHJPictureListVC.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "539"
-            endingLineNumber = "539"
-            landmarkName = "-deleteImageWith:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "242A09BD-7220-412A-825D-896686B9F14C - f8a60e769bce69e2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__36-[KHJPictureListVC deleteImageWith:]_block_invoke.315"
-                  moduleName = "HDCamView"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/khj888/Documents/kevin/HDMini/HDMiniCam/HDMiniCam/HDMiniCam/Picture/VC/KHJPictureListVC.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "539"
-                  endingLineNumber = "539"
-                  offsetFromSymbolStart = "64">
-               </Location>
-               <Location
-                  uuid = "242A09BD-7220-412A-825D-896686B9F14C - f8a60e769bce69e2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__36-[KHJPictureListVC deleteImageWith:]_block_invoke.315"
-                  moduleName = "HDCamView"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/khj888/Documents/kevin/HDMini/HDMiniCam/HDMiniCam/HDMiniCam/Picture/VC/KHJPictureListVC.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "539"
-                  endingLineNumber = "539"
-                  offsetFromSymbolStart = "104">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "316B891C-F300-442F-95AA-F017A0FFD168"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -442,8 +298,8 @@
             filePath = "HDMiniCam/Device/VC/KHJVideoPlayer_hf_VC.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "620"
-            endingLineNumber = "620"
+            startingLineNumber = "621"
+            endingLineNumber = "621"
             landmarkName = "-chooseDateWith_date:"
             landmarkType = "7">
          </BreakpointContent>

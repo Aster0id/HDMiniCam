@@ -124,12 +124,12 @@ typedef enum : NSUInteger {
 
 - (IBAction)add:(id)sender
 {
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"添加设备", nil) message:@""
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"adDev_", nil) message:@""
                                                             preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel
                                                    handler:nil];
     WeakSelf
-    UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(@"设备配网", nil) style:UIAlertActionStyleDefault
+    UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(@"devAddNet_", nil) style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * _Nonnull action) {
         if ([wifiName hasPrefix:@"IPC"]) {
             KHJAddDeviceListVC *vc = [[KHJAddDeviceListVC alloc] init];
@@ -141,13 +141,13 @@ typedef enum : NSUInteger {
             [weakSelf changeToDeviceHotpoint];
         }
     }];
-    UIAlertAction *defult1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"添加已配网的设备", nil) style:UIAlertActionStyleDefault
+    UIAlertAction *defult1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"adHadDevNet_", nil) style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * _Nonnull action) {
         KHJOnlineVC *vc = [[KHJOnlineVC alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }];
-    UIAlertAction *defult2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"局域网下搜索设备", nil) style:UIAlertActionStyleDefault
+    UIAlertAction *defult2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"adDevNet_", nil) style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * _Nonnull action) {
         KHJAddDeviceListVC *vc = [[KHJAddDeviceListVC alloc] init];
         vc.isSameRouter = YES;
@@ -219,16 +219,16 @@ typedef enum : NSUInteger {
     cell.name.text = info.deviceName;
     
     if ([info.deviceStatus isEqualToString:@"0"]) {
-        cell.status.text = KHJLocalizedString(@"在线", nil);
+        cell.status.text = KHJLocalizedString(@"onLn_", nil);
     }
     else if ([info.deviceStatus isEqualToString:@"-6"]) {
-        cell.status.text = KHJLocalizedString(@"离线", nil);
+        cell.status.text = KHJLocalizedString(@"ofLn_", nil);
     }
     else if ([info.deviceStatus isEqualToString:@"-26"]) {
-        cell.status.text = KHJLocalizedString(@"密码错误", nil);
+        cell.status.text = KHJLocalizedString(@"pwdErr_", nil);
     }
     else {
-        cell.status.text = KHJLocalizedString(@"连接中...", nil);
+        cell.status.text = KHJLocalizedString(@"cneting_", nil);
     }
     cell.delegate = self;
     cell.tag = indexPath.row + FLAG_TAG;
@@ -267,7 +267,7 @@ typedef enum : NSUInteger {
     }
     else if ([info.deviceStatus isEqualToString:@"-26"]) {
         // 密码错误，请重新设置
-        [self.view makeToast:KHJLocalizedString(@"密码错误，请重新设置", nil)];
+        [self.view makeToast:KHJLocalizedString(@"pwdErSet_", nil)];
     }
     else if ([info.deviceStatus isEqualToString:@"-6"]) {
         // 离线，重连
@@ -284,19 +284,19 @@ typedef enum : NSUInteger {
 {
     WeakSelf
     UIAlertController *alertview = [UIAlertController alertControllerWithTitle:deviceInfo.deviceName message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"修改设备", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"chageDev_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         KHJOnlineVC *vc = [[KHJOnlineVC alloc] init];
         vc.deviceInfo = deviceInfo;
         vc.hidesBottomBarWhenPushed = YES;
         [weakSelf.navigationController pushViewController:vc animated:YES];
     }];
-    UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"删除设备", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"dltDev_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [[KHJDataBase sharedDataBase] deleteDeviceInfo_with_deviceInfo:deviceInfo resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
             if ([weakSelf.deviceList containsObject:deviceInfo]) {
                 NSInteger index = [weakSelf.deviceList indexOfObject:deviceInfo];
                 [weakSelf.deviceList removeObject:deviceInfo];
                 [self->contentTBV deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
-                [weakSelf.view makeToast:KHJLocalizedString(@"设备删除成功", nil)];
+                [weakSelf.view makeToast:KHJLocalizedString(@"dltSuc_", nil)];
                 
                 
                 NSString *path_document = NSHomeDirectory();
@@ -311,19 +311,19 @@ typedef enum : NSUInteger {
         }];
     }];
     
-    UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"重连设备", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"reCnctDev_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         // 离线，重连
         [[KHJDeviceManager sharedManager] disconnect_with_deviceID:deviceInfo.deviceID resultBlock:^(NSInteger code) {
             [[KHJDeviceManager sharedManager] connect_with_deviceID:deviceInfo.deviceID password:deviceInfo.devicePassword resultBlock:^(NSInteger code) {}];
         }];
     }];
-    UIAlertAction *config3 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"高级配置", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config3 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"highCfg_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         KHJDeviceConfVC *vc = [[KHJDeviceConfVC alloc] init];
         vc.deviceInfo = deviceInfo;
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
 
     [alertview addAction:config];
     [alertview addAction:config1];
@@ -368,7 +368,7 @@ typedef enum : NSUInteger {
                     self->hotPoint = hotPointType_more;
                 }
                 else {
-                    [weakSelf.view makeToast:KHJString(@"%@ %@ %@",KHJLocalizedString(@"手机已连接", nil),wifiName,KHJLocalizedString(@"的设备热点", nil))];
+                    [weakSelf.view makeToast:KHJString(@"%@ %@ %@",KHJLocalizedString(@"phadCnet_", nil),wifiName,KHJLocalizedString(@"devHot_", nil))];
                 }
             }
             else {
@@ -382,9 +382,9 @@ typedef enum : NSUInteger {
 {
     if ([wifiName hasPrefix:@"IPC"]) {
         KHJDeviceInfo *info = (KHJDeviceInfo *)noti.object;
-        UIAlertController *alertview = [UIAlertController alertControllerWithTitle:@"" message:KHJLocalizedString(@"提示", nil)
+        UIAlertController *alertview = [UIAlertController alertControllerWithTitle:@"" message:KHJLocalizedString(@"tips_", nil)
                                                                     preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJString(@"%@ \" %@ \" %@",KHJLocalizedString(@"给设备", nil),info.deviceID,KHJLocalizedString(@"配网", nil))
+        UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJString(@"%@ \" %@ \" %@",KHJLocalizedString(@"toDev_", nil),info.deviceID,KHJLocalizedString(@"adNet_", nil))
                                                          style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * _Nonnull action) {
             KHJWIFIConfigVC *vc = [[KHJWIFIConfigVC alloc] init];

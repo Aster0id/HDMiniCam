@@ -334,9 +334,9 @@
 - (void)showAlert:(NSString *)pathStr
 {
     WeakSelf
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"删除文件", nil) message:KHJLocalizedString(@"确认删除吗？", nil) preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:nil];
-    UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"dltFile_", nil) message:KHJLocalizedString(@"sureDlt_", nil) preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         BOOL ret = [[KHJHelpCameraData sharedModel] DeleateFileWithPath:pathStr];
         if (ret) {
@@ -347,12 +347,12 @@
             [self->imagePathArr removeObject:pathStr];
             [weakSelf setCurrentIndex];
             [[KHJToast share] showToastActionWithToastType:_SuccessType toastPostion:_CenterPostion tip:@""
-                                                   content:KHJLocalizedString(@"删除成功", nil)];
+                                                   content:KHJLocalizedString(@"dltSuc_", nil)];
         }
         else {
             CLog(@"删除失败");
             [[KHJToast share] showToastActionWithToastType:_ErrorType toastPostion:_CenterPostion tip:KHJLocalizedString(@"tips", nil)
-                                                   content:KHJLocalizedString(@"删除失败", nil)];
+                                                   content:KHJLocalizedString(@"dltFail_", nil)];
         }
     }];
     [alertview addAction:cancel];
@@ -460,12 +460,12 @@
 {
     NSInteger row = [imagePathArr indexOfObject:path];
     CLog(@"长按 row = %ld",row);
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"是否删除该图片？", nil) message:@""
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"isDltPic_", nil) message:@""
                                                             preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel
                                                    handler:nil];
     WeakSelf
-    UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault
+    UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sure", nil) style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf deletePic:row];
     }];

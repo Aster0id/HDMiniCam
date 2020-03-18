@@ -1,9 +1,9 @@
 
 /* Class = "UILabel"; text = "声音侦测"; ObjectID = "547-H8-lW9"; */
-"547-H8-lW9.text" = "Sound detection";
+"547-H8-lW9.text" = "Sound";
 
 /* Class = "UILabel"; text = "全天录像"; ObjectID = "8rA-IP-Ktb"; */
-"8rA-IP-Ktb.text" = "All day video";
+"8rA-IP-Ktb.text" = "All";
 
 /* Class = "UIButton"; normalTitle = "前一天"; ObjectID = "NZ1-zX-hpH"; */
 "NZ1-zX-hpH.normalTitle" = "Pre";
@@ -15,16 +15,16 @@
 "QlN-He-TqK.normalTitle" = "Next";
 
 /* Class = "UIButton"; normalTitle = "拍照"; ObjectID = "U1H-Ug-Mvx"; */
-"U1H-Ug-Mvx.normalTitle" = "Camera";
+"U1H-Ug-Mvx.normalTitle" = "Cam";
 
 /* Class = "UILabel"; text = "监听"; ObjectID = "Vjg-tX-4LZ"; */
 "Vjg-tX-4LZ.text" = "Listen";
 
 /* Class = "UIButton"; normalTitle = "浏览"; ObjectID = "aRv-iZ-ieg"; */
-"aRv-iZ-ieg.normalTitle" = "Browse";
+"aRv-iZ-ieg.normalTitle" = "List";
 
 /* Class = "UILabel"; text = "视频名称"; ObjectID = "g0R-K7-cOV"; */
-"g0R-K7-cOV.text" = "Video name";
+"g0R-K7-cOV.text" = "";
 
 /* Class = "UIButton"; selectedTitle = "监听中"; ObjectID = "nBl-Yu-j5J"; */
 "nBl-Yu-j5J.selectedTitle" = "Listening";
@@ -36,7 +36,7 @@
 "qOf-da-YXh.text" = "2020_02_12";
 
 /* Class = "UIButton"; normalTitle = "录屏"; ObjectID = "vNf-GT-CTH"; */
-"vNf-GT-CTH.normalTitle" = "Record";
+"vNf-GT-CTH.normalTitle" = "Video";
 
 /* Class = "UILabel"; text = "移动侦测"; ObjectID = "zkc-3N-hfE"; */
-"zkc-3N-hfE.text" = "Motion Detection";
+"zkc-3N-hfE.text" = "Motion";

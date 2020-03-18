@@ -31,7 +31,7 @@
 {
     [super viewDidLoad];
     self.deviceID = self.deviceInfo.deviceID;
-    self.titleLab.text = KHJLocalizedString(@"高级配置", nil);
+    self.titleLab.text = KHJLocalizedString(@"highCfg_", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     
     iconArr = @[KHJIMAGE(@"config_alarm"),
@@ -43,14 +43,14 @@
                 KHJIMAGE(@"config_restart"),
                 KHJIMAGE(@"config_reboot")];
 //                KHJIMAGE(@"config_app")];
-    titleArr = @[KHJLocalizedString(@"报警配置", nil),
-                 KHJLocalizedString(@"Wi-Fi连接配置", nil),
-                 KHJLocalizedString(@"SD卡录像设置", nil),
+    titleArr = @[KHJLocalizedString(@"alarCfg_", nil),
+                 KHJLocalizedString(@"WiFiConectCfg_", nil),
+                 KHJLocalizedString(@"SDCadCfg_", nil),
 //                 KHJLocalizedString(@"杂项设置", nil),
-                 KHJLocalizedString(@"时间设置", nil),
-                 KHJLocalizedString(@"修改访问密码", nil),
-                 KHJLocalizedString(@"重启设备", nil),
-                 KHJLocalizedString(@"恢复出厂设置", nil)];
+                 KHJLocalizedString(@"timeCfg_", nil),
+                 KHJLocalizedString(@"chagPwd_", nil),
+                 KHJLocalizedString(@"restartDev_", nil),
+                 KHJLocalizedString(@"rset_", nil)];
 //                 KHJLocalizedString(@"APP密码", nil)];
 }
 
@@ -122,21 +122,21 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
     else if (row == 5) {
-        UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:KHJLocalizedString(@"确定要重启设备吗？", nil) preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *delete = [UIAlertAction actionWithTitle:KHJLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:KHJLocalizedString(@"surestart_", nil) preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *delete = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
         }];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
         [alertview addAction:delete];
         [alertview addAction:cancel];
         [self presentViewController:alertview animated:YES completion:nil];
     }
     else if (row == 6) {
-        UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:KHJLocalizedString(@"确定恢复出厂设置吗？", nil) preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *delete = [UIAlertAction actionWithTitle:KHJLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:KHJLocalizedString(@"sureSet_", nil) preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *delete = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
         }];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
         [alertview addAction:delete];
         [alertview addAction:cancel];
         [self presentViewController:alertview animated:YES completion:nil];

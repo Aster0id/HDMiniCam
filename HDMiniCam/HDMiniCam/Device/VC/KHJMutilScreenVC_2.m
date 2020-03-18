@@ -65,7 +65,7 @@ extern KHJDecorderType currentDecorderType;
         dispatch_async(dispatch_get_main_queue(), ^{
             if (![weakSelf.deviceList containsObject:deviceID]) {
                 [weakSelf.deviceList addObject:deviceID];
-                [weakSelf.view makeToast:KHJLocalizedString(@"有新设备可以添加", nil)];
+                [weakSelf.view makeToast:KHJLocalizedString(@"caAdNewDev_", nil)];
             }
         });
     }
@@ -124,7 +124,7 @@ extern KHJDecorderType currentDecorderType;
 {
     chooseIndex = sender.tag;
     NSArray *passDeviceList = [self.deviceList copy];
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"添加设备", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"adDev_", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
     WeakSelf
     for (int i = 0; i < passDeviceList.count; i++) {
         UIAlertAction *config = [UIAlertAction actionWithTitle:passDeviceList[i]
@@ -134,7 +134,7 @@ extern KHJDecorderType currentDecorderType;
         }];
         [alertview addAction:config];
     }
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
     [alertview addAction:cancel];
     [self presentViewController:alertview animated:YES completion:nil];
 }

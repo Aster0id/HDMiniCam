@@ -225,7 +225,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"照片";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
     [self configTableView];
 }
 

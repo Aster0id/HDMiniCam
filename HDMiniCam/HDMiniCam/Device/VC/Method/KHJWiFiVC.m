@@ -23,7 +23,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.titleLab.text = KHJLocalizedString(@"配置网络", nil);
+    self.titleLab.text = KHJLocalizedString(@"cfgNet_", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
 }
 

@@ -130,6 +130,7 @@
 		AB4827A52420B845008970A0 /* KHJPictureListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4827A72420B845008970A0 /* KHJPictureListVC.xib */; };
 		AB4827AE2420C841008970A0 /* KHJToast.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4827AC2420C840008970A0 /* KHJToast.m */; };
 		AB4827B32420CB49008970A0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB4827B52420CB49008970A0 /* Localizable.strings */; };
+		AB4827C52421FEED008970A0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB4827C72421FEED008970A0 /* InfoPlist.strings */; };
 		AB4EFA7323F6B40000D584E7 /* libIPCNetManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB4EFA7123F6B40000D584E7 /* libIPCNetManager.a */; };
 		AB4EFA7423F6B40000D584E7 /* libFBP2P.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB4EFA7223F6B40000D584E7 /* libFBP2P.a */; };
 		AB4EFA7E23F6D43600D584E7 /* KHJDeviceManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB4EFA7D23F6D43600D584E7 /* KHJDeviceManager.mm */; };
@@ -168,9 +169,11 @@
 		AB7648662405132A00D6DE1C /* KHJPickerDate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7648652405132A00D6DE1C /* KHJPickerDate.m */; };
 		AB764975240617A300D6DE1C /* KHJVideoPlayerBaseVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB764974240617A300D6DE1C /* KHJVideoPlayerBaseVC.mm */; };
 		AB7649782406794F00D6DE1C /* KHJPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7649772406794F00D6DE1C /* KHJPicker.m */; };
+		AB771A2E24222979007B5E2E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB771A2D24222979007B5E2E /* Info.plist */; };
 		ABEBCDFF23CF1B8400581AFB /* KHJPictureListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEBCDFE23CF1B8400581AFB /* KHJPictureListVC.m */; };
 		ABEBCE0323CF1D5000581AFB /* KHJPicture_oneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEBCE0123CF1D5000581AFB /* KHJPicture_oneCell.m */; };
 		ABEBCE0423CF1D5000581AFB /* KHJPicture_oneCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABEBCE0223CF1D5000581AFB /* KHJPicture_oneCell.xib */; };
+		BAF3EF2E16DEB1D8A292EDE7 /* Pods_HDMiniCam.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E40FDE3B8EEB6E3E1782DFE /* Pods_HDMiniCam.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -204,7 +207,6 @@
 		93C3396723CB75BB00B44E5F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		93C3396923CB75BE00B44E5F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		93C3396C23CB75BE00B44E5F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		93C3396E23CB75BE00B44E5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93C3396F23CB75BE00B44E5F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		93C3397C23CE1BA800B44E5F /* KHJTabBarBaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHJTabBarBaseVC.m; sourceTree = "<group>"; };
 		93C3397E23CE1BA800B44E5F /* KHJBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHJBaseCell.m; sourceTree = "<group>"; };
@@ -401,6 +403,8 @@
 		AB4827AD2420C840008970A0 /* KHJToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHJToast.h; sourceTree = "<group>"; };
 		AB4827B42420CB49008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AB4827B62420CB4D008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		AB4827C62421FEED008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		AB4827C82421FEF0008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		AB4EFA6223F6B0BE00D584E7 /* JSONObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JSONObject.hpp; sourceTree = "<group>"; };
 		AB4EFA6323F6B0BE00D584E7 /* SEP2P_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEP2P_API.h; sourceTree = "<group>"; };
 		AB4EFA6423F6B0BE00D584E7 /* cJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cJSON.h; sourceTree = "<group>"; };
@@ -470,6 +474,7 @@
 		AB764974240617A300D6DE1C /* KHJVideoPlayerBaseVC.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KHJVideoPlayerBaseVC.mm; sourceTree = "<group>"; };
 		AB7649762406794F00D6DE1C /* KHJPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHJPicker.h; sourceTree = "<group>"; };
 		AB7649772406794F00D6DE1C /* KHJPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHJPicker.m; sourceTree = "<group>"; };
+		AB771A2D24222979007B5E2E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ABEBCDFA23CF1B6E00581AFB /* KHJPictureListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHJPictureListVC.h; sourceTree = "<group>"; };
 		ABEBCDFE23CF1B8400581AFB /* KHJPictureListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHJPictureListVC.m; sourceTree = "<group>"; };
 		ABEBCE0023CF1D5000581AFB /* KHJPicture_oneCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJPicture_oneCell.h; sourceTree = "<group>"; };
@@ -492,6 +497,7 @@
 				AB597B3C240154D500F04F84 /* libIOTCAPIs_P2PTunnelT.a in Frameworks */,
 				AB597B3A240154D500F04F84 /* libIOTCAPIs_ALLT.a in Frameworks */,
 				AB597B39240154D500F04F84 /* libIOTCAPIs_P2PTunnel.a in Frameworks */,
+				BAF3EF2E16DEB1D8A292EDE7 /* Pods_HDMiniCam.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,11 +548,12 @@
 				93C3396623CB75BB00B44E5F /* Main.storyboard */,
 				93C3396923CB75BE00B44E5F /* Assets.xcassets */,
 				93C3396B23CB75BE00B44E5F /* LaunchScreen.storyboard */,
-				93C3396E23CB75BE00B44E5F /* Info.plist */,
 				93C33B2823CE20B400B44E5F /* KHJUtility.h */,
+				AB771A2D24222979007B5E2E /* Info.plist */,
 				93C33A9923CE20AF00B44E5F /* KHJUtility.m */,
 				93C3399123CE1D0600B44E5F /* KHJPublicDefine.h */,
 				93C3398F23CE1C3F00B44E5F /* PrefixHeader.pch */,
+				AB4827C72421FEED008970A0 /* InfoPlist.strings */,
 				AB4827B52420CB49008970A0 /* Localizable.strings */,
 				93C3396F23CB75BE00B44E5F /* main.m */,
 			);
@@ -1156,6 +1163,7 @@
 				93037C8B23D933EE00F4D969 /* KHJWiFiVC.xib in Resources */,
 				93C33B4E23CE20B400B44E5F /* ZQAlterField.strings in Resources */,
 				AB30DA6623D1482F005BD2A1 /* KHJSearchDeviceCell.xib in Resources */,
+				AB771A2E24222979007B5E2E /* Info.plist in Resources */,
 				AB4827862420B769008970A0 /* KHJWIFIConfigVC.xib in Resources */,
 				93C33B7623CE20B400B44E5F /* navi_back@2x.png in Resources */,
 				AB4827552420B666008970A0 /* KHJDeviceListVC.xib in Resources */,
@@ -1179,6 +1187,7 @@
 				93C33B7923CE20B400B44E5F /* VideoSendIcon@2x.png in Resources */,
 				93C33B4F23CE20B400B44E5F /* ZQAlterField.xib in Resources */,
 				AB30DA5123D066F7005BD2A1 /* KHJHadBindDeviceVC.xib in Resources */,
+				AB4827C52421FEED008970A0 /* InfoPlist.strings in Resources */,
 				93C33B6E23CE20B400B44E5F /* photo_sel_previewVc@2x.png in Resources */,
 				AB5462E3240FB91000A096ED /* KHJCollectionViewCell_three.xib in Resources */,
 				AB48276A2420B6DC008970A0 /* KHJBackPlayListVC.xib in Resources */,
@@ -1531,6 +1540,15 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
+		AB4827C72421FEED008970A0 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AB4827C62421FEED008970A0 /* en */,
+				AB4827C82421FEF0008970A0 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -1653,13 +1671,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CODE_SIGN_ENTITLEMENTS = HDMiniCam/HDMiniCam.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = VNCC3G6TV4;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = HDMiniCam/PrefixHeader.pch;
-				INFOPLIST_FILE = HDMiniCam/Info.plist;
+				INFOPLIST_FILE = "$(PROJECT_DIR)/HDMiniCam/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1671,8 +1689,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.khj.HDCamView;
 				PRODUCT_NAME = HDCamView;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE_SPECIFIER = HDCamView_dis;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1683,13 +1701,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CODE_SIGN_ENTITLEMENTS = HDMiniCam/HDMiniCam.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = VNCC3G6TV4;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = HDMiniCam/PrefixHeader.pch;
-				INFOPLIST_FILE = HDMiniCam/Info.plist;
+				INFOPLIST_FILE = "$(PROJECT_DIR)/HDMiniCam/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1701,8 +1719,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.khj.HDCamView;
 				PRODUCT_NAME = HDCamView;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE_SPECIFIER = HDCamView_dis;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

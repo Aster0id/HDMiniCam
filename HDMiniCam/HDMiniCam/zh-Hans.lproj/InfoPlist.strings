@@ -1,0 +1,5 @@
+
+"CFBundleDisplayName"="HDCamView";
+"NSMicrophoneUsageDescription"="此App在设备进行对讲时，需访问您手机的录音权限";
+"NSPhotoLibraryUsageDescription"="此App在使用截图功能来保存照片时，需访问您手机的相册权限";
+"NSLocationWhenInUseUsageDescription"="此App在ios13系统下，给设备配网时，必须获取手机Wi-Fi信息，故需要访问您手机的定位权限";

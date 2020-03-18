@@ -119,6 +119,7 @@ TYCameraTimeLineScrollView_oldDelegate>
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    nameLab.text = self.deviceID;
     isRebackPlaying = NO;
     self.delayHiddenTimes = 2;
     nextDayBtn.hidden = YES;
@@ -359,7 +360,7 @@ TYCameraTimeLineScrollView_oldDelegate>
         return;
     }
     if (index == -1) {
-        [self.view makeToast:KHJLocalizedString(@"当前没有视频！", nil)];
+        [self.view makeToast:KHJLocalizedString(@"noVide_", nil)];
     }
     else {
 //        [self.view makeToast:KHJString(@"当前第 %ld 个视频，总共 %ld 个视频", index, self.videoList.count)];
@@ -701,7 +702,7 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
                         weakSelf.activityView.hidden = YES;
                         [weakSelf.activityView stopAnimating];
                     }
-                    [weakSelf.view makeToast:KHJLocalizedString(@"无视频可播放", nil)];
+                    [weakSelf.view makeToast:KHJLocalizedString(@"noVidePly_", nil)];
                 });
             }
         });

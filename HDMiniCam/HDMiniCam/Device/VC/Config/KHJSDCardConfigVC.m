@@ -26,7 +26,7 @@
     [self registerLJWKeyboardHandler];
     timeView.layer.borderWidth = 1;
     timeView.layer.borderColor = UIColorFromRGB(0xF5F5F5).CGColor;
-    self.titleLab.text = KHJLocalizedString(@"录像设置", nil);
+    self.titleLab.text = KHJLocalizedString(@"rcodSet_", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -54,7 +54,7 @@
 
 - (void)addFenBianLv
 {
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"分辨率", nil)
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"fenbianlv_", nil)
                                                                        message:nil
                                                                 preferredStyle:UIAlertControllerStyleAlert];
     WeakSelf

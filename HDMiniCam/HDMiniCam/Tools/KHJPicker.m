@@ -98,7 +98,7 @@ static const NSInteger HZWDefaultHeight = 248;
         _confirmButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH -100, 0, 100, 44)];
         _confirmButton.backgroundColor = UIColor.clearColor;
         _confirmButton.titleLabel.font = [UIFont systemFontOfSize:18.0];
-        NSString *title = KHJLocalizedString(@"确认", nil);
+        NSString *title = KHJLocalizedString(@"sure", nil);
         [_confirmButton setTitle:title forState:UIControlStateNormal];
         [_confirmButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_confirmButton addTarget:self action:@selector(confirm:) forControlEvents:UIControlEventTouchUpInside];
@@ -112,7 +112,7 @@ static const NSInteger HZWDefaultHeight = 248;
         _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
         _cancelButton.backgroundColor = UIColor.clearColor;
         _cancelButton.titleLabel.font = [UIFont systemFontOfSize:18.0];
-        NSString *title =KHJLocalizedString(@"取消", nil);
+        NSString *title =KHJLocalizedString(@"cancel_", nil);
         [_cancelButton setTitle:title forState:UIControlStateNormal];
         [_cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_cancelButton addTarget:self action:@selector(cancel:) forControlEvents:UIControlEventTouchUpInside];
@@ -191,7 +191,7 @@ static const NSInteger HZWDefaultHeight = 248;
             break;
         case 1:
         {
-            return KHJLocalizedString(@"时", nil);
+            return KHJLocalizedString(@"hous_", nil);
         }
             break;
         case 2:
@@ -200,13 +200,13 @@ static const NSInteger HZWDefaultHeight = 248;
         }
             break;
         case 3:
-            return KHJLocalizedString(@"分", nil);
+            return KHJLocalizedString(@"mins_", nil);
             break;
         case 4:
             return [secArr objectAtIndex:row];
             break;
         case 5:
-            return KHJLocalizedString(@"秒", nil);
+            return KHJLocalizedString(@"secs_", nil);
             break;
         default:
             break;

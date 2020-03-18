@@ -96,7 +96,7 @@
     [self addSubview:viewbottom];
     
     buttonCancle = [[UIButton alloc]initWithFrame:CGRectMake(16,2, 80, 36)];
-    [buttonCancle setTitle:KHJLocalizedString(@"取消", nil) forState:UIControlStateNormal];
+    [buttonCancle setTitle:KHJLocalizedString(@"cancel_", nil) forState:UIControlStateNormal];
     buttonCancle.titleLabel.font = [UIFont systemFontOfSize:17];
     [buttonCancle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [buttonCancle.titleLabel sizeToFit];
@@ -106,7 +106,7 @@
     buttonSure = [[UIButton alloc]initWithFrame:CGRectMake(KWindowWidth-56-44,2, 80, 36)];
 //    buttonSure.titleLabel.font = [UIFont systemFontOfSize:14];
     [buttonSure setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [buttonSure setTitle:KHJLocalizedString(@"确认", nil) forState:UIControlStateNormal];
+    [buttonSure setTitle:KHJLocalizedString(@"sure", nil) forState:UIControlStateNormal];
     buttonSure.titleLabel.font = [UIFont systemFontOfSize:17];
     [buttonSure.titleLabel sizeToFit];
     [buttonSure addTarget:self action:@selector(clickSure) forControlEvents:UIControlEventTouchUpInside];

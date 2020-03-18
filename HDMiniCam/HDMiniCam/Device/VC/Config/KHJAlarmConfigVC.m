@@ -30,7 +30,7 @@
 {
     [super viewDidLoad];
     [self registerLJWKeyboardHandler];
-    self.titleLab.text = KHJLocalizedString(@"报警设置", nil);
+    self.titleLab.text = KHJLocalizedString(@"alarSet_", nil);
     [self.leftBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -102,22 +102,22 @@
                                                                        message:nil
                                                                 preferredStyle:UIAlertControllerStyleAlert];
     WeakSelf
-    UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"1-最高", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"high1_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf setAlarmTypeWith:@"1"];
     }];
-    UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"2-高", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"high0_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf setAlarmTypeWith:@"2"];
     }];
-    UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"3-普通", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"normal_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf setAlarmTypeWith:@"3"];
     }];
-    UIAlertAction *config3 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"4-低", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config3 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"low4_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf setAlarmTypeWith:@"4"];
     }];
-    UIAlertAction *config4 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"5-最低", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config4 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"low5_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf setAlarmTypeWith:@"5"];
     }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
     [alertview addAction:config];
     [alertview addAction:config1];
     [alertview addAction:config2];

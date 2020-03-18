@@ -123,7 +123,7 @@
     _okButton.frame = CGRectMake(self.view.tz_width - 44 - 12, 0, 44, 44);
     _okButton.titleLabel.font = [UIFont systemFontOfSize:16];
     [_okButton addTarget:self action:@selector(okButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [_okButton setTitle:@"确定" forState:UIControlStateNormal];
+    [_okButton setTitle:KHJLocalizedString(@"sure", nil) forState:UIControlStateNormal];
     [_okButton setTitleColor:imagePickerVc.oKButtonTitleColorNormal forState:UIControlStateNormal];
     
     _numberImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo_number_icon"]];

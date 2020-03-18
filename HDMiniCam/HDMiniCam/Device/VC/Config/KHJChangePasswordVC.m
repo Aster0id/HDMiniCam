@@ -21,11 +21,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     if (self.isFinderPassword) {
-        self.titleLab.text = KHJLocalizedString(@"修改访问密码", nil);
+        self.titleLab.text = KHJLocalizedString(@"chagPwd_", nil);
     }
     else {
-        self.titleLab.text = KHJLocalizedString(@"APP密码", nil);
-        oldtf.placeholder = KHJLocalizedString(@"APP原密码默认为空", nil);
+        self.titleLab.text = KHJLocalizedString(@"APPwd_", nil);
+        oldtf.placeholder = KHJLocalizedString(@"APPDeftNull_", nil);
     }
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
 }

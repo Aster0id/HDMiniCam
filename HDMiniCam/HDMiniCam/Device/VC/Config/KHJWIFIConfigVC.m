@@ -29,7 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.titleLab.text = KHJLocalizedString(@"wifi设置", nil);
+    self.titleLab.text = KHJLocalizedString(@"wfSetp_", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     [[KHJDeviceManager sharedManager] getDeviceWiFi_with_deviceID:self.deviceInfo.deviceID
                                                       resultBlock:^(NSInteger code) {}];
@@ -71,7 +71,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OnSearchDeviceWiFi_CmdResult:) name:noti_OnSearchDeviceWiFi_CmdResult_KEY object:nil];
     }
     else {
-        [self.view makeToast:KHJLocalizedString(@"获取设备Wi-Fi失败！", nil)];
+        [self.view makeToast:KHJLocalizedString(@"gtDevWfFaile_", nil)];
     }
 }
 
@@ -96,7 +96,7 @@
         });
     }
     else {
-        [self.view makeToast:KHJLocalizedString(@"获取设备Wi-Fi失败！", nil)];
+        [self.view makeToast:KHJLocalizedString(@"gtDevWfFaile_", nil)];
     }
 }
 
@@ -124,8 +124,8 @@
         [weakSelf changewifi:body];
     };
     cell.name.text = body[@"SSID"];
-    cell.safeLab.text = KHJString(@"%@：%@",KHJLocalizedString(@"安全性", nil),body[@"EncType"]);
-    cell.stronglyLab.text = KHJString(@"%@：%@",KHJLocalizedString(@"信号强度", nil),body[@"RSSI"]);
+    cell.safeLab.text = KHJString(@"%@：%@",KHJLocalizedString(@"sfe_", nil),body[@"EncType"]);
+    cell.stronglyLab.text = KHJString(@"%@：%@",KHJLocalizedString(@"singStrog_", nil),body[@"RSSI"]);
     return cell;
 }
 
@@ -133,8 +133,8 @@
 {
     WeakSelf
     ZQAlterField *alertView = [ZQAlterField alertView];
-    alertView.title = KHJString(@"%@：%@",KHJLocalizedString(@"更改 Wi-Fi 为", nil),body[@"SSID"]);
-    alertView.placeholder = KHJLocalizedString(@"请输入 Wi-Fi 密码", nil);
+    alertView.title = KHJString(@"%@：%@",KHJLocalizedString(@"changeWF_", nil),body[@"SSID"]);
+    alertView.placeholder = KHJLocalizedString(@"inputWFPwd_", nil);
     alertView.Maxlength = 50;
     alertView.ensureBgColor = KHJUtility.appMainColor;
     [alertView ensureClickBlock:^(NSString *inputString, int type) {
@@ -150,7 +150,7 @@
 {
     [[KHJDeviceManager sharedManager] setDeviceWiFi_with_deviceID:self.deviceInfo.deviceID ssid:body[@"SSID"] password:password encType:body[@"EncType"] resultBlock:^(NSInteger code) {}];
     WeakSelf
-    [self.view makeToast:KHJLocalizedString(@"正在切换Wi-Fi，请等待重连", nil)];
+    [self.view makeToast:KHJLocalizedString(@"wtReconect_", nil)];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakSelf.navigationController popToRootViewControllerAnimated:YES];
     });

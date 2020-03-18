@@ -67,15 +67,15 @@
     
     KHJDeviceListVC *vc1 = [[KHJDeviceListVC alloc] init];
     KHJBaseNavigationController *deviceListNavi = [[KHJBaseNavigationController  alloc] initWithRootViewController:vc1];
-    deviceListNavi.tabBarItem.title = KHJLocalizedString(@"视频", nil);
+    deviceListNavi.tabBarItem.title = KHJLocalizedString(@"vide_", nil);
     
     KHJPictureListVC *vc2 = [[KHJPictureListVC alloc] init];
     KHJBaseNavigationController *pictureNavi = [[KHJBaseNavigationController  alloc] initWithRootViewController:vc2];
-    pictureNavi.tabBarItem.title = KHJLocalizedString(@"截图", nil);
+    pictureNavi.tabBarItem.title = KHJLocalizedString(@"pic_", nil);
     
     KHJRecordListVC *vc3 = [[KHJRecordListVC alloc] init];
     KHJBaseNavigationController *recordNavi = [[KHJBaseNavigationController  alloc] initWithRootViewController:vc3];
-    recordNavi.tabBarItem.title = KHJLocalizedString(@"录像", nil);
+    recordNavi.tabBarItem.title = KHJLocalizedString(@"recrd_", nil);
     
 //    KHJAlarmListVC *vc4 = [[KHJAlarmListVC alloc] init];
 //    KHJBaseNavigationController *alarmListNavi = [[KHJBaseNavigationController  alloc] initWithRootViewController:vc4];

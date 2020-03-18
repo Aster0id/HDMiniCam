@@ -111,7 +111,7 @@
     CGFloat okBtnH      = 28;
     UIButton *okBtn     = [[UIButton alloc]initWithFrame:CGRectMake(okBtnX, okBtnY, okBtnW, okBtnH)];
     okBtn.backgroundColor       = [UIColor colorWithRed:0.17 green:0.69 blue:0.55 alpha:1.00];
-    [okBtn setTitle:@"确定" forState:UIControlStateNormal];
+    [okBtn setTitle:KHJLocalizedString(@"sure", nil) forState:UIControlStateNormal];
     okBtn.titleLabel.font       = [UIFont systemFontOfSize:13];
     okBtn.layer.cornerRadius    = 2.f;
     okBtn.layer.masksToBounds   = YES;

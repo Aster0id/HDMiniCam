@@ -75,7 +75,7 @@
 {
     rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     rightBtn.frame = CGRectMake(0,0,44,44);
-    [rightBtn setTitle:KHJLocalizedString(@"编辑", nil) forState:UIControlStateNormal];
+    [rightBtn setTitle:KHJLocalizedString(@"edit_", nil) forState:UIControlStateNormal];
     [rightBtn setTitleColor:KHJUtility.appMainColor forState:UIControlStateNormal];
     [rightBtn addTarget:self action:@selector(editAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
@@ -86,10 +86,10 @@
 {
     delete = !delete;
     if (delete) {
-        [rightBtn setTitle:KHJLocalizedString(@"完成", nil) forState:UIControlStateNormal];
+        [rightBtn setTitle:KHJLocalizedString(@"finsh_", nil) forState:UIControlStateNormal];
     }
     else {
-        [rightBtn setTitle:KHJLocalizedString(@"编辑", nil) forState:UIControlStateNormal];
+        [rightBtn setTitle:KHJLocalizedString(@"edit_", nil) forState:UIControlStateNormal];
     }
     [collectionView reloadData];
 }
@@ -224,7 +224,7 @@
         return;
     }
     isDeleting = YES;
-    [[KHJHub shareHub] showText:@"删除中" addToView:[[UIApplication sharedApplication] keyWindow]];
+    [[KHJHub shareHub] showText:@"dltFailing_" addToView:[[UIApplication sharedApplication] keyWindow]];
     NSString *name = self.videoList[row];
     NSString *path = @"";
     if (self.currentIndex == 0) {
@@ -250,7 +250,7 @@
         [KHJHub shareHub].hud.hidden = YES;
     }
     else {
-        [self.view makeToast:KHJLocalizedString(@"删除失败", nil)];
+        [self.view makeToast:KHJLocalizedString(@"dltFail_", nil)];
         isDeleting = NO;
         [KHJHub shareHub].hud.hidden = YES;
     }

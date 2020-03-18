@@ -17,7 +17,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="430" height="80"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uK3-wp-dbB">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new_header_icon" translatesAutoresizingMaskIntoConstraints="NO" id="uK3-wp-dbB">
                         <rect key="frame" x="12" y="8" width="85.5" height="64"/>
                         <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.38431372549999998" green="0.69411764710000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -117,6 +117,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="new_header_icon" width="600" height="337"/>
         <image name="setup" width="64" height="64"/>
     </resources>
 </document>

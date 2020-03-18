@@ -21,7 +21,10 @@
     NSString *path_document = NSHomeDirectory();
     NSString *pString       = KHJString(@"/Documents/%@.png",deviceID);
     NSString *imagePath     = [path_document stringByAppendingString:pString];
-    self.bigIMGV.image      = [UIImage imageWithContentsOfFile:imagePath];
+    UIImage *image          = [UIImage imageWithContentsOfFile:imagePath];
+    if (image) {
+        self.bigIMGV.image  = image;
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

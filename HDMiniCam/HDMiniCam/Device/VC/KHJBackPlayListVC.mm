@@ -47,18 +47,6 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-//    NSMutableDictionary *body = [NSMutableDictionary dictionary];
-//    [body setValue:@"000039" forKey:@"end"];
-//    [body setValue:@"000023-000039.avi" forKey:@"name"];
-//    [body setValue:@"779994" forKey:@"size"];
-//    [body setValue:@"000023" forKey:@"start"];
-//    [body setValue:@"/mnt/s0/media/vi0/202002/29/000023-000039.avi" forKey:@"videoPath"];
-//    KHJBackPlayerList_playerVC *vc = [[KHJBackPlayerList_playerVC alloc] init];
-//    vc.body = body;
-//    vc.deviceID = self.deviceID;
-//    [self.navigationController pushViewController:vc animated:YES];
-
     if (self.exitVideoList) {
         [self reloadTableView];
     }
@@ -86,7 +74,7 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
     [self.listArr removeObjectAtIndex:deleteIndex];
     [contentList deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:deleteIndex inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
     [contentList reloadData];
-    [self.view makeToast:KHJString(@"%@,%@",body[@"name"],KHJLocalizedString(@"删除成功", nil))];
+    [self.view makeToast:KHJString(@"%@,%@",body[@"name"],KHJLocalizedString(@"dltSuc_", nil))];
 }
 
 - (void)backAction
@@ -159,31 +147,31 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
     
     WeakSelf
     UIAlertController *alertview    = [UIAlertController alertControllerWithTitle:body[@"name"] message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *config           = [UIAlertAction actionWithTitle:KHJLocalizedString(@"播放视频", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config           = [UIAlertAction actionWithTitle:KHJLocalizedString(@"plyVideo_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         KHJBackPlayerList_playerVC *vc = [[KHJBackPlayerList_playerVC alloc] init];
         vc.body = body;
         vc.deviceID = weakSelf.deviceID;
         [weakSelf.navigationController pushViewController:vc animated:YES];
     }];
-    UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"删除视频", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"deltVideo_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self->deleteIndex = index;
         [[KHJDeviceManager sharedManager] deleteRemoteFile_with_deviceID:self.deviceID path:body[@"videoPath"] resultBlock:^(NSInteger code) {}];
     }];
-    UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"详细文件信息", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self->fileNameLab.text = KHJString(@"%@：%@",KHJLocalizedString(@"文件名", nil),body[@"name"]);
-        self->fileSizeLab.text = KHJString(@"%@：%@M",KHJLocalizedString(@"文件大小", nil),sizeUnit);
+    UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"flDetaIf_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self->fileNameLab.text = KHJString(@"%@：%@",KHJLocalizedString(@"flNm_", nil),body[@"name"]);
+        self->fileSizeLab.text = KHJString(@"%@：%@M",KHJLocalizedString(@"flSiz_", nil),sizeUnit);
         if (min > 0) {
-            self->fileDurationLab.text = KHJString(@"%@：%ld%@%ld%@",KHJLocalizedString(@"录像时长", nil),(long)min,KHJLocalizedString(@"分", nil),(long)sec,KHJLocalizedString(@"秒", nil));
+            self->fileDurationLab.text = KHJString(@"%@：%ld%@%ld%@",KHJLocalizedString(@"recdTms_", nil),(long)min,KHJLocalizedString(@"mins_", nil),(long)sec,KHJLocalizedString(@"secs_", nil));
         }
         else {
-            self->fileDurationLab.text = KHJString(@"%@：%ld%@",KHJLocalizedString(@"录像时长", nil),(long)sec,KHJLocalizedString(@"秒", nil));
+            self->fileDurationLab.text = KHJString(@"%@：%ld%@",KHJLocalizedString(@"recdTms_", nil),(long)sec,KHJLocalizedString(@"secs_", nil));
         }
         self->fileStartTimeLab.text = KHJString(@"%@-%@",weakSelf.date,times);
         [UIView animateWithDuration:0.25 animations:^{
             self->fileView.alpha = 1;
         }];
     }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
     [alertview addAction:config];
     [alertview addAction:config1];
     [alertview addAction:config2];
@@ -314,7 +302,7 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
                     [weakSelf.delegate exitListData:NO];
                 }
             }
-            self->numLab.text = KHJString(@"%@%ld%@",KHJLocalizedString(@"共", nil),weakSelf.listArr.count,KHJLocalizedString(@"个", nil));
+            self->numLab.text = KHJString(@"%@%ld%@",KHJLocalizedString(@"ttl_", nil),weakSelf.listArr.count,KHJLocalizedString(@"unt_", nil));
             [self->contentList reloadData];
         });
     });

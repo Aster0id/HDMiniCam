@@ -41,7 +41,7 @@ extern NSString *wifiName;
 {
     [super viewDidLoad];
     [self addNoti];
-    self.titleLab.text = KHJLocalizedString(@"添加设备", nil);
+    self.titleLab.text = KHJLocalizedString(@"adDev_", nil);
     [[KHJDeviceManager sharedManager] startSearchDevice_with_resultBlock:^(NSInteger code) {}];
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getSearchDeviceResult:) name:@"OnSearchDeviceResult_noti_key" object:nil];
@@ -175,12 +175,12 @@ extern NSString *wifiName;
         wifiName = info[@"SSID"];
         if (![wifiName hasPrefix:@"IPC_"]) {
             
-            UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"请前往手机设置界面,设置手机连接的wifi", nil) message:@""
+            UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"setWF_", nil) message:@""
                                                                     preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel
                                                            handler:nil];
             WeakSelf
-            UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(@"提交", nil) style:UIAlertActionStyleDefault
+            UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sbMit_", nil) style:UIAlertActionStyleDefault
                                                            handler:^(UIAlertAction * _Nonnull action) {
                 [weakSelf changeToDeviceHotpoint];
             }];
