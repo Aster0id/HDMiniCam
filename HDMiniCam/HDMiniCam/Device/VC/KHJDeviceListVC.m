@@ -431,6 +431,27 @@ typedef enum : NSUInteger {
     
     if ([wifiName hasPrefix:@"IPC"]) {
         CLog(@"当前连接的是热点");
+        NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();
+        for (NSString *item in ifs) {
+            NSDictionary *info = [NSDictionary dictionaryWithDictionary:(__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)item)];
+            wifiName = info[@"SSID"];
+            if (![wifiName hasPrefix:@"IPC"]) {
+                CLog(@"wifiName ============ %@",wifiName);
+                CLog(@"当前连接的是正常Wi-Fi");
+                [self.deviceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    KHJDeviceInfo *info = (KHJDeviceInfo *)obj;
+                    if ([info.deviceID isEqualToString:deviceID]) {
+                        // 设备状态不保存在数据库，只临时赋值给对象
+                        info.deviceStatus = deviceStatus;
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self->contentTBV reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]]
+                                                    withRowAnimation:UITableViewRowAnimationNone];
+                        });
+                        *stop = YES;
+                    }
+                }];
+            }
+        }
     }
     else {
         CLog(@"当前连接的是正常Wi-Fi");

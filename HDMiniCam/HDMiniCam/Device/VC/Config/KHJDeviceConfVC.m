@@ -15,6 +15,7 @@
 #import "KHJlampConfigVC.h"
 #import "KHJTimeZoneConfigVC.h"
 #import "KHJChangePasswordVC.h"
+#import "KHJDeviceManager.h"
 
 @interface KHJDeviceConfVC ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -133,8 +134,9 @@
     }
     else if (row == 6) {
         UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:KHJLocalizedString(@"sureSet_", nil) preferredStyle:UIAlertControllerStyleAlert];
+        WeakSelf
         UIAlertAction *delete = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
+            [[KHJDeviceManager sharedManager] resetDevice_with_deviceID:weakSelf.deviceInfo.deviceID resultBlock:^(NSInteger code) {}];
         }];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
         [alertview addAction:delete];
