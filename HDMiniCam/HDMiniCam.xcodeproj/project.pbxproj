@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		93037C8A23D933EE00F4D969 /* KHJWiFiVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93037C8823D933EE00F4D969 /* KHJWiFiVC.m */; };
 		93037C8B23D933EE00F4D969 /* KHJWiFiVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93037C8923D933EE00F4D969 /* KHJWiFiVC.xib */; };
+		936229BA24278721002A1EFB /* KHJAlarmConfVC_2.m in Sources */ = {isa = PBXBuildFile; fileRef = 936229B824278721002A1EFB /* KHJAlarmConfVC_2.m */; };
+		936229BB24278721002A1EFB /* KHJAlarmConfVC_2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 936229B924278721002A1EFB /* KHJAlarmConfVC_2.xib */; };
 		9398AEE123E08DC600E8D685 /* KHJWiFiVC_2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398AEDF23E08DC600E8D685 /* KHJWiFiVC_2.m */; };
 		9398AEE223E08DC700E8D685 /* KHJWiFiVC_2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9398AEE023E08DC600E8D685 /* KHJWiFiVC_2.xib */; };
 		93A30C4723D29862009A0F4C /* KHJAlarmConfigVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A30C4523D29862009A0F4C /* KHJAlarmConfigVC.m */; };
@@ -181,6 +183,9 @@
 		93037C8723D933EE00F4D969 /* KHJWiFiVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJWiFiVC.h; sourceTree = "<group>"; };
 		93037C8823D933EE00F4D969 /* KHJWiFiVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJWiFiVC.m; sourceTree = "<group>"; };
 		93037C8923D933EE00F4D969 /* KHJWiFiVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJWiFiVC.xib; sourceTree = "<group>"; };
+		936229B724278721002A1EFB /* KHJAlarmConfVC_2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJAlarmConfVC_2.h; sourceTree = "<group>"; };
+		936229B824278721002A1EFB /* KHJAlarmConfVC_2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJAlarmConfVC_2.m; sourceTree = "<group>"; };
+		936229B924278721002A1EFB /* KHJAlarmConfVC_2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJAlarmConfVC_2.xib; sourceTree = "<group>"; };
 		9398AEDE23E08DC600E8D685 /* KHJWiFiVC_2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJWiFiVC_2.h; sourceTree = "<group>"; };
 		9398AEDF23E08DC600E8D685 /* KHJWiFiVC_2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJWiFiVC_2.m; sourceTree = "<group>"; };
 		9398AEE023E08DC600E8D685 /* KHJWiFiVC_2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJWiFiVC_2.xib; sourceTree = "<group>"; };
@@ -925,6 +930,9 @@
 				AB30DA7223D163A4005BD2A1 /* KHJDeviceConfVC.h */,
 				AB30DA7323D163A4005BD2A1 /* KHJDeviceConfVC.m */,
 				AB30DA7423D163A4005BD2A1 /* KHJDeviceConfVC.xib */,
+				936229B724278721002A1EFB /* KHJAlarmConfVC_2.h */,
+				936229B824278721002A1EFB /* KHJAlarmConfVC_2.m */,
+				936229B924278721002A1EFB /* KHJAlarmConfVC_2.xib */,
 				93A30C4423D29862009A0F4C /* KHJAlarmConfigVC.h */,
 				93A30C4523D29862009A0F4C /* KHJAlarmConfigVC.m */,
 				AB4827812420B756008970A0 /* KHJAlarmConfigVC.xib */,
@@ -1168,6 +1176,7 @@
 				93C33B7623CE20B400B44E5F /* navi_back@2x.png in Resources */,
 				AB4827552420B666008970A0 /* KHJDeviceListVC.xib in Resources */,
 				93A30C5723D298B3009A0F4C /* KHJlampConfigVC.xib in Resources */,
+				936229BB24278721002A1EFB /* KHJAlarmConfVC_2.xib in Resources */,
 				93A30C6623D43378009A0F4C /* KHJWIFIConfigCell.xib in Resources */,
 				93C33B6A23CE20B400B44E5F /* TZAlbumCell.xib in Resources */,
 				AB4827782420B707008970A0 /* KHJAddDeviceListVC.xib in Resources */,
@@ -1296,6 +1305,7 @@
 				AB30DA4023D05396005BD2A1 /* KHJAlarmListCell.m in Sources */,
 				93C33B5B23CE20B400B44E5F /* NSBundle+Language.m in Sources */,
 				93C33B6623CE20B400B44E5F /* TZImageManager.m in Sources */,
+				936229BA24278721002A1EFB /* KHJAlarmConfVC_2.m in Sources */,
 				93C33B8023CE236100B44E5F /* KHJPlayMusic.m in Sources */,
 				93FC9F7824057033000B9B51 /* H26xHwDecoder.m in Sources */,
 				93C33B6523CE20B400B44E5F /* TZPhotoPreviewController.m in Sources */,
@@ -1671,8 +1681,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CODE_SIGN_ENTITLEMENTS = HDMiniCam/HDMiniCam.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = VNCC3G6TV4;
 				ENABLE_BITCODE = NO;
@@ -1689,7 +1699,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.khj.HDCamView;
 				PRODUCT_NAME = HDCamView;
-				PROVISIONING_PROFILE_SPECIFIER = HDCamView_dis;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1701,8 +1711,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CODE_SIGN_ENTITLEMENTS = HDMiniCam/HDMiniCam.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = VNCC3G6TV4;
 				ENABLE_BITCODE = NO;
@@ -1719,7 +1729,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.khj.HDCamView;
 				PRODUCT_NAME = HDCamView;
-				PROVISIONING_PROFILE_SPECIFIER = HDCamView_dis;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
