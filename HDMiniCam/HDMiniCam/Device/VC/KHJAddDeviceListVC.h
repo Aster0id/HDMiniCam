@@ -12,9 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KHJAddDeviceListVC : KHJBaseVC
 
-// 局域网搜索设备
-@property (nonatomic, assign) BOOL isSameRouter;
-
 @end
 
 NS_ASSUME_NONNULL_END

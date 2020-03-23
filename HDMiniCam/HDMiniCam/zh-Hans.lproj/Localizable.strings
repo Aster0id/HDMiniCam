@@ -74,7 +74,7 @@
 "normal_"="3-普通";
 "low4_"="4-低";
 "low5_"="5-最低";
-"wfSetp_"="wifi设置";
+"wfSetp_"="设备Wi-Fi";
 "gtDevWfFaile_"="获取设备Wi-Fi失败！";
 "sfe_"="安全性";
 "singStrog_"="信号强度";

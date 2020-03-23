@@ -18,7 +18,7 @@
 #import "KHJDeviceInfo.h"
 #import "KHJAddDeviceListVC.h"
 #import "KHJSearchDeviceVC.h"
-#import "KHJMutilScreenVC_2.h"
+#import "KHJMutilScreenVC.h"
 #import "KHJVideoPlayer_sp_VC.h"
 #import "KHJDeviceConfVC.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
@@ -124,41 +124,9 @@ typedef enum : NSUInteger {
 
 - (IBAction)add:(id)sender
 {
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"adDev_", nil) message:@""
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel
-                                                   handler:nil];
-    WeakSelf
-    UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(@"devAddNet_", nil) style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-        if ([wifiName hasPrefix:@"IPC"]) {
-            KHJAddDeviceListVC *vc = [[KHJAddDeviceListVC alloc] init];
-            vc.isSameRouter = NO;
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-        else {
-            [weakSelf changeToDeviceHotpoint];
-        }
-    }];
-    UIAlertAction *defult1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"adHadDevNet_", nil) style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-        KHJOnlineVC *vc = [[KHJOnlineVC alloc] init];
-        vc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:vc animated:YES];
-    }];
-    UIAlertAction *defult2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"adDevNet_", nil) style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-        KHJAddDeviceListVC *vc = [[KHJAddDeviceListVC alloc] init];
-        vc.isSameRouter = YES;
-        vc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:vc animated:YES];
-    }];
-    [alertview addAction:cancel];
-    [alertview addAction:defult];
-    [alertview addAction:defult1];
-    [alertview addAction:defult2];
-    [self presentViewController:alertview animated:YES completion:nil];
+    KHJAddDeviceListVC *vc = [[KHJAddDeviceListVC alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (IBAction)more:(id)sender
@@ -184,7 +152,7 @@ typedef enum : NSUInteger {
             appDelegate.setTurnScreen   = YES;
             [UIDevice switchNewOrientation:UIInterfaceOrientationLandscapeRight];
             [weakSelf.navigationController setNavigationBarHidden:YES animated:YES];
-            KHJMutilScreenVC_2 *vc = [[KHJMutilScreenVC_2 alloc] init];
+            KHJMutilScreenVC *vc = [[KHJMutilScreenVC alloc] init];
             vc.list = [list copy];
             vc.hidesBottomBarWhenPushed = YES;
             [UITabBar appearance].translucent = YES;
@@ -355,21 +323,25 @@ typedef enum : NSUInteger {
             wifiName = info[@"SSID"];
             if ([wifiName hasPrefix:@"IPC_"]) {
                 CLog(@"wifiName ============ %@",wifiName);
-                if (self->hotPoint == hotPointType_no) {
-                    self->hotPoint = hotPointType_once;
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-
-                        KHJAddDeviceListVC *vc = [[KHJAddDeviceListVC alloc] init];
-                        vc.hidesBottomBarWhenPushed = YES;
-                        [weakSelf.navigationController pushViewController:vc animated:YES];
-                    });
-                }
-                else if (self->hotPoint == hotPointType_once) {
-                    self->hotPoint = hotPointType_more;
-                }
-                else {
-                    [weakSelf.view makeToast:KHJString(@"%@ %@ %@",KHJLocalizedString(@"phadCnet_", nil),wifiName,KHJLocalizedString(@"devHot_", nil))];
-                }
+//                if (self->hotPoint == hotPointType_no) {
+//                    self->hotPoint = hotPointType_once;
+//                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//
+//                        KHJAddDeviceListVC *vc = [[KHJAddDeviceListVC alloc] init];
+//                        vc.hidesBottomBarWhenPushed = YES;
+//                        [weakSelf.navigationController pushViewController:vc animated:YES];
+//                    });
+//                }
+//                else if (self->hotPoint == hotPointType_once) {
+//                    self->hotPoint = hotPointType_more;
+//                }
+//                else {
+            
+                [weakSelf.view makeToast:KHJString(@"%@ %@ %@",KHJLocalizedString(@"phadCnet_", nil),wifiName,KHJLocalizedString(@"devHot_", nil))];
+//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                    [weakSelf.view makeToast:KHJString(@"%@ %@ %@",KHJLocalizedString(@"请给", nil),wifiName,KHJLocalizedString(@"配置网络", nil))];
+//                });
+//                }
             }
             else {
                 self->hotPoint = hotPointType_no;
@@ -378,6 +350,7 @@ typedef enum : NSUInteger {
     });
 }
 
+// 热点配网时，提示用户给设备进行网络配置
 - (void)addNewDeviceTellUser:(NSNotification *)noti
 {
     if ([wifiName hasPrefix:@"IPC"]) {

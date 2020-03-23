@@ -29,6 +29,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[KHJHub shareHub] showText:@"" addToView:self.view type:_default];
+
     self.titleLab.text = KHJLocalizedString(@"wfSetp_", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     [[KHJDeviceManager sharedManager] getDeviceWiFi_with_deviceID:self.deviceInfo.deviceID
@@ -60,6 +62,7 @@
 
 - (void)OnGetDeviceWiFi_CmdResult:(NSNotification *)noti
 {
+    
     NSDictionary *result = (NSDictionary *)noti.object;
     int ret = [result[@"ret"] intValue];
     NSDictionary *body = [NSDictionary dictionaryWithDictionary:result[@"NetWork.Wireless"]];
@@ -77,6 +80,9 @@
 
 - (void)OnSearchDeviceWiFi_CmdResult:(NSNotification *)noti
 {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [KHJHub shareHub].hud.hidden = YES;
+    });
     NSDictionary *result = (NSDictionary *)noti.object;
     int ret = [result[@"ret"] intValue];
     if (ret == 0) {

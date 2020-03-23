@@ -23,9 +23,7 @@
 
 - (IBAction)btn:(id)sender
 {
-    if (_block) {
-        _block(self.tag - FLAG_TAG);
-    }
+    
 }
 
 @end

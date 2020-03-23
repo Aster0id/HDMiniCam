@@ -98,6 +98,7 @@
 {
     if (row == 0) {
         KHJAlarmConfigVC *vc = [[KHJAlarmConfigVC alloc] init];
+        vc.deviceInfo = self.deviceInfo;
         [self.navigationController pushViewController:vc animated:YES];
     }
     else if (row == 1) {
@@ -124,8 +125,11 @@
     }
     else if (row == 5) {
         UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:KHJLocalizedString(@"surestart_", nil) preferredStyle:UIAlertControllerStyleAlert];
+        WeakSelf
         UIAlertAction *delete = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
+            [[KHJDeviceManager sharedManager] rebootDevice_with_deviceID:weakSelf.deviceInfo.deviceID resultBlock:^(NSInteger code) {
+                [weakSelf.view makeToast:KHJLocalizedString(@"设备已重启", nil)];
+            }];
         }];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
         [alertview addAction:delete];
@@ -136,7 +140,12 @@
         UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:KHJLocalizedString(@"sureSet_", nil) preferredStyle:UIAlertControllerStyleAlert];
         WeakSelf
         UIAlertAction *delete = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [[KHJDeviceManager sharedManager] resetDevice_with_deviceID:weakSelf.deviceInfo.deviceID resultBlock:^(NSInteger code) {}];
+            [[KHJDeviceManager sharedManager] resetDevice_with_deviceID:weakSelf.deviceInfo.deviceID resultBlock:^(NSInteger code) {
+                [weakSelf.view makeToast:KHJLocalizedString(@"正在恢复出厂设置，3秒后将返回设备列表", nil)];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                });
+            }];
         }];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
         [alertview addAction:delete];

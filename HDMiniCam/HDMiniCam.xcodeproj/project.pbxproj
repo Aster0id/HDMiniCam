@@ -11,7 +11,7 @@
 		93037C8B23D933EE00F4D969 /* KHJWiFiVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93037C8923D933EE00F4D969 /* KHJWiFiVC.xib */; };
 		9398AEE123E08DC600E8D685 /* KHJWiFiVC_2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398AEDF23E08DC600E8D685 /* KHJWiFiVC_2.m */; };
 		9398AEE223E08DC700E8D685 /* KHJWiFiVC_2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9398AEE023E08DC600E8D685 /* KHJWiFiVC_2.xib */; };
-		93A30C4723D29862009A0F4C /* KHJAlarmConfigVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A30C4523D29862009A0F4C /* KHJAlarmConfigVC.m */; };
+		93A30C4723D29862009A0F4C /* KHJAlarmConfigVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 93A30C4523D29862009A0F4C /* KHJAlarmConfigVC.mm */; };
 		93A30C4C23D29889009A0F4C /* KHJWIFIConfigVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A30C4A23D29889009A0F4C /* KHJWIFIConfigVC.m */; };
 		93A30C5123D2989E009A0F4C /* KHJSDCardConfigVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A30C4F23D2989E009A0F4C /* KHJSDCardConfigVC.m */; };
 		93A30C5623D298B3009A0F4C /* KHJlampConfigVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A30C5423D298B3009A0F4C /* KHJlampConfigVC.m */; };
@@ -131,6 +131,14 @@
 		AB4827AE2420C841008970A0 /* KHJToast.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4827AC2420C840008970A0 /* KHJToast.m */; };
 		AB4827B32420CB49008970A0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB4827B52420CB49008970A0 /* Localizable.strings */; };
 		AB4827C52421FEED008970A0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB4827C72421FEED008970A0 /* InfoPlist.strings */; };
+		AB4E898B24260AC10023152B /* KHJQRCodeScanningVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E898924260AC10023152B /* KHJQRCodeScanningVC.m */; };
+		AB4E89B324260D550023152B /* SGQRCode.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB4E89A524260D540023152B /* SGQRCode.bundle */; };
+		AB4E89B424260D550023152B /* UIImage+SGImageSize.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E89A724260D540023152B /* UIImage+SGImageSize.m */; };
+		AB4E89B524260D550023152B /* SGQRCodeHelperTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E89A924260D540023152B /* SGQRCodeHelperTool.m */; };
+		AB4E89B624260D550023152B /* SGQRCodeScanningView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E89AA24260D540023152B /* SGQRCodeScanningView.m */; };
+		AB4E89B724260D550023152B /* SGQRCodeScanManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E89AB24260D540023152B /* SGQRCodeScanManager.m */; };
+		AB4E89B824260D550023152B /* SGQRCodeGenerateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E89AC24260D540023152B /* SGQRCodeGenerateManager.m */; };
+		AB4E89B924260D550023152B /* SGQRCodeAlbumManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E89B124260D540023152B /* SGQRCodeAlbumManager.m */; };
 		AB4EFA7323F6B40000D584E7 /* libIPCNetManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB4EFA7123F6B40000D584E7 /* libIPCNetManager.a */; };
 		AB4EFA7423F6B40000D584E7 /* libFBP2P.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB4EFA7223F6B40000D584E7 /* libFBP2P.a */; };
 		AB4EFA7E23F6D43600D584E7 /* KHJDeviceManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB4EFA7D23F6D43600D584E7 /* KHJDeviceManager.mm */; };
@@ -150,8 +158,8 @@
 		AB5462D9240FB4FA00A096ED /* KHJRecordListVC_Three.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5462D7240FB4FA00A096ED /* KHJRecordListVC_Three.xib */; };
 		AB5462E2240FB91000A096ED /* KHJCollectionViewCell_three.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5462E0240FB91000A096ED /* KHJCollectionViewCell_three.m */; };
 		AB5462E3240FB91000A096ED /* KHJCollectionViewCell_three.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5462E1240FB91000A096ED /* KHJCollectionViewCell_three.xib */; };
-		AB5462FA2416453900A096ED /* KHJMutilScreenVC_2.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5462F82416453900A096ED /* KHJMutilScreenVC_2.m */; };
-		AB5462FB2416453900A096ED /* KHJMutilScreenVC_2.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5462F92416453900A096ED /* KHJMutilScreenVC_2.xib */; };
+		AB5462FA2416453900A096ED /* KHJMutilScreenVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5462F82416453900A096ED /* KHJMutilScreenVC.m */; };
+		AB5462FB2416453900A096ED /* KHJMutilScreenVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5462F92416453900A096ED /* KHJMutilScreenVC.xib */; };
 		AB54630324172A9C00A096ED /* XBAudioTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5462FD24172A9B00A096ED /* XBAudioTool.m */; };
 		AB54630424172A9C00A096ED /* XBAudioUnitRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5462FF24172A9B00A096ED /* XBAudioUnitRecorder.m */; };
 		AB54630524172A9C00A096ED /* XBAudioUnitPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB54630224172A9C00A096ED /* XBAudioUnitPlayer.m */; };
@@ -185,7 +193,7 @@
 		9398AEDF23E08DC600E8D685 /* KHJWiFiVC_2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJWiFiVC_2.m; sourceTree = "<group>"; };
 		9398AEE023E08DC600E8D685 /* KHJWiFiVC_2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJWiFiVC_2.xib; sourceTree = "<group>"; };
 		93A30C4423D29862009A0F4C /* KHJAlarmConfigVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJAlarmConfigVC.h; sourceTree = "<group>"; };
-		93A30C4523D29862009A0F4C /* KHJAlarmConfigVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJAlarmConfigVC.m; sourceTree = "<group>"; };
+		93A30C4523D29862009A0F4C /* KHJAlarmConfigVC.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KHJAlarmConfigVC.mm; sourceTree = "<group>"; };
 		93A30C4923D29889009A0F4C /* KHJWIFIConfigVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJWIFIConfigVC.h; sourceTree = "<group>"; };
 		93A30C4A23D29889009A0F4C /* KHJWIFIConfigVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJWIFIConfigVC.m; sourceTree = "<group>"; };
 		93A30C4E23D2989E009A0F4C /* KHJSDCardConfigVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJSDCardConfigVC.h; sourceTree = "<group>"; };
@@ -378,8 +386,6 @@
 		AB4827752420B6F8008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/KHJBackPlayerList_playerVC.strings; sourceTree = "<group>"; };
 		AB4827772420B6FD008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/KHJBackPlayerList_playerVC.strings"; sourceTree = "<group>"; };
 		AB4827792420B707008970A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/KHJAddDeviceListVC.xib; sourceTree = "<group>"; };
-		AB48277C2420B70E008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/KHJAddDeviceListVC.strings; sourceTree = "<group>"; };
-		AB48277E2420B722008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/KHJAddDeviceListVC.strings"; sourceTree = "<group>"; };
 		AB4827802420B756008970A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/KHJAlarmConfigVC.xib; sourceTree = "<group>"; };
 		AB4827832420B75D008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/KHJAlarmConfigVC.strings; sourceTree = "<group>"; };
 		AB4827852420B75F008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/KHJAlarmConfigVC.strings"; sourceTree = "<group>"; };
@@ -405,11 +411,28 @@
 		AB4827B62420CB4D008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		AB4827C62421FEED008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AB4827C82421FEF0008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		AB4E89862425BF6A0023152B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/KHJAddDeviceListVC.strings; sourceTree = "<group>"; };
+		AB4E89882425BF6D0023152B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/KHJAddDeviceListVC.strings"; sourceTree = "<group>"; };
+		AB4E898924260AC10023152B /* KHJQRCodeScanningVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHJQRCodeScanningVC.m; sourceTree = "<group>"; };
+		AB4E898A24260AC10023152B /* KHJQRCodeScanningVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHJQRCodeScanningVC.h; sourceTree = "<group>"; };
+		AB4E89A424260D540023152B /* SGQRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCode.h; sourceTree = "<group>"; };
+		AB4E89A524260D540023152B /* SGQRCode.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SGQRCode.bundle; sourceTree = "<group>"; };
+		AB4E89A724260D540023152B /* UIImage+SGImageSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SGImageSize.m"; sourceTree = "<group>"; };
+		AB4E89A824260D540023152B /* UIImage+SGImageSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SGImageSize.h"; sourceTree = "<group>"; };
+		AB4E89A924260D540023152B /* SGQRCodeHelperTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGQRCodeHelperTool.m; sourceTree = "<group>"; };
+		AB4E89AA24260D540023152B /* SGQRCodeScanningView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGQRCodeScanningView.m; sourceTree = "<group>"; };
+		AB4E89AB24260D540023152B /* SGQRCodeScanManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGQRCodeScanManager.m; sourceTree = "<group>"; };
+		AB4E89AC24260D540023152B /* SGQRCodeGenerateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGQRCodeGenerateManager.m; sourceTree = "<group>"; };
+		AB4E89AD24260D540023152B /* SGQRCodeAlbumManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCodeAlbumManager.h; sourceTree = "<group>"; };
+		AB4E89AE24260D540023152B /* SGQRCodeHelperTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCodeHelperTool.h; sourceTree = "<group>"; };
+		AB4E89AF24260D540023152B /* SGQRCodeScanningView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCodeScanningView.h; sourceTree = "<group>"; };
+		AB4E89B024260D540023152B /* SGQRCodeScanManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCodeScanManager.h; sourceTree = "<group>"; };
+		AB4E89B124260D540023152B /* SGQRCodeAlbumManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGQRCodeAlbumManager.m; sourceTree = "<group>"; };
+		AB4E89B224260D540023152B /* SGQRCodeGenerateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCodeGenerateManager.h; sourceTree = "<group>"; };
 		AB4EFA6223F6B0BE00D584E7 /* JSONObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JSONObject.hpp; sourceTree = "<group>"; };
 		AB4EFA6323F6B0BE00D584E7 /* SEP2P_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEP2P_API.h; sourceTree = "<group>"; };
 		AB4EFA6423F6B0BE00D584E7 /* cJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cJSON.h; sourceTree = "<group>"; };
 		AB4EFA6523F6B0BE00D584E7 /* SEP2P_Error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEP2P_Error.h; sourceTree = "<group>"; };
-		AB4EFA6623F6B0BE00D584E7 /* IPCNetManagerInterface_olc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPCNetManagerInterface_olc.h; sourceTree = "<group>"; };
 		AB4EFA6723F6B0BE00D584E7 /* JSONStructProtocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONStructProtocal.h; sourceTree = "<group>"; };
 		AB4EFA6823F6B0BE00D584E7 /* SEP2P_Type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEP2P_Type.h; sourceTree = "<group>"; };
 		AB4EFA6923F6B0BE00D584E7 /* sepcam_protocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sepcam_protocal.h; sourceTree = "<group>"; };
@@ -441,9 +464,9 @@
 		AB5462DF240FB91000A096ED /* KHJCollectionViewCell_three.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJCollectionViewCell_three.h; sourceTree = "<group>"; };
 		AB5462E0240FB91000A096ED /* KHJCollectionViewCell_three.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJCollectionViewCell_three.m; sourceTree = "<group>"; };
 		AB5462E1240FB91000A096ED /* KHJCollectionViewCell_three.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJCollectionViewCell_three.xib; sourceTree = "<group>"; };
-		AB5462F72416453900A096ED /* KHJMutilScreenVC_2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJMutilScreenVC_2.h; sourceTree = "<group>"; };
-		AB5462F82416453900A096ED /* KHJMutilScreenVC_2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJMutilScreenVC_2.m; sourceTree = "<group>"; };
-		AB5462F92416453900A096ED /* KHJMutilScreenVC_2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJMutilScreenVC_2.xib; sourceTree = "<group>"; };
+		AB5462F72416453900A096ED /* KHJMutilScreenVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJMutilScreenVC.h; sourceTree = "<group>"; };
+		AB5462F82416453900A096ED /* KHJMutilScreenVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJMutilScreenVC.m; sourceTree = "<group>"; };
+		AB5462F92416453900A096ED /* KHJMutilScreenVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJMutilScreenVC.xib; sourceTree = "<group>"; };
 		AB5462FC24172A9B00A096ED /* Header_audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Header_audio.h; sourceTree = "<group>"; };
 		AB5462FD24172A9B00A096ED /* XBAudioTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBAudioTool.m; sourceTree = "<group>"; };
 		AB5462FE24172A9B00A096ED /* XBAudioTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBAudioTool.h; sourceTree = "<group>"; };
@@ -791,6 +814,9 @@
 				AB20E60523CEBEE500D2861C /* KHJDeviceListVC.h */,
 				AB20E60623CEBEE500D2861C /* KHJDeviceListVC.m */,
 				AB4827572420B666008970A0 /* KHJDeviceListVC.xib */,
+				AB5462F72416453900A096ED /* KHJMutilScreenVC.h */,
+				AB5462F82416453900A096ED /* KHJMutilScreenVC.m */,
+				AB5462F92416453900A096ED /* KHJMutilScreenVC.xib */,
 				AB5D784723F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.h */,
 				AB5D784823F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.mm */,
 				AB48275E2420B698008970A0 /* KHJVideoPlayer_sp_VC.xib */,
@@ -806,9 +832,6 @@
 				AB30DA4223D05B0F005BD2A1 /* KHJAddDeviceListVC.h */,
 				AB30DA4323D05B0F005BD2A1 /* KHJAddDeviceListVC.m */,
 				AB48277A2420B707008970A0 /* KHJAddDeviceListVC.xib */,
-				AB5462F72416453900A096ED /* KHJMutilScreenVC_2.h */,
-				AB5462F82416453900A096ED /* KHJMutilScreenVC_2.m */,
-				AB5462F92416453900A096ED /* KHJMutilScreenVC_2.xib */,
 				AB30DA7123D16342005BD2A1 /* Config */,
 				AB30DA4723D060A2005BD2A1 /* Method */,
 			);
@@ -890,6 +913,9 @@
 		AB30DA4723D060A2005BD2A1 /* Method */ = {
 			isa = PBXGroup;
 			children = (
+				AB4E898A24260AC10023152B /* KHJQRCodeScanningVC.h */,
+				AB4E898924260AC10023152B /* KHJQRCodeScanningVC.m */,
+				AB4E89A324260D540023152B /* SGQRCode */,
 				AB30DA4823D060F2005BD2A1 /* KHJOnlineVC.h */,
 				AB30DA4923D060F2005BD2A1 /* KHJOnlineVC.m */,
 				AB48279D2420B7F4008970A0 /* KHJOnlineVC.xib */,
@@ -926,7 +952,7 @@
 				AB30DA7323D163A4005BD2A1 /* KHJDeviceConfVC.m */,
 				AB30DA7423D163A4005BD2A1 /* KHJDeviceConfVC.xib */,
 				93A30C4423D29862009A0F4C /* KHJAlarmConfigVC.h */,
-				93A30C4523D29862009A0F4C /* KHJAlarmConfigVC.m */,
+				93A30C4523D29862009A0F4C /* KHJAlarmConfigVC.mm */,
 				AB4827812420B756008970A0 /* KHJAlarmConfigVC.xib */,
 				93A30C4923D29889009A0F4C /* KHJWIFIConfigVC.h */,
 				93A30C4A23D29889009A0F4C /* KHJWIFIConfigVC.m */,
@@ -988,6 +1014,35 @@
 			path = TuyaTimeLineView;
 			sourceTree = "<group>";
 		};
+		AB4E89A324260D540023152B /* SGQRCode */ = {
+			isa = PBXGroup;
+			children = (
+				AB4E89A424260D540023152B /* SGQRCode.h */,
+				AB4E89A524260D540023152B /* SGQRCode.bundle */,
+				AB4E89A624260D540023152B /* Category */,
+				AB4E89A924260D540023152B /* SGQRCodeHelperTool.m */,
+				AB4E89AA24260D540023152B /* SGQRCodeScanningView.m */,
+				AB4E89AB24260D540023152B /* SGQRCodeScanManager.m */,
+				AB4E89AC24260D540023152B /* SGQRCodeGenerateManager.m */,
+				AB4E89AD24260D540023152B /* SGQRCodeAlbumManager.h */,
+				AB4E89AE24260D540023152B /* SGQRCodeHelperTool.h */,
+				AB4E89AF24260D540023152B /* SGQRCodeScanningView.h */,
+				AB4E89B024260D540023152B /* SGQRCodeScanManager.h */,
+				AB4E89B124260D540023152B /* SGQRCodeAlbumManager.m */,
+				AB4E89B224260D540023152B /* SGQRCodeGenerateManager.h */,
+			);
+			path = SGQRCode;
+			sourceTree = "<group>";
+		};
+		AB4E89A624260D540023152B /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				AB4E89A724260D540023152B /* UIImage+SGImageSize.m */,
+				AB4E89A824260D540023152B /* UIImage+SGImageSize.h */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
 		AB4EFA4623F6559400D584E7 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -1013,7 +1068,6 @@
 				AB4EFA6223F6B0BE00D584E7 /* JSONObject.hpp */,
 				AB4EFA6723F6B0BE00D584E7 /* JSONStructProtocal.h */,
 				AB54630624172B8A00A096ED /* IPCNetManagerInterface.h */,
-				AB4EFA6623F6B0BE00D584E7 /* IPCNetManagerInterface_olc.h */,
 			);
 			path = includes;
 			sourceTree = "<group>";
@@ -1158,6 +1212,7 @@
 				AB5911DD23D0141A0060F05C /* KHJRecordListCell.xib in Resources */,
 				AB20E62223CED07300D2861C /* KHJDeviceListCell.xib in Resources */,
 				AB30DA4123D05396005BD2A1 /* KHJAlarmListCell.xib in Resources */,
+				AB4E89B324260D550023152B /* SGQRCode.bundle in Resources */,
 				AB30DA5623D06844005BD2A1 /* KHJHadBindDeviceCell.xib in Resources */,
 				93C3396D23CB75BE00B44E5F /* LaunchScreen.storyboard in Resources */,
 				93037C8B23D933EE00F4D969 /* KHJWiFiVC.xib in Resources */,
@@ -1180,7 +1235,7 @@
 				AB4827632420B6AE008970A0 /* KHJVideoPlayer_hf_VC.xib in Resources */,
 				AB597B4624027BC900F04F84 /* KHJBackPlayListCell.xib in Resources */,
 				AB4827942420B7C4008970A0 /* KHJTimeZoneConfigVC.xib in Resources */,
-				AB5462FB2416453900A096ED /* KHJMutilScreenVC_2.xib in Resources */,
+				AB5462FB2416453900A096ED /* KHJMutilScreenVC.xib in Resources */,
 				AB52C11523FBEB0100C921F1 /* KHJAddDeviceListCell.xib in Resources */,
 				93C33B6C23CE20B400B44E5F /* TZAssetCell.xib in Resources */,
 				AB30DA7C23D164AE005BD2A1 /* KHJDeviceConfCell.xib in Resources */,
@@ -1278,6 +1333,7 @@
 				93C3398A23CE1BA900B44E5F /* KHJBaseCell.m in Sources */,
 				AB597B4024027A7600F04F84 /* KHJBackPlayListVC.mm in Sources */,
 				AB30DA4523D05B0F005BD2A1 /* KHJAddDeviceListVC.m in Sources */,
+				AB4E89B624260D550023152B /* SGQRCodeScanningView.m in Sources */,
 				AB5911DC23D0141A0060F05C /* KHJRecordListCell.m in Sources */,
 				AB764975240617A300D6DE1C /* KHJVideoPlayerBaseVC.mm in Sources */,
 				93A30C5123D2989E009A0F4C /* KHJSDCardConfigVC.m in Sources */,
@@ -1286,19 +1342,22 @@
 				93C33B5C23CE20B400B44E5F /* UIDevice+TFDevice.m in Sources */,
 				93C33B6123CE20B400B44E5F /* TZAssetCell.m in Sources */,
 				AB20E62123CED07300D2861C /* KHJDeviceListCell.m in Sources */,
+				AB4E89B824260D550023152B /* SGQRCodeGenerateManager.m in Sources */,
 				AB52C11B23FC153400C921F1 /* KHJDeviceInfo.m in Sources */,
-				AB5462FA2416453900A096ED /* KHJMutilScreenVC_2.m in Sources */,
+				AB5462FA2416453900A096ED /* KHJMutilScreenVC.m in Sources */,
 				AB5D784A23F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.mm in Sources */,
 				AB54630524172A9C00A096ED /* XBAudioUnitPlayer.m in Sources */,
 				93A30C5623D298B3009A0F4C /* KHJlampConfigVC.m in Sources */,
 				AB597B4524027BC900F04F84 /* KHJBackPlayListCell.m in Sources */,
 				93C33B7D23CE218200B44E5F /* Toast+UIView.m in Sources */,
 				AB30DA4023D05396005BD2A1 /* KHJAlarmListCell.m in Sources */,
+				AB4E89B524260D550023152B /* SGQRCodeHelperTool.m in Sources */,
 				93C33B5B23CE20B400B44E5F /* NSBundle+Language.m in Sources */,
 				93C33B6623CE20B400B44E5F /* TZImageManager.m in Sources */,
 				93C33B8023CE236100B44E5F /* KHJPlayMusic.m in Sources */,
 				93FC9F7824057033000B9B51 /* H26xHwDecoder.m in Sources */,
 				93C33B6523CE20B400B44E5F /* TZPhotoPreviewController.m in Sources */,
+				AB4E89B924260D550023152B /* SGQRCodeAlbumManager.m in Sources */,
 				93C3398823CE1BA900B44E5F /* KHJTabBarBaseVC.m in Sources */,
 				AB52C11423FBEB0100C921F1 /* KHJAddDeviceListCell.m in Sources */,
 				AB4827AE2420C841008970A0 /* KHJToast.m in Sources */,
@@ -1311,6 +1370,7 @@
 				93C33B5623CE20B400B44E5F /* LJWKeyboardToolBar.m in Sources */,
 				93C33A8223CE1D0800B44E5F /* KHJHelpCameraData.mm in Sources */,
 				93A30C6023D298DC009A0F4C /* KHJChangePasswordVC.m in Sources */,
+				AB4E89B724260D550023152B /* SGQRCodeScanManager.m in Sources */,
 				AB5462E2240FB91000A096ED /* KHJCollectionViewCell_three.m in Sources */,
 				93C33B5323CE20B400B44E5F /* ZQAlterField.m in Sources */,
 				AB30DA4B23D060F2005BD2A1 /* KHJOnlineVC.m in Sources */,
@@ -1342,6 +1402,7 @@
 				93C33B5023CE20B400B44E5F /* ZQUtil.m in Sources */,
 				93C33B2E23CE20B400B44E5F /* NSString+Utility.m in Sources */,
 				93A30C5B23D298C5009A0F4C /* KHJTimeZoneConfigVC.m in Sources */,
+				AB4E898B24260AC10023152B /* KHJQRCodeScanningVC.m in Sources */,
 				ABEBCDFF23CF1B8400581AFB /* KHJPictureListVC.m in Sources */,
 				93037C8A23D933EE00F4D969 /* KHJWiFiVC.m in Sources */,
 				93C3398C23CE1BA900B44E5F /* KHJBaseVC.m in Sources */,
@@ -1351,13 +1412,14 @@
 				93C33B6823CE20B400B44E5F /* TZPhotoPreviewCell.m in Sources */,
 				AB5462D8240FB4FA00A096ED /* KHJRecordListVC_Three.m in Sources */,
 				AB482754241F9CE4008970A0 /* TYCameraTimeLineScrollView.m in Sources */,
-				93A30C4723D29862009A0F4C /* KHJAlarmConfigVC.m in Sources */,
+				93A30C4723D29862009A0F4C /* KHJAlarmConfigVC.mm in Sources */,
 				AB54630424172A9C00A096ED /* XBAudioUnitRecorder.m in Sources */,
 				AB30DA5F23D1470F005BD2A1 /* KHJSearchDeviceVC.m in Sources */,
 				AB30DA6523D1482F005BD2A1 /* KHJSearchDeviceCell.m in Sources */,
 				93A30C4C23D29889009A0F4C /* KHJWIFIConfigVC.m in Sources */,
 				93C33A4523CE1D0800B44E5F /* KHJHttpManager.mm in Sources */,
 				93C33B6323CE20B400B44E5F /* TZAssetModel.m in Sources */,
+				AB4E89B424260D550023152B /* UIImage+SGImageSize.m in Sources */,
 				93C33A8723CE1D0800B44E5F /* KHJCalculate.m in Sources */,
 				ABEBCE0323CF1D5000581AFB /* KHJPicture_oneCell.m in Sources */,
 				AB20E61423CEBF2900D2861C /* KHJRecordListVC.m in Sources */,
@@ -1457,8 +1519,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				AB4827792420B707008970A0 /* Base */,
-				AB48277C2420B70E008970A0 /* en */,
-				AB48277E2420B722008970A0 /* zh-Hans */,
+				AB4E89862425BF6A0023152B /* en */,
+				AB4E89882425BF6D0023152B /* zh-Hans */,
 			);
 			name = KHJAddDeviceListVC.xib;
 			sourceTree = "<group>";

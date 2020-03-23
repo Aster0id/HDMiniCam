@@ -427,32 +427,33 @@
 
 - (void)shareClick
 {
-    NSString *path = KHJString(@"%@/%@",[[KHJHelpCameraData sharedModel] getTakeCameraDocPath_deviceID:@""],imagePathArr[_currentIndex]);
-    NSURL *urlToShare = [NSURL fileURLWithPath:path];
-    NSArray *activityItems = [[NSArray alloc] initWithObjects:urlToShare,nil];
-    UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:activityItems applicationActivities:nil];
-    //不出现在活动项目
-    activityVC.excludedActivityTypes = @[UIActivityTypePrint,
-                                         UIActivityTypeCopyToPasteboard,
-                                         UIActivityTypeAssignToContact,
-                                         UIActivityTypeSaveToCameraRoll,
-                                         UIActivityTypeAddToReadingList];
-    UIActivityViewControllerCompletionWithItemsHandler myBlock = ^(UIActivityType activityType, BOOL completed, NSArray * returnedItems, NSError * activityError) {
-        CLog(@"activityType :%@", activityType);
-        if (completed){
-            CLog(@"completed");
-        }
-        else {
-            CLog(@"cancel");
-        }
-    };
-    
-    // 初始化completionHandler，当post结束之后（无论是done还是cancell）该blog都会被调用
-    activityVC.completionWithItemsHandler = myBlock;
-    UIViewController * rootVc = [UIApplication sharedApplication].keyWindow.rootViewController;
-    [rootVc presentViewController:activityVC animated:TRUE completion:nil];
+    if (imagePathArr.count > 0 && _currentIndex < imagePathArr.count) {
+        NSString *path = KHJString(@"%@/%@",[[KHJHelpCameraData sharedModel] getTakeCameraDocPath_deviceID:@""],imagePathArr[_currentIndex]);
+        NSURL *urlToShare = [NSURL fileURLWithPath:path];
+        NSArray *activityItems = [[NSArray alloc] initWithObjects:urlToShare,nil];
+        UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:activityItems applicationActivities:nil];
+        //不出现在活动项目
+        activityVC.excludedActivityTypes = @[UIActivityTypePrint,
+                                             UIActivityTypeCopyToPasteboard,
+                                             UIActivityTypeAssignToContact,
+                                             UIActivityTypeSaveToCameraRoll,
+                                             UIActivityTypeAddToReadingList];
+        UIActivityViewControllerCompletionWithItemsHandler myBlock = ^(UIActivityType activityType, BOOL completed, NSArray * returnedItems, NSError * activityError) {
+            CLog(@"activityType :%@", activityType);
+            if (completed){
+                CLog(@"completed");
+            }
+            else {
+                CLog(@"cancel");
+            }
+        };
+        
+        // 初始化completionHandler，当post结束之后（无论是done还是cancell）该blog都会被调用
+        activityVC.completionWithItemsHandler = myBlock;
+        UIViewController * rootVc = [UIApplication sharedApplication].keyWindow.rootViewController;
+        [rootVc presentViewController:activityVC animated:TRUE completion:nil];
+    }
 }
-
 
 #pragma mark - KHJPicture_oneCellDelegate
 

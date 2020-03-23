@@ -1,12 +1,12 @@
 //
-//  KHJMutilScreenVC_2.m
+//  KHJMutilScreenVC.m
 //  HDMiniCam
 //
 //  Created by khj888 on 2020/3/9.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
-#import "KHJMutilScreenVC_2.h"
+#import "KHJMutilScreenVC.h"
 #import "AppDelegate.h"
 #import "UIDevice+TFDevice.h"
 #import "KHJDeviceManager.h"
@@ -16,7 +16,7 @@ extern NSMutableArray *mutliDeviceIDList;
 // 当前解码类型
 extern KHJDecorderType currentDecorderType;
 
-@interface KHJMutilScreenVC_2 ()<H26xHwDecoderDelegate>
+@interface KHJMutilScreenVC ()<H26xHwDecoderDelegate>
 {
     __weak IBOutlet UIView *naviView;
     __weak IBOutlet UIButton *naviBtn;
@@ -32,7 +32,7 @@ extern KHJDecorderType currentDecorderType;
 
 @end
 
-@implementation KHJMutilScreenVC_2
+@implementation KHJMutilScreenVC
 
 - (void)viewDidLoad
 {

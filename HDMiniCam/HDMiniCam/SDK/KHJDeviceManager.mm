@@ -30,6 +30,9 @@ static int mTotalNum=0;
 static RemoteDirInfo_t*mRemoteRootDirInfo,mSelectedRemoteDirInfo;
 RemoteDirInfo_t*mCurRemoteDirInfo;
 
+// 报警信息
+IPCNETMoveAlarmCfg_st moveAlarmCfg;
+
 //RemoteDirInfo_t 在 JSONStructProtocal.h 定义
 @interface KHJDeviceManager ()
 {
@@ -595,6 +598,7 @@ void OnGetDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
        }
     });
 }
+
 void OnSearchDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:noti_OnSearchDeviceWiFi_CmdResult_KEY object:[KHJUtility cString_changto_ocStringWith:json]];
@@ -618,10 +622,12 @@ void OnSearchDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
 void OnSearchDeviceResult(struct DevInfo *device)
 {
     NSString *uuid = KHJString(@"%s",device->mUUID);
+    NSString *deviceIP = KHJString(@"%s",device->mIP);
     NSString *name = KHJString(@"%s",device->mDevName);
     NSMutableDictionary *body = [NSMutableDictionary dictionary];
     [body setValue:uuid forKey:@"deviceID"];
     [body setValue:name forKey:@"deviceName"];
+    [body setValue:deviceIP forKey:@"deviceIP"];
     [body setValue:@"admin" forKey:@"devicePassword"];// admin 原始密码
     [[NSNotificationCenter defaultCenter] postNotificationName:@"OnSearchDeviceResult_noti_key" object:body];
 }
@@ -1109,13 +1115,31 @@ void OnSetWiFiAPInfoCmdResult(int cmd,const char*uuid,const char*json)
 - (void)getDeviceAlarm_with_deviceID:(NSString *)deviceID
                          resultBlock:(resultBlock)resultBlock
 {
-    int ret = IPCNetGetAlarmR(deviceID.UTF8String, OnGetCmdResult);
+    int ret = IPCNetGetAlarmR(deviceID.UTF8String, OnGetDeviceAlarmCmdResult);
     CLog(@"获取设备报警信息，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
        }
     });
+}
+
+void OnGetDeviceAlarmCmdResult(int cmd,const char*uuid,const char*json)
+{
+    NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
+    CLog(@"dict = %@",dict);
+    int ret = [dict[@"ret"] intValue];
+    if (ret >= 0) {
+        JSONObject jsdata(json);//解析json
+        moveAlarmCfg.parseJSON(jsdata);
+        IPCNetReleaseCmdResource(cmd,uuid,OnGetDeviceAlarmCmdResult);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"OnGetDeviceAlarmCmdResult_noti_key" object:nil];
+        });
+    }
+    else {
+        CLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
+    }
 }
 
 /// 设置设备报警

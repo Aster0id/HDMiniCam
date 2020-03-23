@@ -8,6 +8,11 @@
 
 #import "KHJAlarmConfigVC.h"
 #import "KHJPicker.h"
+#import "KHJDeviceManager.h"
+#import "JSONStructProtocal.h"
+
+// 报警信息
+extern IPCNETMoveAlarmCfg_st moveAlarmCfg;
 
 @interface KHJAlarmConfigVC ()
 {
@@ -32,6 +37,15 @@
     [self registerLJWKeyboardHandler];
     self.titleLab.text = KHJLocalizedString(@"alarSet_", nil);
     [self.leftBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    
+    [[KHJDeviceManager sharedManager] getDeviceAlarm_with_deviceID:self.deviceInfo.deviceID resultBlock:^(NSInteger code) {}];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getAlarmInfo) name:@"OnGetDeviceAlarmCmdResult_noti_key" object:nil];
+}
+
+- (void)getAlarmInfo
+{
+    
 }
 
 - (void)back

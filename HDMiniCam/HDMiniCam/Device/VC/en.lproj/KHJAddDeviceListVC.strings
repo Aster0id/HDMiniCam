@@ -1,6 +1,9 @@
 
-/* Class = "UILabel"; text = "添加在线摄像机"; ObjectID = "1Ff-zf-yN9"; */
-"1Ff-zf-yN9.text" = "Add online camera";
+/* Class = "UILabel"; text = "扫码添加已联网设备"; ObjectID = "1Ff-zf-yN9"; */
+"1Ff-zf-yN9.text" = "Scanning and adding";
 
-/* Class = "UILabel"; text = "配置设备连接到Wi-Fi网络"; ObjectID = "6kl-39-uKU"; */
-"6kl-39-uKU.text" = "Configure the device to connect to a Wi-Fi network";
+/* Class = "UILabel"; text = "热点配网"; ObjectID = "9Xq-RW-nEz"; */
+"9Xq-RW-nEz.text" = "Configure the network";
+
+/* Class = "UILabel"; text = "手动添加设备"; ObjectID = "Ree-DI-09m"; */
+"Ree-DI-09m.text" = "Adding devices manually";

@@ -1,5 +1,5 @@
 //
-//  KHJMutilScreenVC_2.h
+//  KHJMutilScreenVC.h
 //  HDMiniCam
 //
 //  Created by khj888 on 2020/3/9.
@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJMutilScreenVC_2 : KHJVideoPlayerBaseVC
+@interface KHJMutilScreenVC : KHJVideoPlayerBaseVC
 
 @property (nonatomic, strong) NSArray *list;
 
