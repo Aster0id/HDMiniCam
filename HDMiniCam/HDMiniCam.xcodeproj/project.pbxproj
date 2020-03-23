@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		93037C8A23D933EE00F4D969 /* KHJWiFiVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93037C8823D933EE00F4D969 /* KHJWiFiVC.m */; };
 		93037C8B23D933EE00F4D969 /* KHJWiFiVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93037C8923D933EE00F4D969 /* KHJWiFiVC.xib */; };
+		936229BA24278721002A1EFB /* KHJAlarmConfVC_2.m in Sources */ = {isa = PBXBuildFile; fileRef = 936229B824278721002A1EFB /* KHJAlarmConfVC_2.m */; };
+		936229BB24278721002A1EFB /* KHJAlarmConfVC_2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 936229B924278721002A1EFB /* KHJAlarmConfVC_2.xib */; };
 		9398AEE123E08DC600E8D685 /* KHJWiFiVC_2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398AEDF23E08DC600E8D685 /* KHJWiFiVC_2.m */; };
 		9398AEE223E08DC700E8D685 /* KHJWiFiVC_2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9398AEE023E08DC600E8D685 /* KHJWiFiVC_2.xib */; };
 		93A30C4723D29862009A0F4C /* KHJAlarmConfigVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 93A30C4523D29862009A0F4C /* KHJAlarmConfigVC.mm */; };
@@ -139,6 +141,18 @@
 		AB4E89B724260D550023152B /* SGQRCodeScanManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E89AB24260D540023152B /* SGQRCodeScanManager.m */; };
 		AB4E89B824260D550023152B /* SGQRCodeGenerateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E89AC24260D540023152B /* SGQRCodeGenerateManager.m */; };
 		AB4E89B924260D550023152B /* SGQRCodeAlbumManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E89B124260D540023152B /* SGQRCodeAlbumManager.m */; };
+		AB4E89BD242883E10023152B /* KHJAlarmConfHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E89BC242883E10023152B /* KHJAlarmConfHeadView.m */; };
+		AB4E89BF242883F30023152B /* KHJAlarmConfHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4E89BE242883F30023152B /* KHJAlarmConfHeadView.xib */; };
+		AB4E89C3242887C70023152B /* KHJAlarmConfCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E89C1242887C70023152B /* KHJAlarmConfCell.m */; };
+		AB4E89C4242887C70023152B /* KHJAlarmConfCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4E89C2242887C70023152B /* KHJAlarmConfCell.xib */; };
+		AB4E89C824289B880023152B /* KHJAlarmTriggerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E89C624289B880023152B /* KHJAlarmTriggerVC.m */; };
+		AB4E89C924289B880023152B /* KHJAlarmTriggerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4E89C724289B880023152B /* KHJAlarmTriggerVC.xib */; };
+		AB4E89CD2428B7320023152B /* KHJDefensTimeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E89CB2428B7320023152B /* KHJDefensTimeVC.m */; };
+		AB4E89CE2428B7320023152B /* KHJDefensTimeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4E89CC2428B7320023152B /* KHJDefensTimeVC.xib */; };
+		AB4E89D22428BACD0023152B /* KHJDefensTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E89D02428BACD0023152B /* KHJDefensTimeCell.m */; };
+		AB4E89D32428BACD0023152B /* KHJDefensTimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4E89D12428BACD0023152B /* KHJDefensTimeCell.xib */; };
+		AB4E89D62428BFF70023152B /* KHJAlarmConfFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E89D52428BFF70023152B /* KHJAlarmConfFootView.m */; };
+		AB4E89D82428C0060023152B /* KHJAlarmConfFootView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4E89D72428C0060023152B /* KHJAlarmConfFootView.xib */; };
 		AB4EFA7323F6B40000D584E7 /* libIPCNetManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB4EFA7123F6B40000D584E7 /* libIPCNetManager.a */; };
 		AB4EFA7423F6B40000D584E7 /* libFBP2P.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB4EFA7223F6B40000D584E7 /* libFBP2P.a */; };
 		AB4EFA7E23F6D43600D584E7 /* KHJDeviceManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB4EFA7D23F6D43600D584E7 /* KHJDeviceManager.mm */; };
@@ -189,6 +203,9 @@
 		93037C8723D933EE00F4D969 /* KHJWiFiVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJWiFiVC.h; sourceTree = "<group>"; };
 		93037C8823D933EE00F4D969 /* KHJWiFiVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJWiFiVC.m; sourceTree = "<group>"; };
 		93037C8923D933EE00F4D969 /* KHJWiFiVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJWiFiVC.xib; sourceTree = "<group>"; };
+		936229B724278721002A1EFB /* KHJAlarmConfVC_2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJAlarmConfVC_2.h; sourceTree = "<group>"; };
+		936229B824278721002A1EFB /* KHJAlarmConfVC_2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJAlarmConfVC_2.m; sourceTree = "<group>"; };
+		936229B924278721002A1EFB /* KHJAlarmConfVC_2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJAlarmConfVC_2.xib; sourceTree = "<group>"; };
 		9398AEDE23E08DC600E8D685 /* KHJWiFiVC_2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJWiFiVC_2.h; sourceTree = "<group>"; };
 		9398AEDF23E08DC600E8D685 /* KHJWiFiVC_2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJWiFiVC_2.m; sourceTree = "<group>"; };
 		9398AEE023E08DC600E8D685 /* KHJWiFiVC_2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJWiFiVC_2.xib; sourceTree = "<group>"; };
@@ -429,6 +446,24 @@
 		AB4E89B024260D540023152B /* SGQRCodeScanManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCodeScanManager.h; sourceTree = "<group>"; };
 		AB4E89B124260D540023152B /* SGQRCodeAlbumManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGQRCodeAlbumManager.m; sourceTree = "<group>"; };
 		AB4E89B224260D540023152B /* SGQRCodeGenerateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCodeGenerateManager.h; sourceTree = "<group>"; };
+		AB4E89BB242883E10023152B /* KHJAlarmConfHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJAlarmConfHeadView.h; sourceTree = "<group>"; };
+		AB4E89BC242883E10023152B /* KHJAlarmConfHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJAlarmConfHeadView.m; sourceTree = "<group>"; };
+		AB4E89BE242883F30023152B /* KHJAlarmConfHeadView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJAlarmConfHeadView.xib; sourceTree = "<group>"; };
+		AB4E89C0242887C70023152B /* KHJAlarmConfCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJAlarmConfCell.h; sourceTree = "<group>"; };
+		AB4E89C1242887C70023152B /* KHJAlarmConfCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJAlarmConfCell.m; sourceTree = "<group>"; };
+		AB4E89C2242887C70023152B /* KHJAlarmConfCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJAlarmConfCell.xib; sourceTree = "<group>"; };
+		AB4E89C524289B880023152B /* KHJAlarmTriggerVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJAlarmTriggerVC.h; sourceTree = "<group>"; };
+		AB4E89C624289B880023152B /* KHJAlarmTriggerVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJAlarmTriggerVC.m; sourceTree = "<group>"; };
+		AB4E89C724289B880023152B /* KHJAlarmTriggerVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJAlarmTriggerVC.xib; sourceTree = "<group>"; };
+		AB4E89CA2428B7320023152B /* KHJDefensTimeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJDefensTimeVC.h; sourceTree = "<group>"; };
+		AB4E89CB2428B7320023152B /* KHJDefensTimeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJDefensTimeVC.m; sourceTree = "<group>"; };
+		AB4E89CC2428B7320023152B /* KHJDefensTimeVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJDefensTimeVC.xib; sourceTree = "<group>"; };
+		AB4E89CF2428BACD0023152B /* KHJDefensTimeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJDefensTimeCell.h; sourceTree = "<group>"; };
+		AB4E89D02428BACD0023152B /* KHJDefensTimeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJDefensTimeCell.m; sourceTree = "<group>"; };
+		AB4E89D12428BACD0023152B /* KHJDefensTimeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJDefensTimeCell.xib; sourceTree = "<group>"; };
+		AB4E89D42428BFF70023152B /* KHJAlarmConfFootView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJAlarmConfFootView.h; sourceTree = "<group>"; };
+		AB4E89D52428BFF70023152B /* KHJAlarmConfFootView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJAlarmConfFootView.m; sourceTree = "<group>"; };
+		AB4E89D72428C0060023152B /* KHJAlarmConfFootView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJAlarmConfFootView.xib; sourceTree = "<group>"; };
 		AB4EFA6223F6B0BE00D584E7 /* JSONObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JSONObject.hpp; sourceTree = "<group>"; };
 		AB4EFA6323F6B0BE00D584E7 /* SEP2P_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEP2P_API.h; sourceTree = "<group>"; };
 		AB4EFA6423F6B0BE00D584E7 /* cJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cJSON.h; sourceTree = "<group>"; };
@@ -951,6 +986,16 @@
 				AB30DA7223D163A4005BD2A1 /* KHJDeviceConfVC.h */,
 				AB30DA7323D163A4005BD2A1 /* KHJDeviceConfVC.m */,
 				AB30DA7423D163A4005BD2A1 /* KHJDeviceConfVC.xib */,
+				936229B724278721002A1EFB /* KHJAlarmConfVC_2.h */,
+				936229B824278721002A1EFB /* KHJAlarmConfVC_2.m */,
+				936229B924278721002A1EFB /* KHJAlarmConfVC_2.xib */,
+				AB4E89C524289B880023152B /* KHJAlarmTriggerVC.h */,
+				AB4E89C624289B880023152B /* KHJAlarmTriggerVC.m */,
+				AB4E89C724289B880023152B /* KHJAlarmTriggerVC.xib */,
+				AB4E89CA2428B7320023152B /* KHJDefensTimeVC.h */,
+				AB4E89CB2428B7320023152B /* KHJDefensTimeVC.m */,
+				AB4E89CC2428B7320023152B /* KHJDefensTimeVC.xib */,
+				AB4E89BA242875F90023152B /* AlarmConfgView */,
 				93A30C4423D29862009A0F4C /* KHJAlarmConfigVC.h */,
 				93A30C4523D29862009A0F4C /* KHJAlarmConfigVC.mm */,
 				AB4827812420B756008970A0 /* KHJAlarmConfigVC.xib */,
@@ -1041,6 +1086,25 @@
 				AB4E89A824260D540023152B /* UIImage+SGImageSize.h */,
 			);
 			path = Category;
+			sourceTree = "<group>";
+		};
+		AB4E89BA242875F90023152B /* AlarmConfgView */ = {
+			isa = PBXGroup;
+			children = (
+				AB4E89BB242883E10023152B /* KHJAlarmConfHeadView.h */,
+				AB4E89BC242883E10023152B /* KHJAlarmConfHeadView.m */,
+				AB4E89BE242883F30023152B /* KHJAlarmConfHeadView.xib */,
+				AB4E89D42428BFF70023152B /* KHJAlarmConfFootView.h */,
+				AB4E89D52428BFF70023152B /* KHJAlarmConfFootView.m */,
+				AB4E89D72428C0060023152B /* KHJAlarmConfFootView.xib */,
+				AB4E89C0242887C70023152B /* KHJAlarmConfCell.h */,
+				AB4E89C1242887C70023152B /* KHJAlarmConfCell.m */,
+				AB4E89C2242887C70023152B /* KHJAlarmConfCell.xib */,
+				AB4E89CF2428BACD0023152B /* KHJDefensTimeCell.h */,
+				AB4E89D02428BACD0023152B /* KHJDefensTimeCell.m */,
+				AB4E89D12428BACD0023152B /* KHJDefensTimeCell.xib */,
+			);
+			path = AlarmConfgView;
 			sourceTree = "<group>";
 		};
 		AB4EFA4623F6559400D584E7 /* SDK */ = {
@@ -1212,17 +1276,21 @@
 				AB5911DD23D0141A0060F05C /* KHJRecordListCell.xib in Resources */,
 				AB20E62223CED07300D2861C /* KHJDeviceListCell.xib in Resources */,
 				AB30DA4123D05396005BD2A1 /* KHJAlarmListCell.xib in Resources */,
+				AB4E89C4242887C70023152B /* KHJAlarmConfCell.xib in Resources */,
 				AB4E89B324260D550023152B /* SGQRCode.bundle in Resources */,
 				AB30DA5623D06844005BD2A1 /* KHJHadBindDeviceCell.xib in Resources */,
+				AB4E89CE2428B7320023152B /* KHJDefensTimeVC.xib in Resources */,
 				93C3396D23CB75BE00B44E5F /* LaunchScreen.storyboard in Resources */,
 				93037C8B23D933EE00F4D969 /* KHJWiFiVC.xib in Resources */,
 				93C33B4E23CE20B400B44E5F /* ZQAlterField.strings in Resources */,
+				AB4E89D82428C0060023152B /* KHJAlarmConfFootView.xib in Resources */,
 				AB30DA6623D1482F005BD2A1 /* KHJSearchDeviceCell.xib in Resources */,
 				AB771A2E24222979007B5E2E /* Info.plist in Resources */,
 				AB4827862420B769008970A0 /* KHJWIFIConfigVC.xib in Resources */,
 				93C33B7623CE20B400B44E5F /* navi_back@2x.png in Resources */,
 				AB4827552420B666008970A0 /* KHJDeviceListVC.xib in Resources */,
 				93A30C5723D298B3009A0F4C /* KHJlampConfigVC.xib in Resources */,
+				936229BB24278721002A1EFB /* KHJAlarmConfVC_2.xib in Resources */,
 				93A30C6623D43378009A0F4C /* KHJWIFIConfigCell.xib in Resources */,
 				93C33B6A23CE20B400B44E5F /* TZAlbumCell.xib in Resources */,
 				AB4827782420B707008970A0 /* KHJAddDeviceListVC.xib in Resources */,
@@ -1234,7 +1302,9 @@
 				93C33B7223CE20B400B44E5F /* photo_original_sel@2x.png in Resources */,
 				AB4827632420B6AE008970A0 /* KHJVideoPlayer_hf_VC.xib in Resources */,
 				AB597B4624027BC900F04F84 /* KHJBackPlayListCell.xib in Resources */,
+				AB4E89C924289B880023152B /* KHJAlarmTriggerVC.xib in Resources */,
 				AB4827942420B7C4008970A0 /* KHJTimeZoneConfigVC.xib in Resources */,
+				AB4E89BF242883F30023152B /* KHJAlarmConfHeadView.xib in Resources */,
 				AB5462FB2416453900A096ED /* KHJMutilScreenVC.xib in Resources */,
 				AB52C11523FBEB0100C921F1 /* KHJAddDeviceListCell.xib in Resources */,
 				93C33B6C23CE20B400B44E5F /* TZAssetCell.xib in Resources */,
@@ -1243,6 +1313,7 @@
 				93C33B4F23CE20B400B44E5F /* ZQAlterField.xib in Resources */,
 				AB30DA5123D066F7005BD2A1 /* KHJHadBindDeviceVC.xib in Resources */,
 				AB4827C52421FEED008970A0 /* InfoPlist.strings in Resources */,
+				AB4E89D32428BACD0023152B /* KHJDefensTimeCell.xib in Resources */,
 				93C33B6E23CE20B400B44E5F /* photo_sel_previewVc@2x.png in Resources */,
 				AB5462E3240FB91000A096ED /* KHJCollectionViewCell_three.xib in Resources */,
 				AB48276A2420B6DC008970A0 /* KHJBackPlayListVC.xib in Resources */,
@@ -1348,18 +1419,22 @@
 				AB5D784A23F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.mm in Sources */,
 				AB54630524172A9C00A096ED /* XBAudioUnitPlayer.m in Sources */,
 				93A30C5623D298B3009A0F4C /* KHJlampConfigVC.m in Sources */,
+				AB4E89CD2428B7320023152B /* KHJDefensTimeVC.m in Sources */,
 				AB597B4524027BC900F04F84 /* KHJBackPlayListCell.m in Sources */,
 				93C33B7D23CE218200B44E5F /* Toast+UIView.m in Sources */,
 				AB30DA4023D05396005BD2A1 /* KHJAlarmListCell.m in Sources */,
+				AB4E89D62428BFF70023152B /* KHJAlarmConfFootView.m in Sources */,
 				AB4E89B524260D550023152B /* SGQRCodeHelperTool.m in Sources */,
 				93C33B5B23CE20B400B44E5F /* NSBundle+Language.m in Sources */,
 				93C33B6623CE20B400B44E5F /* TZImageManager.m in Sources */,
+				936229BA24278721002A1EFB /* KHJAlarmConfVC_2.m in Sources */,
 				93C33B8023CE236100B44E5F /* KHJPlayMusic.m in Sources */,
 				93FC9F7824057033000B9B51 /* H26xHwDecoder.m in Sources */,
 				93C33B6523CE20B400B44E5F /* TZPhotoPreviewController.m in Sources */,
 				AB4E89B924260D550023152B /* SGQRCodeAlbumManager.m in Sources */,
 				93C3398823CE1BA900B44E5F /* KHJTabBarBaseVC.m in Sources */,
 				AB52C11423FBEB0100C921F1 /* KHJAddDeviceListCell.m in Sources */,
+				AB4E89C824289B880023152B /* KHJAlarmTriggerVC.m in Sources */,
 				AB4827AE2420C841008970A0 /* KHJToast.m in Sources */,
 				93C33B6423CE20B400B44E5F /* UIView+Layout.m in Sources */,
 				AB30DA7523D163A4005BD2A1 /* KHJDeviceConfVC.m in Sources */,
@@ -1385,6 +1460,7 @@
 				AB52C11E23FD3B3200C921F1 /* KHJErrorManager.m in Sources */,
 				AB52C11823FC14A300C921F1 /* KHJDataBase.m in Sources */,
 				AB30DA7B23D164AE005BD2A1 /* KHJDeviceConfCell.m in Sources */,
+				AB4E89BD242883E10023152B /* KHJAlarmConfHeadView.m in Sources */,
 				93C3397023CB75BE00B44E5F /* main.m in Sources */,
 				AB30DA5523D06844005BD2A1 /* KHJHadBindDeviceCell.m in Sources */,
 				AB30DA5023D066F7005BD2A1 /* KHJHadBindDeviceVC.m in Sources */,
@@ -1414,6 +1490,7 @@
 				AB482754241F9CE4008970A0 /* TYCameraTimeLineScrollView.m in Sources */,
 				93A30C4723D29862009A0F4C /* KHJAlarmConfigVC.mm in Sources */,
 				AB54630424172A9C00A096ED /* XBAudioUnitRecorder.m in Sources */,
+				AB4E89C3242887C70023152B /* KHJAlarmConfCell.m in Sources */,
 				AB30DA5F23D1470F005BD2A1 /* KHJSearchDeviceVC.m in Sources */,
 				AB30DA6523D1482F005BD2A1 /* KHJSearchDeviceCell.m in Sources */,
 				93A30C4C23D29889009A0F4C /* KHJWIFIConfigVC.m in Sources */,
@@ -1426,6 +1503,7 @@
 				93C33B6923CE20B400B44E5F /* TZImagePickerController.m in Sources */,
 				AB20E63123CEEB9B00D2861C /* KHJPictureCell.m in Sources */,
 				93C3396223CB75BB00B44E5F /* AppDelegate.mm in Sources */,
+				AB4E89D22428BACD0023152B /* KHJDefensTimeCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

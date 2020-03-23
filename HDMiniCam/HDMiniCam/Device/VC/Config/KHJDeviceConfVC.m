@@ -8,7 +8,7 @@
 
 #import "KHJDeviceConfVC.h"
 #import "KHJDeviceConfCell.h"
-#import "KHJAlarmConfigVC.h"
+#import "KHJAlarmConfVC_2.h"
 #import "KHJWIFIConfigVC.h"
 #import "KHJSDCardConfigVC.h"
 #import "KHJlampConfigVC.h"
@@ -97,8 +97,8 @@
 - (void)pushTo:(NSInteger)row
 {
     if (row == 0) {
-        KHJAlarmConfigVC *vc = [[KHJAlarmConfigVC alloc] init];
-        vc.deviceInfo = self.deviceInfo;
+        KHJAlarmConfVC_2 *vc = [[KHJAlarmConfVC_2 alloc] init];
+//        vc.deviceInfo = self.deviceInfo;
         [self.navigationController pushViewController:vc animated:YES];
     }
     else if (row == 1) {
