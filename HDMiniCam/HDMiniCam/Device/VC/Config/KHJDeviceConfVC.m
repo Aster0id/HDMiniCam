@@ -114,7 +114,7 @@
 //        KHJlampConfigVC *vc = [[KHJlampConfigVC alloc] init];
 //        [self.navigationController pushViewController:vc animated:YES];
 //    }
-    else if (row == 3){
+    else if (row == 3) {
         KHJTimeZoneConfigVC *vc = [[KHJTimeZoneConfigVC alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
