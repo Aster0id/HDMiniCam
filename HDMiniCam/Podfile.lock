@@ -1,40 +1,74 @@
 PODS:
+  - AFNetworking/NSURLSession (3.2.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.2.1)
+  - AFNetworking/Security (3.2.1)
+  - AFNetworking/Serialization (3.2.1)
   - Bugly (2.5.2)
+  - CocoaAsyncSocket (7.4.3):
+    - CocoaAsyncSocket/All (= 7.4.3)
+  - CocoaAsyncSocket/All (7.4.3):
+    - CocoaAsyncSocket/GCD
+    - CocoaAsyncSocket/RunLoop
+  - CocoaAsyncSocket/GCD (7.4.3)
+  - CocoaAsyncSocket/RunLoop (7.4.3)
   - FFToast (1.2.0)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
   - MJRefresh (3.3.1)
+  - MQTTClient (0.15.3):
+    - MQTTClient/Core (= 0.15.3)
+  - MQTTClient/Core (0.15.3):
+    - MQTTClient/Manager
+    - MQTTClient/Min
+  - MQTTClient/Manager (0.15.3):
+    - MQTTClient/Min
+  - MQTTClient/Min (0.15.3)
   - SDWebImage (5.4.0):
     - SDWebImage/Core (= 5.4.0)
   - SDWebImage/Core (5.4.0)
   - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
+  - AFNetworking/NSURLSession (~> 3.0)
+  - AFNetworking/Reachability (~> 3.0)
+  - AFNetworking/Security (~> 3.0)
+  - AFNetworking/Serialization (~> 3.0)
   - Bugly
+  - CocoaAsyncSocket (~> 7.4.1)
   - FFToast
   - FMDB
   - MJRefresh
+  - MQTTClient
   - SDWebImage
   - SVProgressHUD
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - AFNetworking
     - Bugly
+    - CocoaAsyncSocket
     - FFToast
     - FMDB
     - MJRefresh
+    - MQTTClient
     - SDWebImage
     - SVProgressHUD
 
 SPEC CHECKSUMS:
+  AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   Bugly: dbac48b55ad469a97cc4321045cd50df8f63d44f
+  CocoaAsyncSocket: a18c75dca4b08723628a0bacca6e94803d90be91
   FFToast: 60e0f3c9fd8fc473205015055ee39cd200404e01
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   MJRefresh: eeda70fbf0ad277f3178cef1cd0c3532591d6237
+  MQTTClient: 0dfa04e789479c2e461786464969895c1fcb0875
   SDWebImage: 5bf6aec6481ae2a062bdc59f9d6c1d1e552090e0
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: 16bdfda52b5fae141bf3be53174341b1fe4bd0ef
+PODFILE CHECKSUM: b41b775daacf703683a017f260d48f2e75c095c6
 
 COCOAPODS: 1.7.4

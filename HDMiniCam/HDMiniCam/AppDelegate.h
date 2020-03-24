@@ -6,6 +6,11 @@
 //  Copyright © 2020年 王涛. All rights reserved.
 //
 
+/**
+ 1、新增分享
+ 2、新增报警设置
+ */
+
 #import <UIKit/UIKit.h>
 #import "KHJTabBarBaseVC.h"
 // IPCA000015WAABW 84567

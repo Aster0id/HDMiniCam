@@ -7,10 +7,10 @@ target 'HDMiniCam' do
   pod 'Bugly'
   pod 'FFToast'
   pod 'MJRefresh'
-#  pod 'MQTTClient'
+  pod 'MQTTClient'
   pod 'SDWebImage'
   pod 'SVProgressHUD'
-#  pod 'AFNetworking', '~> 3.0', :subspecs => ['Reachability', 'Serialization', 'Security', 'NSURLSession']
-#  pod 'CocoaAsyncSocket', '~> 7.4.1'
+  pod 'AFNetworking', '~> 3.0', :subspecs => ['Reachability', 'Serialization', 'Security', 'NSURLSession']
+  pod 'CocoaAsyncSocket', '~> 7.4.1'
 
 end
