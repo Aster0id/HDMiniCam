@@ -10,7 +10,7 @@
 
 @protocol KHJDefensTimeCellDelegate <NSObject>
 
-- (void)closeWith:(NSInteger)row;
+- (void)closeWithSection:(NSInteger)section row:(NSInteger)row;
 
 @end
 
@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KHJDefensTimeCell : KHJBaseCell
 
+@property (nonatomic, assign) NSInteger section;
 @property (weak, nonatomic) IBOutlet UILabel *timeLab;
 @property (nonatomic, strong) id<KHJDefensTimeCellDelegate> delegate;
 

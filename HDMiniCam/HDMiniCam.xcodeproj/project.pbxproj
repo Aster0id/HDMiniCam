@@ -153,6 +153,12 @@
 		AB4E89D32428BACD0023152B /* KHJDefensTimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4E89D12428BACD0023152B /* KHJDefensTimeCell.xib */; };
 		AB4E89D62428BFF70023152B /* KHJAlarmConfFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E89D52428BFF70023152B /* KHJAlarmConfFootView.m */; };
 		AB4E89D82428C0060023152B /* KHJAlarmConfFootView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4E89D72428C0060023152B /* KHJAlarmConfFootView.xib */; };
+		AB4E89DC2429C32D0023152B /* KHJAddDTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E89DA2429C32D0023152B /* KHJAddDTVC.m */; };
+		AB4E89DD2429C32D0023152B /* KHJAddDTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4E89DB2429C32D0023152B /* KHJAddDTVC.xib */; };
+		AB4E89E12429F2CC0023152B /* KHJAlarmPushSetupVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E89DF2429F2CC0023152B /* KHJAlarmPushSetupVC.m */; };
+		AB4E89E22429F2CC0023152B /* KHJAlarmPushSetupVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4E89E02429F2CC0023152B /* KHJAlarmPushSetupVC.xib */; };
+		AB4E89E7242A043D0023152B /* KHJAlarmAreaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E89E5242A043D0023152B /* KHJAlarmAreaCell.m */; };
+		AB4E89E8242A043D0023152B /* KHJAlarmAreaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4E89E6242A043D0023152B /* KHJAlarmAreaCell.xib */; };
 		AB4EFA7323F6B40000D584E7 /* libIPCNetManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB4EFA7123F6B40000D584E7 /* libIPCNetManager.a */; };
 		AB4EFA7423F6B40000D584E7 /* libFBP2P.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB4EFA7223F6B40000D584E7 /* libFBP2P.a */; };
 		AB4EFA7E23F6D43600D584E7 /* KHJDeviceManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB4EFA7D23F6D43600D584E7 /* KHJDeviceManager.mm */; };
@@ -464,6 +470,15 @@
 		AB4E89D42428BFF70023152B /* KHJAlarmConfFootView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJAlarmConfFootView.h; sourceTree = "<group>"; };
 		AB4E89D52428BFF70023152B /* KHJAlarmConfFootView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJAlarmConfFootView.m; sourceTree = "<group>"; };
 		AB4E89D72428C0060023152B /* KHJAlarmConfFootView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJAlarmConfFootView.xib; sourceTree = "<group>"; };
+		AB4E89D92429C32D0023152B /* KHJAddDTVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJAddDTVC.h; sourceTree = "<group>"; };
+		AB4E89DA2429C32D0023152B /* KHJAddDTVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJAddDTVC.m; sourceTree = "<group>"; };
+		AB4E89DB2429C32D0023152B /* KHJAddDTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJAddDTVC.xib; sourceTree = "<group>"; };
+		AB4E89DE2429F2CC0023152B /* KHJAlarmPushSetupVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJAlarmPushSetupVC.h; sourceTree = "<group>"; };
+		AB4E89DF2429F2CC0023152B /* KHJAlarmPushSetupVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJAlarmPushSetupVC.m; sourceTree = "<group>"; };
+		AB4E89E02429F2CC0023152B /* KHJAlarmPushSetupVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJAlarmPushSetupVC.xib; sourceTree = "<group>"; };
+		AB4E89E4242A043D0023152B /* KHJAlarmAreaCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJAlarmAreaCell.h; sourceTree = "<group>"; };
+		AB4E89E5242A043D0023152B /* KHJAlarmAreaCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJAlarmAreaCell.m; sourceTree = "<group>"; };
+		AB4E89E6242A043D0023152B /* KHJAlarmAreaCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJAlarmAreaCell.xib; sourceTree = "<group>"; };
 		AB4EFA6223F6B0BE00D584E7 /* JSONObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JSONObject.hpp; sourceTree = "<group>"; };
 		AB4EFA6323F6B0BE00D584E7 /* SEP2P_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEP2P_API.h; sourceTree = "<group>"; };
 		AB4EFA6423F6B0BE00D584E7 /* cJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cJSON.h; sourceTree = "<group>"; };
@@ -989,12 +1004,19 @@
 				936229B724278721002A1EFB /* KHJAlarmConfVC_2.h */,
 				936229B824278721002A1EFB /* KHJAlarmConfVC_2.m */,
 				936229B924278721002A1EFB /* KHJAlarmConfVC_2.xib */,
+				AB4E89E3242A040C0023152B /* AlarmArea */,
 				AB4E89C524289B880023152B /* KHJAlarmTriggerVC.h */,
 				AB4E89C624289B880023152B /* KHJAlarmTriggerVC.m */,
 				AB4E89C724289B880023152B /* KHJAlarmTriggerVC.xib */,
+				AB4E89DE2429F2CC0023152B /* KHJAlarmPushSetupVC.h */,
+				AB4E89DF2429F2CC0023152B /* KHJAlarmPushSetupVC.m */,
+				AB4E89E02429F2CC0023152B /* KHJAlarmPushSetupVC.xib */,
 				AB4E89CA2428B7320023152B /* KHJDefensTimeVC.h */,
 				AB4E89CB2428B7320023152B /* KHJDefensTimeVC.m */,
 				AB4E89CC2428B7320023152B /* KHJDefensTimeVC.xib */,
+				AB4E89D92429C32D0023152B /* KHJAddDTVC.h */,
+				AB4E89DA2429C32D0023152B /* KHJAddDTVC.m */,
+				AB4E89DB2429C32D0023152B /* KHJAddDTVC.xib */,
 				AB4E89BA242875F90023152B /* AlarmConfgView */,
 				93A30C4423D29862009A0F4C /* KHJAlarmConfigVC.h */,
 				93A30C4523D29862009A0F4C /* KHJAlarmConfigVC.mm */,
@@ -1105,6 +1127,16 @@
 				AB4E89D12428BACD0023152B /* KHJDefensTimeCell.xib */,
 			);
 			path = AlarmConfgView;
+			sourceTree = "<group>";
+		};
+		AB4E89E3242A040C0023152B /* AlarmArea */ = {
+			isa = PBXGroup;
+			children = (
+				AB4E89E4242A043D0023152B /* KHJAlarmAreaCell.h */,
+				AB4E89E5242A043D0023152B /* KHJAlarmAreaCell.m */,
+				AB4E89E6242A043D0023152B /* KHJAlarmAreaCell.xib */,
+			);
+			path = AlarmArea;
 			sourceTree = "<group>";
 		};
 		AB4EFA4623F6559400D584E7 /* SDK */ = {
@@ -1281,9 +1313,12 @@
 				AB30DA5623D06844005BD2A1 /* KHJHadBindDeviceCell.xib in Resources */,
 				AB4E89CE2428B7320023152B /* KHJDefensTimeVC.xib in Resources */,
 				93C3396D23CB75BE00B44E5F /* LaunchScreen.storyboard in Resources */,
+				AB4E89DD2429C32D0023152B /* KHJAddDTVC.xib in Resources */,
 				93037C8B23D933EE00F4D969 /* KHJWiFiVC.xib in Resources */,
+				AB4E89E8242A043D0023152B /* KHJAlarmAreaCell.xib in Resources */,
 				93C33B4E23CE20B400B44E5F /* ZQAlterField.strings in Resources */,
 				AB4E89D82428C0060023152B /* KHJAlarmConfFootView.xib in Resources */,
+				AB4E89E22429F2CC0023152B /* KHJAlarmPushSetupVC.xib in Resources */,
 				AB30DA6623D1482F005BD2A1 /* KHJSearchDeviceCell.xib in Resources */,
 				AB771A2E24222979007B5E2E /* Info.plist in Resources */,
 				AB4827862420B769008970A0 /* KHJWIFIConfigVC.xib in Resources */,
@@ -1437,6 +1472,7 @@
 				AB4E89C824289B880023152B /* KHJAlarmTriggerVC.m in Sources */,
 				AB4827AE2420C841008970A0 /* KHJToast.m in Sources */,
 				93C33B6423CE20B400B44E5F /* UIView+Layout.m in Sources */,
+				AB4E89DC2429C32D0023152B /* KHJAddDTVC.m in Sources */,
 				AB30DA7523D163A4005BD2A1 /* KHJDeviceConfVC.m in Sources */,
 				93C33B6723CE20B400B44E5F /* TZPhotoPickerController.m in Sources */,
 				AB32D4C423F54FE0008AFD1F /* TuyaTimeLineModel.m in Sources */,
@@ -1458,6 +1494,7 @@
 				93C33B2923CE20B400B44E5F /* KHJUtility.m in Sources */,
 				93C33A7423CE1D0800B44E5F /* KHJHub.m in Sources */,
 				AB52C11E23FD3B3200C921F1 /* KHJErrorManager.m in Sources */,
+				AB4E89E7242A043D0023152B /* KHJAlarmAreaCell.m in Sources */,
 				AB52C11823FC14A300C921F1 /* KHJDataBase.m in Sources */,
 				AB30DA7B23D164AE005BD2A1 /* KHJDeviceConfCell.m in Sources */,
 				AB4E89BD242883E10023152B /* KHJAlarmConfHeadView.m in Sources */,
@@ -1477,6 +1514,7 @@
 				93C33B5723CE20B400B44E5F /* LJWKeyboardHandler.m in Sources */,
 				93C33B5023CE20B400B44E5F /* ZQUtil.m in Sources */,
 				93C33B2E23CE20B400B44E5F /* NSString+Utility.m in Sources */,
+				AB4E89E12429F2CC0023152B /* KHJAlarmPushSetupVC.m in Sources */,
 				93A30C5B23D298C5009A0F4C /* KHJTimeZoneConfigVC.m in Sources */,
 				AB4E898B24260AC10023152B /* KHJQRCodeScanningVC.m in Sources */,
 				ABEBCDFF23CF1B8400581AFB /* KHJPictureListVC.m in Sources */,
@@ -1811,8 +1849,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CODE_SIGN_ENTITLEMENTS = HDMiniCam/HDMiniCam.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = VNCC3G6TV4;
 				ENABLE_BITCODE = NO;
@@ -1829,7 +1867,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.khj.HDCamView;
 				PRODUCT_NAME = HDCamView;
-				PROVISIONING_PROFILE_SPECIFIER = HDCamView_ad_hoc;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1841,8 +1879,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CODE_SIGN_ENTITLEMENTS = HDMiniCam/HDMiniCam.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = VNCC3G6TV4;
 				ENABLE_BITCODE = NO;
@@ -1859,7 +1897,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.khj.HDCamView;
 				PRODUCT_NAME = HDCamView;
-				PROVISIONING_PROFILE_SPECIFIER = HDCamView_ad_hoc;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

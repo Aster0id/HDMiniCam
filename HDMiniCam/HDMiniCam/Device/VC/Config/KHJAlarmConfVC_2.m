@@ -11,8 +11,13 @@
 #import "KHJAlarmConfHeadView.h"
 #import "KHJAlarmTriggerVC.h"
 #import "KHJDefensTimeVC.h"
+#import "KHJAlarmAreaCell.h"
 
-@interface KHJAlarmConfVC_2 ()<KHJAlarmConfHeadViewDelegate, KHJAlarmConfCellDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface KHJAlarmConfVC_2 ()
+<
+KHJAlarmConfHeadViewDelegate, KHJAlarmConfCellDelegate,
+KHJAlarmAreaCellDelegate,UICollectionViewDelegate,UICollectionViewDataSource,
+UITableViewDelegate, UITableViewDataSource>
 {
     BOOL firstOn;
     BOOL secondOn;
@@ -27,6 +32,11 @@
     NSArray *cryArr;
     NSString *cryTime;
     NSString *cryLmd;
+    
+    BOOL hadLine;
+    __weak IBOutlet UIView *areaBgView;
+    __weak IBOutlet UIView *areaContentView;
+    __weak IBOutlet UICollectionView *areaCollectionView;
 }
 @end
 
@@ -35,6 +45,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    firstOn = YES;
+    secondOn = YES;
+    thirdOn = YES;
     moveLmd = KHJLocalizedString(@"中", nil);
     moveTime = KHJLocalizedString(@"每天", nil);
     moveArr = @[KHJLocalizedString(@"灵敏度", nil),
@@ -52,6 +65,12 @@
                KHJLocalizedString(@"触发操作", nil)];
     self.titleLab.text = KHJLocalizedString(@"alarSet_", nil);
     [self.leftBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    
+    areaContentView.layer.cornerRadius = 2;
+    areaContentView.layer.masksToBounds = YES;
+    areaContentView.layer.borderWidth = 1;
+    areaContentView.layer.borderColor = UIColorFromRGB(0xD5D5D5).CGColor;
+    [self addCollectionView];
 }
 
 - (void)back
@@ -115,21 +134,18 @@
 - (void)clickHeadWith:(NSInteger)index
 {
     if (index == 0) {
-        CLog(@"第一行 = %ld",index);
         firstOn = !firstOn;
         [UIView performWithoutAnimation:^{
             [self->contentTBV reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
         }];
     }
     else if (index == 1) {
-        CLog(@"第二行 = %ld",index);
         secondOn = !secondOn;
         [UIView performWithoutAnimation:^{
             [self->contentTBV reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
         }];
     }
     else if (index == 2) {
-        CLog(@"第三行 = %ld",index);
         thirdOn = !thirdOn;
         [UIView performWithoutAnimation:^{
             [self->contentTBV reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
@@ -179,14 +195,13 @@
 - (void)clickWith:(NSInteger)row
 {
     if (row == 100) {
-        CLog(@"移动侦测 灵敏度 = %ld",row);
         [self chooseLmdWith:0];
     }
     else if (row == 101) {
         // 移动侦测 侦测区域设置
+        [self showCollectionView];
     }
     else if (row == 102) {
-        CLog(@"移动侦测 布防时间 = %ld",row);
         KHJDefensTimeVC *vc = [[KHJDefensTimeVC alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
@@ -197,9 +212,9 @@
     }
     else if (row == 200) {
         // 人形侦测 侦测区域设置
+        [self showCollectionView];
     }
     else if (row == 201) {
-        CLog(@"人形 布防时间 = %ld",row);
         KHJDefensTimeVC *vc = [[KHJDefensTimeVC alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
@@ -209,11 +224,9 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
     else if (row == 300) {
-        CLog(@"灵敏度 = %ld",row);
         [self chooseLmdWith:2];
     }
     else if (row == 301) {
-        CLog(@"布防时间 = %ld",row);
         KHJDefensTimeVC *vc = [[KHJDefensTimeVC alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
@@ -320,5 +333,115 @@
     [alertview addAction:cancel];
     [self presentViewController:alertview animated:YES completion:nil];
 }
+
+#pragma mark - 区域侦测
+
+- (void)showCollectionView
+{
+    if (!hadLine) {
+        float sizeWith      = (SCREEN_WIDTH - 24 - 15)/16;
+        float sizeHeight    = ((SCREEN_WIDTH - 24)*12/16 - 11)/12;
+        for (int i = 0; i < 12; i++) {
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, sizeHeight*i + i - 1, SCREEN_WIDTH - 24, 1)];
+                view.backgroundColor = UIColor.greenColor;
+                view.alpha = 0.45;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self->areaContentView addSubview:view];
+                });
+            });
+        }
+        for (int i = 0; i < 16; i++) {
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                UIView *view = [[UIView alloc] initWithFrame:CGRectMake(sizeWith*i + i - 1, 0, 1, (SCREEN_WIDTH - 24)*12/16)];
+                view.backgroundColor = UIColor.greenColor;
+                view.alpha = 0.45;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self->areaContentView addSubview:view];
+                });
+            });
+        }
+        [UIView animateWithDuration:0.25 animations:^{
+            self->areaBgView.alpha = 1;
+            self->areaContentView.alpha = 1;
+        }];
+    }
+    else {
+        [UIView animateWithDuration:0.25 animations:^{
+            self->areaBgView.alpha = 1;
+            self->areaContentView.alpha = 1;
+        }];
+    }
+    
+}
+
+- (void)hiddenCollectionView
+{
+    areaBgView.alpha = 0;
+    areaContentView.alpha = 0;
+}
+
+- (void)addCollectionView
+{
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+    float sizeWith      = (SCREEN_WIDTH - 24 - 15)/16;
+    float sizeHeight    = ((SCREEN_WIDTH - 24)*12/16 - 11)/12;
+    layout.itemSize     = CGSizeMake(sizeWith, sizeHeight);
+    areaCollectionView.collectionViewLayout = layout;
+    [areaCollectionView registerNib:[UINib nibWithNibName:@"KHJAlarmAreaCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"KHJAlarmAreaCell"];
+}
+
+#pragma mark - UICollectionViewDelegate, UICollectionViewDataSource
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return 192;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 1;
+}
+
+// 这个是两行cell之间的间距（上下行cell的间距）
+ - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 1;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *identifierCell = @"KHJAlarmAreaCell";
+    KHJAlarmAreaCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifierCell forIndexPath:indexPath];
+    cell.tag = indexPath.row + FLAG_TAG;
+    cell.delegate = self;
+    return cell;
+}
+
+#pragma mark - KHJAlarmAreaCellDelegate
+
+- (void)clickCellWith:(NSInteger)row select:(BOOL)select
+{
+    if (select) {
+        CLog(@"row = %ld 被选择",(long)row);
+    }
+    else {
+        CLog(@"row = %ld 取消",(long)row);
+    }
+}
+
+- (IBAction)areaBtnActoin:(UIButton *)sender
+{
+    if (sender.tag == 10) {
+        // 清理
+    }
+    else if (sender.tag == 20) {
+        // 全选
+    }
+    else if (sender.tag == 30) {
+        // 确定
+    }
+}
+
 
 @end

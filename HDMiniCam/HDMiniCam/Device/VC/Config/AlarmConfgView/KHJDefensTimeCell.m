@@ -22,8 +22,8 @@
 }
 - (IBAction)closeBtnAction:(id)sender
 {
-    if (_delegate && [_delegate respondsToSelector:@selector(closeWith:)]) {
-        [_delegate closeWith:self.tag - FLAG_TAG];
+    if (_delegate && [_delegate respondsToSelector:@selector(closeWithSection:row:)]) {
+        [_delegate closeWithSection:self.section row:self.tag - FLAG_TAG];
     }
 }
 

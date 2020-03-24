@@ -17,6 +17,8 @@
 #import <CoreLocation/CoreLocation.h>
 #import "KHJDeviceManager.h"
 #import "KHJDataBase.h"
+//
+#import "AFNetworkReachabilityManager.h"
 
 @interface AppDelegate ()<CLLocationManagerDelegate>
 
@@ -51,6 +53,8 @@
         [self.locationManager requestWhenInUseAuthorization];
     }
     [self initHomeView];
+    
+    [self checkNetworking];
     return YES;
 }
 
@@ -169,5 +173,36 @@
     return NO;
 }
 
+- (void)checkNetworking
+{
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case -1:
+                CLog(@"---------------------------------------------------- 未知网络");
+                break;
+            case 0:
+                CLog(@"---------------------------------------------------- 网络不可达");
+                break;
+            case 1:
+                CLog(@"---------------------------------------------------- GPRS网络");
+                break;
+            case 2:
+                CLog(@"---------------------------------------------------- wifi网络");
+                break;
+            default:
+                break;
+        }
+        if (status == AFNetworkReachabilityStatusReachableViaWWAN
+           || status == AFNetworkReachabilityStatusReachableViaWiFi) {
+            CLog(@"有网");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"netStateChange" object:@"手机有网络"];
+        }
+        else {
+            CLog(@"没网");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"netStateChange" object:@"手机无网络"];
+        }
+    }];
+}
 
 @end

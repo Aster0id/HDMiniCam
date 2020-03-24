@@ -1,0 +1,26 @@
+//
+//  KHJAddDTVC.h
+//  HDMiniCam
+//
+//  Created by khj888 on 2020/3/24.
+//  Copyright © 2020 王涛. All rights reserved.
+//
+
+#import "KHJBaseVC.h"
+
+@protocol KHJAddDTVCDelegate <NSObject>
+
+- (void)addDefinesTime:(NSString *_Nullable)time;
+
+@end
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface KHJAddDTVC : KHJBaseVC
+
+@property (nonatomic, strong) NSArray *timeArr;
+@property (nonatomic, strong) id<KHJAddDTVCDelegate> delegate;
+
+@end
+
+NS_ASSUME_NONNULL_END
