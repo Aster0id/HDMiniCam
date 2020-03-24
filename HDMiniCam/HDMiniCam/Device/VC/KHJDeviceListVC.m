@@ -74,6 +74,10 @@ typedef enum : NSUInteger {
     [self.deviceList addObjectsFromArray:[[KHJDataBase sharedDataBase] getAllDeviceInfo]];
     [self addDeviceNoti];
     [self reloadNewDeviceList];
+    
+    [[KHJDeviceManager sharedManager] stopSearchDevice_with_resultBlock:^(NSInteger code) {
+        [[KHJDeviceManager sharedManager] startSearchDevice_with_resultBlock:^(NSInteger code) {}];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
