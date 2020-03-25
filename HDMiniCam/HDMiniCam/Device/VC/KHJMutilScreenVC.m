@@ -2,7 +2,7 @@
 //  KHJMutilScreenVC.m
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/3/9.
+//  Created by kevin on 2020/3/9.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
@@ -14,7 +14,7 @@
 // 设备列表
 extern NSMutableArray *mutliDeviceIDList;
 // 当前解码类型
-extern KHJDecorderType currentDecorderType;
+extern TTDecordeType currentDecorderType;
 
 @interface KHJMutilScreenVC ()<H26xHwDecoderDelegate>
 {
@@ -37,7 +37,7 @@ extern KHJDecorderType currentDecorderType;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    currentDecorderType = KHJDecorderType_mutli;
+    currentDecorderType = TTDecorde_mutli;
     if (mutliDeviceIDList) {
         [mutliDeviceIDList addObject:@""];
         [mutliDeviceIDList addObject:@""];
@@ -61,7 +61,7 @@ extern KHJDecorderType currentDecorderType;
     NSString *deviceID      = KHJString(@"%@",body[@"deviceID"]);
     NSString *deviceStatus  = KHJString(@"%@",body[@"deviceStatus"]);
     if ([deviceStatus isEqualToString:@"0"]) {
-        WeakSelf
+        TTWeakSelf
         dispatch_async(dispatch_get_main_queue(), ^{
             if (![weakSelf.deviceList containsObject:deviceID]) {
                 [weakSelf.deviceList addObject:deviceID];
@@ -79,11 +79,11 @@ extern KHJDecorderType currentDecorderType;
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    currentDecorderType = KHJDecorderType_none;
+    currentDecorderType = TTDecorder_none;
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
     /* 显示多个视频 */
     AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    appDelegate.setTurnScreen = NO;
+    appDelegate.canLandscape = NO;
     [UIDevice switchNewOrientation:UIInterfaceOrientationPortrait];
     [UIApplication sharedApplication].statusBarHidden = NO;
     
@@ -104,7 +104,7 @@ extern KHJDecorderType currentDecorderType;
     [UIApplication sharedApplication].statusBarHidden = YES;
     /* 显示多个视频 */
     AppDelegate *appDelegate    = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    appDelegate.setTurnScreen   = YES;
+    appDelegate.canLandscape   = YES;
     [UIDevice switchNewOrientation:UIInterfaceOrientationLandscapeRight];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
@@ -125,7 +125,7 @@ extern KHJDecorderType currentDecorderType;
     chooseIndex = sender.tag;
     NSArray *passDeviceList = [self.deviceList copy];
     UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"adDev_", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-    WeakSelf
+    TTWeakSelf
     for (int i = 0; i < passDeviceList.count; i++) {
         UIAlertAction *config = [UIAlertAction actionWithTitle:passDeviceList[i]
                                                          style:UIAlertActionStyleDefault
@@ -154,7 +154,7 @@ extern KHJDecorderType currentDecorderType;
     if (!self.initMutliDecorder) {
         self.initMutliDecorder = YES;
     }
-    WeakSelf
+    TTWeakSelf
     [[KHJDeviceManager sharedManager] startGetVideo_with_deviceID:deviceID quality:1 resultBlock:^(NSInteger code) {
         [weakSelf.deviceList removeObject:deviceID];
     }];

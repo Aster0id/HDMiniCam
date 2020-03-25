@@ -2,7 +2,7 @@
 //  KHJMutilScreenVC.h
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/3/9.
+//  Created by kevin on 2020/3/9.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 

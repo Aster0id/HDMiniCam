@@ -2,7 +2,7 @@
 //  KHJDeviceConfVC.m
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/1/17.
+//  Created by kevin on 2020/1/17.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
@@ -85,7 +85,7 @@
         cell = [[NSBundle  mainBundle] loadNibNamed:@"KHJDeviceConfCell" owner:nil options:nil][0];
     }
     cell.tag = indexPath.row + FLAG_TAG;
-    WeakSelf
+    TTWeakSelf
     cell.block = ^(NSInteger row) {
         [weakSelf pushTo:row];
     };
@@ -125,7 +125,7 @@
     }
     else if (row == 5) {
         UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:KHJLocalizedString(@"surestart_", nil) preferredStyle:UIAlertControllerStyleAlert];
-        WeakSelf
+        TTWeakSelf
         UIAlertAction *delete = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [[KHJDeviceManager sharedManager] rebootDevice_with_deviceID:weakSelf.deviceInfo.deviceID resultBlock:^(NSInteger code) {
                 [weakSelf.view makeToast:KHJLocalizedString(@"设备已重启", nil)];
@@ -138,7 +138,7 @@
     }
     else if (row == 6) {
         UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:KHJLocalizedString(@"sureSet_", nil) preferredStyle:UIAlertControllerStyleAlert];
-        WeakSelf
+        TTWeakSelf
         UIAlertAction *delete = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [[KHJDeviceManager sharedManager] resetDevice_with_deviceID:weakSelf.deviceInfo.deviceID resultBlock:^(NSInteger code) {
                 [weakSelf.view makeToast:KHJLocalizedString(@"正在恢复出厂设置，3秒后将返回设备列表", nil)];

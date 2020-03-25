@@ -2,7 +2,7 @@
 //  KHJVideoPlayer_sp_VC.h
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/2/12.
+//  Created by kevin on 2020/2/12.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 

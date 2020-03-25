@@ -36,20 +36,20 @@
 - (IBAction)btn:(UIButton *)sender
 {
     if (sender.tag == 10) {
-        CLog(@"选择时区");
+        TLog(@"选择时区");
         [self chooseTimeZone];
     }
     else if (sender.tag == 20) {
-        CLog(@"时间服务器");
+        TLog(@"时间服务器");
     }
     else if (sender.tag == 30) {
-        CLog(@"确定");
+        TLog(@"确定");
     }
     else if (sender.tag == 40) {
-        CLog(@"取消");
+        TLog(@"取消");
     }
     else if (sender.tag == 50) {
-        CLog(@"用APP同步时间");
+        TLog(@"用APP同步时间");
     }
 }
 
@@ -58,7 +58,7 @@
     UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"chooseTimeZone_", nil)
                                                                        message:nil
                                                                 preferredStyle:UIAlertControllerStyleAlert];
-    WeakSelf
+    TTWeakSelf
     UIAlertAction *config = [UIAlertAction actionWithTitle:KHJString(@"(GMT-11:00) %@",KHJLocalizedString(@"ztd_", nil))
                                                      style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * _Nonnull action) {

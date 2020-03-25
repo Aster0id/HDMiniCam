@@ -2,7 +2,7 @@
 //  KHJDeviceListVC.m
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/1/15.
+//  Created by kevin on 2020/1/15.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
@@ -92,7 +92,7 @@ typedef enum : NSUInteger {
 
     NSArray *subDeviceList = [self.deviceList copy];
     NSArray *array = [[KHJDataBase sharedDataBase] getAllDeviceInfo];
-    WeakSelf
+    TTWeakSelf
     [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         KHJDeviceInfo *info = (KHJDeviceInfo *)obj;
         __block BOOL isExit = NO;
@@ -106,13 +106,13 @@ typedef enum : NSUInteger {
         if (!isExit) {
             if (hotPoint != hotPointType_no) {
                 if ([wifiName hasPrefix:info.deviceID]) {
-                    CLog(@"wifiName = %@, info.deviceID = %@",wifiName,info.deviceID);
+                    TLog(@"wifiName = %@, info.deviceID = %@",wifiName,info.deviceID);
                     [weakSelf.deviceList addObject:info];
                     [[KHJDeviceManager sharedManager] connect_with_deviceID:info.deviceID
                                                                    password:info.devicePassword resultBlock:^(NSInteger code) {}];
                 }
                 else {
-                    CLog(@"非本机 ----------- info.deviceID = %@",info.deviceID);
+                    TLog(@"非本机 ----------- info.deviceID = %@",info.deviceID);
                     [weakSelf.deviceList addObject:info];
                 }
             }
@@ -142,7 +142,7 @@ typedef enum : NSUInteger {
 {
     NSMutableArray *list = [NSMutableArray array];
     NSArray *passDeviceList = [self.deviceList copy];
-    WeakSelf
+    TTWeakSelf
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         for (int i = 0; i < passDeviceList.count; i++) {
             KHJDeviceInfo *info = passDeviceList[i];
@@ -153,7 +153,7 @@ typedef enum : NSUInteger {
         dispatch_async(dispatch_get_main_queue(), ^{
             /* 显示多个视频 */
             AppDelegate *appDelegate    = (AppDelegate *)[UIApplication sharedApplication].delegate;
-            appDelegate.setTurnScreen   = YES;
+            appDelegate.canLandscape   = YES;
             [UIDevice switchNewOrientation:UIInterfaceOrientationLandscapeRight];
             [weakSelf.navigationController setNavigationBarHidden:YES animated:YES];
             KHJMutilScreenVC *vc = [[KHJMutilScreenVC alloc] init];
@@ -225,7 +225,7 @@ typedef enum : NSUInteger {
 
 - (void)gotoVideoWithIndex:(NSInteger)index
 {
-    CLog(@"进入第 %ld 个视频播放界面",index);
+    TLog(@"进入第 %ld 个视频播放界面",index);
     KHJDeviceInfo *info = self.deviceList[index];
     if ([info.deviceStatus isEqualToString:@"0"]) {
         KHJVideoPlayer_sp_VC *vc = [[KHJVideoPlayer_sp_VC alloc] init];
@@ -254,7 +254,7 @@ typedef enum : NSUInteger {
 
 - (void)showSetupWith:(KHJDeviceInfo *)deviceInfo
 {
-    WeakSelf
+    TTWeakSelf
     UIAlertController *alertview = [UIAlertController alertControllerWithTitle:deviceInfo.deviceName message:nil preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"chageDev_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         KHJOnlineVC *vc = [[KHJOnlineVC alloc] init];
@@ -274,11 +274,11 @@ typedef enum : NSUInteger {
                 NSString *path_document = NSHomeDirectory();
                 NSString *pString = [NSString stringWithFormat:@"/Documents/%@.png",deviceInfo.deviceID];
                 NSString *imagePath = [path_document stringByAppendingString:pString];
-                NSString *screenShotPath = [[KHJHelpCameraData sharedModel] get_screenShot_DocPath_deviceID:deviceInfo.deviceID];
-                NSString *recordScreenShotPath = [[KHJHelpCameraData sharedModel] get_recordVideo_screenShot_DocPath_deviceID:deviceInfo.deviceID];
-                [[KHJHelpCameraData sharedModel] DeleateFileWithPath:imagePath];
-                [[KHJHelpCameraData sharedModel] DeleateFileWithPath:screenShotPath];
-                [[KHJHelpCameraData sharedModel] DeleateFileWithPath:recordScreenShotPath];
+                NSString *screenShotPath = [[TTFileManager sharedModel] get_screenShot_DocPath_deviceID:deviceInfo.deviceID];
+                NSString *recordScreenShotPath = [[TTFileManager sharedModel] get_recordVideo_screenShot_DocPath_with_deviceID:deviceInfo.deviceID];
+                [[TTFileManager sharedModel] delete_videoFile_With_path:imagePath];
+                [[TTFileManager sharedModel] delete_videoFile_With_path:screenShotPath];
+                [[TTFileManager sharedModel] delete_videoFile_With_path:recordScreenShotPath];
             }
         }];
     }];
@@ -325,14 +325,14 @@ typedef enum : NSUInteger {
 
 - (void)getPhoneWifi
 {
-    WeakSelf
+    TTWeakSelf
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();
         for (NSString *item in ifs) {
             NSDictionary *info = [NSDictionary dictionaryWithDictionary:(__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)item)];
             wifiName = info[@"SSID"];
             if ([wifiName hasPrefix:@"IPC_"]) {
-                CLog(@"wifiName ============ %@",wifiName);
+                TLog(@"wifiName ============ %@",wifiName);
 //                if (self->hotPoint == hotPointType_no) {
 //                    self->hotPoint = hotPointType_once;
 //                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -413,14 +413,14 @@ typedef enum : NSUInteger {
     NSString *deviceStatus = KHJString(@"%@",body[@"deviceStatus"]);
     
     if ([wifiName hasPrefix:@"IPC"]) {
-        CLog(@"当前连接的是热点");
+        TLog(@"当前连接的是热点");
         NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();
         for (NSString *item in ifs) {
             NSDictionary *info = [NSDictionary dictionaryWithDictionary:(__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)item)];
             wifiName = info[@"SSID"];
             if (![wifiName hasPrefix:@"IPC"]) {
-                CLog(@"wifiName ============ %@",wifiName);
-                CLog(@"当前连接的是正常Wi-Fi");
+                TLog(@"wifiName ============ %@",wifiName);
+                TLog(@"当前连接的是正常Wi-Fi");
                 [self.deviceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                     KHJDeviceInfo *info = (KHJDeviceInfo *)obj;
                     if ([info.deviceID isEqualToString:deviceID]) {
@@ -437,7 +437,7 @@ typedef enum : NSUInteger {
         }
     }
     else {
-        CLog(@"当前连接的是正常Wi-Fi");
+        TLog(@"当前连接的是正常Wi-Fi");
         [self.deviceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             KHJDeviceInfo *info = (KHJDeviceInfo *)obj;
             if ([info.deviceID isEqualToString:deviceID]) {

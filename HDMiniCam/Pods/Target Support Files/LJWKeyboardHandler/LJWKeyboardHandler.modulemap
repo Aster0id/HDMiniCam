@@ -1,0 +1,6 @@
+framework module LJWKeyboardHandler {
+  umbrella header "LJWKeyboardHandler-umbrella.h"
+
+  export *
+  module * { export * }
+}

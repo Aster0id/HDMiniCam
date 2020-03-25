@@ -2,7 +2,7 @@
 //  KHJRecordListVC.m
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/1/15.
+//  Created by kevin on 2020/1/15.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
@@ -116,7 +116,7 @@
     cell.idLab.text = info.deviceName;
     cell.nameLab.text = info.deviceID;
     if (currentIndex == 0) {
-        NSArray *list = [[KHJHelpCameraData sharedModel] getmp4VideoArray_with_deviceID:info.deviceID];
+        NSArray *list = [[TTFileManager sharedModel] get_live_record_VideoArray_with_deviceID:info.deviceID];
         cell.numberLab.text = KHJString(@"%@ %d %@",KHJLocalizedString(@"共", nil),(int)list.count,KHJLocalizedString(@"个", nil));
     }
     else if (currentIndex == 1) {
@@ -164,7 +164,7 @@
 
 - (void)contentWith:(NSInteger)row
 {
-    CLog(@"contentWith Row = %ld",(long)row);
+    TLog(@"contentWith Row = %ld",(long)row);
     KHJDeviceInfo *info = self.deviceList[row];
     if (currentIndex == 0) {
         KHJRecordListVC_Two *vc = [[KHJRecordListVC_Two alloc] init];

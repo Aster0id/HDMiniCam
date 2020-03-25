@@ -2,7 +2,7 @@
 //  KHJOnlineVC.m
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/1/16.
+//  Created by kevin on 2020/1/16.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
@@ -73,7 +73,7 @@
     deviceInfo.devicePassword = password.text;
     
     NSArray *deviceList = [[KHJDataBase sharedDataBase] getAllDeviceInfo];
-    CLog(@"deviceList = %@",deviceList);
+    TLog(@"deviceList = %@",deviceList);
     
     __block BOOL exit = NO;
     [deviceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -82,7 +82,7 @@
             exit = YES;
         }
     }];
-    WeakSelf
+    TTWeakSelf
     if (!exit) {
         // 未添加的设备：直接添加
         [[KHJDataBase sharedDataBase] addDeviceInfo_with_deviceInfo:deviceInfo resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
@@ -99,7 +99,7 @@
         UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"tips_", nil)
                                                                            message:KHJLocalizedString(@"reAdd_", nil)
                                                                     preferredStyle:UIAlertControllerStyleAlert];
-        WeakSelf
+        TTWeakSelf
         UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             // 已添加的设备：先删除，再添加
             [[KHJDataBase sharedDataBase] deleteDeviceInfo_with_deviceInfo:deviceInfo resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {

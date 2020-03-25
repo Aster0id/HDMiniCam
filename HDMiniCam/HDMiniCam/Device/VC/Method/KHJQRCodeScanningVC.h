@@ -8,13 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
-
 @interface KHJQRCodeScanningVC : KHJBaseVC
-
-@property(nonatomic,assign)NSInteger indexP;
-
-- (void)setupQRCodeScanning;
-
 
 @end

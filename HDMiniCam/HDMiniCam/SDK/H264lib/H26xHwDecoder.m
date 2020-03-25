@@ -2,7 +2,7 @@
 //  H26xHwDecoder.m
 //  test3
 //
-//  Created by khj888 on 2020/2/21.
+//  Created by kevin on 2020/2/21.
 //  Copyright © 2020 fenzhi. All rights reserved.
 //
 
@@ -344,7 +344,7 @@ static int exitFlag = -1;
                         if (frameFlag != HWVideoFrameType_UNKNOWN) {
                             self.image = [self pixelBufferToImage:pixelBuffer];
                             if (_delegate && [_delegate respondsToSelector:@selector(getImageWith:imageSize:deviceID:)]) {
-                                WeakSelf
+                                TTWeakSelf
                                 dispatch_async(dispatch_get_main_queue(), ^{
                                     [weakSelf.delegate getImageWith:self.image imageSize:imageSize deviceID:self.deviceID];
                                 });

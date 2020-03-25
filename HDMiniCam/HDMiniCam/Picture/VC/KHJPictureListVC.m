@@ -8,9 +8,6 @@
 #import "KHJPictureListVC.h"
 #import "KHJPicture_oneCell.h"
 #import "AIPhotoZoom.h"
-#import "KHJHadBindDeviceVC.h"
-//#import "AISDCard_VideoPlayerVC.h"
-//#import "AIDeviceManager.h"
 
 @interface KHJPictureListVC ()<UIScrollViewDelegate, UICollectionViewDataSource,KHJPicture_oneCellDelegate>
 {
@@ -64,14 +61,14 @@
 {
     [super viewDidLoad];
     [self addNoti];
-    scrollHeight = SCREEN_HEIGHT - 120 - Height_TabBar - 44;
-    [imagePathArr addObjectsFromArray:[[KHJHelpCameraData sharedModel] getAllFile]];
+    scrollHeight = SCREEN_HEIGHT - 120 - TTTabBarHeight - 44;
+    [imagePathArr addObjectsFromArray:[[TTFileManager sharedModel] get_all_video_and_pic_File]];
     totalNumber = imagePathArr.count;
     [self.view addSubview:self.scroll_one];
     [self.view sendSubviewToBack:self.scroll_one];
     [self addCollectionView];
 
-    WeakSelf
+    TTWeakSelf
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         if (self->imagePathArr.count > 0) {
             NSMutableArray *arr1 = [NSMutableArray array];
@@ -79,7 +76,7 @@
                 NSString *imageName  = [[[imagePth componentsSeparatedByString:@"/"].lastObject componentsSeparatedByString:@"-"].lastObject componentsSeparatedByString:@"."][0];
                 [arr1 addObject:imageName];
             }
-            NSArray *array = [[KHJCalculate bubbleDescendingOrderSortWithArray:arr1] mutableCopy];
+            NSArray *array = [[TTCommon bubbleDescendingOrderSortWithArray:arr1] mutableCopy];
             NSArray *array2 = [self->imagePathArr copy];
             [self->imagePathArr removeAllObjects];
             [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -91,7 +88,7 @@
                     }
                 }];
             }];
-            CLog(@"imagePathArr = %@",self->imagePathArr);
+            TLog(@"imagePathArr = %@",self->imagePathArr);
             [arr1 removeAllObjects];
             for (NSString *imagePth  in self->imagePathArr) {
                 NSArray *aa  = [imagePth componentsSeparatedByString:@"/"];
@@ -99,7 +96,7 @@
                 [arr1 addObject:imageName];
             }
             self->imagePathArr = [arr1 mutableCopy];
-            CLog(@"imagePathArr = %@",self->imagePathArr);
+            TLog(@"imagePathArr = %@",self->imagePathArr);
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf showImageViewAtIndex:weakSelf.currentIndex];
                 [weakSelf setShowPage];
@@ -116,8 +113,8 @@
 - (void)reloadScrollView_CollectionView
 {
     [imagePathArr removeAllObjects];
-    [imagePathArr addObjectsFromArray:[[KHJHelpCameraData sharedModel] getAllFile]];
-    WeakSelf
+    [imagePathArr addObjectsFromArray:[[TTFileManager sharedModel] get_all_video_and_pic_File]];
+    TTWeakSelf
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         if (self->imagePathArr.count > 0) {
             NSMutableArray *arr1 = [NSMutableArray array];
@@ -125,7 +122,7 @@
                 NSString *imageName  = [[[imagePth componentsSeparatedByString:@"/"].lastObject componentsSeparatedByString:@"-"].lastObject componentsSeparatedByString:@"."][0];
                 [arr1 addObject:imageName];
             }
-            NSArray *array = [[KHJCalculate bubbleDescendingOrderSortWithArray:arr1] mutableCopy];
+            NSArray *array = [[TTCommon bubbleDescendingOrderSortWithArray:arr1] mutableCopy];
             NSArray *array2 = [self->imagePathArr copy];
             [self->imagePathArr removeAllObjects];
             [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -208,7 +205,7 @@
     }
     else {
         ZoomView.needScale = YES;
-        path = KHJString(@"%@/%@",[[KHJHelpCameraData sharedModel] getTakeCameraDocPath_deviceID:@""],imagePathArr[index]);;
+        path = KHJString(@"%@/%@",[[TTFileManager sharedModel] get_live_screenShot_DocPath_with_deviceID:@""],imagePathArr[index]);;
         ZoomView.imageView.image = [[UIImage alloc] initWithContentsOfFile:path];
         [ZoomView showNoCover];
     }
@@ -237,7 +234,7 @@
         _showLabel.text = [NSString stringWithFormat:@"%d/%ld",currentPage+1,(long)totalNumber];
         [self reloadCurrentImageSize:_currentIndex];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_currentIndex inSection:0];
-        CLog(@"indexPath.row = %ld",indexPath.row);
+        TLog(@"indexPath.row = %ld",indexPath.row);
         [collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
     }
 }
@@ -307,7 +304,7 @@
 - (void)reloadCurrentImageSize:(NSInteger)index
 {
     NSString *path = imagePathArr[index];
-    self.imageContentSizeLab.text = [KHJCalculate valueImageSize:path];
+    self.imageContentSizeLab.text = [TTCommon valueImageSize:path];
 }
 
 //如果是视频点击进入下一个界面播放视频，图片则不变，但是图片需要支持放大手势
@@ -328,31 +325,29 @@
     //删除图片或者视频
     //删除字典中的路径，同时删除本地沙盒图片
     [self showAlert:imagePathArr[_currentIndex]];
-    CLog(@"deleteVedio");
+    TLog(@"deleteVedio");
 }
 
 - (void)showAlert:(NSString *)pathStr
 {
-    WeakSelf
+    TTWeakSelf
     UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"dltFile_", nil) message:KHJLocalizedString(@"sureDlt_", nil) preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-        BOOL ret = [[KHJHelpCameraData sharedModel] DeleateFileWithPath:pathStr];
+        BOOL ret = [[TTFileManager sharedModel] delete_videoFile_With_path:pathStr];
         if (ret) {
-            CLog(@"删除成功");
+            TLog(@"删除成功");
             if (weakSelf.deleteBlock) {
                 weakSelf.deleteBlock(pathStr);
             }
             [self->imagePathArr removeObject:pathStr];
             [weakSelf setCurrentIndex];
-            [[KHJToast share] showToastActionWithToastType:_SuccessType toastPostion:_CenterPostion tip:@""
-                                                   content:KHJLocalizedString(@"dltSuc_", nil)];
+            [weakSelf.view makeToast:KHJLocalizedString(@"dltSuc_", nil)];
         }
         else {
-            CLog(@"删除失败");
-            [[KHJToast share] showToastActionWithToastType:_ErrorType toastPostion:_CenterPostion tip:KHJLocalizedString(@"tips", nil)
-                                                   content:KHJLocalizedString(@"dltFail_", nil)];
+            TLog(@"删除失败");
+            [weakSelf.view makeToast:KHJLocalizedString(@"dltFail_", nil)];
         }
     }];
     [alertview addAction:cancel];
@@ -407,14 +402,14 @@
     KHJPicture_oneCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifierCell forIndexPath:indexPath];
     cell.delegate = self;
     cell.tag = indexPath.row + FLAG_TAG;
-    WeakSelf
+    TTWeakSelf
     cell.block = ^(NSString *path) {
         NSInteger row = [self->imagePathArr indexOfObject:path];
         weakSelf.currentIndex = row;
         [weakSelf.scroll_one setContentOffset:CGPointMake(row*SCREEN_WIDTH, 0) animated:YES];
     };
     cell.path = imagePathArr[indexPath.row];
-    NSString *path = KHJString(@"%@/%@",[[KHJHelpCameraData sharedModel] getTakeCameraDocPath_deviceID:@""],imagePathArr[indexPath.row]);
+    NSString *path = KHJString(@"%@/%@",[[TTFileManager sharedModel] get_live_screenShot_DocPath_with_deviceID:@""],imagePathArr[indexPath.row]);
     UIImage *image = [[UIImage alloc] initWithContentsOfFile:path];
     cell.imageView.image = image;
     return cell;
@@ -428,7 +423,7 @@
 - (void)shareClick
 {
     if (imagePathArr.count > 0 && _currentIndex < imagePathArr.count) {
-        NSString *path = KHJString(@"%@/%@",[[KHJHelpCameraData sharedModel] getTakeCameraDocPath_deviceID:@""],imagePathArr[_currentIndex]);
+        NSString *path = KHJString(@"%@/%@",[[TTFileManager sharedModel] get_live_screenShot_DocPath_with_deviceID:@""],imagePathArr[_currentIndex]);
         NSURL *urlToShare = [NSURL fileURLWithPath:path];
         NSArray *activityItems = [[NSArray alloc] initWithObjects:urlToShare,nil];
         UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:activityItems applicationActivities:nil];
@@ -439,12 +434,12 @@
                                              UIActivityTypeSaveToCameraRoll,
                                              UIActivityTypeAddToReadingList];
         UIActivityViewControllerCompletionWithItemsHandler myBlock = ^(UIActivityType activityType, BOOL completed, NSArray * returnedItems, NSError * activityError) {
-            CLog(@"activityType :%@", activityType);
+            TLog(@"activityType :%@", activityType);
             if (completed){
-                CLog(@"completed");
+                TLog(@"completed");
             }
             else {
-                CLog(@"cancel");
+                TLog(@"cancel");
             }
         };
         
@@ -460,12 +455,12 @@
 - (void)longPressWith:(NSString *)path
 {
     NSInteger row = [imagePathArr indexOfObject:path];
-    CLog(@"长按 row = %ld",row);
+    TLog(@"长按 row = %ld",row);
     UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"isDltPic_", nil) message:@""
                                                             preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel
                                                    handler:nil];
-    WeakSelf
+    TTWeakSelf
     UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sure", nil) style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf deletePic:row];
@@ -477,8 +472,8 @@
 
 - (void)deletePic:(NSInteger)row
 {
-    NSString *path = KHJString(@"%@/%@",[[KHJHelpCameraData sharedModel] getTakeCameraDocPath_deviceID:@""],imagePathArr[row]);
-    if ([[KHJHelpCameraData sharedModel] DeleateFileWithPath:path]) {
+    NSString *path = KHJString(@"%@/%@",[[TTFileManager sharedModel] get_live_screenShot_DocPath_with_deviceID:@""],imagePathArr[row]);
+    if ([[TTFileManager sharedModel] delete_videoFile_With_path:path]) {
         [self deleteImageWith:row];
         [collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:row inSection:0]]];
     }
@@ -487,7 +482,7 @@
 - (void)deleteImageWith:(NSInteger)row
 {
     [imagePathArr removeObjectAtIndex:row];
-    WeakSelf
+    TTWeakSelf
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         if (self->imagePathArr.count > 0) {
             NSMutableArray *arr1 = [NSMutableArray array];
@@ -495,7 +490,7 @@
                 NSString *imageName  = [[[imagePth componentsSeparatedByString:@"/"].lastObject componentsSeparatedByString:@"-"].lastObject componentsSeparatedByString:@"."][0];
                 [arr1 addObject:imageName];
             }
-            NSArray *array = [[KHJCalculate bubbleDescendingOrderSortWithArray:arr1] mutableCopy];
+            NSArray *array = [[TTCommon bubbleDescendingOrderSortWithArray:arr1] mutableCopy];
             NSArray *array2 = [self->imagePathArr copy];
             [self->imagePathArr removeAllObjects];
             [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

@@ -2,7 +2,7 @@
 //  KHJPublicDefine.h
 //  KHJCamera
 //
-//  Created by khj888 on 2018/12/4.
+//  Created by kevin on 2018/12/4.
 //  Copyright © 2018 khj. All rights reserved.
 //
 

@@ -2,7 +2,7 @@
 //  KHJErrorManager.h
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/2/19.
+//  Created by kevin on 2020/2/19.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 

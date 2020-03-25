@@ -43,10 +43,10 @@
 - (IBAction)btn:(UIButton *)sender
 {
     if (sender.tag == 10) {
-        CLog(@"确定");
+        TLog(@"确定");
     }
     else if (sender.tag == 20) {
-        CLog(@"取消");
+        TLog(@"取消");
     }
 }
 

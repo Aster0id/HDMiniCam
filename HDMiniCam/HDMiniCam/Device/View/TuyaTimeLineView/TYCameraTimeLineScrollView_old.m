@@ -83,18 +83,18 @@
             if (isCancelled()) { return; }
             id<TYCameraTimeLineViewSource> sourceModel = self.sourceModels[i];
             CGFloat x = sourceModel.startTimeIntervalSinceCurrentDay / _secsPerUnit * _spacePerUnit + _viewWidth / 2 - _offset;
-//            CLog(@"++++++++++++++++++++++++++++++   x = %f",x);
+//            TLog(@"++++++++++++++++++++++++++++++   x = %f",x);
             CGFloat width = (sourceModel.stopTimeIntervalSinceCurrentDay - sourceModel.startTimeIntervalSinceCurrentDay) / _secsPerUnit * _spacePerUnit;
-//            CLog(@"++++++++++++++++++++++++++++++   sourceModel.stopTimeIntervalSinceCurrentDay = %f",sourceModel.stopTimeIntervalSinceCurrentDay);
-//            CLog(@"++++++++++++++++++++++++++++++   sourceModel.startTimeIntervalSinceCurrentDay = %f",sourceModel.startTimeIntervalSinceCurrentDay);
-//            CLog(@"++++++++++++++++++++++++++++++   _secsPerUnit = %ld",(long)_secsPerUnit);
-//            CLog(@"++++++++++++++++++++++++++++++   _spacePerUnit = %f",_spacePerUnit);
-//            CLog(@"++++++++++++++++++++++++++++++   width = %f",width);
+//            TLog(@"++++++++++++++++++++++++++++++   sourceModel.stopTimeIntervalSinceCurrentDay = %f",sourceModel.stopTimeIntervalSinceCurrentDay);
+//            TLog(@"++++++++++++++++++++++++++++++   sourceModel.startTimeIntervalSinceCurrentDay = %f",sourceModel.startTimeIntervalSinceCurrentDay);
+//            TLog(@"++++++++++++++++++++++++++++++   _secsPerUnit = %ld",(long)_secsPerUnit);
+//            TLog(@"++++++++++++++++++++++++++++++   _spacePerUnit = %f",_spacePerUnit);
+//            TLog(@"++++++++++++++++++++++++++++++   width = %f",width);
             UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRect:CGRectMake(x, rect.size.height - _contentHeight, width, _contentHeight)];
             CGPoint startPoint = CGPointMake((x+width)/2, rect.size.height - _contentHeight);
-//            CLog(@"++++++++++++++++++++++++++++++   startPoint.x = %f, startPoint.y = %f",startPoint.x,startPoint.y);
+//            TLog(@"++++++++++++++++++++++++++++++   startPoint.x = %f, startPoint.y = %f",startPoint.x,startPoint.y);
             CGPoint endPoint = CGPointMake((x+width)/2, rect.size.height);
-//            CLog(@"++++++++++++++++++++++++++++++   endPoint.x = %f, endPoint.y = %f",endPoint.x,endPoint.y);
+//            TLog(@"++++++++++++++++++++++++++++++   endPoint.x = %f, endPoint.y = %f",endPoint.x,endPoint.y);
             CGContextSaveGState(ctx); {
                 CGContextAddPath(ctx, bezierPath.CGPath);
                 CGContextClip(ctx);
@@ -295,7 +295,7 @@
 
 - (NSRange)rangeOfDisplayedSources
 {
-    CLog(@"___rangeOfDisplayedSources___");
+    TLog(@"___rangeOfDisplayedSources___");
     NSTimeInterval min = (_offset - _viewWidth / 2) / _spacePerUnit * _secsPerUnit;
     NSTimeInterval max = (_offset + _viewWidth / 2) / _spacePerUnit * _secsPerUnit;
     NSInteger startIndex = -1;
@@ -303,13 +303,13 @@
     
     for (NSInteger i = 0; i < self.sourceModels.count; i++) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            CLog(@"self.sourceModels.count = %lu",(unsigned long)self.sourceModels.count);
+            TLog(@"self.sourceModels.count = %lu",(unsigned long)self.sourceModels.count);
         });
         id<TYCameraTimeLineViewSource> sourceModel = [self.sourceModels objectAtIndex:i];
-//        CLog(@"min = %f",min);
-//        CLog(@"max = %f",max);
-//        CLog(@"sourceModel.stopTimeIntervalSinceCurrentDay = %f",sourceModel.stopTimeIntervalSinceCurrentDay);
-        CLog(@"sourceModel.startTimeIntervalSinceCurrentDay = %f",sourceModel.startTimeIntervalSinceCurrentDay);
+//        TLog(@"min = %f",min);
+//        TLog(@"max = %f",max);
+//        TLog(@"sourceModel.stopTimeIntervalSinceCurrentDay = %f",sourceModel.stopTimeIntervalSinceCurrentDay);
+        TLog(@"sourceModel.startTimeIntervalSinceCurrentDay = %f",sourceModel.startTimeIntervalSinceCurrentDay);
         if (sourceModel.stopTimeIntervalSinceCurrentDay > min && sourceModel.startTimeIntervalSinceCurrentDay < max) {
             startIndex = i;
             break;

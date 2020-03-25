@@ -342,24 +342,16 @@ UITableViewDelegate, UITableViewDataSource>
         float sizeWith      = (SCREEN_WIDTH - 24 - 15)/16;
         float sizeHeight    = ((SCREEN_WIDTH - 24)*12/16 - 11)/12;
         for (int i = 0; i < 12; i++) {
-            dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, sizeHeight*i + i - 1, SCREEN_WIDTH - 24, 1)];
-                view.backgroundColor = UIColor.greenColor;
-                view.alpha = 0.45;
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self->areaContentView addSubview:view];
-                });
-            });
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, sizeHeight*i + i - 1, SCREEN_WIDTH - 24, 1)];
+            view.backgroundColor = UIColor.greenColor;
+            view.alpha = 0.45;
+            [areaContentView addSubview:view];
         }
         for (int i = 0; i < 16; i++) {
-            dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                UIView *view = [[UIView alloc] initWithFrame:CGRectMake(sizeWith*i + i - 1, 0, 1, (SCREEN_WIDTH - 24)*12/16)];
-                view.backgroundColor = UIColor.greenColor;
-                view.alpha = 0.45;
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self->areaContentView addSubview:view];
-                });
-            });
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(sizeWith*i + i - 1, 0, 1, (SCREEN_WIDTH - 24)*12/16)];
+            view.backgroundColor = UIColor.greenColor;
+            view.alpha = 0.45;
+            [areaContentView addSubview:view];
         }
         [UIView animateWithDuration:0.25 animations:^{
             self->areaBgView.alpha = 1;
@@ -372,7 +364,6 @@ UITableViewDelegate, UITableViewDataSource>
             self->areaContentView.alpha = 1;
         }];
     }
-    
 }
 
 - (void)hiddenCollectionView
@@ -394,20 +385,14 @@ UITableViewDelegate, UITableViewDataSource>
 #pragma mark - UICollectionViewDelegate, UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return 192;
-}
+{return 192;}
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
-{
-    return 1;
-}
+{return 1;}
 
 // 这个是两行cell之间的间距（上下行cell的间距）
  - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
-{
-    return 1;
-}
+{return 1;}
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -423,10 +408,10 @@ UITableViewDelegate, UITableViewDataSource>
 - (void)clickCellWith:(NSInteger)row select:(BOOL)select
 {
     if (select) {
-        CLog(@"row = %ld 被选择",(long)row);
+        TLog(@"row = %ld 被选择",(long)row);
     }
     else {
-        CLog(@"row = %ld 取消",(long)row);
+        TLog(@"row = %ld 取消",(long)row);
     }
 }
 

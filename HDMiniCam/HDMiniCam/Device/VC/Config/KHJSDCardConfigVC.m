@@ -38,17 +38,17 @@
 - (IBAction)btn:(UIButton *)sender
 {
     if (sender.tag == 10) {
-        CLog(@"分辨率");
+        TLog(@"分辨率");
         [self addFenBianLv];
     }
     else if (sender.tag == 20) {
-        CLog(@"确定");
+        TLog(@"确定");
     }
     else if (sender.tag == 30) {
-        CLog(@"取消");
+        TLog(@"取消");
     }
     else if (sender.tag == 40) {
-        CLog(@"格式化");
+        TLog(@"格式化");
     }
 }
 
@@ -57,7 +57,7 @@
     UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"fenbianlv_", nil)
                                                                        message:nil
                                                                 preferredStyle:UIAlertControllerStyleAlert];
-    WeakSelf
+    TTWeakSelf
     UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"1080P", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf setAlarmTypeWith:1];
     }];
@@ -74,16 +74,16 @@
 - (void)setAlarmTypeWith:(NSInteger)tag
 {
     if (tag == 1) {
-        CLog(@"1080P");
+        TLog(@"1080P");
     }
     else if (tag == 2) {
-        CLog(@"720P");
+        TLog(@"720P");
     }
 }
 
 - (IBAction)sbtn:(id)sender
 {
-    CLog(@"循环录像");
+    TLog(@"循环录像");
 }
 
 @end

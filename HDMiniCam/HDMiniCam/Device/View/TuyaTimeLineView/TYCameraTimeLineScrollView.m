@@ -216,9 +216,9 @@
 
 - (void)setCurrentTime:(NSTimeInterval)currentTime
 {
-    CLog(@"currentTime ========= %f",currentTime);
+    TLog(@"currentTime ========= %f",currentTime);
     self.timeLab.text = [self showTimeWithInterval:currentTime + self.zeroTime];
-    CLog(@"self.timeLab.text ========= %@",self.timeLab.text);
+    TLog(@"self.timeLab.text ========= %@",self.timeLab.text);
     _currentTime = currentTime;
     _offset = _currentTime / _secsPerUnit * _spacePerUnit;
     [_displayLayer setNeedsDisplay];

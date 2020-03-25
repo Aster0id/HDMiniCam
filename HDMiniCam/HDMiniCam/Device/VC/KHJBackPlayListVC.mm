@@ -2,7 +2,7 @@
 //  KHJBackPlayListVC.m
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/2/23.
+//  Created by kevin on 2020/2/23.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
@@ -85,13 +85,13 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
 - (IBAction)btnAction:(UIButton *)sender
 {
     if (sender.tag == 10) {
-        CLog(@"刷新");
+        TLog(@"刷新");
     }
     else if (sender.tag == 20) {
-        CLog(@"返回");
+        TLog(@"返回");
     }
     else if (sender.tag == 30) {
-        CLog(@"确定");
+        TLog(@"确定");
         [UIView animateWithDuration:0.25 animations:^{
             self->fileView.alpha = 0;
         }];
@@ -111,7 +111,7 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
     }
     cell.delegate = self;
     cell.tag = indexPath.row + FLAG_TAG;
-    WeakSelf
+    TTWeakSelf
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
         NSDictionary *body = self.listArr[indexPath.row];
@@ -145,7 +145,7 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
     long size = [body[@"size"] longLongValue];
     NSString *sizeUnit = [self imageSizeString:size];
     
-    WeakSelf
+    TTWeakSelf
     UIAlertController *alertview    = [UIAlertController alertControllerWithTitle:body[@"name"] message:nil preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *config           = [UIAlertAction actionWithTitle:KHJLocalizedString(@"plyVideo_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         KHJBackPlayerList_playerVC *vc = [[KHJBackPlayerList_playerVC alloc] init];
@@ -227,11 +227,11 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
     [body setValue:@(end) forKey:@"e"];
     [dict setValue:body forKey:@"lir"];
     // "{\"lir\":{\"p\":\"%s\",\"si\":%d,\"m\":%d,\"st\":%d,\"e\":%d}}"
-//    CLog(@"dict = %@",dict);
-    NSString *json = [KHJUtility convertToJsonData:(NSDictionary *)dict];
-//    CLog(@"json = %@",json);
+//    TLog(@"dict = %@",dict);
+    NSString *json = [TTCommon convertToJsonData:(NSDictionary *)dict];
+//    TLog(@"json = %@",json);
     [[KHJDeviceManager sharedManager] getRemoteDirInfo_with_deviceID:self.deviceID json:json resultBlock:^(NSInteger code) {
-        CLog(@"code = %ld",(long)code);
+        TLog(@"code = %ld",(long)code);
     }];
 }
 
@@ -247,7 +247,7 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
     
     NSString *rootdir = KHJString(@"%@/%@",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],str);
     NSDictionary *result = (NSDictionary *)obj.object;
-    CLog(@"num of files:%@ disk size:%@ MB used size:%@ MB\n",result[@"n"], result[@"t"], result[@"u"]);
+    TLog(@"num of files:%@ disk size:%@ MB used size:%@ MB\n",result[@"n"], result[@"t"], result[@"u"]);
     //组织json字符串，lp是list path简写， p为path简写，s是start简写，c是count简写
 //    int count = [result[@"n"] intValue];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -256,9 +256,9 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
     [body setValue:@(0)     forKey:@"s"];
     [body setValue:@(10)    forKey:@"c"];
     [dict setValue:body     forKey:@"lp"];
-    NSString *json = [KHJUtility convertToJsonData:(NSDictionary *)dict];
+    NSString *json = [TTCommon convertToJsonData:(NSDictionary *)dict];
     [[KHJDeviceManager sharedManager] getRemotePageFile_with_deviceID:self.deviceID path:json resultBlock:^(NSInteger code) {
-        CLog(@"code = %ld",(long)code);
+        TLog(@"code = %ld",(long)code);
     }];
 }
 
@@ -272,7 +272,7 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
 - (void)reloadTableView
 {
     [self.listArr removeAllObjects];
-    WeakSelf
+    TTWeakSelf
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
         for (list<RemoteFileInfo_t*>::iterator i = mCurRemoteDirInfo->mRemoteFileInfoList.begin(); i != mCurRemoteDirInfo->mRemoteFileInfoList.end(); i++){

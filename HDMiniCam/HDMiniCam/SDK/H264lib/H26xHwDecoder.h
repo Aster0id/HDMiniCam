@@ -2,7 +2,7 @@
 //  H26xHwDecoder.h
 //  test3
 //
-//  Created by khj888 on 2020/2/21.
+//  Created by kevin on 2020/2/21.
 //  Copyright © 2020 fenzhi. All rights reserved.
 //
 

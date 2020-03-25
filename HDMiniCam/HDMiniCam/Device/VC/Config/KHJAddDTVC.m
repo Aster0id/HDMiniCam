@@ -2,12 +2,12 @@
 //  KHJAddDTVC.m
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/3/24.
+//  Created by kevin on 2020/3/24.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
 #import "KHJAddDTVC.h"
-#import "KHJPicker.h"
+#import "TTHourMinSeconsPicker.h"
 
 @interface KHJAddDTVC ()
 {
@@ -34,16 +34,16 @@
 - (IBAction)btnAction:(UIButton *)sender
 {
     if (sender.tag == 10) {
-        KHJPicker *pick = [[KHJPicker alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 250 + 44, SCREEN_WIDTH, 324)];
-        pick.tKind = 0;
+        TTHourMinSeconsPicker *pick = [[TTHourMinSeconsPicker alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 250 + 44, SCREEN_WIDTH, 324)];
+        pick.pickerType = 0;
         [pick initSubViews:nil];
         pick.confirmBlock = ^(NSString *strings) {
             self->startTimeLab.text = strings;
         };
     }
     else if (sender.tag == 20) {
-        KHJPicker *pick = [[KHJPicker alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 250 + 44, SCREEN_WIDTH, 324)];
-        pick.tKind = 0;
+        TTHourMinSeconsPicker *pick = [[TTHourMinSeconsPicker alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 250 + 44, SCREEN_WIDTH, 324)];
+        pick.pickerType = 0;
         [pick initSubViews:nil];
         pick.confirmBlock = ^(NSString *strings) {
             self->endTimeLab.text = strings;
@@ -66,7 +66,7 @@
             int eMin    = [eArr.lastObject intValue];
             
             __block BOOL exit = NO;
-            WeakSelf
+            TTWeakSelf
             [self.timeArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 NSArray *timeArr = [(NSString *)obj componentsSeparatedByString:@" - "];
                 __block int shour = 0;
@@ -97,7 +97,7 @@
             }];
             
             if (!exit) {
-                CLog(@"添加的时间 = %@",KHJString(@"%@ - %@",startTimeLab.text,endTimeLab.text));
+                TLog(@"添加的时间 = %@",KHJString(@"%@ - %@",startTimeLab.text,endTimeLab.text));
 //                if (_delegate && [_delegate respondsToSelector:@selector(addDefinesTime:)]) {
 //                    [_delegate addDefinesTime:KHJString(@"%@ - %@",startTimeLab.text,endTimeLab.text)];
 //                    [self.navigationController popViewControllerAnimated:YES];

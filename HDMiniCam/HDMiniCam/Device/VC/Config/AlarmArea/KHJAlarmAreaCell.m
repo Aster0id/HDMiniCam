@@ -2,7 +2,7 @@
 //  KHJAlarmAreaCell.m
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/3/24.
+//  Created by kevin on 2020/3/24.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
@@ -19,7 +19,7 @@
 {
     sender.selected = !sender.selected;
     if (sender.selected) {
-        [sender setBackgroundColor:UIColor.greenColor];
+        [sender setBackgroundColor:UIColorFromRGB(0x34C42E)];
     }
     else {
         [sender setBackgroundColor:UIColor.clearColor];

@@ -2,12 +2,12 @@
 //  KHJRecordListCell_Two.m
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/3/4.
+//  Created by kevin on 2020/3/4.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
 #import "KHJRecordListCell_Two.h"
-#import "KHJHelpCameraData.h"
+#import "TTFileManager.h"
 
 @implementation KHJRecordListCell_Two
 
@@ -18,7 +18,7 @@
 
 - (void)setDeviceID:(NSString *)deviceID
 {
-    NSString *imagePath     = [[[KHJHelpCameraData sharedModel] get_screenShot_DocPath_deviceID:deviceID] stringByAppendingPathComponent:KHJString(@"%@.png",self.date)];
+    NSString *imagePath     = [[[TTFileManager sharedModel] get_screenShot_DocPath_deviceID:deviceID] stringByAppendingPathComponent:KHJString(@"%@.png",self.date)];
     self.picImgView.image   = [UIImage imageWithContentsOfFile:imagePath];
 }
 

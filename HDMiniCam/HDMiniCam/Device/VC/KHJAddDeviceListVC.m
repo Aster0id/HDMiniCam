@@ -2,7 +2,7 @@
 //  KHJAddDeviceListVC.m
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/1/16.
+//  Created by kevin on 2020/1/16.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
@@ -12,7 +12,6 @@
 #import <SystemConfiguration/CaptiveNetwork.h>
 
 #import "KHJOnlineVC.h"
-#import "KHJWiFiVC.h"
 #import "KHJQRCodeScanningVC.h"
 
 extern NSString *wifiName;
@@ -52,7 +51,7 @@ extern NSString *wifiName;
 {
     [super viewDidLoad];
     NSArray *hadArray = [NSArray arrayWithArray:[[KHJDataBase sharedDataBase] getAllDeviceInfo]];
-    WeakSelf
+    TTWeakSelf
     [hadArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         KHJDeviceInfo *info = (KHJDeviceInfo *)obj;
         [weakSelf.deviceList_old addObject:info.deviceID];
@@ -71,7 +70,7 @@ extern NSString *wifiName;
 {
     __block BOOL exit = NO;
     NSArray *arr = [self.deviceList copy];
-    WeakSelf
+    TTWeakSelf
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
         NSDictionary *body = (NSDictionary *)noti.object;
@@ -252,7 +251,7 @@ extern NSString *wifiName;
         }
     }];
     if (!exit) {
-        WeakSelf
+        TTWeakSelf
         [[KHJDataBase sharedDataBase] addDeviceInfo_with_deviceInfo:deviceInfo resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
             if (code == 1) {
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -288,7 +287,7 @@ extern NSString *wifiName;
 
 - (void)EnterForeground
 {
-    WeakSelf
+    TTWeakSelf
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (self->isHotPoint) {
             [weakSelf getPhoneWifi];
@@ -309,7 +308,7 @@ extern NSString *wifiName;
 //                                                                    preferredStyle:UIAlertControllerStyleAlert];
 //            UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel
 //                                                           handler:nil];
-//            WeakSelf
+//            TTWeakSelf
 //            UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sbMit_", nil) style:UIAlertActionStyleDefault
 //                                                           handler:^(UIAlertAction * _Nonnull action) {
 //                [weakSelf changeToDeviceHotpoint];
@@ -320,7 +319,7 @@ extern NSString *wifiName;
             
         }
         else {
-            CLog(@"wifiName ============ %@",wifiName);
+            TLog(@"wifiName ============ %@",wifiName);
             [self.view makeToast:KHJLocalizedString(@"正在搜索设备..", nil)];
             [self fireRecordTimer];
         }

@@ -29,7 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[KHJHub shareHub] showText:@"" addToView:self.view type:_default];
+    [[TTHub shareHub] showText:@"" addToView:self.view type:0];
 
     self.titleLab.text = KHJLocalizedString(@"wfSetp_", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
@@ -81,7 +81,7 @@
 - (void)OnSearchDeviceWiFi_CmdResult:(NSNotification *)noti
 {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [KHJHub shareHub].hud.hidden = YES;
+        [TTHub shareHub].hud.hidden = YES;
     });
     NSDictionary *result = (NSDictionary *)noti.object;
     int ret = [result[@"ret"] intValue];
@@ -123,10 +123,10 @@
         cell = [[NSBundle mainBundle] loadNibNamed:@"KHJWIFIConfigCell" owner:nil options:nil][0];
     }
     cell.tag = indexPath.row + FLAG_TAG;
-    WeakSelf
+    TTWeakSelf
     NSDictionary *body = wifiListArr[indexPath.row];
     cell.block = ^(NSInteger row) {
-        CLog(@"row = %ld",(long)row);
+        TLog(@"row = %ld",(long)row);
         [weakSelf changewifi:body];
     };
     cell.name.text = body[@"SSID"];
@@ -137,14 +137,14 @@
 
 - (void)changewifi:(NSDictionary *)body
 {
-    WeakSelf
+    TTWeakSelf
     ZQAlterField *alertView = [ZQAlterField alertView];
     alertView.title = KHJString(@"%@：%@",KHJLocalizedString(@"changeWF_", nil),body[@"SSID"]);
     alertView.placeholder = KHJLocalizedString(@"inputWFPwd_", nil);
     alertView.Maxlength = 50;
-    alertView.ensureBgColor = KHJUtility.appMainColor;
-    [alertView ensureClickBlock:^(NSString *inputString, int type) {
-        CLog(@"输入内容为%@",inputString);
+    alertView.ensureBgColor = TTCommon.appMainColor;
+    [alertView ensureClickBlock:^(NSString *inputString) {
+        TLog(@"输入内容为%@",inputString);
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf changeConnectWifi:body password:inputString];
         });
@@ -155,7 +155,7 @@
 - (void)changeConnectWifi:(NSDictionary *)body password:(NSString *)password
 {
     [[KHJDeviceManager sharedManager] setDeviceWiFi_with_deviceID:self.deviceInfo.deviceID ssid:body[@"SSID"] password:password encType:body[@"EncType"] resultBlock:^(NSInteger code) {}];
-    WeakSelf
+    TTWeakSelf
     [self.view makeToast:KHJLocalizedString(@"wtReconect_", nil)];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakSelf.navigationController popToRootViewControllerAnimated:YES];

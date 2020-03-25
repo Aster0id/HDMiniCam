@@ -35,14 +35,14 @@
 {
     NSDictionary *info = (NSDictionary *)note.object;
 //    if (![SaveManager.isLogined boolValue]) {
-//        CLog(@"当前未登陆！！！！！！！！！！");
+//        TLog(@"当前未登陆！！！！！！！！！！");
 //        return;
 //    }
     NSString *address = info[@"address"];
     NSString *slogan = info[@"slogan"];
     
-    CLog(@"address = %@",address);
-    CLog(@"slogan = %@",slogan);
+    TLog(@"address = %@",address);
+    TLog(@"slogan = %@",slogan);
     
     [[NSUserDefaults standardUserDefaults] synchronize];
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -56,11 +56,11 @@
 //    NSURL *imageURL = [NSURL URLWithString:imgUrl];
 //    NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
 //    if (imageData && imageData.length > 0) {
-//        CLog(@"更新广告页面");
+//        TLog(@"更新广告页面");
 //        [self saveImageToLocal:imageData withPath:imgUrl];
 //    }
 //    else {
-//        CLog(@"更新广告页面失败");
+//        TLog(@"更新广告页面失败");
 //    }
 }
 
@@ -81,10 +81,10 @@
 //    imagePath = [imagePath stringByAppendingString:[NSString stringWithFormat:@"/%@",newImgName]];
 //    BOOL success = [imgData writeToFile:imagePath atomically:YES];
 //    if (success) {
-//        CLog(@"保存成功!");
+//        TLog(@"保存成功!");
 //    }
 //    else {
-//        CLog(@"保存失败!");
+//        TLog(@"保存失败!");
 //    }
 //
 //    /* 保存新的广告页 */
@@ -101,10 +101,10 @@
 //        /* 查询文件是否存在 */
 //        BOOL isSuccess = [fileManager removeItemAtPath:imagePath error:nil];
 //        if (isSuccess) {
-//            CLog(@"删除成功!");
+//            TLog(@"删除成功!");
 //        }
 //        else {
-//            CLog(@"删除失败!");
+//            TLog(@"删除失败!");
 //        }
 //    }
 }
@@ -117,7 +117,7 @@
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
     NSInteger inNum = [tabBar.items indexOfObject:item];
-    CLog(@"item tag = %ld", (long)inNum);
+    TLog(@"item tag = %ld", (long)inNum);
     [[NSUserDefaults standardUserDefaults] setInteger:inNum forKey:KHJNaviBarItemIndexKey];
     
 }

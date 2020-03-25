@@ -2,7 +2,7 @@
 //  KHJVideoPlayer_sp_VC.m
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/2/12.
+//  Created by kevin on 2020/2/12.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
@@ -12,7 +12,7 @@
 //
 #import "JSONStructProtocal.h"
 //
-#import "KHJPlayMusic.h"
+#import "TTPlayVoiceManager.h"
 #import <Photos/Photos.h>
 #import <Photos/PHPhotoLibrary.h>
 #import <AssetsLibrary/AssetsLibrary.h>
@@ -20,10 +20,10 @@
 #import "UIDevice+TFDevice.h"
 
 //  当前解码类型
-extern KHJDecorderType currentDecorderType;
+extern TTDecordeType currentDecorderType;
 // 是否直播录屏
 extern NSString *liveRecordVideoPath;
-extern KHJLiveRecordType liveRecordType;
+extern TTRecordLiveStatus liveRecordType;
 // 彩色/黑白画面
 extern IPCNetPicColorInfo_st picColorCfg;
 // 监听
@@ -119,7 +119,7 @@ extern XBAudioUnitRecorder *audioRecorder;
 
 - (void)customizeDataSource
 {
-    currentDecorderType = KHJDecorderType_live;
+    currentDecorderType = TTDecorde_live;
     spTitleLab.text = self.deviceInfo.deviceName;
     hpTitleLab.text = self.deviceInfo.deviceName;
     [self addNoti];
@@ -153,7 +153,7 @@ extern XBAudioUnitRecorder *audioRecorder;
         if (isHengping) {
             isHengping = NO;
             AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-            appDelegate.setTurnScreen = NO;//关闭横屏仅允许竖屏
+            appDelegate.canLandscape = NO;//关闭横屏仅允许竖屏
             [UIDevice switchNewOrientation:UIInterfaceOrientationPortrait];
             naviView.alpha = 1;
             hpBackBtn.alpha = 0;
@@ -185,7 +185,7 @@ extern XBAudioUnitRecorder *audioRecorder;
             bottomView.hidden = YES;
             naviViewCH.constant = 0;
             AppDelegate *appDelegate    = (AppDelegate *)[UIApplication sharedApplication].delegate;
-            appDelegate.setTurnScreen   = YES;
+            appDelegate.canLandscape   = YES;
             [UIDevice switchNewOrientation:UIInterfaceOrientationLandscapeRight];
         }
     }
@@ -262,10 +262,10 @@ extern XBAudioUnitRecorder *audioRecorder;
 - (void)OnGetIRModeCmdResult
 {
     if (picColorCfg.Type == 0) {
-        CLog(@"彩色画面");
+        TLog(@"彩色画面");
     }
     else {
-        CLog(@"黑白画面");
+        TLog(@"黑白画面");
     }
 }
 
@@ -314,10 +314,10 @@ extern XBAudioUnitRecorder *audioRecorder;
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    currentDecorderType = KHJDecorderType_none;
+    currentDecorderType = TTDecorder_none;
     [self stopTalk];
     [self stopListen];
-    liveRecordType = KHJLiveRecordType_Normal;
+    liveRecordType = TTRecordLive_Normal;
     [[KHJDeviceManager sharedManager] stopGetVideo_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
     [[KHJDeviceManager sharedManager] stopGetAudio_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
     [self sp_releaseDecoder];
@@ -348,7 +348,7 @@ extern XBAudioUnitRecorder *audioRecorder;
     else if (sender.tag == 60) {
         isHengping = NO;
         AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        appDelegate.setTurnScreen = NO;//关闭横屏仅允许竖屏
+        appDelegate.canLandscape = NO;//关闭横屏仅允许竖屏
         [UIDevice switchNewOrientation:UIInterfaceOrientationPortrait];
         naviView.alpha = 1;
         hpBackBtn.alpha = 0;
@@ -441,7 +441,7 @@ extern XBAudioUnitRecorder *audioRecorder;
 
         isHengping = YES;
         AppDelegate *appDelegate    = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        appDelegate.setTurnScreen   = YES;
+        appDelegate.canLandscape   = YES;
         [UIDevice switchNewOrientation:UIInterfaceOrientationLandscapeRight];
     }
     else if (sender.tag == 20) {
@@ -523,7 +523,7 @@ extern XBAudioUnitRecorder *audioRecorder;
     UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"HMSet_", nil)
                                                                        message:KHJLocalizedString(@"SXSet_", nil)
                                                                 preferredStyle:UIAlertControllerStyleAlert];
-    WeakSelf
+    TTWeakSelf
     UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"baohedu_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:1];
     }];
@@ -601,7 +601,7 @@ extern XBAudioUnitRecorder *audioRecorder;
         }
     }
     else if (index == 5) {
-        CLog(@"彩色/黑白");
+        TLog(@"彩色/黑白");
         int type = 0;
         if (picColorCfg.Type == 0) {
             type = 1;
@@ -612,16 +612,16 @@ extern XBAudioUnitRecorder *audioRecorder;
         [[KHJDeviceManager sharedManager] setIRModel_with_deviceID:self.deviceID type:type resultBlock:^(NSInteger code) {}];
     }
     else if (index == 6) {
-        CLog(@"垂直镜像");
+        TLog(@"垂直镜像");
         [[KHJDeviceManager sharedManager] setFilp_with_deviceID:self.deviceID flip:1 mirror:0 resultBlock:^(NSInteger code) {}];
     }
     else if (index == 7) {
-        CLog(@"水平镜像");
+        TLog(@"水平镜像");
         [[KHJDeviceManager sharedManager] setFilp_with_deviceID:self.deviceID flip:0 mirror:1 resultBlock:^(NSInteger code) {}];
     }
     else if (index == 8) {
-        CLog(@"恢复默认值");
-        WeakSelf
+        TLog(@"恢复默认值");
+        TTWeakSelf
         [[KHJDeviceManager sharedManager] setDefault_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {
             if (code >= 0) {
                 [weakSelf.view makeToast:KHJLocalizedString(@"devBecomeDft_", nil)];
@@ -668,8 +668,8 @@ extern XBAudioUnitRecorder *audioRecorder;
     recordTimeView.hidden = NO;
     [self fireTimer];
     // 直播录屏，截取数据
-    liveRecordType = KHJLiveRecordType_Recording;
-    liveRecordVideoPath = [[[KHJHelpCameraData sharedModel] getTakeVideoDocPath_with_deviceID:self.deviceID] stringByAppendingPathComponent:[[KHJHelpCameraData sharedModel] getVideoNameWithType:@"mp4" deviceID:self.deviceID]];
+    liveRecordType = TTRecordLive_Recording;
+    liveRecordVideoPath = [[[TTFileManager sharedModel] get_live_recordVideo_DocPath_with_deviceID:self.deviceID] stringByAppendingPathComponent:[[TTFileManager sharedModel] get_videoName_With_fileType:@"mp4" deviceID:self.deviceID]];
 }
 
 /// 停止录像
@@ -678,7 +678,7 @@ extern XBAudioUnitRecorder *audioRecorder;
     recordTimeView.hidden = YES;
     // 结束直播录屏，停止截取数据
     liveRecordVideoPath = @"";
-    liveRecordType = KHJLiveRecordType_stopRecoding;
+    liveRecordType = TTRecordLive_stopRecoding;
 }
 
 #pragma mark - 切换清晰度
@@ -686,7 +686,7 @@ extern XBAudioUnitRecorder *audioRecorder;
 - (void)gotoChangeQuality
 {
     UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"setQualty_", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-    WeakSelf
+    TTWeakSelf
     UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"kd_", nil)
                                                      style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf setQualityWith:2];
@@ -749,12 +749,12 @@ extern XBAudioUnitRecorder *audioRecorder;
 - (void)takePhoto
 {
     //播放拍照声音
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"photoshutter" ofType:@"mp3"];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"screenShot" ofType:@"mp3"];
     NSURL *url = [NSURL fileURLWithPath:filePath];
-    [[KHJPlayMusic shareInstance] play:url repeates:0];
+    [[TTPlayVoiceManager shareInstance] playVoiceWithURL:url];
     
-    NSString *savedImagePath = [[[KHJHelpCameraData sharedModel] getTakeCameraDocPath_deviceID:self.deviceID] stringByAppendingPathComponent:[[KHJHelpCameraData sharedModel] getVideoNameWithType:@"jpg" deviceID:self.deviceID]];
-    CLog(@"saveImagePath = %@",savedImagePath);
+    NSString *savedImagePath = [[[TTFileManager sharedModel] get_live_screenShot_DocPath_with_deviceID:self.deviceID] stringByAppendingPathComponent:[[TTFileManager sharedModel] get_videoName_With_fileType:@"jpg" deviceID:self.deviceID]];
+    TLog(@"saveImagePath = %@",savedImagePath);
 
     //截取指定区域图片
     UIImage *screenImage = [self snapsHotView:playerView];
@@ -764,10 +764,9 @@ extern XBAudioUnitRecorder *audioRecorder;
     if (is) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadPictureVC_noti" object:nil];
         [self loadImageFinished:[[UIImage alloc] initWithContentsOfFile:savedImagePath]];
-//        [[KHJHub shareHub] showText:KHJLocalizedString(@"PhotoSuccess", nil) addToView:self.view];
     }
     else {
-        [[KHJHub shareHub] showText:KHJLocalizedString(@"picFail_", nil) addToView:self.view];
+        [[TTHub shareHub] showText:KHJLocalizedString(@"picFail_", nil) addToView:self.view];
     }
 }
 - (UIImage *)snapsHotView:(UIView *)view
@@ -852,7 +851,7 @@ extern XBAudioUnitRecorder *audioRecorder;
     NSString *year = KHJString(@"%ld", (long)[components year]);
     NSString *month = KHJString(@"%02ld", (long)[components month]);
     NSString *day = KHJString(@"%02ld", (long)[components day]);
-    NSString *imagePath1 = [[[KHJHelpCameraData sharedModel] get_screenShot_DocPath_deviceID:self.deviceInfo.deviceID] stringByAppendingPathComponent:KHJString(@"%@%@%@.png",year,month,day)];
+    NSString *imagePath1 = [[[TTFileManager sharedModel] get_screenShot_DocPath_deviceID:self.deviceInfo.deviceID] stringByAppendingPathComponent:KHJString(@"%@%@%@.png",year,month,day)];
     [UIImagePNGRepresentation(screenImage) writeToFile:imagePath1 atomically:YES];
 }
 

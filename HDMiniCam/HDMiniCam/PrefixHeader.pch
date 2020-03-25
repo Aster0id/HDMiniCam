@@ -12,15 +12,12 @@
 #import "KHJDeviceInfo.h"
 #import "KHJDataBase.h"
 
-//#import "MBProgressHUD.h"
-#import "KHJHttpManager.h"
-#import "KHJCalculate.h"
-#import "KHJHelpCameraData.h"
-#import "KHJHub.h"
+#import "TTCommon.h"
+#import "TTFileManager.h"
+#import "TTHub.h"
 #import "KHJBaseCell.h"
 #import "KHJBaseVC.h"
 #import "KHJVideoPlayerBaseVC.h"
-#import "KHJToast.h"
 #import "Toast+UIView.h"
 #import "KHJPublicDefine.h"
 #import "UIImageView+WebCache.h"
@@ -29,51 +26,54 @@
 #import "UIImage+FFToast.h"
 #import <FFToast/FFToast.h>
 
-#import "KHJUtility.h"
+#import "TTCommon.h"
 #import "NSBundle+Language.h"
 #import "UIViewController+LJWKeyboardHandlerHelper.h"
 
-#define Height_NavContentBar 44.0f
-#define Height_StatusBar    ((IS_IPHONE_X==YES)?44.0f: 20.0f)
-#define Height_NavBar       ((IS_IPHONE_X==YES)?88.0f: 64.0f)
-#define Height_TabBar       ((IS_IPHONE_X==YES)?83.0f: 49.0f)
+// 直播录屏状态
+typedef enum : NSUInteger {
+    TTRecordLive_Normal = 0,
+    TTRecordLive_Recording,
+    TTRecordLive_stopRecoding,
+} TTRecordLiveStatus;
+
+// 回放录屏
+typedef enum : NSUInteger {
+    TTRecordBack_Normal = 0,
+    TTRecordBack_Recording,
+    TTRecordBack_stopRecoding,
+} TTRecordBackStatus;
+
+// 解码类型： 直播、多瓶、回放
+typedef enum : NSUInteger {
+    TTDecorder_none = 0,
+    TTDecorde_live,
+    TTDecorde_mutli,
+    TTDecorde_reback,
+} TTDecordeType;
+
+
+#define TTNavConentHeight   44.0f
+#define TTStatusBarHeight   ((IS_IPHONE_X == YES) ? 44.0f : 20.0f)
+#define TTNavBarHeight      ((IS_IPHONE_X == YES) ? 88.0f : 64.0f)
+#define TTTabBarHeight      ((IS_IPHONE_X == YES) ? 83.0f : 49.0f)
 #define IS_IPHONE_X         (SCREEN_HEIGHT >= 812.0f) ? YES : NO
 #define IS_IPHONE_5         (SCREEN_HEIGHT == 568.0f) ? YES : NO
 
-#define WeakSelf __weak typeof(self) weakSelf = self;
-#define HDWindow [UIApplication sharedApplication].keyWindow
-#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
-#define UIColorFromRGB_alpha(rgbValue, A) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:A]
+// 弱引用
+#define TTWeakSelf  __weak typeof(self) weakSelf = self;
+// keywindow
+#define TTWindow    [UIApplication sharedApplication].keyWindow
+// RGB color
+#define UIColorFromRGB(rgbValue)            [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
+#define UIColorFromRGB_alpha(rgbValue, A)   [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:A]
+
+// 打印
 #ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#define TLog(fmt, ...) NSLog((fmt), ##__VA_ARGS__);
 #else
-#define DLog(...)
+#define TLog(...);
 #endif
-
-#ifdef DEBUG
-#define CLog(fmt, ...) NSLog((fmt), ##__VA_ARGS__);
-#else
-#define CLog(...);
-#endif
-
-typedef enum : NSUInteger {
-    KHJLiveRecordType_Normal = 0,
-    KHJLiveRecordType_Recording,
-    KHJLiveRecordType_stopRecoding,
-} KHJLiveRecordType;
-
-typedef enum : NSUInteger {
-    KHJRebackPlayRecordType_Normal = 0,
-    KHJRebackPlayRecordType_Recording,
-    KHJRebackPlayRecordType_stopRecoding,
-} KHJRebackPlayRecordType;
-
-typedef enum : NSUInteger {
-    KHJDecorderType_none = 0,
-    KHJDecorderType_live,
-    KHJDecorderType_mutli,
-    KHJDecorderType_reback,
-} KHJDecorderType;
 
 #endif /* PrefixHeader_pch */

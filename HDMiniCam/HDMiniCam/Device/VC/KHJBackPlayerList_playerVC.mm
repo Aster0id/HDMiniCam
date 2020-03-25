@@ -2,7 +2,7 @@
 //  KHJBackPlayerList_playerVC.m
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/2/28.
+//  Created by kevin on 2020/2/28.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
@@ -83,7 +83,7 @@ extern IPCNetRecordCfg_st recordCfg;
     [self registerCallBack];
     // 注册完监听回调，再开始获取音频数据
     [[KHJDeviceManager sharedManager] startPlayback_with_deviceID:self.deviceID path:self.body[@"videoPath"] resultBlock:^(NSInteger code) {
-        CLog(@"播放回放视频 - %@",self.body[@"name"]);
+        TLog(@"播放回放视频 - %@",self.body[@"name"]);
     }];
 }
 
@@ -120,7 +120,7 @@ extern IPCNetRecordCfg_st recordCfg;
 {
     if (sender.tag == 10) {
         [self.navigationController popViewControllerAnimated:YES];
-        WeakSelf
+        TTWeakSelf
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             [[KHJDeviceManager sharedManager] removePlaybackAudioVideoDataCallBack_with_deviceID:weakSelf.deviceID];
             [[KHJDeviceManager sharedManager] stopPlayback_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
@@ -132,14 +132,14 @@ extern IPCNetRecordCfg_st recordCfg;
     else if (sender.tag == 30) {
         if (isPlay) {
             // 暂停
-            CLog(@"暂停播放回放视频 - %@",self.body[@"name"]);
+            TLog(@"暂停播放回放视频 - %@",self.body[@"name"]);
             [[KHJDeviceManager sharedManager] pausePlayback_with_deviceID:self.deviceID contin:YES resultBlock:^(NSInteger code) {
                 self->isPlay = NO;
             }];
         }
         else {
             // 开始
-            CLog(@"继续播放回放视频 - %@",self.body[@"name"]);
+            TLog(@"继续播放回放视频 - %@",self.body[@"name"]);
             [[KHJDeviceManager sharedManager] pausePlayback_with_deviceID:self.deviceID contin:NO resultBlock:^(NSInteger code) {
                 self->isPlay = YES;
             }];
@@ -153,7 +153,7 @@ extern IPCNetRecordCfg_st recordCfg;
 // 注册音频数据/视频数据回调
 - (void)registerCallBack
 {
-    WeakSelf
+    TTWeakSelf
     [[KHJDeviceManager sharedManager] setPlaybackAudioVideoDataCallBack_with_deviceID:self.deviceID resultBlock:^(const char * _Nonnull uuid, int type, unsigned char * _Nonnull data, int len, long timestamp) {
         [self->activeView stopAnimating];
         self->playerImageView.hidden = NO;

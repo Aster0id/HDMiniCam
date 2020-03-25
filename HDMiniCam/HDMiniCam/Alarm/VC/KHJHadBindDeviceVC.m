@@ -2,7 +2,7 @@
 //  KHJHadBindDeviceVC.m
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/1/16.
+//  Created by kevin on 2020/1/16.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
@@ -57,7 +57,7 @@
     
     cell.tag = indexPath.row + FLAG_TAG;
     cell.block = ^(NSInteger row) {
-        CLog(@"row = %ld",(long)row);
+        TLog(@"row = %ld",(long)row);
     };
     cell.lab.text = self.dataSource[indexPath.row];
     return cell;

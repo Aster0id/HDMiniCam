@@ -2,7 +2,7 @@
 //  KHJDefensTimeVC.m
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/3/23.
+//  Created by kevin on 2020/3/23.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
@@ -324,7 +324,7 @@
 
 - (void)addDefinesTime:(NSString *)time
 {
-    CLog(@"time ====================== %@",time);
+    TLog(@"time ====================== %@",time);
 }
 
 #pragma mark - KHJAlarmConfHeadViewDelegate
@@ -354,7 +354,7 @@
 
 - (void)closeWithSection:(NSInteger)section row:(NSInteger)row
 {
-    CLog(@"删除第 %ld 个cell",(long)row);
+    TLog(@"删除第 %ld 个cell",(long)row);
     if (section == 0)
         [self.everyDayArr removeObjectAtIndex:row];
     else if (section == 1)

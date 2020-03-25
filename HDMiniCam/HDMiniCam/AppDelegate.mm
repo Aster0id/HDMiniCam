@@ -11,7 +11,6 @@
 #import "KHJBaseNavigationController.h"
 #import "KHJPictureListVC.h"
 #import "KHJRecordListVC.h"
-#import "KHJAlarmListVC.h"
 #import "KHJVideoPlayer_hf_VC.h"
 #pragma mark - ios13 开启地理位置权限，获取Wi-Fi名称
 #import <CoreLocation/CoreLocation.h>
@@ -62,12 +61,12 @@
 {
     //三个导航栏控制器，注意标题问题
     AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    if (appDelegate.tabVControll) {
+    if (appDelegate.rootTabBarVC) {
         [UIApplication sharedApplication].delegate.window.rootViewController = nil;
-        appDelegate.tabVControll = nil;
+        appDelegate.rootTabBarVC = nil;
     }
     KHJTabBarBaseVC * tabbar = [[KHJTabBarBaseVC alloc] init];
-    appDelegate.tabVControll = tabbar;//关闭横屏仅允许竖屏
+    appDelegate.rootTabBarVC = tabbar;//关闭横屏仅允许竖屏
     
     KHJDeviceListVC *vc1 = [[KHJDeviceListVC alloc] init];
     KHJBaseNavigationController *deviceListNavi = [[KHJBaseNavigationController  alloc] initWithRootViewController:vc1];
@@ -81,44 +80,27 @@
     KHJBaseNavigationController *recordNavi = [[KHJBaseNavigationController  alloc] initWithRootViewController:vc3];
     recordNavi.tabBarItem.title = KHJLocalizedString(@"recrd_", nil);
     
-//    KHJAlarmListVC *vc4 = [[KHJAlarmListVC alloc] init];
-//    KHJBaseNavigationController *alarmListNavi = [[KHJBaseNavigationController  alloc] initWithRootViewController:vc4];
-//    alarmListNavi.tabBarItem.title = KHJLocalizedString(@"报警", nil);
-
-    [deviceListNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:KHJUtility.appMainColor}
+    [deviceListNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TTCommon.appMainColor}
                                              forState:UIControlStateSelected];
     [deviceListNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.blackColor}
                                              forState:UIControlStateNormal];
-    
-    [pictureNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:KHJUtility.appMainColor}
+    [pictureNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TTCommon.appMainColor}
                                           forState:UIControlStateSelected];
     [pictureNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.blackColor}
                                           forState:UIControlStateNormal];
-    
-    [recordNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:KHJUtility.appMainColor}
+    [recordNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TTCommon.appMainColor}
                                          forState:UIControlStateSelected];
     [recordNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.blackColor}
                                          forState:UIControlStateNormal];
-    
-//    [alarmListNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:KHJUtility.appMainColor,}
-//                                            forState:UIControlStateSelected];
-//    [alarmListNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.blackColor,}
-//                                            forState:UIControlStateNormal];
-    
-//    [tabbar setViewControllers:@[deviceListNavi, pictureNavi, recordNavi, alarmListNavi]];
     [tabbar setViewControllers:@[deviceListNavi, pictureNavi, recordNavi]];
-
-    //设置tabar图像
-    pictureNavi.tabBarItem.image = [KHJIMAGE(@"picture_n") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    pictureNavi.tabBarItem.selectedImage = [KHJIMAGE(@"picture_s") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] ;
-    recordNavi.tabBarItem.image = [KHJIMAGE(@"record_n") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    recordNavi.tabBarItem.selectedImage = [KHJIMAGE(@"record_s") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    alarmListNavi.tabBarItem.image = [KHJIMAGE(@"alarm_n") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    alarmListNavi.tabBarItem.selectedImage = [KHJIMAGE(@"alarm_s") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    deviceListNavi.tabBarItem.image = [KHJIMAGE(@"video_n") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    deviceListNavi.tabBarItem.selectedImage = [KHJIMAGE(@"video_s") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
-    [UIApplication sharedApplication].delegate.window.rootViewController = appDelegate.tabVControll;
+    pictureNavi.tabBarItem.image            = [KHJIMAGE(@"picture_n") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    pictureNavi.tabBarItem.selectedImage    = [KHJIMAGE(@"picture_s") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] ;
+    recordNavi.tabBarItem.image             = [KHJIMAGE(@"record_n") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    recordNavi.tabBarItem.selectedImage     = [KHJIMAGE(@"record_s") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    deviceListNavi.tabBarItem.image         = [KHJIMAGE(@"video_n") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    deviceListNavi.tabBarItem.selectedImage = [KHJIMAGE(@"video_s") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [UIApplication sharedApplication].delegate.window.rootViewController = appDelegate.rootTabBarVC;
     [self.window makeKeyAndVisible];
 }
 
@@ -152,7 +134,7 @@
 
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(nullable UIWindow *)window
 {
-    if (self.setTurnScreen)  {
+    if (self.canLandscape)  {
         /* 横屏 */
         return UIInterfaceOrientationMaskLandscape;
     }
@@ -166,7 +148,7 @@
 
 - (BOOL)shouldAutorotate
 {
-    if (self.setTurnScreen == YES) {
+    if (self.canLandscape == YES) {
         //为1的话,支持旋转
         return YES;
     }
@@ -179,27 +161,27 @@
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         switch (status) {
             case -1:
-                CLog(@"---------------------------------------------------- 未知网络");
+                TLog(@"---------------------------------------------------- 未知网络");
                 break;
             case 0:
-                CLog(@"---------------------------------------------------- 网络不可达");
+                TLog(@"---------------------------------------------------- 网络不可达");
                 break;
             case 1:
-                CLog(@"---------------------------------------------------- GPRS网络");
+                TLog(@"---------------------------------------------------- GPRS网络");
                 break;
             case 2:
-                CLog(@"---------------------------------------------------- wifi网络");
+                TLog(@"---------------------------------------------------- wifi网络");
                 break;
             default:
                 break;
         }
         if (status == AFNetworkReachabilityStatusReachableViaWWAN
            || status == AFNetworkReachabilityStatusReachableViaWiFi) {
-            CLog(@"有网");
+            TLog(@"有网");
             [[NSNotificationCenter defaultCenter] postNotificationName:@"netStateChange" object:@"手机有网络"];
         }
         else {
-            CLog(@"没网");
+            TLog(@"没网");
             [[NSNotificationCenter defaultCenter] postNotificationName:@"netStateChange" object:@"手机无网络"];
         }
     }];

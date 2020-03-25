@@ -2,7 +2,7 @@
 //  KHJVideoModel.h
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/2/13.
+//  Created by kevin on 2020/2/13.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 

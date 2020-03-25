@@ -2,7 +2,7 @@
 //  KHJDeviceManager.h
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/2/14.
+//  Created by kevin on 2020/2/14.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 

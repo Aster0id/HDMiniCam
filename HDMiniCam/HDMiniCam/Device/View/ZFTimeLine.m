@@ -100,7 +100,7 @@
 - (void)panView:(UIPanGestureRecognizer *)panGest
 {
     if (!self.userInteractionEnabled) {
-        CLog(@"touchesBegan") ;
+        TLog(@"touchesBegan") ;
         return;
     }
     if (panGest.state == UIGestureRecognizerStateBegan){
@@ -169,7 +169,7 @@
 
 - (void)upDateVideo
 {
-    CLog(@"upDateVideo");
+    TLog(@"upDateVideo");
     if (!onTouch) {
         NSLog(@"[self currentTimeStr] = %@",[self currentTimeStr]);
         if (self.delegate && [self.delegate respondsToSelector:@selector(timeLine:moveToDate:)]) {
@@ -182,7 +182,7 @@
 - (void) pinchView:(UIPinchGestureRecognizer *)pinchGest
 {
     if (!self.userInteractionEnabled) {
-        CLog(@"touchesBegan");
+        TLog(@"touchesBegan");
         return;
     }
     
@@ -196,7 +196,7 @@
         
         intervalValue = intervalValue + (value - scaleValue)/100;
         intervalValue = round(intervalValue);
-//        CLog(@"intervalValue = %f",intervalValue);
+//        TLog(@"intervalValue = %f",intervalValue);
         if (scaleType == ScaleTypeBig) {
             
             if (scaleValue - value < 0) {//变大
@@ -255,7 +255,7 @@
         return;
     }
     currentInterval = [self intervalWithTime:date];
-    CLog(@"moveToDate:%@",date);
+    TLog(@"moveToDate:%@",date);
     [self setNeedsDisplay];
     if (self.delegate && [self.delegate respondsToSelector:@selector(timeLine:moveToDate:)]) {
         [self.delegate timeLine:self moveToDate:currentInterval];
@@ -361,7 +361,7 @@
                 }
             }
             else {
-//                CLog(@"时间区域显示不正常！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
+//                TLog(@"时间区域显示不正常！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
             }
         }
     }
@@ -410,7 +410,7 @@
     NSString *timeStr = [self currentShowTimeStr];
     self->timeLab.text = timeStr;
 
-//    WeakSelf
+//    TTWeakSelf
 //    dispatch_async(dispatch_get_global_queue(0, 0), ^{
 //        //计算 x = 0时对应的时间戳
 //        float centerX = rect.size.width/2.0;
@@ -466,7 +466,7 @@
 //                    }
 //                }
 //                else {
-//    //                CLog(@"时间区域显示不正常！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
+//    //                TLog(@"时间区域显示不正常！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
 //                }
 //            }
 //        }
@@ -559,7 +559,7 @@
     CGContextSetLineWidth(context, 1.0);
     CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
     CGContextStrokePath(context);
-//    WeakSelf
+//    TTWeakSelf
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //        int mm = [weakSelf getLeftPointFromZero];
 //        CGFloat ff = [weakSelf getNeedWidth];
@@ -591,7 +591,7 @@
     CGContextSetLineWidth(context, 1.0);
     CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
     CGContextStrokePath(context);
-//    WeakSelf
+//    TTWeakSelf
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //        int mm = [weakSelf getLeftPointFromZero];
 //        CGFloat ff = [weakSelf getNeedWidth];
@@ -624,7 +624,7 @@
     CGContextSetLineWidth(ctx, 1.0);
     CGContextSetStrokeColorWithColor(ctx, [UIColor grayColor].CGColor);
     CGContextStrokePath(ctx);
-//    WeakSelf
+//    TTWeakSelf
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //        int mm = [weakSelf getLeftPointFromZero];
 //        CGFloat ff = [weakSelf getNeedWidth];
@@ -656,7 +656,7 @@
     CGContextSetLineWidth(ctx, 1.0);
     CGContextSetStrokeColorWithColor(ctx, [UIColor grayColor].CGColor);
     CGContextStrokePath(ctx);
-//    WeakSelf
+//    TTWeakSelf
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //        int mm = [weakSelf getLeftPointFromZero];
 //        CGFloat ff = [weakSelf getNeedWidth];
@@ -757,7 +757,7 @@
     CGContextSetLineWidth(ctx, 1.0);
     CGContextSetStrokeColorWithColor(ctx, [UIColor grayColor].CGColor);
     CGContextStrokePath(ctx);
-//    WeakSelf
+//    TTWeakSelf
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //        int nn = [weakSelf getRightPointFrom24];
 //        int mm = [weakSelf getLeftPointFromZero];
@@ -795,7 +795,7 @@
     CGContextSetLineWidth(ctx, 1.0);
     CGContextSetStrokeColorWithColor(ctx, [UIColor grayColor].CGColor);
     CGContextStrokePath(ctx);
-//    WeakSelf
+//    TTWeakSelf
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //        int nn = [weakSelf getRightPointFrom24];
 //        int mm = [weakSelf getLeftPointFromZero];
@@ -838,7 +838,7 @@
     paragraph.alignment = NSTextAlignmentCenter;
     [text drawInRect:CGRectMake(x - 17, height/2.0, 34, 12)
       withAttributes:@{NSFontAttributeName:font,NSForegroundColorAttributeName:[UIColor blueColor],NSParagraphStyleAttributeName:paragraph}];
-//    WeakSelf
+//    TTWeakSelf
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //        int mm = [weakSelf getLeftPointFromZero];
 //        CGFloat ff = [weakSelf getNeedWidth];

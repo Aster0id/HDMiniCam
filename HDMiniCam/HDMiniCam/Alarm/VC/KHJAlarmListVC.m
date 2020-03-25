@@ -2,7 +2,7 @@
 //  KHJAlarmListVC.m
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/1/15.
+//  Created by kevin on 2020/1/15.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
@@ -18,9 +18,9 @@
 
 @implementation KHJAlarmListVC
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -46,7 +46,7 @@
     }
     cell.tag = indexPath.row + FLAG_TAG;
     cell.block = ^(NSInteger row) {
-        CLog(@"点了一下 row = %ld",row);
+        TLog(@"点了一下 row = %ld",row);
     };
     return cell;
 }

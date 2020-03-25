@@ -2,7 +2,7 @@
 //  KHJDeviceManager.m
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/2/14.
+//  Created by kevin on 2020/2/14.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
@@ -44,8 +44,8 @@ IPCNETMoveAlarmCfg_st moveAlarmCfg;
 
 void OnGetCmdResult(int cmd,const char*uuid,const char*json)
 {
-    NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
-    CLog(@"dict = %@",dict);
+    NSDictionary *dict = [TTCommon cString_changto_ocStringWith:json];
+    TLog(@"dict = %@",dict);
     int ret = [dict[@"ret"] intValue];
     if (ret >= 0) {
         switch (cmd) {
@@ -62,14 +62,14 @@ void OnGetCmdResult(int cmd,const char*uuid,const char*json)
         }
     }
     else {
-        CLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
+        TLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
     }
 }
 
 void OnDownloadDataCallBack(const char*uuid,const char *file,const char*data,int len,unsigned int offset)
 {
-//    NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
-//    CLog(@"dict = %@",dict);
+//    NSDictionary *dict = [TTCommon cString_changto_ocStringWith:json];
+//    TLog(@"dict = %@",dict);
 }
 
 void OnListRemoteDirInfoCmdResult(int cmd,const char*uuid,const char*json);
@@ -133,7 +133,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
     RemoteDirInfo_t *rdi = new RemoteDirInfo_t;
 
     NSString *path = KHJString(@"%@/%s",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],mCurViewPath_date);
-//    CLog(@"path = %@",path);
+//    TLog(@"path = %@",path);
     
     rdi->path = path.UTF8String;
     rdi->parseJSON(jsdata);
@@ -231,7 +231,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
                   resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetStartIPCNetSession(deviceID.UTF8String, password.UTF8String, &netHandle);
-    CLog(@"设备登录，ret = %d",ret);
+    TLog(@"设备登录，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -246,7 +246,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
                      resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetStopIPCNetSession(deviceID.UTF8String);
-    CLog(@"设备断开，ret = %d",ret);
+    TLog(@"设备断开，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -263,7 +263,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
                         resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetStartVideo(deviceID.UTF8String, quality);
-    CLog(@"开始获取视频，ret = %d",ret);
+    TLog(@"开始获取视频，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -278,7 +278,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
                        resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetStopVideo(deviceID.UTF8String);
-    CLog(@"停止获取视频，ret = %d",ret);
+    TLog(@"停止获取视频，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -293,7 +293,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
                         resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetStartAudio(deviceID.UTF8String);
-    CLog(@"开始获取音频，ret = %d",ret);
+    TLog(@"开始获取音频，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -308,7 +308,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
                        resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetStopAudio(deviceID.UTF8String);
-    CLog(@"停止获取音频，ret = %d",ret);
+    TLog(@"停止获取音频，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -323,7 +323,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
                     resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetStartTalk(deviceID.UTF8String, IPCNET_AUDIO_G711A);
-    CLog(@"开启设备扬声器，准备接收音频数据并播放，ret = %d",ret);
+    TLog(@"开启设备扬声器，准备接收音频数据并播放，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        resultBlock(ret);
     });
@@ -336,7 +336,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
                    resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetStopTalk(deviceID.UTF8String);
-    CLog(@"关闭设备扬声器，ret = %d",ret);
+    TLog(@"关闭设备扬声器，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        resultBlock(ret);
     });
@@ -353,7 +353,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
 {
 //    String str;
 //    int ret = IPCNetPutTalkData(deviceID.UTF8String, str.data(), length);
-//    CLog(@"发送音频数据，ret = %d",ret);
+//    TLog(@"发送音频数据，ret = %d",ret);
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       resultBlock(ret);
 //    });
@@ -366,7 +366,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
                                             resultBlock:(playBackVideoOrAudioDataRetultBlock)resultBlock
 {
     int ret = IPCNetSetPlaybackAudioVideoDataCallBack(deviceID.UTF8String, OnSetPlaybackAudioVideoDataCallBackCmdResult);
-    CLog(@"设置 音频 和 视频 回调，ret = %d",ret);
+    TLog(@"设置 音频 和 视频 回调，ret = %d",ret);
     playBackDataBlock = resultBlock;
 }
 
@@ -375,7 +375,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
 - (void)removePlaybackAudioVideoDataCallBack_with_deviceID:(NSString *)deviceID
 {
     int ret = IPCNetSetPlaybackAudioVideoDataCallBack(deviceID.UTF8String, NULL);
-    CLog(@"移除 音频 和 视频 回调，ret = %d",ret);
+    TLog(@"移除 音频 和 视频 回调，ret = %d",ret);
     playBackDataBlock = nil;
 }
 
@@ -388,7 +388,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
 void OnSetPlaybackAudioVideoDataCallBackCmdResult(const char*uuid,int type,unsigned char*data,int len,long timestamp)
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-//        CLog(@"设置 音频 和 视频 回调 uuid = %s type = %d len = %d timestamp = %ld \n", uuid, type, len, (long)timestamp);
+//        TLog(@"设置 音频 和 视频 回调 uuid = %s type = %d len = %d timestamp = %ld \n", uuid, type, len, (long)timestamp);
         if (playBackDataBlock) {
             playBackDataBlock(uuid, type, data, len, timestamp);
         }
@@ -404,7 +404,7 @@ void OnSetPlaybackAudioVideoDataCallBackCmdResult(const char*uuid,int type,unsig
                         resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetStartPlaybackR(deviceID.UTF8String, path.UTF8String, OnStartPlaybackCmdResult);
-    CLog(@"开始视频回放，ret = %d",ret);
+    TLog(@"开始视频回放，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -414,7 +414,7 @@ void OnSetPlaybackAudioVideoDataCallBackCmdResult(const char*uuid,int type,unsig
 
 void OnStartPlaybackCmdResult(int cmd,const char*uuid,const char*json)
 {
-    CLog(@"OnStartPlaybackCmdResult %s cmd:%d uuid:%s json:%s\n",__func__,cmd, uuid, json);
+    TLog(@"OnStartPlaybackCmdResult %s cmd:%d uuid:%s json:%s\n",__func__,cmd, uuid, json);
 }
 
 /// 停止视频回放
@@ -424,7 +424,7 @@ void OnStartPlaybackCmdResult(int cmd,const char*uuid,const char*json)
                        resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetStopPlaybackR(deviceID.UTF8String, OnGetCmdResult);
-    CLog(@"停止视频回放，ret = %d",ret);
+    TLog(@"停止视频回放，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -442,14 +442,14 @@ void OnStartPlaybackCmdResult(int cmd,const char*uuid,const char*json)
 {
     if (!contin) {
         int ret = IPCNetRestorePlaybackAfterPause(deviceID.UTF8String);
-//        CLog(@"暂停播放回放视频，ret = %d",ret);
+//        TLog(@"暂停播放回放视频，ret = %d",ret);
         dispatch_async(dispatch_get_main_queue(), ^{
            resultBlock(ret);
         });
     }
     else {
         int ret = IPCNetPausePlaybackR(deviceID.UTF8String, OnGetCmdResult);
-//        CLog(@"继续播放回放视频，ret = %d",ret);
+//        TLog(@"继续播放回放视频，ret = %d",ret);
         dispatch_async(dispatch_get_main_queue(), ^{
            resultBlock(ret);
         });
@@ -465,7 +465,7 @@ void OnStartPlaybackCmdResult(int cmd,const char*uuid,const char*json)
                       resultBlock:(resultBlock)resultBlock
 {
 //    int ret = IPCNetPlaybackFastForwardR(deviceID.UTF8String, speed, OnGetCmdResult);
-//    CLog(@"回放快进，ret = %d",ret);
+//    TLog(@"回放快进，ret = %d",ret);
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       resultBlock(ret);
 //    });
@@ -480,7 +480,7 @@ void OnStartPlaybackCmdResult(int cmd,const char*uuid,const char*json)
                        resultBlock:(resultBlock)resultBlock
 {
 //    int ret = IPCNetPlaybackFastBackwardR(deviceID.UTF8String, speed, OnGetCmdResult);
-//    CLog(@"回放快退，ret = %d",ret);
+//    TLog(@"回放快退，ret = %d",ret);
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       resultBlock(ret);
 //    });
@@ -493,7 +493,7 @@ void OnStartPlaybackCmdResult(int cmd,const char*uuid,const char*json)
                             resultBlock:(resultBlock)resultBlock
 {
 //    int ret = IPCNetGetDenoiseSettingR(deviceID.UTF8String, OnGetCmdResult);
-//    CLog(@"获取降噪设置，ret = %d",ret);
+//    TLog(@"获取降噪设置，ret = %d",ret);
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       resultBlock(ret);
 //    });
@@ -508,7 +508,7 @@ void OnStartPlaybackCmdResult(int cmd,const char*uuid,const char*json)
                             resultBlock:(resultBlock)resultBlock
 {
 //    int ret = IPCNetSetDenoiseSettingR(deviceID.UTF8String, json.UTF8String, OnGetCmdResult);
-//    CLog(@"设置降噪设置，ret = %d",ret);
+//    TLog(@"设置降噪设置，ret = %d",ret);
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       resultBlock(ret);
 //    });
@@ -521,7 +521,7 @@ void OnStartPlaybackCmdResult(int cmd,const char*uuid,const char*json)
                       resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetRestoreToFactorySetting(deviceID.UTF8String);
-    CLog(@"恢复设备出厂设置，ret = %d",ret);
+    TLog(@"恢复设备出厂设置，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -536,7 +536,7 @@ void OnStartPlaybackCmdResult(int cmd,const char*uuid,const char*json)
                        resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetRebootDevice(deviceID.UTF8String);
-    CLog(@"重启设备，ret = %d",ret);
+    TLog(@"重启设备，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -551,7 +551,7 @@ void OnStartPlaybackCmdResult(int cmd,const char*uuid,const char*json)
                         resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetGetWiFiR(deviceID.UTF8String, OnGetDeviceWiFi_CmdResult);
-    CLog(@"获取设备Wi-Fi，ret = %d",ret);
+    TLog(@"获取设备Wi-Fi，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -560,7 +560,7 @@ void OnStartPlaybackCmdResult(int cmd,const char*uuid,const char*json)
 }
 void OnGetDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:noti_OnGetDeviceWiFi_CmdResult_KEY object:[KHJUtility cString_changto_ocStringWith:json]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:noti_OnGetDeviceWiFi_CmdResult_KEY object:[TTCommon cString_changto_ocStringWith:json]];
 }
 
 /// 设置设备Wi-Fi
@@ -576,7 +576,7 @@ void OnGetDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
                         resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetSetWiFi(deviceID.UTF8String, ssid.UTF8String, password.UTF8String, encType.UTF8String);
-    CLog(@"设置设备Wi-Fi，ret = %d",ret);
+    TLog(@"设置设备Wi-Fi，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -591,7 +591,7 @@ void OnGetDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
                            resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetSearchWiFiR(deviceID.UTF8String, OnSearchDeviceWiFi_CmdResult);
-    CLog(@"搜索附近Wi-Fi列表，ret = %d",ret);
+    TLog(@"搜索附近Wi-Fi列表，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -601,7 +601,7 @@ void OnGetDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
 
 void OnSearchDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:noti_OnSearchDeviceWiFi_CmdResult_KEY object:[KHJUtility cString_changto_ocStringWith:json]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:noti_OnSearchDeviceWiFi_CmdResult_KEY object:[TTCommon cString_changto_ocStringWith:json]];
 }
 
 /// 搜索附近的设备
@@ -611,7 +611,7 @@ void OnSearchDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
 - (void)startSearchDevice_with_resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetSearchDevice(OnSearchDeviceResult);
-    CLog(@"搜索附近的设备，ret = %d",ret);
+    TLog(@"搜索附近的设备，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -637,7 +637,7 @@ void OnSearchDeviceResult(struct DevInfo *device)
 - (void)stopSearchDevice_with_resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetStopSearchDevice();
-    CLog(@"停止搜索附近的设备，ret = %d",ret);
+    TLog(@"停止搜索附近的设备，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -663,7 +663,7 @@ void OnSearchDeviceResult(struct DevInfo *device)
                         resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetGetDevInfo(deviceID.UTF8String);
-    CLog(@"获取设备端信息，ret = %d",ret);
+    TLog(@"获取设备端信息，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -680,7 +680,7 @@ void OnSearchDeviceResult(struct DevInfo *device)
                                resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetChangeDevPwd(deviceID.UTF8String, password.UTF8String);
-    CLog(@"修改设备密码，ret = %d",ret);
+    TLog(@"修改设备密码，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -697,7 +697,7 @@ void OnSearchDeviceResult(struct DevInfo *device)
                  resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetGetOSDR(deviceID.UTF8String, json.UTF8String, OnGetCmdResult);
-    CLog(@"获取OSD，ret = %d",ret);
+    TLog(@"获取OSD，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -714,7 +714,7 @@ void OnSearchDeviceResult(struct DevInfo *device)
                  resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetSetOSDR(deviceID.UTF8String, json.UTF8String, OnGetCmdResult);
-    CLog(@"设置OSD，ret = %d",ret);
+    TLog(@"设置OSD，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -737,7 +737,7 @@ void OnSearchDeviceResult(struct DevInfo *device)
     String str;
     ipcrgc.toJSONString(str);
     int ret = IPCNetGetRecordConfR(deviceID.UTF8String, str.c_str(), OnGetRecordConfCmdResult);
-    CLog(@"获取录像配置，ret = %d",ret);
+    TLog(@"获取录像配置，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -765,7 +765,7 @@ void OnGetRecordConfCmdResult(int cmd,const char*uuid,const char*json)
                           resultBlock:(resultBlock)resultBlock
 {
 //    int ret = IPCNetSetRecordConfR(deviceID.UTF8String, json.UTF8String, OnGetCmdResult);
-//    CLog(@"设置录像配置，ret = %d",ret);
+//    TLog(@"设置录像配置，ret = %d",ret);
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       resultBlock(ret);
 //    });
@@ -800,7 +800,7 @@ void OnGetRecordConfCmdResult(int cmd,const char*uuid,const char*json)
 {
     // noti_1075_KEY
     int ret = IPCNetListRemoteDirInfoR(deviceID.UTF8String, json.UTF8String, OnListRemoteDirInfoCmdResult);
-    CLog(@"获取远程目录信息，ret = %d",ret);
+    TLog(@"获取远程目录信息，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -821,7 +821,7 @@ void OnGetRecordConfCmdResult(int cmd,const char*uuid,const char*json)
     char jsonbuff[1024] = {0};
     sprintf(jsonbuff,"{\"RecInfo\":{\"vi\":%d,\"date\":%d}}", vi, date);
     int ret = IPCNetListRemoteDirInfoR(deviceID.UTF8String, jsonbuff, OnGetRemoteDirInfo_timeLine_CmdResult);
-    CLog(@"获取时间轴数据的远程目录信息，ret = %d",ret);
+    TLog(@"获取时间轴数据的远程目录信息，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -831,9 +831,9 @@ void OnGetRecordConfCmdResult(int cmd,const char*uuid,const char*json)
 
 void OnGetRemoteDirInfo_timeLine_CmdResult(int cmd,const char*uuid,const char*json)
 {
-    NSDictionary *backPlay_result = [KHJUtility cString_changto_ocStringWith:json];
+    NSDictionary *backPlay_result = [TTCommon cString_changto_ocStringWith:json];
     NSArray *result_array = backPlay_result[@"RecInfo"][@"period"];
-    CLog(@"OnGetRemoteDirInfo_timeLine_CmdResult = %ld",(long)result_array.count);
+    TLog(@"OnGetRemoteDirInfo_timeLine_CmdResult = %ld",(long)result_array.count);
     [[NSNotificationCenter defaultCenter] postNotificationName:noti_timeLineInfo_1075_KEY object:result_array];
 }
 
@@ -850,7 +850,7 @@ void OnGetRemoteDirInfo_timeLine_CmdResult(int cmd,const char*uuid,const char*js
                                     resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetStartPlaybackAtTimeR(deviceID.UTF8String, vi, date, time, OnStarPlayback_timeLine_CmdResult);
-    CLog(@"播放时间轴回放视频，ret = %d",ret);
+    TLog(@"播放时间轴回放视频，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -860,18 +860,18 @@ void OnGetRemoteDirInfo_timeLine_CmdResult(int cmd,const char*uuid,const char*js
 
 void OnStarPlayback_timeLine_CmdResult(int cmd,const char*uuid,const char*json)
 {
-    CLog(@"OnStartPlaybackCmdResult %s cmd:%d uuid:%s json:%s\n",__func__,cmd, uuid, json);
-//    NSDictionary *backPlay_result = [KHJUtility cString_changto_ocStringWith:json];
+    TLog(@"OnStartPlaybackCmdResult %s cmd:%d uuid:%s json:%s\n",__func__,cmd, uuid, json);
+//    NSDictionary *backPlay_result = [TTCommon cString_changto_ocStringWith:json];
 //    NSArray *result_array = backPlay_result[@"RecInfo"][@"period"];
-//    CLog(@"result_array.count = %ld",(long)result_array.count);
+//    TLog(@"result_array.count = %ld",(long)result_array.count);
 //    [[NSNotificationCenter defaultCenter] postNotificationName:noti_timeLineInfo_1075_KEY object:result_array];
 }
 
 void OnGetRecTimePeriodCmdResult(int cmd,const char*uuid,const char*json)
 {
-    NSDictionary *backPlay_result = [KHJUtility cString_changto_ocStringWith:json];
+    NSDictionary *backPlay_result = [TTCommon cString_changto_ocStringWith:json];
     NSArray *result_array = backPlay_result[@"RecInfo"][@"period"];
-//    CLog(@"result_array.count = %ld",(long)result_array.count);
+//    TLog(@"result_array.count = %ld",(long)result_array.count);
     [[NSNotificationCenter defaultCenter] postNotificationName:noti_timeLineInfo_1075_KEY object:result_array];
 }
 
@@ -885,7 +885,7 @@ void OnGetRecTimePeriodCmdResult(int cmd,const char*uuid,const char*json)
 {
     // noti_1077_KEY
     int ret = IPCNetListRemotePageFileR(deviceID.UTF8String, path.UTF8String, OnGetCmdResult);
-    CLog(@"获取远程 Page 文件，ret = %d",ret);
+    TLog(@"获取远程 Page 文件，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -902,7 +902,7 @@ void OnGetRecTimePeriodCmdResult(int cmd,const char*uuid,const char*json)
                            resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetDeleteRemoteFileR(deviceID.UTF8String, path.UTF8String, OnDeleteRemoteFileCmdResult);
-    CLog(@"删除远程文件，ret = %d",ret);
+    TLog(@"删除远程文件，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -912,8 +912,8 @@ void OnGetRecTimePeriodCmdResult(int cmd,const char*uuid,const char*json)
 
 void OnDeleteRemoteFileCmdResult(int cmd,const char*uuid,const char*json)
 {
-    NSDictionary *result = [KHJUtility cString_changto_ocStringWith:json];
-    CLog(@"result = %@",result);
+    NSDictionary *result = [TTCommon cString_changto_ocStringWith:json];
+    TLog(@"result = %@",result);
     dispatch_async(dispatch_get_main_queue(), ^{
         int ret = [result[@"ret"] intValue];
         if (ret == 0) {
@@ -930,7 +930,7 @@ void OnDeleteRemoteFileCmdResult(int cmd,const char*uuid,const char*json)
                                    path:(NSString *)path
 {
 //    int ret = IPCNetStartDownloadFileR(deviceID.UTF8String, path.UTF8String, OnDownloadDataCallBack, OnGetCmdResult);
-//    CLog(@"开始下载设备文件，ret = %d",ret);
+//    TLog(@"开始下载设备文件，ret = %d",ret);
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       resultBlock(ret);
 //    });
@@ -944,7 +944,7 @@ void OnDeleteRemoteFileCmdResult(int cmd,const char*uuid,const char*json)
                                   path:(NSString *)path
 {
 //    int ret = IPCNetStopDownloadFileR(deviceID.UTF8String, path.UTF8String, OnGetCmdResult);
-//    CLog(@"停止下载设备文件，ret = %d",ret);
+//    TLog(@"停止下载设备文件，ret = %d",ret);
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       resultBlock(ret);
 //    });
@@ -959,7 +959,7 @@ void OnDeleteRemoteFileCmdResult(int cmd,const char*uuid,const char*json)
                         resultBlock:(resultBlock)resultBlock
 {
 //    int ret = IPCNetSetPtzCtrlR(deviceID.UTF8String, json.UTF8String, OnGetCmdResult);
-//    CLog(@"获取PTZ控制，摇头相关，ret = %d",ret);
+//    TLog(@"获取PTZ控制，摇头相关，ret = %d",ret);
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       resultBlock(ret);
 //    });
@@ -974,7 +974,7 @@ void OnDeleteRemoteFileCmdResult(int cmd,const char*uuid,const char*json)
                         resultBlock:(resultBlock)resultBlock
 {
 //    int ret = IPCNetGetPtzCtrlR(deviceID.UTF8String, OnGetCmdResult);
-//    CLog(@"设置PTZ控制，摇头相关，ret = %d",ret);
+//    TLog(@"设置PTZ控制，摇头相关，ret = %d",ret);
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       resultBlock(ret);
 //    });
@@ -987,7 +987,7 @@ void OnDeleteRemoteFileCmdResult(int cmd,const char*uuid,const char*json)
                      resultBlock:(resultBlock)resultBlock
 {
 //    int ret = IPCNetGetExpTypeR(deviceID.UTF8String, OnGetCmdResult);
-//    CLog(@"获取曝光类型，ret = %d",ret);
+//    TLog(@"获取曝光类型，ret = %d",ret);
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       resultBlock(ret);
 //    });
@@ -1002,7 +1002,7 @@ void OnDeleteRemoteFileCmdResult(int cmd,const char*uuid,const char*json)
                      resultBlock:(resultBlock)resultBlock
 {
 //    int ret = IPCNetSetExpTypeR(deviceID.UTF8String, json.UTF8String, OnGetCmdResult);
-//    CLog(@"设置曝光类型，ret = %d",ret);
+//    TLog(@"设置曝光类型，ret = %d",ret);
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       resultBlock(ret);
 //    });
@@ -1015,7 +1015,7 @@ void OnDeleteRemoteFileCmdResult(int cmd,const char*uuid,const char*json)
                          resultBlock:(resultBlock)resultBlock
 {
 //    int ret = IPCNetGetManualExpInfoR(deviceID.UTF8String, OnGetCmdResult);
-//    CLog(@"获取手动曝光，ret = %d",ret);
+//    TLog(@"获取手动曝光，ret = %d",ret);
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       resultBlock(ret);
 //    });
@@ -1030,7 +1030,7 @@ void OnDeleteRemoteFileCmdResult(int cmd,const char*uuid,const char*json)
                          resultBlock:(resultBlock)resultBlock
 {
 //    int ret = IPCNetSetManualExpInfoR(deviceID.UTF8String, json.UTF8String, OnGetCmdResult);
-//    CLog(@"设置手动曝光，ret = %d",ret);
+//    TLog(@"设置手动曝光，ret = %d",ret);
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       resultBlock(ret);
 //    });
@@ -1043,7 +1043,7 @@ void OnDeleteRemoteFileCmdResult(int cmd,const char*uuid,const char*json)
                          resultBlock:(resultBlock)resultBlock
 {
 //    int ret = IPCNetGetAutoExpInfoR(deviceID.UTF8String, OnGetCmdResult);
-//    CLog(@" 获取自动曝光，ret = %d",ret);
+//    TLog(@" 获取自动曝光，ret = %d",ret);
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       resultBlock(ret);
 //    });
@@ -1058,7 +1058,7 @@ void OnDeleteRemoteFileCmdResult(int cmd,const char*uuid,const char*json)
                          resultBlock:(resultBlock)resultBlock
 {
 //    int ret = IPCNetSetAutoExpInfoR(deviceID.UTF8String, json.UTF8String, OnGetCmdResult);
-//    CLog(@"设设置自动曝光，ret = %d",ret);
+//    TLog(@"设设置自动曝光，ret = %d",ret);
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       resultBlock(ret);
 //    });
@@ -1071,7 +1071,7 @@ void OnDeleteRemoteFileCmdResult(int cmd,const char*uuid,const char*json)
                         resultBlock:(resultBlock)resultBlock
 {
 //    int ret = IPCNetGetWiFiAPInfoR(deviceID.UTF8String, OnGetCmdResult);
-//    CLog(@"获取设备热点，ret = %d",ret);
+//    TLog(@"获取设备热点，ret = %d",ret);
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       resultBlock(ret);
 //    });
@@ -1086,7 +1086,7 @@ void OnDeleteRemoteFileCmdResult(int cmd,const char*uuid,const char*json)
                         resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetSetWiFiAPInfoR(deviceID.UTF8String, json.UTF8String, OnSetWiFiAPInfoCmdResult);
-    CLog(@"设设置设备热点，ret = %d",ret);
+    TLog(@"设设置设备热点，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -1096,14 +1096,14 @@ void OnDeleteRemoteFileCmdResult(int cmd,const char*uuid,const char*json)
 
 void OnSetWiFiAPInfoCmdResult(int cmd,const char*uuid,const char*json)
 {
-    NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
-    CLog(@"dict = %@",dict);
+    NSDictionary *dict = [TTCommon cString_changto_ocStringWith:json];
+    TLog(@"dict = %@",dict);
     int ret = [dict[@"ret"] intValue];
     if (ret >= 0) {
         
     }
     else {
-        CLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
+        TLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
     }
 }
 
@@ -1116,7 +1116,7 @@ void OnSetWiFiAPInfoCmdResult(int cmd,const char*uuid,const char*json)
                          resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetGetAlarmR(deviceID.UTF8String, OnGetDeviceAlarmCmdResult);
-    CLog(@"获取设备报警信息，ret = %d",ret);
+    TLog(@"获取设备报警信息，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -1126,8 +1126,8 @@ void OnSetWiFiAPInfoCmdResult(int cmd,const char*uuid,const char*json)
 
 void OnGetDeviceAlarmCmdResult(int cmd,const char*uuid,const char*json)
 {
-    NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
-    CLog(@"dict = %@",dict);
+    NSDictionary *dict = [TTCommon cString_changto_ocStringWith:json];
+    TLog(@"dict = %@",dict);
     int ret = [dict[@"ret"] intValue];
     if (ret >= 0) {
         JSONObject jsdata(json);//解析json
@@ -1138,7 +1138,7 @@ void OnGetDeviceAlarmCmdResult(int cmd,const char*uuid,const char*json)
         });
     }
     else {
-        CLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
+        TLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
     }
 }
 
@@ -1151,7 +1151,7 @@ void OnGetDeviceAlarmCmdResult(int cmd,const char*uuid,const char*json)
                          resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetSetAlarmR(deviceID.UTF8String, json.UTF8String, OnGetCmdResult);
-    CLog(@"设置设备报警，ret = %d",ret);
+    TLog(@"设置设备报警，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -1166,7 +1166,7 @@ void OnGetDeviceAlarmCmdResult(int cmd,const char*uuid,const char*json)
                           resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetGetResolutionR(deviceID.UTF8String, OnGetQualityLevelCmdResult);
-    CLog(@"获取清晰度，ret = %d",ret);
+    TLog(@"获取清晰度，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        resultBlock(ret);
     });
@@ -1174,8 +1174,8 @@ void OnGetDeviceAlarmCmdResult(int cmd,const char*uuid,const char*json)
 
 void OnGetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
 {
-    NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
-    CLog(@"dict = %@",dict);
+    NSDictionary *dict = [TTCommon cString_changto_ocStringWith:json];
+    TLog(@"dict = %@",dict);
     int ret = [dict[@"ret"] intValue];
     if (ret >= 0) {
 //        dispatch_async(dispatch_get_main_queue(), ^{
@@ -1183,7 +1183,7 @@ void OnGetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
 //        });
     }
     else {
-        CLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
+        TLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
     }
 }
 
@@ -1196,7 +1196,7 @@ void OnGetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
                           resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetSetResolutionR(deviceID.UTF8String, level, OnSetQualityLevelCmdResult);
-    CLog(@"设置清晰度，ret = %d",ret);
+    TLog(@"设置清晰度，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -1206,8 +1206,8 @@ void OnGetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
 
 void OnSetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
 {
-    NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
-    CLog(@"dict = %@",dict);
+    NSDictionary *dict = [TTCommon cString_changto_ocStringWith:json];
+    TLog(@"dict = %@",dict);
     int ret = [dict[@"ret"] intValue];
     if (ret >= 0) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -1215,7 +1215,7 @@ void OnSetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
         });
     }
     else {
-        CLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
+        TLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
     }
 }
 
@@ -1226,7 +1226,7 @@ void OnSetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
 //                        resultBlock:(resultBlock)resultBlock
 //{
 //    int ret = IPCNetGetHueR(deviceID.UTF8String, OnGetSaturationLevelCmdResult);
-//    CLog(@"获取色度，ret = %d",ret);
+//    TLog(@"获取色度，ret = %d",ret);
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       if (ret >= 0) {
 //           resultBlock(ret);
@@ -1243,7 +1243,7 @@ void OnSetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
 //                        resultBlock:(resultBlock)resultBlock
 //{
 //    int ret = IPCNetSetHueR(deviceID.UTF8String, level, OnSetSaturationLevelCmdResult);
-//    CLog(@"设置色度，ret = %d",ret);
+//    TLog(@"设置色度，ret = %d",ret);
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       if (ret >= 0) {
 //           resultBlock(ret);
@@ -1258,7 +1258,7 @@ void OnSetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
                              resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetGetBrightnessR(deviceID.UTF8String, OnGetSaturationLevelCmdResult);
-    CLog(@"获取亮度，ret = %d",ret);
+    TLog(@"获取亮度，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -1275,7 +1275,7 @@ void OnSetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
                              resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetSetBrightnessR(deviceID.UTF8String, level, OnSetSaturationLevelCmdResult);
-    CLog(@"设置亮度，ret = %d",ret);
+    TLog(@"设置亮度，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -1290,7 +1290,7 @@ void OnSetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
                               resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetGetContrastR(deviceID.UTF8String, OnGetSaturationLevelCmdResult);
-    CLog(@"获取对比度，ret = %d",ret);
+    TLog(@"获取对比度，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -1307,7 +1307,7 @@ void OnSetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
                                resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetSetContrastR(deviceID.UTF8String, level, OnSetSaturationLevelCmdResult);
-    CLog(@"设置对比度，ret = %d",ret);
+    TLog(@"设置对比度，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -1322,7 +1322,7 @@ void OnSetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
                              resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetGetSaturationR(deviceID.UTF8String, OnGetSaturationLevelCmdResult);
-    CLog(@"获取饱和度，ret = %d",ret);
+    TLog(@"获取饱和度，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        resultBlock(ret);
     });
@@ -1337,7 +1337,7 @@ void OnSetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
                              resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetSetSaturationR(deviceID.UTF8String, level, OnSetSaturationLevelCmdResult);
-    CLog(@"设置饱和度，ret = %d",ret);
+    TLog(@"设置饱和度，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -1352,7 +1352,7 @@ void OnSetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
                            resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetGetAcutanceR(deviceID.UTF8String, OnGetSaturationLevelCmdResult);
-    CLog(@"获取锐度，ret = %d",ret);
+    TLog(@"获取锐度，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -1369,7 +1369,7 @@ void OnSetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
                            resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetSetAcutanceR(deviceID.UTF8String, level, OnSetSaturationLevelCmdResult);
-    CLog(@"设置锐度，ret = %d",ret);
+    TLog(@"设置锐度，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -1384,7 +1384,7 @@ void OnSetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
                      resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetSetCameraColorSettingDefault(deviceID.UTF8String);
-    CLog(@"恢复图像默认设置（图像异常时可用），ret = %d",ret);
+    TLog(@"恢复图像默认设置（图像异常时可用），ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -1399,7 +1399,7 @@ void OnSetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
                      resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetGetIRModeR(deviceID.UTF8String, OnGetIRModeCmdResult);
-    CLog(@"获取色彩/黑白模式，ret = %d",ret);
+    TLog(@"获取色彩/黑白模式，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -1410,8 +1410,8 @@ void OnSetQualityLevelCmdResult(int cmd,const char*uuid,const char*json)
 void OnGetIRModeCmdResult(int cmd,const char*uuid,const char*json)
 {
     Log("%s cmd:%d uuid:%s json:%s\n",__func__,cmd, uuid, json);
-    NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
-    CLog(@"dict = %@",dict);
+    NSDictionary *dict = [TTCommon cString_changto_ocStringWith:json];
+    TLog(@"dict = %@",dict);
     int ret = [dict[@"ret"] intValue];
     if (ret >= 0) {
         JSONObject jsdata(json);//解析json
@@ -1422,7 +1422,7 @@ void OnGetIRModeCmdResult(int cmd,const char*uuid,const char*json)
         });
     }
     else {
-        CLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
+        TLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
     }
 }
 
@@ -1438,7 +1438,7 @@ void OnGetIRModeCmdResult(int cmd,const char*uuid,const char*json)
     picColorCfg.Type = type;
     picColorCfg.toJSONString(str);
     int ret = IPCNetSetIRModeR(deviceID.UTF8String, str.c_str(), OnSetIRModeCmdResult);
-    CLog(@"获取色彩/黑白模式，ret = %d",ret);
+    TLog(@"获取色彩/黑白模式，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -1448,8 +1448,8 @@ void OnGetIRModeCmdResult(int cmd,const char*uuid,const char*json)
 
 void OnSetIRModeCmdResult(int cmd,const char*uuid,const char*json)
 {
-   NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
-   CLog(@"dict = %@",dict);
+   NSDictionary *dict = [TTCommon cString_changto_ocStringWith:json];
+   TLog(@"dict = %@",dict);
    int ret = [dict[@"ret"] intValue];
    if (ret >= 0) {
        dispatch_async(dispatch_get_main_queue(), ^{
@@ -1457,7 +1457,7 @@ void OnSetIRModeCmdResult(int cmd,const char*uuid,const char*json)
        });
    }
    else {
-       CLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
+       TLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
    }
 }
 
@@ -1468,7 +1468,7 @@ void OnSetIRModeCmdResult(int cmd,const char*uuid,const char*json)
 //                  resultBlock:(resultBlock)resultBlock
 //{
 //    int ret = IPCNetGetFlipMirrorR(deviceID.UTF8String, OnSetSaturationLevelCmdResult);
-//    CLog(@"画面翻转，ret = %d",ret);
+//    TLog(@"画面翻转，ret = %d",ret);
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //       if (ret >= 0) {
 //           resultBlock(ret);
@@ -1487,7 +1487,7 @@ void OnSetIRModeCmdResult(int cmd,const char*uuid,const char*json)
                   resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetSetFlipMirrorR(deviceID.UTF8String, flip, mirror, OnSetFilpCmdResult);
-    CLog(@"画面翻转，ret = %d",ret);
+    TLog(@"画面翻转，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -1497,8 +1497,8 @@ void OnSetIRModeCmdResult(int cmd,const char*uuid,const char*json)
 
 void OnSetFilpCmdResult(int cmd,const char*uuid,const char*json)
 {
-    NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
-    CLog(@"dict = %@",dict);
+    NSDictionary *dict = [TTCommon cString_changto_ocStringWith:json];
+    TLog(@"dict = %@",dict);
     int ret = [dict[@"ret"] intValue];
     if (ret >= 0) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -1506,27 +1506,27 @@ void OnSetFilpCmdResult(int cmd,const char*uuid,const char*json)
         });
     }
     else {
-        CLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
+        TLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
     }
 }
 
 void OnGetSaturationLevelCmdResult(int cmd,const char*uuid,const char*json)
 {
-    NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
-    CLog(@"dict = %@",dict);
+    NSDictionary *dict = [TTCommon cString_changto_ocStringWith:json];
+    TLog(@"dict = %@",dict);
     int ret = [dict[@"ret"] intValue];
     if (ret >= 0) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"OnGetSaturationLevelCmdResult_noti_key" object:dict[@"CamCfg.info"]];
     }
     else {
-        CLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
+        TLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
     }
 }
 
 void OnSetSaturationLevelCmdResult(int cmd,const char*uuid,const char*json)
 {
-    NSDictionary *dict = [KHJUtility cString_changto_ocStringWith:json];
-    CLog(@"dict = %@",dict);
+    NSDictionary *dict = [TTCommon cString_changto_ocStringWith:json];
+    TLog(@"dict = %@",dict);
     int ret = [dict[@"ret"] intValue];
     if (ret >= 0) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -1534,7 +1534,7 @@ void OnSetSaturationLevelCmdResult(int cmd,const char*uuid,const char*json)
         });
     }
     else {
-        CLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
+        TLog(@"指令 = %d，执行失败 ret = %d",cmd,ret);
     }
 }
 
@@ -1545,7 +1545,7 @@ void OnSetSaturationLevelCmdResult(int cmd,const char*uuid,const char*json)
                         resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetGetTimeR(deviceID.UTF8String, OnGetCmdResult);
-    CLog(@"获取设备时间，ret = %d",ret);
+    TLog(@"获取设备时间，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);
@@ -1562,7 +1562,7 @@ void OnSetSaturationLevelCmdResult(int cmd,const char*uuid,const char*json)
                         resultBlock:(resultBlock)resultBlock
 {
     int ret = IPCNetSetTimeR(deviceID.UTF8String, time, OnGetCmdResult);
-    CLog(@"设置设备时间，ret = %d",ret);
+    TLog(@"设置设备时间，ret = %d",ret);
     dispatch_async(dispatch_get_main_queue(), ^{
        if (ret >= 0) {
            resultBlock(ret);

@@ -30,20 +30,20 @@
 - (IBAction)sbtn:(UISwitch *)sender
 {
     if (sender.tag == 10) {
-        CLog(@"红外灯");
+        TLog(@"红外灯");
     }
     else if (sender.tag == 20) {
-        CLog(@"工作指示灯");
+        TLog(@"工作指示灯");
     }
 }
 
 - (IBAction)btn:(UIButton *)sender
 {
     if (sender.tag == 10) {
-        CLog(@"确定");
+        TLog(@"确定");
     }
     else if (sender.tag == 20) {
-        CLog(@"取消");
+        TLog(@"取消");
     }
 }
 

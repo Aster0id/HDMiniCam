@@ -7,7 +7,7 @@
 //
 
 #import "KHJAlarmConfigVC.h"
-#import "KHJPicker.h"
+#import "TTHourMinSeconsPicker.h"
 #import "KHJDeviceManager.h"
 #import "JSONStructProtocal.h"
 
@@ -27,6 +27,7 @@ extern IPCNETMoveAlarmCfg_st moveAlarmCfg;
     __weak IBOutlet UILabel *startTimeLab;
     __weak IBOutlet UILabel *endTimeLab;
 }
+
 @end
 
 @implementation KHJAlarmConfigVC
@@ -56,42 +57,42 @@ extern IPCNETMoveAlarmCfg_st moveAlarmCfg;
 - (IBAction)moveAction:(UIButton *)sender
 {
     if (sender.tag == 10) {
-        CLog(@"移动侦测灵敏度");
+        TLog(@"移动侦测灵敏度");
         [self moveAlarmType];
     }
     else if (sender.tag == 20) {
-        CLog(@"开始时间");
-        KHJPicker *pick = [[KHJPicker alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-250+44, SCREEN_WIDTH, 324)];
-        pick.tKind = 0;
+        TLog(@"开始时间");
+        TTHourMinSeconsPicker *pick = [[TTHourMinSeconsPicker alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-250+44, SCREEN_WIDTH, 324)];
+        pick.pickerType = 0;
         [pick initSubViews:nil];
         pick.confirmBlock = ^(NSString *strings) {
             self->startTimeLab.text = strings;
         };
     }
     else if (sender.tag == 30) {
-        CLog(@"结束时间");
-        KHJPicker *pick = [[KHJPicker alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-250+44, SCREEN_WIDTH, 324)];
-        pick.tKind = 0;
+        TLog(@"结束时间");
+        TTHourMinSeconsPicker *pick = [[TTHourMinSeconsPicker alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-250+44, SCREEN_WIDTH, 324)];
+        pick.pickerType = 0;
         [pick initSubViews:nil];
         pick.confirmBlock = ^(NSString *strings) {
             self->endTimeLab.text = strings;
         };
     }
     else if (sender.tag == 40) {
-        CLog(@"取消");
+        TLog(@"取消");
     }
     else if (sender.tag == 50) {
-        CLog(@"取消");
+        TLog(@"取消");
     }
 }
 
 - (IBAction)alarmBtn:(UISwitch *)sender
 {
     if (sender.tag == 10) {
-        CLog(@"是否打开移动侦测");
+        TLog(@"是否打开移动侦测");
     }
     else if (sender.tag == 20) {
-        CLog(@"是否设置报警时间");
+        TLog(@"是否设置报警时间");
         if (sender.on) {
             alarmTimeCH.constant = 88;
             alarmTimeView.hidden = NO;
@@ -102,10 +103,10 @@ extern IPCNETMoveAlarmCfg_st moveAlarmCfg;
         }
     }
     else if (sender.tag == 30) {
-        CLog(@"是否打开报警抓拍");
+        TLog(@"是否打开报警抓拍");
     }
     else if (sender.tag == 40) {
-        CLog(@"是否打开报警录像");
+        TLog(@"是否打开报警录像");
     }
 }
 
@@ -115,7 +116,7 @@ extern IPCNETMoveAlarmCfg_st moveAlarmCfg;
     UIAlertController *alertview = [UIAlertController alertControllerWithTitle:nil
                                                                        message:nil
                                                                 preferredStyle:UIAlertControllerStyleAlert];
-    WeakSelf
+    TTWeakSelf
     UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"high1_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf setAlarmTypeWith:@"1"];
     }];

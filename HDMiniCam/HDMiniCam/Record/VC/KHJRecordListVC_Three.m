@@ -2,7 +2,7 @@
 //  KHJRecordListVC_Three.m
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/3/4.
+//  Created by kevin on 2020/3/4.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
@@ -50,14 +50,14 @@
 
 - (void)customizeDataSource
 {
-    WeakSelf
+    TTWeakSelf
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         NSArray *array = [NSArray array];
         if (self.currentIndex == 0) {
-            array = [[[KHJHelpCameraData sharedModel] getmp4VideoArray_with_deviceID:self.info.deviceID] copy];
+            array = [[[TTFileManager sharedModel] get_live_record_VideoArray_with_deviceID:self.info.deviceID] copy];
         }
         else if (self.currentIndex == 1) {
-            array = [[[KHJHelpCameraData sharedModel] getmp4_rebackPlay_VideoArray_with_deviceID:self.info.deviceID] copy];
+            array = [[[TTFileManager sharedModel] get_reback_record_videoArray_with_deviceID:self.info.deviceID] copy];
         }
         for (int i = 0; i < array.count; i++) {
             NSString *videoUrl = array[i];
@@ -76,7 +76,7 @@
     rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     rightBtn.frame = CGRectMake(0,0,44,44);
     [rightBtn setTitle:KHJLocalizedString(@"edit_", nil) forState:UIControlStateNormal];
-    [rightBtn setTitleColor:KHJUtility.appMainColor forState:UIControlStateNormal];
+    [rightBtn setTitleColor:TTCommon.appMainColor forState:UIControlStateNormal];
     [rightBtn addTarget:self action:@selector(editAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem  = rightItem;
@@ -132,10 +132,10 @@
     
     NSString *path = @"";
     if (self.currentIndex == 0) {
-        path = [[KHJHelpCameraData sharedModel] getTakeVideoDocPath_with_deviceID:self.info.deviceID];
+        path = [[TTFileManager sharedModel] get_live_recordVideo_DocPath_with_deviceID:self.info.deviceID];
     }
     else if (self.currentIndex == 1) {
-        path = [[KHJHelpCameraData sharedModel] getTakeVideo_rebackPlay_DocPath_with_deviceID:self.info.deviceID];
+        path = [[TTFileManager sharedModel] get_reback_recordVideo_DocPath_with_deviceID:self.info.deviceID];
     }
     NSString *dir   = KHJString(@"%@/%@",path,name);
     cell.videoImgView.image = [self getScreenShotImageFromVideoPath:dir];
@@ -208,10 +208,10 @@
     NSString *name = self.videoList[row];
     NSString *path = @"";
     if (self.currentIndex == 0) {
-        path = [[KHJHelpCameraData sharedModel] getTakeVideoDocPath_with_deviceID:self.info.deviceID];
+        path = [[TTFileManager sharedModel] get_live_recordVideo_DocPath_with_deviceID:self.info.deviceID];
     }
     else if (self.currentIndex == 1) {
-        path = [[KHJHelpCameraData sharedModel] getTakeVideo_rebackPlay_DocPath_with_deviceID:self.info.deviceID];
+        path = [[TTFileManager sharedModel] get_reback_recordVideo_DocPath_with_deviceID:self.info.deviceID];
     }
     AVPlayerViewController * av = [[AVPlayerViewController alloc] init];
     av.player = [AVPlayer playerWithURL:[NSURL fileURLWithPath:KHJString(@"%@/%@",path,name)]];
@@ -224,17 +224,17 @@
         return;
     }
     isDeleting = YES;
-    [[KHJHub shareHub] showText:@"dltFailing_" addToView:[[UIApplication sharedApplication] keyWindow]];
+    [[TTHub shareHub] showText:@"dltFailing_" addToView:[[UIApplication sharedApplication] keyWindow]];
     NSString *name = self.videoList[row];
     NSString *path = @"";
     if (self.currentIndex == 0) {
-        path = [[KHJHelpCameraData sharedModel] getTakeVideoDocPath_with_deviceID:self.info.deviceID];
+        path = [[TTFileManager sharedModel] get_live_recordVideo_DocPath_with_deviceID:self.info.deviceID];
     }
     else if (self.currentIndex == 1) {
-        path = [[KHJHelpCameraData sharedModel] getTakeVideo_rebackPlay_DocPath_with_deviceID:self.info.deviceID];
+        path = [[TTFileManager sharedModel] get_reback_recordVideo_DocPath_with_deviceID:self.info.deviceID];
     }
     NSString *dir = KHJString(@"%@/%@",path,name);
-    BOOL success = [[KHJHelpCameraData sharedModel] DeleateFileWithPath:dir];
+    BOOL success = [[TTFileManager sharedModel] delete_videoFile_With_path:dir];
     
     if (success) {
         [self.videoList removeObjectAtIndex:row];
@@ -243,16 +243,16 @@
         NSInteger tag = 0;
         for (KHJCollectionViewCell_three *cell in collectionView.visibleCells) {
             cell.tag = tag + FLAG_TAG;
-            CLog(@"cell.tag = %ld",(long)tag);
+            TLog(@"cell.tag = %ld",(long)tag);
             tag++;
         }
         isDeleting = NO;
-        [KHJHub shareHub].hud.hidden = YES;
+        [TTHub shareHub].hud.hidden = YES;
     }
     else {
         [self.view makeToast:KHJLocalizedString(@"dltFail_", nil)];
         isDeleting = NO;
-        [KHJHub shareHub].hud.hidden = YES;
+        [TTHub shareHub].hud.hidden = YES;
     }
 }
 

@@ -2,7 +2,7 @@
 //  KHJVideoPlayerBaseVC.m
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/2/26.
+//  Created by kevin on 2020/2/26.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
@@ -15,7 +15,7 @@
 H26xHwDecoder *h264Decode;
 
 // 解码类型
-KHJDecorderType currentDecorderType;
+TTDecordeType currentDecorderType;
 // 多屏时，保存已添加的设备id，用于区分多屏解码器
 NSMutableArray *mutliDeviceIDList;
 H26xHwDecoder *h264Decode1;
@@ -23,11 +23,11 @@ H26xHwDecoder *h264Decode2;
 H26xHwDecoder *h264Decode3;
 H26xHwDecoder *h264Decode4;
 
-KHJLiveRecordType liveRecordType;       // 直播是否录屏
-NSString *liveRecordVideoPath;          // 直播录屏保存路径
-KHJRebackPlayRecordType rebackPlayRecordType;   // 是否回放录屏
-NSString *rebackPlayRecordVideoPath;            // 回放录屏保存路径
-RecSess_t gVideoRecordSession = NULL;   // 直播录屏会话
+TTRecordLiveStatus liveRecordType;          // 直播是否录屏
+NSString *liveRecordVideoPath;              // 直播录屏保存路径
+TTRecordBackStatus rebackPlayRecordType;    // 是否回放录屏
+NSString *rebackPlayRecordVideoPath;        // 回放录屏保存路径
+RecSess_t gVideoRecordSession = NULL;       // 直播录屏会话
 dispatch_queue_t recordQueue = dispatch_queue_create("recordQueue", DISPATCH_QUEUE_SERIAL);
 
 @interface KHJVideoPlayerBaseVC ()<H26xHwDecoderDelegate>
@@ -68,7 +68,7 @@ XBAudioUnitRecorder *audioRecorder;
 
 - (void)getImageWith:(UIImage * _Nullable)image imageSize:(CGSize)imageSize deviceID:(NSString *)deviceID
 {
-    CLog(@"KHJVideoPlayerBaseVC.getImageWith");
+    TLog(@"KHJVideoPlayerBaseVC.getImageWith");
 }
 
 - (UIButton *)leftBtn
@@ -134,7 +134,7 @@ void onVideoData(const char* uuid,int type,unsigned char*data,int len,long times
 {
     // 子线程回调
     // NSLog(@"onVideoData uuid:%s type:%d len:%d timestamp:%ld\n\n",uuid,type,len,timestamp);
-    if (currentDecorderType == KHJDecorderType_mutli) {
+    if (currentDecorderType == TTDecorde_mutli) {
         // 多屏解码器
         NSInteger index = [mutliDeviceIDList indexOfObject:KHJString(@"%s",uuid)];
         switch (index) {
@@ -166,19 +166,19 @@ void onVideoData(const char* uuid,int type,unsigned char*data,int len,long times
                 break;
         }
     }
-    else if (currentDecorderType == KHJDecorderType_reback) {
+    else if (currentDecorderType == TTDecorde_reback) {
         // 回放解码器
         
     }
-    else if (currentDecorderType == KHJDecorderType_live) {
+    else if (currentDecorderType == TTDecorde_live) {
         // 直播解码器
         [h264Decode decodeH26xVideoData:data videoSize:len frameType:type timestamp:timestamp];
-        if (liveRecordType == KHJLiveRecordType_Recording) {
-            // CLog(@"正在直播录屏 path = %@",liveRecordVideoPath);
+        if (liveRecordType == TTRecordLive_Recording) {
+            // TLog(@"正在直播录屏 path = %@",liveRecordVideoPath);
             dispatch_sync(recordQueue, ^{
                 if (gVideoRecordSession) {
                     int ret = IPCNetPutLocalRecordVideoFrame(gVideoRecordSession, type, (const char*)data, len, timestamp);
-                    if (ret == 0) CLog(@"输入 Video 数据");
+                    if (ret == 0) TLog(@"输入 Video 数据");
                 }
                 else {
                     if (type >= IPCNET_H264E_NALU_BSLICE && type < IPCNET_H264E_NALU_BUTT) {
@@ -192,15 +192,15 @@ void onVideoData(const char* uuid,int type,unsigned char*data,int len,long times
                 }
             });
         }
-        else if (liveRecordType == KHJLiveRecordType_stopRecoding) {
-            // CLog(@"停止直播录屏 path = %@",liveRecordVideoPath);
-            liveRecordType = KHJLiveRecordType_Normal;
+        else if (liveRecordType == TTRecordLive_stopRecoding) {
+            // TLog(@"停止直播录屏 path = %@",liveRecordVideoPath);
+            liveRecordType = TTRecordLive_Normal;
             IPCNetFinishLocalRecord(gVideoRecordSession);
             gVideoRecordSession = NULL;
         }
     }
     else {
-        CLog(@"当前不解码，为什么还有打印？？？？");
+        TLog(@"当前不解码，为什么还有打印？？？？");
     }
 }
 
@@ -215,21 +215,21 @@ void onAudioData(const char* uuid,int type,unsigned char*data,int len,long times
     // 子线程回调
     NSLog(@" \n onAudioData 设备id = %s \n type = %d  \n length = %d  \n timestamp = %ld",uuid,type,len,timestamp);
     [audioPlayer playThisAudioData:(uint8_t *)data audioSize:len frameType:type timestamp:timestamp];
-    if (liveRecordType == KHJLiveRecordType_Recording) {
+    if (liveRecordType == TTRecordLive_Recording) {
         dispatch_sync(recordQueue, ^{
             if (gVideoRecordSession) {
                 int ret = IPCNetPutLocalRecordAudioFrame(gVideoRecordSession, type, (const char *)data, len, timestamp);
                 if (ret == 0) {
-                    CLog(@"输入 Audio 数据");
+                    TLog(@"输入 Audio 数据");
                 }
                 else {
-                    CLog(@"输入 Audio 数据 失败 ret = %d",ret);
+                    TLog(@"输入 Audio 数据 失败 ret = %d",ret);
                 }
             }
         });
     }
-    else if (liveRecordType == KHJLiveRecordType_stopRecoding) {
-        liveRecordType = KHJLiveRecordType_Normal;
+    else if (liveRecordType == TTRecordLive_stopRecoding) {
+        liveRecordType = TTRecordLive_Normal;
         IPCNetFinishLocalRecord(gVideoRecordSession);
         gVideoRecordSession = NULL;
     }
@@ -246,19 +246,19 @@ void onJSONString(const char* uuid,int msg_type,const char* jsonstr)
     if (msg_type == 4003) {
         // 设备连接
         NSDictionary *body = [NSDictionary dictionary];
-        body = [KHJUtility cString_changto_ocStringWith:jsonstr];
-        CLog(@"登录设备，连接设备 body = %@",body);
+        body = [TTCommon cString_changto_ocStringWith:jsonstr];
+        TLog(@"登录设备，连接设备 body = %@",body);
         
         if ([body.allKeys containsObject:@"Login.info"]) {
 #pragma mark - 登录回调
 //            NSString *Tick = body[@"Login.info"][@"Tick"];
-//            CLog(@"Tick = %@", Tick);
+//            TLog(@"Tick = %@", Tick);
         }
         else if ([body.allKeys containsObject:@"dev_info"]) {
 #pragma mark - 设备信息回调
             NSString *deviceName    = body[@"dev_info"][@"name"];
             NSString *deviceID      = body[@"dev_info"][@"p2p_uuid"];
-            CLog(@" deviceID = %@, deviceName = %@",deviceID, deviceName);
+            TLog(@" deviceID = %@, deviceName = %@",deviceID, deviceName);
             NSMutableDictionary *body2 = [NSMutableDictionary dictionary];
             [body2 setValue:deviceID forKey:@"deviceID"];
             [body2 setValue:deviceName forKey:@"deviceName"];
@@ -275,7 +275,7 @@ void onJSONString(const char* uuid,int msg_type,const char* jsonstr)
 - (void)setInitMutliDecorder:(BOOL)initMutliDecorder
 {
     if (initMutliDecorder) {
-        currentDecorderType = KHJDecorderType_mutli;
+        currentDecorderType = TTDecorde_mutli;
         h264Decode1 = [[H26xHwDecoder alloc] init];
         h264Decode2 = [[H26xHwDecoder alloc] init];
         h264Decode3 = [[H26xHwDecoder alloc] init];
@@ -286,7 +286,7 @@ void onJSONString(const char* uuid,int msg_type,const char* jsonstr)
         h264Decode4.delegate = self;
     }
     else {
-        currentDecorderType = KHJDecorderType_none;
+        currentDecorderType = TTDecorder_none;
         [h264Decode1 releaseH26xHwDecoder];
         [h264Decode2 releaseH26xHwDecoder];
         [h264Decode3 releaseH26xHwDecoder];

@@ -2,7 +2,7 @@
 //  KHJPictureCell.h
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/1/15.
+//  Created by kevin on 2020/1/15.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 

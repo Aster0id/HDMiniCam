@@ -2,7 +2,7 @@
 //  KHJDataBase.m
 //  HDMiniCam
 //
-//  Created by khj888 on 2020/2/18.
+//  Created by kevin on 2020/2/18.
 //  Copyright © 2020 王涛. All rights reserved.
 //
 
@@ -29,7 +29,7 @@ static KHJDataBase *_db = nil;
         NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
         // 文件路径
         NSString *filePath = [documentsPath stringByAppendingPathComponent:@"HDMiniCam.sqlite"];
-        CLog(@"创建数据库");
+        TLog(@"创建数据库");
         _queue = [FMDatabaseQueue databaseQueueWithPath:filePath];
     }
     return _queue;
@@ -158,7 +158,7 @@ static KHJDataBase *_db = nil;
     for (int i = 0; i < arr.count; i++) {
         KHJDeviceInfo *info = arr[i];
         [self deleteDeviceInfo_with_deviceInfo:info resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
-            CLog(@"deviecID = %@，已删除",info.deviceID);
+            TLog(@"deviecID = %@，已删除",info.deviceID);
         }];
     }
 }
