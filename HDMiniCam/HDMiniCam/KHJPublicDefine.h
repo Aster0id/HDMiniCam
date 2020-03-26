@@ -10,18 +10,13 @@
 #define KHJPublicDefine_h
 
 // 添加设备通知
-#define noti_addDevice_KEY @"noti_addDevice_KEY"
+#define TT_addDevice_noti_KEY @"TT_addDevice_noti_KEY"
 // 设备状态更新通知
-#define noti_onStatus_KEY @"noti_onStatus_KEY"
-// 视频数据通知
-#define noti_onVideoData_KEY @"noti_onVideoData_KEY"
-// 音频数据通知
-#define noti_onAudioData_KEY @"noti_onAudioData_KEY"
+#define TT_onStatus_noti_KEY @"TT_onStatus_noti_KEY"
 // 接口返回的json数据通知
 #define noti_onJSONString_KEY @"noti_onJSONString_KEY"
 // 指令回调
 #define noti_1073_KEY @"noti_1073_KEY"  // 获取录像配置信息
-#define noti_1075_KEY @"noti_1075_KEY"  // 获取设备SD卡，远程信息，文件个数、总空间、已用空间
 #define noti_timeLineInfo_1075_KEY @"noti_timeLineInfo_1075_KEY"  // 获取设备时间轴信息
 #define noti_1077_KEY @"noti_1077_KEY"  //
 #define noti_1497_KEY @"noti_1497_KEY"  // 获取饱和度、锐度、亮度等等

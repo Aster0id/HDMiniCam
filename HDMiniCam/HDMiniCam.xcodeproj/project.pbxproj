@@ -35,7 +35,7 @@
 		93C33B7D23CE218200B44E5F /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C33B7B23CE218200B44E5F /* Toast+UIView.m */; };
 		93C33B8023CE236100B44E5F /* TTPlayVoiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C33B7F23CE236100B44E5F /* TTPlayVoiceManager.m */; };
 		93E8A98C23E07B4B00F5DB8F /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E8A98B23E07B4B00F5DB8F /* NetworkExtension.framework */; };
-		93FC9F7824057033000B9B51 /* H26xHwDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FC9F7524057033000B9B51 /* H26xHwDecoder.m */; };
+		93FC9F7824057033000B9B51 /* H264_H265_VideoDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FC9F7524057033000B9B51 /* H264_H265_VideoDecoder.m */; };
 		AB20E60823CEBEE500D2861C /* KHJDeviceListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB20E60623CEBEE500D2861C /* KHJDeviceListVC.m */; };
 		AB20E61423CEBF2900D2861C /* KHJRecordListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB20E61223CEBF2900D2861C /* KHJRecordListVC.m */; };
 		AB20E61523CEBF2900D2861C /* KHJRecordListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB20E61323CEBF2900D2861C /* KHJRecordListVC.xib */; };
@@ -103,13 +103,12 @@
 		AB4E8AEE242B6DE40023152B /* TTAlbumManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4E8AED242B6DE40023152B /* TTAlbumManager.m */; };
 		AB4EFA7323F6B40000D584E7 /* libIPCNetManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB4EFA7123F6B40000D584E7 /* libIPCNetManager.a */; };
 		AB4EFA7423F6B40000D584E7 /* libFBP2P.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB4EFA7223F6B40000D584E7 /* libFBP2P.a */; };
-		AB4EFA7E23F6D43600D584E7 /* KHJDeviceManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB4EFA7D23F6D43600D584E7 /* KHJDeviceManager.mm */; };
+		AB4EFA7E23F6D43600D584E7 /* TTFirmwareInterface_API.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB4EFA7D23F6D43600D584E7 /* TTFirmwareInterface_API.mm */; };
 		AB52C10D23F91FB200C921F1 /* screenShot.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AB52C10C23F91FB200C921F1 /* screenShot.mp3 */; };
 		AB52C11423FBEB0100C921F1 /* KHJAddDeviceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52C11223FBEB0100C921F1 /* KHJAddDeviceListCell.m */; };
 		AB52C11523FBEB0100C921F1 /* KHJAddDeviceListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB52C11323FBEB0100C921F1 /* KHJAddDeviceListCell.xib */; };
 		AB52C11823FC14A300C921F1 /* KHJDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52C11723FC14A300C921F1 /* KHJDataBase.m */; };
 		AB52C11B23FC153400C921F1 /* KHJDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52C11A23FC153400C921F1 /* KHJDeviceInfo.m */; };
-		AB52C11E23FD3B3200C921F1 /* KHJErrorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52C11D23FD3B3200C921F1 /* KHJErrorManager.m */; };
 		AB5462C9240CA66A00A096ED /* liblibgpac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5462C6240CA66900A096ED /* liblibgpac.a */; };
 		AB5462CA240CA66A00A096ED /* libfaac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5462C7240CA66A00A096ED /* libfaac.a */; };
 		AB5462CE240FA0A900A096ED /* KHJRecordListVC_Two.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5462CC240FA0A900A096ED /* KHJRecordListVC_Two.m */; };
@@ -122,9 +121,9 @@
 		AB5462E3240FB91000A096ED /* KHJCollectionViewCell_three.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5462E1240FB91000A096ED /* KHJCollectionViewCell_three.xib */; };
 		AB5462FA2416453900A096ED /* KHJMutilScreenVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5462F82416453900A096ED /* KHJMutilScreenVC.m */; };
 		AB5462FB2416453900A096ED /* KHJMutilScreenVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5462F92416453900A096ED /* KHJMutilScreenVC.xib */; };
-		AB54630324172A9C00A096ED /* XBAudioTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5462FD24172A9B00A096ED /* XBAudioTool.m */; };
-		AB54630424172A9C00A096ED /* XBAudioUnitRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5462FF24172A9B00A096ED /* XBAudioUnitRecorder.m */; };
-		AB54630524172A9C00A096ED /* XBAudioUnitPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB54630224172A9C00A096ED /* XBAudioUnitPlayer.m */; };
+		AB54630324172A9C00A096ED /* TTAudioTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5462FD24172A9B00A096ED /* TTAudioTool.m */; };
+		AB54630424172A9C00A096ED /* TTAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5462FF24172A9B00A096ED /* TTAudioRecorder.m */; };
+		AB54630524172A9C00A096ED /* TTAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB54630224172A9C00A096ED /* TTAudioPlayer.m */; };
 		AB5911DC23D0141A0060F05C /* KHJRecordListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5911DA23D0141A0060F05C /* KHJRecordListCell.m */; };
 		AB5911DD23D0141A0060F05C /* KHJRecordListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5911DB23D0141A0060F05C /* KHJRecordListCell.xib */; };
 		AB597B39240154D500F04F84 /* libIOTCAPIs_P2PTunnel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB597B35240154D400F04F84 /* libIOTCAPIs_P2PTunnel.a */; };
@@ -199,8 +198,8 @@
 		93E8A98A23E07B3700F5DB8F /* HDMiniCam.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HDMiniCam.entitlements; sourceTree = "<group>"; };
 		93E8A98B23E07B4B00F5DB8F /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		93FC9F7424057033000B9B51 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
-		93FC9F7524057033000B9B51 /* H26xHwDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = H26xHwDecoder.m; sourceTree = "<group>"; };
-		93FC9F7624057033000B9B51 /* H26xHwDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H26xHwDecoder.h; sourceTree = "<group>"; };
+		93FC9F7524057033000B9B51 /* H264_H265_VideoDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = H264_H265_VideoDecoder.m; sourceTree = "<group>"; };
+		93FC9F7624057033000B9B51 /* H264_H265_VideoDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H264_H265_VideoDecoder.h; sourceTree = "<group>"; };
 		93FC9F7724057033000B9B51 /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
 		9E40FDE3B8EEB6E3E1782DFE /* Pods_HDMiniCam.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HDMiniCam.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB20E60523CEBEE500D2861C /* KHJDeviceListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJDeviceListVC.h; sourceTree = "<group>"; };
@@ -339,8 +338,8 @@
 		AB4EFA6923F6B0BE00D584E7 /* sepcam_protocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sepcam_protocal.h; sourceTree = "<group>"; };
 		AB4EFA7123F6B40000D584E7 /* libIPCNetManager.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIPCNetManager.a; sourceTree = "<group>"; };
 		AB4EFA7223F6B40000D584E7 /* libFBP2P.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFBP2P.a; sourceTree = "<group>"; };
-		AB4EFA7C23F6D43600D584E7 /* KHJDeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHJDeviceManager.h; sourceTree = "<group>"; };
-		AB4EFA7D23F6D43600D584E7 /* KHJDeviceManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KHJDeviceManager.mm; sourceTree = "<group>"; };
+		AB4EFA7C23F6D43600D584E7 /* TTFirmwareInterface_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTFirmwareInterface_API.h; sourceTree = "<group>"; };
+		AB4EFA7D23F6D43600D584E7 /* TTFirmwareInterface_API.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TTFirmwareInterface_API.mm; sourceTree = "<group>"; };
 		AB52C10C23F91FB200C921F1 /* screenShot.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = screenShot.mp3; sourceTree = "<group>"; };
 		AB52C11123FBEB0100C921F1 /* KHJAddDeviceListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJAddDeviceListCell.h; sourceTree = "<group>"; };
 		AB52C11223FBEB0100C921F1 /* KHJAddDeviceListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJAddDeviceListCell.m; sourceTree = "<group>"; };
@@ -349,8 +348,6 @@
 		AB52C11723FC14A300C921F1 /* KHJDataBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJDataBase.m; sourceTree = "<group>"; };
 		AB52C11923FC153400C921F1 /* KHJDeviceInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJDeviceInfo.h; sourceTree = "<group>"; };
 		AB52C11A23FC153400C921F1 /* KHJDeviceInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJDeviceInfo.m; sourceTree = "<group>"; };
-		AB52C11C23FD3B3200C921F1 /* KHJErrorManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJErrorManager.h; sourceTree = "<group>"; };
-		AB52C11D23FD3B3200C921F1 /* KHJErrorManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJErrorManager.m; sourceTree = "<group>"; };
 		AB5462C6240CA66900A096ED /* liblibgpac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibgpac.a; sourceTree = "<group>"; };
 		AB5462C7240CA66A00A096ED /* libfaac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfaac.a; sourceTree = "<group>"; };
 		AB5462CB240FA0A900A096ED /* KHJRecordListVC_Two.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJRecordListVC_Two.h; sourceTree = "<group>"; };
@@ -368,13 +365,13 @@
 		AB5462F72416453900A096ED /* KHJMutilScreenVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJMutilScreenVC.h; sourceTree = "<group>"; };
 		AB5462F82416453900A096ED /* KHJMutilScreenVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJMutilScreenVC.m; sourceTree = "<group>"; };
 		AB5462F92416453900A096ED /* KHJMutilScreenVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJMutilScreenVC.xib; sourceTree = "<group>"; };
-		AB5462FC24172A9B00A096ED /* Header_audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Header_audio.h; sourceTree = "<group>"; };
-		AB5462FD24172A9B00A096ED /* XBAudioTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBAudioTool.m; sourceTree = "<group>"; };
-		AB5462FE24172A9B00A096ED /* XBAudioTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBAudioTool.h; sourceTree = "<group>"; };
-		AB5462FF24172A9B00A096ED /* XBAudioUnitRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBAudioUnitRecorder.m; sourceTree = "<group>"; };
-		AB54630024172A9B00A096ED /* XBAudioUnitRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBAudioUnitRecorder.h; sourceTree = "<group>"; };
-		AB54630124172A9C00A096ED /* XBAudioUnitPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBAudioUnitPlayer.h; sourceTree = "<group>"; };
-		AB54630224172A9C00A096ED /* XBAudioUnitPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBAudioUnitPlayer.m; sourceTree = "<group>"; };
+		AB5462FC24172A9B00A096ED /* TTAudioHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTAudioHeader.h; sourceTree = "<group>"; };
+		AB5462FD24172A9B00A096ED /* TTAudioTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTAudioTool.m; sourceTree = "<group>"; };
+		AB5462FE24172A9B00A096ED /* TTAudioTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTAudioTool.h; sourceTree = "<group>"; };
+		AB5462FF24172A9B00A096ED /* TTAudioRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTAudioRecorder.m; sourceTree = "<group>"; };
+		AB54630024172A9B00A096ED /* TTAudioRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTAudioRecorder.h; sourceTree = "<group>"; };
+		AB54630124172A9C00A096ED /* TTAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTAudioPlayer.h; sourceTree = "<group>"; };
+		AB54630224172A9C00A096ED /* TTAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTAudioPlayer.m; sourceTree = "<group>"; };
 		AB54630624172B8A00A096ED /* IPCNetManagerInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPCNetManagerInterface.h; sourceTree = "<group>"; };
 		AB5911D923D0141A0060F05C /* KHJRecordListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJRecordListCell.h; sourceTree = "<group>"; };
 		AB5911DA23D0141A0060F05C /* KHJRecordListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJRecordListCell.m; sourceTree = "<group>"; };
@@ -459,7 +456,6 @@
 				93E8A98A23E07B3700F5DB8F /* HDMiniCam.entitlements */,
 				93C3396023CB75BB00B44E5F /* AppDelegate.h */,
 				93C3396123CB75BB00B44E5F /* AppDelegate.mm */,
-				AB4EFA4623F6559400D584E7 /* SDK */,
 				93C3397A23CE1B7E00B44E5F /* Base */,
 				AB20E60423CEBEBF00D2861C /* Device */,
 				AB20E60A23CEBEF900D2861C /* Picture */,
@@ -468,6 +464,7 @@
 				93C3396923CB75BE00B44E5F /* Assets.xcassets */,
 				93C3396B23CB75BE00B44E5F /* LaunchScreen.storyboard */,
 				AB771A2D24222979007B5E2E /* Info.plist */,
+				AB4E8AEF242C885C0023152B /* Manager */,
 				AB4E8AC1242B17950023152B /* Category */,
 				AB4E8AC0242B176B0023152B /* Common */,
 				AB4E8AC2242B18010023152B /* Third */,
@@ -789,6 +786,8 @@
 		AB4E8AC2242B18010023152B /* Third */ = {
 			isa = PBXGroup;
 			children = (
+				AB4EFA4623F6559400D584E7 /* Hujian_ThirdSDK */,
+				AB597B312400DC0300F04F84 /* hj_h26xDecoderThirdFile */,
 				93C33A2623CE1D0800B44E5F /* TTHub.h */,
 				93C339F523CE1D0700B44E5F /* TTHub.m */,
 				AB7649762406794F00D6DE1C /* TTHourMinSeconsPicker.h */,
@@ -819,18 +818,22 @@
 			path = QRThird;
 			sourceTree = "<group>";
 		};
-		AB4EFA4623F6559400D584E7 /* SDK */ = {
+		AB4E8AEF242C885C0023152B /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				AB597B312400DC0300F04F84 /* H264lib */,
-				AB4EFA7C23F6D43600D584E7 /* KHJDeviceManager.h */,
-				AB4EFA7D23F6D43600D584E7 /* KHJDeviceManager.mm */,
-				AB52C11C23FD3B3200C921F1 /* KHJErrorManager.h */,
-				AB52C11D23FD3B3200C921F1 /* KHJErrorManager.m */,
+				AB4EFA7C23F6D43600D584E7 /* TTFirmwareInterface_API.h */,
+				AB4EFA7D23F6D43600D584E7 /* TTFirmwareInterface_API.mm */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		AB4EFA4623F6559400D584E7 /* Hujian_ThirdSDK */ = {
+			isa = PBXGroup;
+			children = (
 				AB4EFA6123F6B0BE00D584E7 /* includes */,
 				AB4EFA6A23F6B0BE00D584E7 /* libs */,
 			);
-			path = SDK;
+			path = Hujian_ThirdSDK;
 			sourceTree = "<group>";
 		};
 		AB4EFA6123F6B0BE00D584E7 /* includes */ = {
@@ -895,22 +898,22 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		AB597B312400DC0300F04F84 /* H264lib */ = {
+		AB597B312400DC0300F04F84 /* hj_h26xDecoderThirdFile */ = {
 			isa = PBXGroup;
 			children = (
-				93FC9F7624057033000B9B51 /* H26xHwDecoder.h */,
-				93FC9F7524057033000B9B51 /* H26xHwDecoder.m */,
+				93FC9F7624057033000B9B51 /* H264_H265_VideoDecoder.h */,
+				93FC9F7524057033000B9B51 /* H264_H265_VideoDecoder.m */,
 				93FC9F7724057033000B9B51 /* list.h */,
 				93FC9F7424057033000B9B51 /* types.h */,
-				AB5462FC24172A9B00A096ED /* Header_audio.h */,
-				AB5462FE24172A9B00A096ED /* XBAudioTool.h */,
-				AB5462FD24172A9B00A096ED /* XBAudioTool.m */,
-				AB54630124172A9C00A096ED /* XBAudioUnitPlayer.h */,
-				AB54630224172A9C00A096ED /* XBAudioUnitPlayer.m */,
-				AB54630024172A9B00A096ED /* XBAudioUnitRecorder.h */,
-				AB5462FF24172A9B00A096ED /* XBAudioUnitRecorder.m */,
+				AB5462FC24172A9B00A096ED /* TTAudioHeader.h */,
+				AB5462FE24172A9B00A096ED /* TTAudioTool.h */,
+				AB5462FD24172A9B00A096ED /* TTAudioTool.m */,
+				AB54630124172A9C00A096ED /* TTAudioPlayer.h */,
+				AB54630224172A9C00A096ED /* TTAudioPlayer.m */,
+				AB54630024172A9B00A096ED /* TTAudioRecorder.h */,
+				AB5462FF24172A9B00A096ED /* TTAudioRecorder.m */,
 			);
-			path = H264lib;
+			path = hj_h26xDecoderThirdFile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1098,7 +1101,7 @@
 				AB52C11B23FC153400C921F1 /* KHJDeviceInfo.m in Sources */,
 				AB5462FA2416453900A096ED /* KHJMutilScreenVC.m in Sources */,
 				AB5D784A23F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.mm in Sources */,
-				AB54630524172A9C00A096ED /* XBAudioUnitPlayer.m in Sources */,
+				AB54630524172A9C00A096ED /* TTAudioPlayer.m in Sources */,
 				93A30C5623D298B3009A0F4C /* KHJlampConfigVC.m in Sources */,
 				AB4E89CD2428B7320023152B /* KHJDefensTimeVC.m in Sources */,
 				AB597B4524027BC900F04F84 /* KHJBackPlayListCell.m in Sources */,
@@ -1107,7 +1110,7 @@
 				93C33B5B23CE20B400B44E5F /* NSBundle+Language.m in Sources */,
 				936229BA24278721002A1EFB /* KHJAlarmConfVC_2.m in Sources */,
 				93C33B8023CE236100B44E5F /* TTPlayVoiceManager.m in Sources */,
-				93FC9F7824057033000B9B51 /* H26xHwDecoder.m in Sources */,
+				93FC9F7824057033000B9B51 /* H264_H265_VideoDecoder.m in Sources */,
 				93C3398823CE1BA900B44E5F /* KHJTabBarBaseVC.m in Sources */,
 				AB52C11423FBEB0100C921F1 /* KHJAddDeviceListCell.m in Sources */,
 				AB4E89C824289B880023152B /* KHJAlarmTriggerVC.m in Sources */,
@@ -1120,20 +1123,19 @@
 				AB5462E2240FB91000A096ED /* KHJCollectionViewCell_three.m in Sources */,
 				AB30DA4B23D060F2005BD2A1 /* KHJOnlineVC.m in Sources */,
 				AB4E8AE7242B5C1A0023152B /* TTQRCodeTool.m in Sources */,
-				AB54630324172A9C00A096ED /* XBAudioTool.m in Sources */,
+				AB54630324172A9C00A096ED /* TTAudioTool.m in Sources */,
 				AB32D4C123F54E7A008AFD1F /* KHJVideoModel.m in Sources */,
 				AB5462CE240FA0A900A096ED /* KHJRecordListVC_Two.m in Sources */,
 				93A30C6523D43378009A0F4C /* KHJWIFIConfigCell.m in Sources */,
 				AB20E60823CEBEE500D2861C /* KHJDeviceListVC.m in Sources */,
 				93C33A7423CE1D0800B44E5F /* TTHub.m in Sources */,
-				AB52C11E23FD3B3200C921F1 /* KHJErrorManager.m in Sources */,
 				AB4E89E7242A043D0023152B /* KHJAlarmAreaCell.m in Sources */,
 				AB4E8AE9242B5C1A0023152B /* TTScanManager.m in Sources */,
 				AB52C11823FC14A300C921F1 /* KHJDataBase.m in Sources */,
 				AB30DA7B23D164AE005BD2A1 /* KHJDeviceConfCell.m in Sources */,
 				AB4E89BD242883E10023152B /* KHJAlarmConfHeadView.m in Sources */,
 				93C3397023CB75BE00B44E5F /* main.m in Sources */,
-				AB4EFA7E23F6D43600D584E7 /* KHJDeviceManager.mm in Sources */,
+				AB4EFA7E23F6D43600D584E7 /* TTFirmwareInterface_API.mm in Sources */,
 				AB7649782406794F00D6DE1C /* TTHourMinSeconsPicker.m in Sources */,
 				AB32D4B023F4F476008AFD1F /* KHJVideoPlayer_hf_VC.mm in Sources */,
 				AB20E62A23CEE33400D2861C /* AIPhotoZoom.m in Sources */,
@@ -1153,7 +1155,7 @@
 				AB4E8AC8242B4C320023152B /* TTFileManager.m in Sources */,
 				AB5462D8240FB4FA00A096ED /* KHJRecordListVC_Three.m in Sources */,
 				AB482754241F9CE4008970A0 /* TYCameraTimeLineScrollView.m in Sources */,
-				AB54630424172A9C00A096ED /* XBAudioUnitRecorder.m in Sources */,
+				AB54630424172A9C00A096ED /* TTAudioRecorder.m in Sources */,
 				AB4E89C3242887C70023152B /* KHJAlarmConfCell.m in Sources */,
 				AB30DA5F23D1470F005BD2A1 /* KHJSearchDeviceVC.m in Sources */,
 				AB30DA6523D1482F005BD2A1 /* KHJSearchDeviceCell.m in Sources */,
@@ -1457,7 +1459,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/HDMiniCam/SDK/libs",
+					"\"$(SRCROOT)/HDMiniCam/Third/Hujian_ThirdSDK/libs\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.khj.HDCamView;
 				PRODUCT_NAME = HDCamView;
@@ -1487,7 +1489,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/HDMiniCam/SDK/libs",
+					"\"$(SRCROOT)/HDMiniCam/Third/Hujian_ThirdSDK/libs\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.khj.HDCamView;
 				PRODUCT_NAME = HDCamView;

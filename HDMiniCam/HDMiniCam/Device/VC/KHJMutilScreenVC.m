@@ -1,22 +1,22 @@
 //
 //  KHJMutilScreenVC.m
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by kevin on 2020/3/9.
-//  Copyright © 2020 王涛. All rights reserved.
+//  Copyright © 2020 kevin. All rights reserved.
 //
 
 #import "KHJMutilScreenVC.h"
 #import "AppDelegate.h"
 #import "UIDevice+TFDevice.h"
-#import "KHJDeviceManager.h"
+#import "TTFirmwareInterface_API.h"
 
 // 设备列表
-extern NSMutableArray *mutliDeviceIDList;
+extern NSMutableArray *mutliDidArr;
 // 当前解码类型
-extern TTDecordeType currentDecorderType;
+extern TTDecordeType decoderType;
 
-@interface KHJMutilScreenVC ()<H26xHwDecoderDelegate>
+@interface KHJMutilScreenVC ()<H264_H265_VideoDecoderDelegate>
 {
     __weak IBOutlet UIView *naviView;
     __weak IBOutlet UIButton *naviBtn;
@@ -37,22 +37,21 @@ extern TTDecordeType currentDecorderType;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    currentDecorderType = TTDecorde_mutli;
-    if (mutliDeviceIDList) {
-        [mutliDeviceIDList addObject:@""];
-        [mutliDeviceIDList addObject:@""];
-        [mutliDeviceIDList addObject:@""];
-        [mutliDeviceIDList addObject:@""];
+    decoderType = TTDecorde_moreLive;
+    if (mutliDidArr) {
+        for (int i = 0; i < 4; i++) {
+            [mutliDidArr addObject:@""];
+        }
     }
-    else {
-        mutliDeviceIDList = [NSMutableArray array];
-    }
+    else
+        mutliDidArr = [NSMutableArray array];
+
     [self addDeviceNoti];
 }
 
 - (void)addDeviceNoti
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getDeviceStatus:) name:noti_onStatus_KEY object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getDeviceStatus:) name:TT_onStatus_noti_KEY object:nil];
 }
 
 - (void)getDeviceStatus:(NSNotification *)noti
@@ -79,7 +78,7 @@ extern TTDecordeType currentDecorderType;
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    currentDecorderType = TTDecorder_none;
+    decoderType = TTDecorder_none;
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
     /* 显示多个视频 */
     AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -88,11 +87,11 @@ extern TTDecordeType currentDecorderType;
     [UIApplication sharedApplication].statusBarHidden = NO;
     
     self.initMutliDecorder = NO;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:noti_onStatus_KEY object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:TT_onStatus_noti_KEY object:nil];
     
     // 停止播放视频
-    [mutliDeviceIDList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [[KHJDeviceManager sharedManager] stopGetVideo_with_deviceID:obj resultBlock:^(NSInteger code) {}];
+    [mutliDidArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [[TTFirmwareInterface_API sharedManager] stopGetVideo_with_deviceID:obj reBlock:^(NSInteger code) {}];
     }];
     
     [super viewWillDisappear:animated];
@@ -142,7 +141,7 @@ extern TTDecordeType currentDecorderType;
 - (void)chooseItemWith:(NSInteger)row
 {
     NSString *deviceID = self.deviceList[row];
-    [mutliDeviceIDList replaceObjectAtIndex:chooseIndex withObject:deviceID];
+    [mutliDidArr replaceObjectAtIndex:chooseIndex withObject:deviceID];
     if (chooseIndex == 0)
         oneImgView.alpha = 1;
     else if (chooseIndex == 1)
@@ -155,16 +154,18 @@ extern TTDecordeType currentDecorderType;
         self.initMutliDecorder = YES;
     }
     TTWeakSelf
-    [[KHJDeviceManager sharedManager] startGetVideo_with_deviceID:deviceID quality:1 resultBlock:^(NSInteger code) {
-        [weakSelf.deviceList removeObject:deviceID];
+    [[TTFirmwareInterface_API sharedManager] startGetVideo_with_deviceID:deviceID quality:1 reBlock:^(NSInteger code) {
+        if (code >= 0) {
+            [weakSelf.deviceList removeObject:deviceID];
+        }
     }];
 }
 
-#pragma MARK - H26xHwDecoderDelegate
+#pragma MARK - H264_H265_VideoDecoderDelegate
 
 - (void)getImageWith:(UIImage * _Nullable)image imageSize:(CGSize)imageSize deviceID:(NSString *)deviceID
 {
-    NSInteger index = [mutliDeviceIDList indexOfObject:deviceID];
+    NSInteger index = [mutliDidArr indexOfObject:deviceID];
     switch (index) {
         case 0:
             oneImgView.image = image;

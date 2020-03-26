@@ -1,9 +1,9 @@
 //
 //  KHJAlarmConfVC_2.h
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by 王涛 on 2020/3/22.
-//  Copyright © 2020 王涛. All rights reserved.
+//  Copyright © 2020 kevin. All rights reserved.
 //
 
 #import "KHJBaseVC.h"

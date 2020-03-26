@@ -1,9 +1,9 @@
 //
 //  KHJDefensTimeCell.h
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by kevin on 2020/3/23.
-//  Copyright © 2020 王涛. All rights reserved.
+//  Copyright © 2020 kevin. All rights reserved.
 //
 
 #import "KHJBaseCell.h"

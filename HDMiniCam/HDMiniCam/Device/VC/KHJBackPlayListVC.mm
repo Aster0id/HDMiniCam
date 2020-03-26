@@ -1,21 +1,21 @@
 //
 //  KHJBackPlayListVC.m
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by kevin on 2020/2/23.
-//  Copyright © 2020 王涛. All rights reserved.
+//  Copyright © 2020 kevin. All rights reserved.
 //
 
 #import "KHJBackPlayListVC.h"
 #import "KHJBackPlayListCell.h"
-#import "KHJDeviceManager.h"
+#import "TTFirmwareInterface_API.h"
 #import "KHJBackPlayerList_playerVC.h"
 //
 #import "JSONStructProtocal.h"
 
 extern IPCNetRecordCfg_st recordCfg;
-extern const char *mCurViewPath_date;
-extern RemoteDirInfo_t *mCurRemoteDirInfo;
+extern const char *checkRemoteVideoList_Date;
+extern RemoteDirInfo_t *remoteDirInfo;
 
 @interface KHJBackPlayListVC ()<UITableViewDelegate,UITableViewDataSource,KHJBackPlayListCellDelegate>
 {
@@ -59,10 +59,10 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
 
 - (void)getVideoList
 {
-    [[KHJDeviceManager sharedManager] getRecordConfig_with_deviceID:self.deviceID json:@"" resultBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] getRecordConfig_with_deviceID:self.deviceID json:@"" reBlock:^(NSInteger code) {}];
     // 1、获取录像配置信息：获取文件路径
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti_1073_key:) name:noti_1073_KEY object:nil];
-    // 2、结构体 mCurRemoteDirInfo 保存 列表成功，通知刷新列表
+    // 2、结构体 remoteDirInfo 保存 列表成功，通知刷新列表
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti_1077_key:) name:noti_1077_KEY object:nil];
     // 删除回放视频通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti_OnDeleteRemoteFileCmdResult_key:) name:noti_OnDeleteRemoteFileCmdResult_KEY object:nil];
@@ -155,7 +155,7 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
     }];
     UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"deltVideo_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self->deleteIndex = index;
-        [[KHJDeviceManager sharedManager] deleteRemoteFile_with_deviceID:self.deviceID path:body[@"videoPath"] resultBlock:^(NSInteger code) {}];
+        [[TTFirmwareInterface_API sharedManager] deleteRemoteFile_with_deviceID:self.deviceID path:body[@"videoPath"] reBlock:^(NSInteger code) {}];
     }];
     UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"flDetaIf_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self->fileNameLab.text = KHJString(@"%@：%@",KHJLocalizedString(@"flNm_", nil),body[@"name"]);
@@ -207,7 +207,7 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
     NSString *two = [self.date substringWithRange:NSMakeRange(6, 2)];
     NSString *date1 = KHJString(@"%@/%@",one,two);
     NSString *rootdir = KHJString(@"%@/%@",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],date1);
-    mCurViewPath_date = date1.UTF8String;
+    checkRemoteVideoList_Date = date1.UTF8String;
     
     int vi = 0;
     // 0: 只扫描文件   1: 扫描目录和文件
@@ -229,37 +229,8 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
     // "{\"lir\":{\"p\":\"%s\",\"si\":%d,\"m\":%d,\"st\":%d,\"e\":%d}}"
 //    TLog(@"dict = %@",dict);
     NSString *json = [TTCommon convertToJsonData:(NSDictionary *)dict];
-//    TLog(@"json = %@",json);
-    [[KHJDeviceManager sharedManager] getRemoteDirInfo_with_deviceID:self.deviceID json:json resultBlock:^(NSInteger code) {
-        TLog(@"code = %ld",(long)code);
-    }];
-}
-
-#pragma mark - 获取远程信息：获取文件数量
-
-- (void)noti_1075_key:(NSNotification *)obj
-{
-    NSDate *date = [NSDate date];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyyMM/dd"];
-    //获取当前时间日期展示字符串 如：2019-05-23-13:58:59
-    NSString *str = [formatter stringFromDate:date];
-    
-    NSString *rootdir = KHJString(@"%@/%@",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],str);
-    NSDictionary *result = (NSDictionary *)obj.object;
-    TLog(@"num of files:%@ disk size:%@ MB used size:%@ MB\n",result[@"n"], result[@"t"], result[@"u"]);
-    //组织json字符串，lp是list path简写， p为path简写，s是start简写，c是count简写
-//    int count = [result[@"n"] intValue];
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    NSMutableDictionary *body = [NSMutableDictionary dictionary];
-    [body setValue:rootdir  forKey:@"p"];
-    [body setValue:@(0)     forKey:@"s"];
-    [body setValue:@(10)    forKey:@"c"];
-    [dict setValue:body     forKey:@"lp"];
-    NSString *json = [TTCommon convertToJsonData:(NSDictionary *)dict];
-    [[KHJDeviceManager sharedManager] getRemotePageFile_with_deviceID:self.deviceID path:json resultBlock:^(NSInteger code) {
-        TLog(@"code = %ld",(long)code);
-    }];
+    TLog(@"json = %@",json);
+    [[TTFirmwareInterface_API sharedManager] getRemoteDirInfo_with_deviceID:self.deviceID json:json reBlock:^(NSInteger code) {}];
 }
 
 #pragma mark - 通过文件路径 + 文件数量 => 获取 回放视频列表 (存入)
@@ -275,7 +246,7 @@ extern RemoteDirInfo_t *mCurRemoteDirInfo;
     TTWeakSelf
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
-        for (list<RemoteFileInfo_t*>::iterator i = mCurRemoteDirInfo->mRemoteFileInfoList.begin(); i != mCurRemoteDirInfo->mRemoteFileInfoList.end(); i++){
+        for (list<RemoteFileInfo_t*>::iterator i = remoteDirInfo->mRemoteFileInfoList.begin(); i != remoteDirInfo->mRemoteFileInfoList.end(); i++){
             
             RemoteFileInfo_t *rfi = *i;
             NSMutableDictionary *body = [NSMutableDictionary dictionary];

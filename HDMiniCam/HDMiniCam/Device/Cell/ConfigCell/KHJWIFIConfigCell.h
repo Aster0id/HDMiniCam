@@ -1,6 +1,6 @@
 //
 //  KHJWIFIConfigCell.h
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by 王涛 on 2020/1/19.
 //  Copyright © 2020年 王涛. All rights reserved.

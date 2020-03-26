@@ -1,9 +1,9 @@
 //
 //  TTHourMinSeconsPicker.h
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by kevin on 2020/1/16.
-//  Copyright © 2020 王涛. All rights reserved.
+//  Copyright © 2020 kevin. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

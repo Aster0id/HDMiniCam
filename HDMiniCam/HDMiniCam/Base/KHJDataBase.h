@@ -1,9 +1,9 @@
 //
 //  KHJDataBase.h
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by kevin on 2020/2/18.
-//  Copyright © 2020 王涛. All rights reserved.
+//  Copyright © 2020 kevin. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -24,16 +24,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)removeAllDevice;
 
 // 添加设备
-- (void)addDeviceInfo_with_deviceInfo:(KHJDeviceInfo *)deviceInfo resultBlock:(void(^)(KHJDeviceInfo *info,int code))resultBlock;
+- (void)addDeviceInfo_with_deviceInfo:(KHJDeviceInfo *)deviceInfo reBlock:(void(^)(KHJDeviceInfo *info,int code))reBlock;
 
 // 删除设备
-- (void)deleteDeviceInfo_with_deviceInfo:(KHJDeviceInfo *)deviceInfo resultBlock:(void(^)(KHJDeviceInfo *info,int code))resultBlock;
+- (void)deleteDeviceInfo_with_deviceInfo:(KHJDeviceInfo *)deviceInfo reBlock:(void(^)(KHJDeviceInfo *info,int code))reBlock;
 
 // 更新设备
-- (void)updateDeviceInfo_with_deviceInfo:(KHJDeviceInfo *)deviceInfo resultBlock:(void(^)(KHJDeviceInfo *info,int code))resultBlock;
+- (void)updateDeviceInfo_with_deviceInfo:(KHJDeviceInfo *)deviceInfo reBlock:(void(^)(KHJDeviceInfo *info,int code))reBlock;
 
 // 查找设备
-- (void)selectDeviceInfo_with_deviceInfo:(KHJDeviceInfo *)deviceInfo resultBlock:(void(^)(KHJDeviceInfo *info,int code))resultBlock;
+- (void)selectDeviceInfo_with_deviceInfo:(KHJDeviceInfo *)deviceInfo reBlock:(void(^)(KHJDeviceInfo *info,int code))reBlock;
 
 
 @end

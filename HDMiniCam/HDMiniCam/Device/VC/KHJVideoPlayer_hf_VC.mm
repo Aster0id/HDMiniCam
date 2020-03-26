@@ -1,13 +1,13 @@
 //
 //  KHJVideoPlayer_hf_VC.m
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by kevin on 2020/2/13.
-//  Copyright © 2020 王涛. All rights reserved.
+//  Copyright © 2020 kevin. All rights reserved.
 //
 
 #import "KHJVideoPlayer_hf_VC.h"
-#import "KHJDeviceManager.h"
+#import "TTFirmwareInterface_API.h"
 #import "ZFTimeLine.h"
 #import "NSDate+JLZero.h"
 #import "KHJBackPlayListVC.h"
@@ -27,7 +27,7 @@ extern IPCNetRecordCfg_st recordCfg;
 @interface KHJVideoPlayer_hf_VC ()
 <ZFTimeLineDelegate,
 KHJBackPlayListVCSaveListDelegate,
-H26xHwDecoderDelegate,
+H264_H265_VideoDecoderDelegate,
 TYCameraTimeLineScrollView_oldDelegate>
 {
     __weak IBOutlet UILabel *nameLab;
@@ -46,13 +46,13 @@ TYCameraTimeLineScrollView_oldDelegate>
     BOOL exitVideoList;
     NSTimer *delayHiddenTimer;
     
-    H26xHwDecoder *h264Decode;
+    H264_H265_VideoDecoder *h264Decode;
     BOOL isRebackPlaying;
     // 录屏模块
     TTRecordBackStatus rebackPlayRecordType;
-    RecSess_t rebackPlayRecordSession;
+    RecSess_t _RSession;
     dispatch_queue_t recordQueue;
-    NSString *rebackPlayRecordVideoPath;
+    NSString *rebackRecordPath;
     
     NSTimer *recordTimer;
     NSInteger recordTimes;
@@ -79,7 +79,7 @@ TYCameraTimeLineScrollView_oldDelegate>
 
 @implementation KHJVideoPlayer_hf_VC
 
-#pragma MARK - H26xHwDecoderDelegate
+#pragma MARK - H264_H265_VideoDecoderDelegate
 
 - (void)getImageWith:(UIImage * _Nullable)image imageSize:(CGSize)imageSize deviceID:(NSString *)deviceID
 {
@@ -123,14 +123,14 @@ TYCameraTimeLineScrollView_oldDelegate>
     isRebackPlaying = NO;
     self.delayHiddenTimes = 2;
     nextDayBtn.hidden = YES;
-    rebackPlayRecordSession = NULL;
+    _RSession = NULL;
     recordQueue = dispatch_queue_create("recordQueue", DISPATCH_QUEUE_SERIAL);
     [self customizeDataSource];
 }
 
 - (void)customizeDataSource
 {
-    h264Decode = [[H26xHwDecoder alloc] init];
+    h264Decode = [[H264_H265_VideoDecoder alloc] init];
     h264Decode.delegate = self;
     
     [timeLineContent addSubview:self.zfTimeView];
@@ -257,7 +257,7 @@ TYCameraTimeLineScrollView_oldDelegate>
 - (void)registerCallBack
 {
     TTWeakSelf
-    [[KHJDeviceManager sharedManager] setPlaybackAudioVideoDataCallBack_with_deviceID:self.deviceID resultBlock:^(const char * _Nonnull uuid, int type, unsigned char * _Nonnull data, int len, long timestamp) {
+    [[TTFirmwareInterface_API sharedManager] setPlaybackAudioVideoDataCallBack_with_deviceID:self.deviceID reBlock:^(const char * _Nonnull uuid, int type, unsigned char * _Nonnull data, int len, long timestamp) {
         self->isRebackPlaying = YES;
         [weakSelf.activityView stopAnimating];
         self->playerImageView.hidden = NO;
@@ -279,7 +279,7 @@ TYCameraTimeLineScrollView_oldDelegate>
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [[KHJDeviceManager sharedManager] stopPlayback_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] stopPlayback_with_deviceID:self.deviceID reBlock:^(NSInteger code) {}];
     [super viewWillDisappear:animated];
 }
 
@@ -336,7 +336,7 @@ TYCameraTimeLineScrollView_oldDelegate>
 {
     NSString *time = [date stringByReplacingOccurrencesOfString:@"_" withString:@""];
     // 获取远程回放的配置信息
-    [[KHJDeviceManager sharedManager] getRemoteDirInfo_timeLine_with_deviceID:self.deviceID vi:0 date:[time intValue] resultBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] getRemoteDirInfo_timeLine_with_deviceID:self.deviceID vi:0 date:[time intValue] reBlock:^(NSInteger code) {}];
 }
 
 - (void)exitListData:(BOOL)isExit
@@ -349,7 +349,7 @@ TYCameraTimeLineScrollView_oldDelegate>
 - (void)LineBeginMove
 {
     TLog(@"LineBeginMove 停止回放");
-    [[KHJDeviceManager sharedManager] stopPlayback_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] stopPlayback_with_deviceID:self.deviceID reBlock:^(NSInteger code) {}];
 }
 
 - (void)timeLine:(ZFTimeLine *)timeLine moveToDate:(NSTimeInterval)date
@@ -370,7 +370,7 @@ TYCameraTimeLineScrollView_oldDelegate>
         NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:date];
         int timestamp_int = [[formatterShow stringFromDate:date1] intValue];
         // 播放回放视频
-        [[KHJDeviceManager sharedManager] starPlayback_timeLine_with_deviceID:self.deviceID vi:0 date:date_int time:timestamp_int resultBlock:^(NSInteger code) {}];
+        [[TTFirmwareInterface_API sharedManager] starPlayback_timeLine_with_deviceID:self.deviceID vi:0 date:date_int time:timestamp_int reBlock:^(NSInteger code) {}];
     }
     self.currentIndex = index;
 }
@@ -517,16 +517,16 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
         [self->h264Decode decodeH26xVideoData:data videoSize:length frameType:dataType timestamp:timeStamps];
     });
     
-    if (rebackPlayRecordType == TTRecordBack_Recording) {
-         TLog(@"正在回放录屏 rebackPlayRecordVideoPath = %@",rebackPlayRecordVideoPath);
+    if (rebackPlayRecordType == TTRecordBack_Record) {
+         TLog(@"正在回放录屏 rebackRecordPath = %@",rebackRecordPath);
         dispatch_sync(recordQueue, ^{
-            if (self->rebackPlayRecordSession) {
+            if (self->_RSession) {
                 if (dataType >= 20 && dataType < 30) {
-                    int ret = IPCNetPutLocalRecordAudioFrame(rebackPlayRecordSession, dataType, (const char *)data, length, timeStamps);
+                    int ret = IPCNetPutLocalRecordAudioFrame(_RSession, dataType, (const char *)data, length, timeStamps);
                     if (ret == 0) TLog(@"输入 Audio 数据");
                 }
                 else {
-                    int ret = IPCNetPutLocalRecordVideoFrame(rebackPlayRecordSession, dataType, (const char *)data, length, timeStamps);
+                    int ret = IPCNetPutLocalRecordVideoFrame(_RSession, dataType, (const char *)data, length, timeStamps);
                     if (ret == 0) TLog(@"输入 视频 数据");
                 }
             }
@@ -536,18 +536,18 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
                 }
                 else {
                     if (dataType >= 0 && dataType < 20)
-                        self->rebackPlayRecordSession = IPCNetStartRecordLocalVideo(rebackPlayRecordVideoPath.UTF8String, IPCNET_VIDEO_ENCODE_TYPE_H264, 30, IPCNET_AUDIO_ENCODE_TYPE_G711A, 8000, 2, 1);
+                        self->_RSession = IPCNetStartRecordLocalVideo(rebackRecordPath.UTF8String, IPCNET_VIDEO_ENCODE_TYPE_H264, 30, IPCNET_AUDIO_ENCODE_TYPE_G711A, 8000, 2, 1);
                     else
-                        self->rebackPlayRecordSession = IPCNetStartRecordLocalVideo(rebackPlayRecordVideoPath.UTF8String, IPCNET_VIDEO_ENCODE_TYPE_H265, 30, IPCNET_AUDIO_ENCODE_TYPE_G711A, 8000, 2, 1);
+                        self->_RSession = IPCNetStartRecordLocalVideo(rebackRecordPath.UTF8String, IPCNET_VIDEO_ENCODE_TYPE_H265, 30, IPCNET_AUDIO_ENCODE_TYPE_G711A, 8000, 2, 1);
                 }
             }
         });
     }
-    else if (rebackPlayRecordType == TTRecordBack_stopRecoding) {
-         TLog(@"停止回放录屏 rebackPlayRecordVideoPath = %@",rebackPlayRecordVideoPath);
+    else if (rebackPlayRecordType == TTRecordBack_SRecod) {
+         TLog(@"停止回放录屏 rebackRecordPath = %@",rebackRecordPath);
         rebackPlayRecordType = TTRecordBack_Normal;
-        IPCNetFinishLocalRecord(self->rebackPlayRecordSession);
-        self->rebackPlayRecordSession = NULL;
+        IPCNetFinishLocalRecord(self->_RSession);
+        self->_RSession = NULL;
     }
 }
 
@@ -560,8 +560,8 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
     recordTimeView.hidden = NO;
     [self fireRecordTimer];
     // 回放录屏，截取数据
-    rebackPlayRecordType = TTRecordBack_Recording;
-    rebackPlayRecordVideoPath = [[[TTFileManager sharedModel] get_reback_recordVideo_DocPath_with_deviceID:self.deviceID] stringByAppendingPathComponent:[[TTFileManager sharedModel] get_videoName_With_fileType:@"mp4" deviceID:self.deviceID]];
+    rebackPlayRecordType = TTRecordBack_Record;
+    rebackRecordPath = [[[TTFileManager sharedModel] get_reback_recordVideo_DocPath_with_deviceID:self.deviceID] stringByAppendingPathComponent:[[TTFileManager sharedModel] get_videoName_With_fileType:@"mp4" deviceID:self.deviceID]];
 }
 
 /// 停止录像
@@ -570,8 +570,8 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
     [self stopRecordTimer];
     recordTimeView.hidden = YES;
     // 结束回放录屏，停止截取数据
-    rebackPlayRecordVideoPath = @"";
-    rebackPlayRecordType = TTRecordBack_stopRecoding;
+    rebackRecordPath = @"";
+    rebackPlayRecordType = TTRecordBack_SRecod;
 }
 
 #pragma mark - 前一天
@@ -635,7 +635,7 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
 {
     if (isRebackPlaying == YES) {
         TLog(@"开始拖拽 ============================= %f",timeLineView.currentTime);
-        [[KHJDeviceManager sharedManager] stopPlayback_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {
+        [[TTFirmwareInterface_API sharedManager] stopPlayback_with_deviceID:self.deviceID reBlock:^(NSInteger code) {
             self->isRebackPlaying = NO;
         }];
     }
@@ -664,7 +664,7 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
 //        int timestamp_int = [[formatterShow stringFromDate:date1] intValue];
 //        // 播放回放视频
 //        TTWeakSelf
-//        [[KHJDeviceManager sharedManager] starPlayback_timeLine_with_deviceID:self.deviceID vi:0 date:date_int time:timestamp_int resultBlock:^(NSInteger code) {
+//        [[TTFirmwareInterface_API sharedManager] starPlayback_timeLine_with_deviceID:self.deviceID vi:0 date:date_int time:timestamp_int reBlock:^(NSInteger code) {
 //            [weakSelf.view makeToast:KHJString(@"正在播放，第%ld段视频 ------------------------",(long)weakSelf.currentIndex)];
 //        }];
 //    }
@@ -688,9 +688,7 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
                         NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:weakSelf.currentTimeInterval];
                         int timestamp_int = [[formatterShow stringFromDate:date1] intValue];
                         // 播放回放视频
-                        [[KHJDeviceManager sharedManager] starPlayback_timeLine_with_deviceID:self.deviceID vi:0 date:date_int time:timestamp_int resultBlock:^(NSInteger code) {
-//                            [weakSelf.view makeToast:KHJString(@"正在播放，第%d段视频",i)];
-                        }];
+                        [[TTFirmwareInterface_API sharedManager] starPlayback_timeLine_with_deviceID:self.deviceID vi:0 date:date_int time:timestamp_int reBlock:^(NSInteger code) {}];
                     });
                     break;
                 }

@@ -1,21 +1,21 @@
 //
 //  KHJBackPlayerList_playerVC.m
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by kevin on 2020/2/28.
-//  Copyright © 2020 王涛. All rights reserved.
+//  Copyright © 2020 kevin. All rights reserved.
 //
 
 #import "KHJBackPlayerList_playerVC.h"
 //
-#import "H26xHwDecoder.h"
-#import "KHJDeviceManager.h"
+#import "H264_H265_VideoDecoder.h"
+#import "TTFirmwareInterface_API.h"
 #import "JSONStructProtocal.h"
 #import "IPCNetManagerInterface.h"
 
 extern IPCNetRecordCfg_st recordCfg;
 
-@interface KHJBackPlayerList_playerVC ()<H26xHwDecoderDelegate>
+@interface KHJBackPlayerList_playerVC ()<H264_H265_VideoDecoderDelegate>
 {
     __weak IBOutlet UILabel *nameLab;
     __weak IBOutlet UIImageView *playerImageView;
@@ -28,7 +28,7 @@ extern IPCNetRecordCfg_st recordCfg;
     BOOL isPlay;
     __weak IBOutlet UIButton *playBtn;
     
-    H26xHwDecoder *h264Decode;
+    H264_H265_VideoDecoder *h264Decode;
     int totalTime;
 }
 @end
@@ -50,7 +50,7 @@ extern IPCNetRecordCfg_st recordCfg;
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [[KHJDeviceManager sharedManager] removePlaybackAudioVideoDataCallBack_with_deviceID:self.deviceID];
+    [[TTFirmwareInterface_API sharedManager] removePlaybackAudioVideoDataCallBack_with_deviceID:self.deviceID];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [super viewWillDisappear:animated];
 }
@@ -60,7 +60,7 @@ extern IPCNetRecordCfg_st recordCfg;
     isPlay = YES;
     playerImageView.hidden = YES;
     nameLab.text = self.body[@"name"];
-    h264Decode = [[H26xHwDecoder alloc] init];
+    h264Decode = [[H264_H265_VideoDecoder alloc] init];
     h264Decode.delegate = self;
     totalTime = [self.body[@"end"] intValue] - [self.body[@"start"] intValue];
     int hour = totalTime / 3600;
@@ -82,9 +82,7 @@ extern IPCNetRecordCfg_st recordCfg;
 {
     [self registerCallBack];
     // 注册完监听回调，再开始获取音频数据
-    [[KHJDeviceManager sharedManager] startPlayback_with_deviceID:self.deviceID path:self.body[@"videoPath"] resultBlock:^(NSInteger code) {
-        TLog(@"播放回放视频 - %@",self.body[@"name"]);
-    }];
+    [[TTFirmwareInterface_API sharedManager] startPlayback_with_deviceID:self.deviceID path:self.body[@"videoPath"] reBlock:^(NSInteger code) {}];
 }
 
 /// 获取sd卡回放 视频数据
@@ -109,7 +107,7 @@ extern IPCNetRecordCfg_st recordCfg;
     
 }
 
-#pragma MARK - H26xHwDecoderDelegate
+#pragma MARK - H264_H265_VideoDecoderDelegate
 
 - (void)getImageWith:(UIImage * _Nullable)image imageSize:(CGSize)imageSize deviceID:(NSString *)deviceID
 {
@@ -122,8 +120,8 @@ extern IPCNetRecordCfg_st recordCfg;
         [self.navigationController popViewControllerAnimated:YES];
         TTWeakSelf
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            [[KHJDeviceManager sharedManager] removePlaybackAudioVideoDataCallBack_with_deviceID:weakSelf.deviceID];
-            [[KHJDeviceManager sharedManager] stopPlayback_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
+            [[TTFirmwareInterface_API sharedManager] removePlaybackAudioVideoDataCallBack_with_deviceID:weakSelf.deviceID];
+            [[TTFirmwareInterface_API sharedManager] stopPlayback_with_deviceID:self.deviceID reBlock:^(NSInteger code) {}];
         });
     }
     else if (sender.tag == 20) {
@@ -133,14 +131,14 @@ extern IPCNetRecordCfg_st recordCfg;
         if (isPlay) {
             // 暂停
             TLog(@"暂停播放回放视频 - %@",self.body[@"name"]);
-            [[KHJDeviceManager sharedManager] pausePlayback_with_deviceID:self.deviceID contin:YES resultBlock:^(NSInteger code) {
+            [[TTFirmwareInterface_API sharedManager] pausePlayback_with_deviceID:self.deviceID contin:YES reBlock:^(NSInteger code) {
                 self->isPlay = NO;
             }];
         }
         else {
             // 开始
             TLog(@"继续播放回放视频 - %@",self.body[@"name"]);
-            [[KHJDeviceManager sharedManager] pausePlayback_with_deviceID:self.deviceID contin:NO resultBlock:^(NSInteger code) {
+            [[TTFirmwareInterface_API sharedManager] pausePlayback_with_deviceID:self.deviceID contin:NO reBlock:^(NSInteger code) {
                 self->isPlay = YES;
             }];
         }
@@ -154,7 +152,7 @@ extern IPCNetRecordCfg_st recordCfg;
 - (void)registerCallBack
 {
     TTWeakSelf
-    [[KHJDeviceManager sharedManager] setPlaybackAudioVideoDataCallBack_with_deviceID:self.deviceID resultBlock:^(const char * _Nonnull uuid, int type, unsigned char * _Nonnull data, int len, long timestamp) {
+    [[TTFirmwareInterface_API sharedManager] setPlaybackAudioVideoDataCallBack_with_deviceID:self.deviceID reBlock:^(const char * _Nonnull uuid, int type, unsigned char * _Nonnull data, int len, long timestamp) {
         [self->activeView stopAnimating];
         self->playerImageView.hidden = NO;
         if (type < 20) {

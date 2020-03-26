@@ -1,6 +1,6 @@
 //
 //  PrefixHeader.pch
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by 王涛 on 2020/1/14.
 //  Copyright © 2020年 王涛. All rights reserved.
@@ -33,25 +33,23 @@
 // 直播录屏状态
 typedef enum : NSUInteger {
     TTRecordLive_Normal = 0,
-    TTRecordLive_Recording,
-    TTRecordLive_stopRecoding,
+    TTRecordLive_Record,
+    TTRecordLive_SRecod,
 } TTRecordLiveStatus;
 
 // 回放录屏
 typedef enum : NSUInteger {
     TTRecordBack_Normal = 0,
-    TTRecordBack_Recording,
-    TTRecordBack_stopRecoding,
+    TTRecordBack_Record,
+    TTRecordBack_SRecod,
 } TTRecordBackStatus;
 
-// 解码类型： 直播、多瓶、回放
+// 解码类型： 直播、多屏
 typedef enum : NSUInteger {
     TTDecorder_none = 0,
     TTDecorde_live,
-    TTDecorde_mutli,
-    TTDecorde_reback,
+    TTDecorde_moreLive,
 } TTDecordeType;
-
 
 #define TTNavConentHeight   44.0f
 #define TTStatusBarHeight   ((IS_IPHONE_X == YES) ? 44.0f : 20.0f)

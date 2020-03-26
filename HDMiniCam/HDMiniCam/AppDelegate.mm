@@ -1,6 +1,6 @@
 //
 //  AppDelegate.m
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by 王涛 on 2020/1/12.
 //  Copyright © 2020年 王涛. All rights reserved.
@@ -14,9 +14,8 @@
 #import "KHJVideoPlayer_hf_VC.h"
 #pragma mark - ios13 开启地理位置权限，获取Wi-Fi名称
 #import <CoreLocation/CoreLocation.h>
-#import "KHJDeviceManager.h"
+#import "TTFirmwareInterface_API.h"
 #import "KHJDataBase.h"
-//
 #import "AFNetworkReachabilityManager.h"
 
 @interface AppDelegate ()<CLLocationManagerDelegate>
@@ -44,7 +43,7 @@
     for (int i = 0; i < list.count; i++) {
         KHJDeviceInfo *info = [[KHJDeviceInfo alloc] init];
         info = list[i];
-        [[KHJDeviceManager sharedManager] connect_with_deviceID:info.deviceID password:info.devicePassword resultBlock:^(NSInteger code) {}];
+        [[TTFirmwareInterface_API sharedManager] connect_with_deviceID:info.deviceID password:info.devicePassword reBlock:^(NSInteger code) {}];
     }
 
     // 如果是iOS13 未开启地理位置权限 需要提示一下

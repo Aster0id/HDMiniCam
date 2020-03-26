@@ -1,14 +1,14 @@
 //
 //  KHJOnlineVC.m
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by kevin on 2020/1/16.
-//  Copyright © 2020 王涛. All rights reserved.
+//  Copyright © 2020 kevin. All rights reserved.
 //
 
 #import "KHJOnlineVC.h"
 //#import "KHJQRCodeScanVC.h"
-//#import "KHJDeviceManager.h"
+//#import "TTFirmwareInterface_API.h"
 
 @interface KHJOnlineVC ()
 {
@@ -85,12 +85,12 @@
     TTWeakSelf
     if (!exit) {
         // 未添加的设备：直接添加
-        [[KHJDataBase sharedDataBase] addDeviceInfo_with_deviceInfo:deviceInfo resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
+        [[KHJDataBase sharedDataBase] addDeviceInfo_with_deviceInfo:deviceInfo reBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
             if (code == 1) {
                 [weakSelf.view makeToast:KHJString(@"%@：\"%@\"，%@",KHJLocalizedString(@"dev", nil),info.deviceID,KHJLocalizedString(@"addSuc_", nil))];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:noti_addDevice_KEY object:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:TT_addDevice_noti_KEY object:nil];
                 });
             }
         }];
@@ -102,13 +102,13 @@
         TTWeakSelf
         UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             // 已添加的设备：先删除，再添加
-            [[KHJDataBase sharedDataBase] deleteDeviceInfo_with_deviceInfo:deviceInfo resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
-                [[KHJDataBase sharedDataBase] addDeviceInfo_with_deviceInfo:deviceInfo resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
+            [[KHJDataBase sharedDataBase] deleteDeviceInfo_with_deviceInfo:deviceInfo reBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
+                [[KHJDataBase sharedDataBase] addDeviceInfo_with_deviceInfo:deviceInfo reBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
                     if (code == 1) {
                         [weakSelf.view makeToast:KHJString(@"%@：\"%@\"，%@",KHJLocalizedString(@"dev", nil),info.deviceID,KHJLocalizedString(@"addSuc_", nil))];
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                             [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:noti_addDevice_KEY object:nil];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:TT_addDevice_noti_KEY object:nil];
                         });
                     }
                 }];

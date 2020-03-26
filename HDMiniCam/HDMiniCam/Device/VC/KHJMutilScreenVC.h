@@ -1,13 +1,13 @@
 //
 //  KHJMutilScreenVC.h
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by kevin on 2020/3/9.
-//  Copyright © 2020 王涛. All rights reserved.
+//  Copyright © 2020 kevin. All rights reserved.
 //
 
 #import "KHJVideoPlayerBaseVC.h"
-#import "H26xHwDecoder.h"
+#import "H264_H265_VideoDecoder.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

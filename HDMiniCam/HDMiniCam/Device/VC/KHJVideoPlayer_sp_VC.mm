@@ -1,14 +1,14 @@
 //
 //  KHJVideoPlayer_sp_VC.m
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by kevin on 2020/2/12.
-//  Copyright © 2020 王涛. All rights reserved.
+//  Copyright © 2020 kevin. All rights reserved.
 //
 
 #import "KHJVideoPlayer_sp_VC.h"
 #import "KHJVideoPlayer_hf_VC.h"
-#import "KHJDeviceManager.h"
+#import "TTFirmwareInterface_API.h"
 //
 #import "JSONStructProtocal.h"
 //
@@ -20,18 +20,18 @@
 #import "UIDevice+TFDevice.h"
 
 //  当前解码类型
-extern TTDecordeType currentDecorderType;
+extern TTDecordeType decoderType;
 // 是否直播录屏
-extern NSString *liveRecordVideoPath;
+extern NSString *liveRecordPath;
 extern TTRecordLiveStatus liveRecordType;
 // 彩色/黑白画面
-extern IPCNetPicColorInfo_st picColorCfg;
+extern IPCNetPicColorInfo_st colorCfg;
 // 监听
-extern XBAudioUnitPlayer *audioPlayer;
+extern TTAudioPlayer *audioPlayer;
 // 对讲
-extern XBAudioUnitRecorder *audioRecorder;
+extern TTAudioRecorder *audioRecorder;
 
-@interface KHJVideoPlayer_sp_VC ()<H26xHwDecoderDelegate>
+@interface KHJVideoPlayer_sp_VC ()<H264_H265_VideoDecoderDelegate>
 {
     __weak IBOutlet UIView *hpNaviView;
     __weak IBOutlet UIButton *hpBackBtn;
@@ -119,7 +119,7 @@ extern XBAudioUnitRecorder *audioRecorder;
 
 - (void)customizeDataSource
 {
-    currentDecorderType = TTDecorde_live;
+    decoderType = TTDecorde_live;
     spTitleLab.text = self.deviceInfo.deviceName;
     hpTitleLab.text = self.deviceInfo.deviceName;
     [self addNoti];
@@ -135,7 +135,7 @@ extern XBAudioUnitRecorder *audioRecorder;
     [activeView startAnimating];
     qualityLevel = 0;
     qualityLab.text = KHJLocalizedString(@"sd_", nil);
-    [[KHJDeviceManager sharedManager] startGetVideo_with_deviceID:self.deviceID quality:1 resultBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] startGetVideo_with_deviceID:self.deviceID quality:1 reBlock:^(NSInteger code) {}];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -193,15 +193,13 @@ extern XBAudioUnitRecorder *audioRecorder;
 
 - (void)getVideoStatus
 {
-    /// 获取当前视频的分辨率
-    [[KHJDeviceManager sharedManager] getQualityLevel_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
     /// 获取饱和度、liangdu_、duibidu_、ruidu_
-    [[KHJDeviceManager sharedManager] getSaturationLevel_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] getSaturationLevel_with_deviceID:self.deviceID reBlock:^(NSInteger code) {}];
     /// 获取色彩/黑白模式
-    [[KHJDeviceManager sharedManager] getIRModel_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] getIRModel_with_deviceID:self.deviceID reBlock:^(NSInteger code) {}];
 }
 
-#pragma MARK - H26xHwDecoderDelegate
+#pragma MARK - H264_H265_VideoDecoderDelegate
 
 - (void)getImageWith:(UIImage * _Nullable)image imageSize:(CGSize)imageSize deviceID:(NSString *)deviceID
 {
@@ -218,9 +216,9 @@ extern XBAudioUnitRecorder *audioRecorder;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"OnGetIRModeCmdResult_noti_key" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"OnSetQualityLevelCmdResult_noti_key" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"OnGetSaturationLevelCmdResult_noti_key" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"OnSetSaturationLevelCmdResult_noti_key" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"OnSetStration_Actce_Britness_CompColor_CmdResult_noti_key" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OnSetSaturationLevelCmdResult)
-                                                 name:@"OnSetSaturationLevelCmdResult_noti_key"
+                                                 name:@"OnSetStration_Actce_Britness_CompColor_CmdResult_noti_key"
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OnGetSaturationLevelCmdResult:)
                                                  name:@"OnGetSaturationLevelCmdResult_noti_key"
@@ -261,7 +259,7 @@ extern XBAudioUnitRecorder *audioRecorder;
 // 获取 彩色/黑色 画面
 - (void)OnGetIRModeCmdResult
 {
-    if (picColorCfg.Type == 0) {
+    if (colorCfg.Type == 0) {
         TLog(@"彩色画面");
     }
     else {
@@ -314,12 +312,12 @@ extern XBAudioUnitRecorder *audioRecorder;
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    currentDecorderType = TTDecorder_none;
+    decoderType = TTDecorder_none;
     [self stopTalk];
     [self stopListen];
     liveRecordType = TTRecordLive_Normal;
-    [[KHJDeviceManager sharedManager] stopGetVideo_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
-    [[KHJDeviceManager sharedManager] stopGetAudio_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] stopGetVideo_with_deviceID:self.deviceID reBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] stopGetAudio_with_deviceID:self.deviceID reBlock:^(NSInteger code) {}];
     [self sp_releaseDecoder];
     [super viewWillDisappear:animated];
 }
@@ -409,17 +407,17 @@ extern XBAudioUnitRecorder *audioRecorder;
     }
     else if (sender.tag == 4) {
         // 垂直镜像
-        [[KHJDeviceManager sharedManager] setFilp_with_deviceID:self.deviceID
+        [[TTFirmwareInterface_API sharedManager] setFilp_with_deviceID:self.deviceID
                                                            flip:1
                                                          mirror:0
-                                                    resultBlock:^(NSInteger code) {}];
+                                                    reBlock:^(NSInteger code) {}];
     }
     else if (sender.tag == 5) {
         // 水平镜像
-        [[KHJDeviceManager sharedManager] setFilp_with_deviceID:self.deviceID
+        [[TTFirmwareInterface_API sharedManager] setFilp_with_deviceID:self.deviceID
                                                            flip:0
                                                          mirror:1
-                                                    resultBlock:^(NSInteger code) {}];
+                                                    reBlock:^(NSInteger code) {}];
     }
 }
 
@@ -537,7 +535,7 @@ extern XBAudioUnitRecorder *audioRecorder;
         [weakSelf chooseSetupWith:4];
     }];
     
-    NSString *picColor = picColorCfg.Type == 0 ? KHJLocalizedString(@"colorView_", nil) : KHJLocalizedString(@"blackView_", nil);
+    NSString *picColor = colorCfg.Type == 0 ? KHJLocalizedString(@"colorView_", nil) : KHJLocalizedString(@"blackView_", nil);
     UIAlertAction *config4 = [UIAlertAction actionWithTitle:picColor style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:5];
     }];
@@ -603,26 +601,26 @@ extern XBAudioUnitRecorder *audioRecorder;
     else if (index == 5) {
         TLog(@"彩色/黑白");
         int type = 0;
-        if (picColorCfg.Type == 0) {
+        if (colorCfg.Type == 0) {
             type = 1;
         }
         else {
             type = 0;
         }
-        [[KHJDeviceManager sharedManager] setIRModel_with_deviceID:self.deviceID type:type resultBlock:^(NSInteger code) {}];
+        [[TTFirmwareInterface_API sharedManager] setIRModel_with_deviceID:self.deviceID type:type reBlock:^(NSInteger code) {}];
     }
     else if (index == 6) {
         TLog(@"垂直镜像");
-        [[KHJDeviceManager sharedManager] setFilp_with_deviceID:self.deviceID flip:1 mirror:0 resultBlock:^(NSInteger code) {}];
+        [[TTFirmwareInterface_API sharedManager] setFilp_with_deviceID:self.deviceID flip:1 mirror:0 reBlock:^(NSInteger code) {}];
     }
     else if (index == 7) {
         TLog(@"水平镜像");
-        [[KHJDeviceManager sharedManager] setFilp_with_deviceID:self.deviceID flip:0 mirror:1 resultBlock:^(NSInteger code) {}];
+        [[TTFirmwareInterface_API sharedManager] setFilp_with_deviceID:self.deviceID flip:0 mirror:1 reBlock:^(NSInteger code) {}];
     }
     else if (index == 8) {
         TLog(@"恢复默认值");
         TTWeakSelf
-        [[KHJDeviceManager sharedManager] setDefault_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {
+        [[TTFirmwareInterface_API sharedManager] setDefault_with_deviceID:self.deviceID reBlock:^(NSInteger code) {
             if (code >= 0) {
                 [weakSelf.view makeToast:KHJLocalizedString(@"devBecomeDft_", nil)];
             }
@@ -644,19 +642,19 @@ extern XBAudioUnitRecorder *audioRecorder;
     [self.change_1497_body removeAllObjects];
     if ([sliderNameLab.text isEqualToString:KHJLocalizedString(@"baohedu_", nil)]) {
         [self.change_1497_body setValue:KHJString(@"%d",value) forKey:@"Saturtion"];
-        [[KHJDeviceManager sharedManager] setSaturationLevel_with_deviceID:self.deviceID level:value resultBlock:^(NSInteger code) {}];
+        [[TTFirmwareInterface_API sharedManager] setSaturationLevel_with_deviceID:self.deviceID level:value reBlock:^(NSInteger code) {}];
     }
     else if ([sliderNameLab.text isEqualToString:KHJLocalizedString(@"liangdu_", nil)]) {
         [self.change_1497_body setValue:KHJString(@"%d",value) forKey:@"Brightness"];
-        [[KHJDeviceManager sharedManager] setBrightnessLevel_with_deviceID:self.deviceID level:value resultBlock:^(NSInteger code) {}];
+        [[TTFirmwareInterface_API sharedManager] setBrightnessLevel_with_deviceID:self.deviceID level:value reBlock:^(NSInteger code) {}];
     }
     else if ([sliderNameLab.text isEqualToString:KHJLocalizedString(@"ruidu_", nil)]) {
         [self.change_1497_body setValue:KHJString(@"%d",value) forKey:@"Acutance"];
-        [[KHJDeviceManager sharedManager] setAcutanceLevel_with_deviceID:self.deviceID level:value resultBlock:^(NSInteger code) {}];
+        [[TTFirmwareInterface_API sharedManager] setAcutanceLevel_with_deviceID:self.deviceID level:value reBlock:^(NSInteger code) {}];
     }
     else if ([sliderNameLab.text isEqualToString:KHJLocalizedString(@"duibidu_", nil)]) {
         [self.change_1497_body setValue:KHJString(@"%d",value) forKey:@"Contrast"];
-        [[KHJDeviceManager sharedManager] setCompareColorLevel_with_deviceID:self.deviceID level:value resultBlock:^(NSInteger code) {}];
+        [[TTFirmwareInterface_API sharedManager] setCompareColorLevel_with_deviceID:self.deviceID level:value reBlock:^(NSInteger code) {}];
     }
 }
 
@@ -668,8 +666,8 @@ extern XBAudioUnitRecorder *audioRecorder;
     recordTimeView.hidden = NO;
     [self fireTimer];
     // 直播录屏，截取数据
-    liveRecordType = TTRecordLive_Recording;
-    liveRecordVideoPath = [[[TTFileManager sharedModel] get_live_recordVideo_DocPath_with_deviceID:self.deviceID] stringByAppendingPathComponent:[[TTFileManager sharedModel] get_videoName_With_fileType:@"mp4" deviceID:self.deviceID]];
+    liveRecordType = TTRecordLive_Record;
+    liveRecordPath = [[[TTFileManager sharedModel] get_live_recordVideo_DocPath_with_deviceID:self.deviceID] stringByAppendingPathComponent:[[TTFileManager sharedModel] get_videoName_With_fileType:@"mp4" deviceID:self.deviceID]];
 }
 
 /// 停止录像
@@ -677,8 +675,8 @@ extern XBAudioUnitRecorder *audioRecorder;
 {
     recordTimeView.hidden = YES;
     // 结束直播录屏，停止截取数据
-    liveRecordVideoPath = @"";
-    liveRecordType = TTRecordLive_stopRecoding;
+    liveRecordPath = @"";
+    liveRecordType = TTRecordLive_SRecod;
 }
 
 #pragma mark - 切换清晰度
@@ -713,35 +711,35 @@ extern XBAudioUnitRecorder *audioRecorder;
 {
     // 0 标清，1 高清，2 4K超清
     qualityLevel = level;
-    [[KHJDeviceManager sharedManager] setQualityLevel_with_deviceID:self.deviceID level:qualityLevel resultBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] setQualityLevel_with_deviceID:self.deviceID level:qualityLevel reBlock:^(NSInteger code) {}];
 }
 
 #pragma mark - 监听
 
 - (void)startListen
 {
-    [[KHJDeviceManager sharedManager] startGetAudio_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] startGetAudio_with_deviceID:self.deviceID reBlock:^(NSInteger code) {}];
     [audioPlayer start];
 }
 
 - (void)stopListen
 {
     [audioPlayer stop];
-    [[KHJDeviceManager sharedManager] stopGetAudio_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] stopGetAudio_with_deviceID:self.deviceID reBlock:^(NSInteger code) {}];
 }
 
 #pragma mark - 对讲
 
 - (void)startTalk
 {
-    [[KHJDeviceManager sharedManager] startTalk_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] startTalk_with_deviceID:self.deviceID reBlock:^(NSInteger code) {}];
     [audioRecorder start];
 }
 
 - (void)stopTalk
 {
     [audioRecorder stop];
-    [[KHJDeviceManager sharedManager] stopTalk_with_deviceID:self.deviceID resultBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] stopTalk_with_deviceID:self.deviceID reBlock:^(NSInteger code) {}];
 }
 
 #pragma mark - 截图

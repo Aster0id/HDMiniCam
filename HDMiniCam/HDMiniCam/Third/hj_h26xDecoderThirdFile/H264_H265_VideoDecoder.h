@@ -1,5 +1,5 @@
 //
-//  H26xHwDecoder.h
+//  H264_H265_VideoDecoder.h
 //  test3
 //
 //  Created by kevin on 2020/2/21.
@@ -24,7 +24,7 @@ typedef enum : NSUInteger {
     H264HWDataType_Layer,
 } H264HWDataType;
 
-@protocol H26xHwDecoderDelegate <NSObject>
+@protocol H264_H265_VideoDecoderDelegate <NSObject>
 
 - (void)getImageWith:(UIImage *_Nullable)image imageSize:(CGSize)imageSize deviceID:(NSString *_Nullable)deviceID;
 
@@ -32,11 +32,11 @@ typedef enum : NSUInteger {
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface H26xHwDecoder : NSObject
+@interface H264_H265_VideoDecoder : NSObject
 
 @property (nonatomic, copy) NSString *deviceID;
 
-@property (nonatomic, strong) id<H26xHwDecoderDelegate> delegate;
+@property (nonatomic, strong) id<H264_H265_VideoDecoderDelegate> delegate;
 
 @property (nonatomic,assign) H264HWDataType showType;                   //显示类型
 @property (nonatomic,strong) UIImage *image;                            //解码成RGB数据时的IMG
@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  释放解码器
  */
-- (void)releaseH26xHwDecoder;
+- (void)releaseH264_H265_VideoDecoder;
  
 /**
  视频截图

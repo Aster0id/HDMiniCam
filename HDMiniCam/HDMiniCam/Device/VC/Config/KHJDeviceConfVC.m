@@ -1,9 +1,9 @@
 //
 //  KHJDeviceConfVC.m
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by kevin on 2020/1/17.
-//  Copyright © 2020 王涛. All rights reserved.
+//  Copyright © 2020 kevin. All rights reserved.
 //
 
 #import "KHJDeviceConfVC.h"
@@ -15,7 +15,7 @@
 #import "KHJlampConfigVC.h"
 #import "KHJTimeZoneConfigVC.h"
 #import "KHJChangePasswordVC.h"
-#import "KHJDeviceManager.h"
+#import "TTFirmwareInterface_API.h"
 
 @interface KHJDeviceConfVC ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -127,7 +127,7 @@
         UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:KHJLocalizedString(@"surestart_", nil) preferredStyle:UIAlertControllerStyleAlert];
         TTWeakSelf
         UIAlertAction *delete = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [[KHJDeviceManager sharedManager] rebootDevice_with_deviceID:weakSelf.deviceInfo.deviceID resultBlock:^(NSInteger code) {
+            [[TTFirmwareInterface_API sharedManager] rebootDevice_with_deviceID:weakSelf.deviceInfo.deviceID reBlock:^(NSInteger code) {
                 [weakSelf.view makeToast:KHJLocalizedString(@"设备已重启", nil)];
             }];
         }];
@@ -140,11 +140,16 @@
         UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:KHJLocalizedString(@"sureSet_", nil) preferredStyle:UIAlertControllerStyleAlert];
         TTWeakSelf
         UIAlertAction *delete = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [[KHJDeviceManager sharedManager] resetDevice_with_deviceID:weakSelf.deviceInfo.deviceID resultBlock:^(NSInteger code) {
-                [weakSelf.view makeToast:KHJLocalizedString(@"正在恢复出厂设置，3秒后将返回设备列表", nil)];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [weakSelf.navigationController popViewControllerAnimated:YES];
-                });
+            [[TTFirmwareInterface_API sharedManager] resetDevice_with_deviceID:weakSelf.deviceInfo.deviceID reBlock:^(NSInteger code) {
+                if (code >= 0) {
+                    [weakSelf.view makeToast:KHJLocalizedString(@"正在恢复出厂设置，3秒后将返回设备列表", nil)];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [weakSelf.navigationController popViewControllerAnimated:YES];
+                    });
+                }
+                else {
+                    [weakSelf.view makeToast:KHJLocalizedString(@"恢复出厂设置失败", nil)];
+                }
             }];
         }];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];

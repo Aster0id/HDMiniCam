@@ -1,14 +1,14 @@
 //
 //  KHJAddDeviceListVC.m
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by kevin on 2020/1/16.
-//  Copyright © 2020 王涛. All rights reserved.
+//  Copyright © 2020 kevin. All rights reserved.
 //
 
 #import "KHJAddDeviceListVC.h"
 #import "KHJAddDeviceListCell.h"
-#import "KHJDeviceManager.h"
+#import "TTFirmwareInterface_API.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 
 #import "KHJOnlineVC.h"
@@ -252,11 +252,11 @@ extern NSString *wifiName;
     }];
     if (!exit) {
         TTWeakSelf
-        [[KHJDataBase sharedDataBase] addDeviceInfo_with_deviceInfo:deviceInfo resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
+        [[KHJDataBase sharedDataBase] addDeviceInfo_with_deviceInfo:deviceInfo reBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
             if (code == 1) {
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     // 通知刷新设备列表
-                    [[NSNotificationCenter defaultCenter] postNotificationName:noti_addDevice_KEY object:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:TT_addDevice_noti_KEY object:nil];
                 });
                 if (self->isQRCode) {
 #pragma mark - 扫码连接
@@ -282,7 +282,7 @@ extern NSString *wifiName;
 
 - (void)EnterBackground
 {
-    [[KHJDeviceManager sharedManager] stopSearchDevice_with_resultBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] stopSearchDevice_with_reBlock:^(NSInteger code) {}];
 }
 
 - (void)EnterForeground
@@ -373,8 +373,8 @@ extern NSString *wifiName;
 
 - (void)timerAction
 {
-    [[KHJDeviceManager sharedManager] stopSearchDevice_with_resultBlock:^(NSInteger code) {
-        [[KHJDeviceManager sharedManager] startSearchDevice_with_resultBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] stopSearchDevice_with_reBlock:^(NSInteger code) {
+        [[TTFirmwareInterface_API sharedManager] startSearchDevice_with_reBlock:^(NSInteger code) {}];
     }];
 }
 

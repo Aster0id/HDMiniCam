@@ -1,52 +1,52 @@
 //
 //  KHJVideoPlayerBaseVC.m
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by kevin on 2020/2/26.
-//  Copyright © 2020 王涛. All rights reserved.
+//  Copyright © 2020 kevin. All rights reserved.
 //
 
 #import "KHJVideoPlayerBaseVC.h"
-#import "H26xHwDecoder.h"
-#import "KHJErrorManager.h"
+#import "H264_H265_VideoDecoder.h"
 #include "JSONStructProtocal.h"
 #include "IPCNetManagerInterface.h"
 
-H26xHwDecoder *h264Decode;
+RecSess_t _LSession = NULL;       // 直播录屏会话
+
+H264_H265_VideoDecoder *liveDecode;
 
 // 解码类型
-TTDecordeType currentDecorderType;
+TTDecordeType decoderType;
 // 多屏时，保存已添加的设备id，用于区分多屏解码器
-NSMutableArray *mutliDeviceIDList;
-H26xHwDecoder *h264Decode1;
-H26xHwDecoder *h264Decode2;
-H26xHwDecoder *h264Decode3;
-H26xHwDecoder *h264Decode4;
+NSMutableArray *mutliDidArr;
+H264_H265_VideoDecoder *first_decoder;
+H264_H265_VideoDecoder *second_decoder;
+H264_H265_VideoDecoder *third_decoder;
+H264_H265_VideoDecoder *fourth_decoder;
 
 TTRecordLiveStatus liveRecordType;          // 直播是否录屏
-NSString *liveRecordVideoPath;              // 直播录屏保存路径
+NSString *liveRecordPath;   // 直播录屏保存路径
 TTRecordBackStatus rebackPlayRecordType;    // 是否回放录屏
-NSString *rebackPlayRecordVideoPath;        // 回放录屏保存路径
-RecSess_t gVideoRecordSession = NULL;       // 直播录屏会话
+NSString *rebackRecordPath; // 回放录屏保存路径
 dispatch_queue_t recordQueue = dispatch_queue_create("recordQueue", DISPATCH_QUEUE_SERIAL);
 
-@interface KHJVideoPlayerBaseVC ()<H26xHwDecoderDelegate>
+@interface KHJVideoPlayerBaseVC ()<H264_H265_VideoDecoderDelegate>
 
 @end
 
 // 监听
-XBAudioUnitPlayer *audioPlayer;
+TTAudioPlayer *audioPlayer;
 // 对讲
-XBAudioUnitRecorder *audioRecorder;
+TTAudioRecorder *audioRecorder;
 
 @implementation KHJVideoPlayerBaseVC
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    h264Decode = [[H26xHwDecoder alloc] init];
-    h264Decode.delegate = self;
-    mutliDeviceIDList = [NSMutableArray array];
+    liveDecode = [[H264_H265_VideoDecoder alloc] init];
+    liveDecode.delegate = self;
+    mutliDidArr = [NSMutableArray array];
 }
 
 /// 创建 监听对象 + 对讲对象
@@ -56,11 +56,11 @@ XBAudioUnitRecorder *audioRecorder;
         audioPlayer = nil;
         audioRecorder = nil;
         // 初始化 - 监听播放器
-        audioPlayer = [[XBAudioUnitPlayer alloc] initWithRate:XBAudioRate_8k bit:XBAudioBit_16 channel:XBAudioChannel_1];
-        audioPlayer.mUUID = sp_deviceID;
-        audioPlayer.codeType = IPCNET_AUDIO_ENCODE_TYPE_G711A;
+        audioPlayer = [[TTAudioPlayer alloc] initWithRate:TTAudioRate_8k bit:TTAudioBit_16 channel:TTAudioChannel_1];
+        audioPlayer.sp_deviceID = sp_deviceID;
+        audioPlayer.audio_encode_Type = IPCNET_AUDIO_ENCODE_TYPE_G711A;
         // 初始化 - 对讲录音
-        audioRecorder = [[XBAudioUnitRecorder alloc] initWithRate:XBAudioRate_8k bit:XBAudioBit_16 channel:XBAudioChannel_1];
+        audioRecorder = [[TTAudioRecorder alloc] initWithRate:TTAudioRate_8k bit:TTAudioBit_16 channel:TTAudioChannel_1];
         strcpy(audioRecorder.mUUID, sp_deviceID.UTF8String);
         audioRecorder.codeType = IPCNET_AUDIO_ENCODE_TYPE_G711A;
     }
@@ -111,17 +111,18 @@ void onStatus(const char* uuid,int status)
 {
     // 子线程回调
     if (status >= 0) {
-        NSLog(@" \n onStatus \n 设备id = %s， 当前在线 ！！！！！！！！！！！！！！",uuid);
+        NSLog(@" \n onStatus \n 设备id = %s， 当前在线",uuid);
     }
     else {
-        NSString *statusCodeString = [KHJErrorManager getError_with_code:status];
-        NSLog(@" \n onStatus \n 设备id = %s \n 状态错误 = %@",uuid,statusCodeString);
+        int errorCode = status;
+        NSString *statusCodeString = [KHJVideoPlayerBaseVC getErrorCcode:errorCode];
+        NSLog(@" \n onStatus \n 设备id = %s \n 状态错误码 = %@",uuid,statusCodeString);
     }
 
     NSMutableDictionary *body = [NSMutableDictionary dictionary];
     [body setValue:[[NSString alloc] initWithUTF8String:uuid] forKey:@"deviceID"];
     [body setValue:@(status) forKey:@"deviceStatus"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:noti_onStatus_KEY object:body];
+    [[NSNotificationCenter defaultCenter] postNotificationName:TT_onStatus_noti_KEY object:body];
 }
 
 /// 获取视频数据
@@ -132,71 +133,66 @@ void onStatus(const char* uuid,int status)
 /// @param timestamp 时间戳
 void onVideoData(const char* uuid,int type,unsigned char*data,int len,long timestamp)
 {
-    // 子线程回调
-    // NSLog(@"onVideoData uuid:%s type:%d len:%d timestamp:%ld\n\n",uuid,type,len,timestamp);
-    if (currentDecorderType == TTDecorde_mutli) {
-        // 多屏解码器
-        NSInteger index = [mutliDeviceIDList indexOfObject:KHJString(@"%s",uuid)];
+    if (decoderType == TTDecorde_moreLive) {
+        
+        NSInteger index = [mutliDidArr indexOfObject:KHJString(@"%s",uuid)];
+        
         switch (index) {
             case 0:
             {
-                h264Decode1.deviceID = KHJString(@"%s",uuid);
-                [h264Decode1 decodeH26xVideoData:data videoSize:len frameType:type timestamp:timestamp];
+                first_decoder.deviceID = KHJString(@"%s",uuid);
+                [first_decoder decodeH26xVideoData:data videoSize:len frameType:type timestamp:timestamp];
             }
                 break;
             case 1:
             {
-                h264Decode2.deviceID = KHJString(@"%s",uuid);
-                [h264Decode2 decodeH26xVideoData:data videoSize:len frameType:type timestamp:timestamp];
+                second_decoder.deviceID = KHJString(@"%s",uuid);
+                [second_decoder decodeH26xVideoData:data videoSize:len frameType:type timestamp:timestamp];
             }
                 break;
             case 2:
             {
-                h264Decode3.deviceID = KHJString(@"%s",uuid);
-                [h264Decode3 decodeH26xVideoData:data videoSize:len frameType:type timestamp:timestamp];
+                third_decoder.deviceID = KHJString(@"%s",uuid);
+                [third_decoder decodeH26xVideoData:data videoSize:len frameType:type timestamp:timestamp];
             }
                 break;
             case 3:
             {
-                h264Decode4.deviceID = KHJString(@"%s",uuid);
-                [h264Decode4 decodeH26xVideoData:data videoSize:len frameType:type timestamp:timestamp];
+                fourth_decoder.deviceID = KHJString(@"%s",uuid);
+                [fourth_decoder decodeH26xVideoData:data videoSize:len frameType:type timestamp:timestamp];
             }
                 break;
             default:
                 break;
         }
     }
-    else if (currentDecorderType == TTDecorde_reback) {
-        // 回放解码器
-        
-    }
-    else if (currentDecorderType == TTDecorde_live) {
+    else if (decoderType == TTDecorde_live) {
         // 直播解码器
-        [h264Decode decodeH26xVideoData:data videoSize:len frameType:type timestamp:timestamp];
-        if (liveRecordType == TTRecordLive_Recording) {
-            // TLog(@"正在直播录屏 path = %@",liveRecordVideoPath);
+        [liveDecode decodeH26xVideoData:data videoSize:len frameType:type timestamp:timestamp];
+        if (liveRecordType == TTRecordLive_Record) {
+            // TLog(@"正在直播录屏 path = %@",liveRecordPath);
             dispatch_sync(recordQueue, ^{
-                if (gVideoRecordSession) {
-                    int ret = IPCNetPutLocalRecordVideoFrame(gVideoRecordSession, type, (const char*)data, len, timestamp);
+                if (_LSession) {
+                    int ret = IPCNetPutLocalRecordVideoFrame(_LSession, type, (const char*)data, len, timestamp);
                     if (ret == 0) TLog(@"输入 Video 数据");
                 }
                 else {
                     if (type >= IPCNET_H264E_NALU_BSLICE && type < IPCNET_H264E_NALU_BUTT) {
                         // h264
-                        gVideoRecordSession = IPCNetStartRecordLocalVideo(liveRecordVideoPath.UTF8String, IPCNET_VIDEO_ENCODE_TYPE_H264, 30, IPCNET_AUDIO_ENCODE_TYPE_G711A, 8000, 2, 1);
+                        _LSession = IPCNetStartRecordLocalVideo(liveRecordPath.UTF8String, IPCNET_VIDEO_ENCODE_TYPE_H264, 30, IPCNET_AUDIO_ENCODE_TYPE_G711A, 8000, 2, 1);
                     }
                     else if (type >= IPCNET_H265E_NALU_BSLICE) {
                         // h265
-                        gVideoRecordSession = IPCNetStartRecordLocalVideo(liveRecordVideoPath.UTF8String, IPCNET_VIDEO_ENCODE_TYPE_H265, 30, IPCNET_AUDIO_ENCODE_TYPE_G711A, 8000, 2, 1);
+                        _LSession = IPCNetStartRecordLocalVideo(liveRecordPath.UTF8String, IPCNET_VIDEO_ENCODE_TYPE_H265, 30, IPCNET_AUDIO_ENCODE_TYPE_G711A, 8000, 2, 1);
                     }
                 }
             });
         }
-        else if (liveRecordType == TTRecordLive_stopRecoding) {
-            // TLog(@"停止直播录屏 path = %@",liveRecordVideoPath);
+        else if (liveRecordType == TTRecordLive_SRecod) {
+            // TLog(@"停止直播录屏 path = %@",liveRecordPath);
             liveRecordType = TTRecordLive_Normal;
-            IPCNetFinishLocalRecord(gVideoRecordSession);
-            gVideoRecordSession = NULL;
+            IPCNetFinishLocalRecord(_LSession);
+            _LSession = NULL;
         }
     }
     else {
@@ -215,10 +211,10 @@ void onAudioData(const char* uuid,int type,unsigned char*data,int len,long times
     // 子线程回调
     NSLog(@" \n onAudioData 设备id = %s \n type = %d  \n length = %d  \n timestamp = %ld",uuid,type,len,timestamp);
     [audioPlayer playThisAudioData:(uint8_t *)data audioSize:len frameType:type timestamp:timestamp];
-    if (liveRecordType == TTRecordLive_Recording) {
+    if (liveRecordType == TTRecordLive_Record) {
         dispatch_sync(recordQueue, ^{
-            if (gVideoRecordSession) {
-                int ret = IPCNetPutLocalRecordAudioFrame(gVideoRecordSession, type, (const char *)data, len, timestamp);
+            if (_LSession) {
+                int ret = IPCNetPutLocalRecordAudioFrame(_LSession, type, (const char *)data, len, timestamp);
                 if (ret == 0) {
                     TLog(@"输入 Audio 数据");
                 }
@@ -228,10 +224,10 @@ void onAudioData(const char* uuid,int type,unsigned char*data,int len,long times
             }
         });
     }
-    else if (liveRecordType == TTRecordLive_stopRecoding) {
+    else if (liveRecordType == TTRecordLive_SRecod) {
         liveRecordType = TTRecordLive_Normal;
-        IPCNetFinishLocalRecord(gVideoRecordSession);
-        gVideoRecordSession = NULL;
+        IPCNetFinishLocalRecord(_LSession);
+        _LSession = NULL;
     }
 }
 
@@ -242,7 +238,7 @@ void onAudioData(const char* uuid,int type,unsigned char*data,int len,long times
 void onJSONString(const char* uuid,int msg_type,const char* jsonstr)
 {
     // 子线程回调
-//    NSLog(@" \n 设备id = %s \n messageCode = %d \n json数据 = %s",uuid,msg_type,jsonstr);
+    NSLog(@" \n 设备id = %s \n messageCode = %d \n json数据 = %s",uuid,msg_type,jsonstr);
     if (msg_type == 4003) {
         // 设备连接
         NSDictionary *body = [NSDictionary dictionary];
@@ -275,32 +271,99 @@ void onJSONString(const char* uuid,int msg_type,const char* jsonstr)
 - (void)setInitMutliDecorder:(BOOL)initMutliDecorder
 {
     if (initMutliDecorder) {
-        currentDecorderType = TTDecorde_mutli;
-        h264Decode1 = [[H26xHwDecoder alloc] init];
-        h264Decode2 = [[H26xHwDecoder alloc] init];
-        h264Decode3 = [[H26xHwDecoder alloc] init];
-        h264Decode4 = [[H26xHwDecoder alloc] init];
-        h264Decode1.delegate = self;
-        h264Decode2.delegate = self;
-        h264Decode3.delegate = self;
-        h264Decode4.delegate = self;
+        decoderType = TTDecorde_moreLive;
+        first_decoder = [[H264_H265_VideoDecoder alloc] init];
+        second_decoder = [[H264_H265_VideoDecoder alloc] init];
+        third_decoder = [[H264_H265_VideoDecoder alloc] init];
+        fourth_decoder = [[H264_H265_VideoDecoder alloc] init];
+        first_decoder.delegate = self;
+        second_decoder.delegate = self;
+        third_decoder.delegate = self;
+        fourth_decoder.delegate = self;
     }
     else {
-        currentDecorderType = TTDecorder_none;
-        [h264Decode1 releaseH26xHwDecoder];
-        [h264Decode2 releaseH26xHwDecoder];
-        [h264Decode3 releaseH26xHwDecoder];
-        [h264Decode4 releaseH26xHwDecoder];
-        h264Decode1 = nil;
-        h264Decode2 = nil;
-        h264Decode3 = nil;
-        h264Decode4 = nil;
+        decoderType = TTDecorder_none;
+        [first_decoder releaseH264_H265_VideoDecoder];
+        [second_decoder releaseH264_H265_VideoDecoder];
+        [third_decoder releaseH264_H265_VideoDecoder];
+        [fourth_decoder releaseH264_H265_VideoDecoder];
+        first_decoder = nil;
+        second_decoder = nil;
+        third_decoder = nil;
+        fourth_decoder = nil;
     }
 }
 
 - (void)sp_releaseDecoder
 {
-    [h264Decode releaseH26xHwDecoder];
+    [liveDecode releaseH264_H265_VideoDecoder];
+}
+
+#pragma mark - errorCode
+
++ (NSString *)getErrorCcode:(int)code
+{
+    if (code == 0)
+        return @"设备连接成功";
+    else if (code == -1)
+        return @"设备未初始化";
+    else if (code == -2)
+        return @"设备已初始化";
+    else if (code == -3)
+        return @"操作超时";
+    else if (code == -4)
+        return @"ID无效";
+    else if (code == -5)
+        return @"参数无效";
+    else if (code == -6)
+        return @"设备离线";
+    else if (code == -7)
+        return @"无法解析名称";
+    else if (code == -8)
+        return @"前缀无效";
+    else if (code == -9)
+        return @"设备id过期";
+    else if (code == -10)
+        return @"没有可用的中继服务器";
+    else if (code == -11)
+        return @"无效的 session";
+    else if (code == -12)
+        return @"session 关闭";
+    else if (code == -13)
+        return @"session 关闭超时";
+    else if (code == -14)
+        return @"session 已关闭";
+    else if (code == -15)
+        return @"远程站点缓冲区已满";
+    else if (code == -16)
+        return @"用户监听断裂";
+    else if (code == -17)
+        return @"session 数量达到最大";
+    else if (code == -18)
+        return @"UDP端口绑定失败";
+    else if (code == -19)
+        return @"用户连接断裂";
+    else if (code == -20)
+        return @"session 关闭的内存不足";
+    else if (code == -21)
+        return @"内部致命错误";
+    else if (code == -22)
+        return @"没有连接的对象";
+    else if (code == -23)
+        return @"没有工作的对象";
+    else if (code == -24)
+        return @"初始化失败";
+    else if (code == -25)
+        return @"对象未准备好";
+    else if (code == -26)
+        return @"密码错误";
+    else if (code == -27)
+        return @"连接丢失";
+    else if (code == -28)
+        return @"数据太长";
+    else if (code == -29)
+        return @"未知错误";
+    return @"未知错误";
 }
 
 @end

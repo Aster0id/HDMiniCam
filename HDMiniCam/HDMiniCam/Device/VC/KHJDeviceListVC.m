@@ -1,9 +1,9 @@
 //
 //  KHJDeviceListVC.m
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by kevin on 2020/1/15.
-//  Copyright © 2020 王涛. All rights reserved.
+//  Copyright © 2020 kevin. All rights reserved.
 //
 
 #import "AppDelegate.h"
@@ -13,7 +13,7 @@
 #import "KHJDeviceListCell.h"
 #import "KHJWIFIConfigVC.h"
 //
-#import "KHJDeviceManager.h"
+#import "TTFirmwareInterface_API.h"
 //
 #import "KHJDeviceInfo.h"
 #import "KHJAddDeviceListVC.h"
@@ -75,8 +75,8 @@ typedef enum : NSUInteger {
     [self addDeviceNoti];
     [self reloadNewDeviceList];
     
-    [[KHJDeviceManager sharedManager] stopSearchDevice_with_resultBlock:^(NSInteger code) {
-        [[KHJDeviceManager sharedManager] startSearchDevice_with_resultBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] stopSearchDevice_with_reBlock:^(NSInteger code) {
+        [[TTFirmwareInterface_API sharedManager] startSearchDevice_with_reBlock:^(NSInteger code) {}];
     }];
 }
 
@@ -108,8 +108,8 @@ typedef enum : NSUInteger {
                 if ([wifiName hasPrefix:info.deviceID]) {
                     TLog(@"wifiName = %@, info.deviceID = %@",wifiName,info.deviceID);
                     [weakSelf.deviceList addObject:info];
-                    [[KHJDeviceManager sharedManager] connect_with_deviceID:info.deviceID
-                                                                   password:info.devicePassword resultBlock:^(NSInteger code) {}];
+                    [[TTFirmwareInterface_API sharedManager] connect_with_deviceID:info.deviceID
+                                                                   password:info.devicePassword reBlock:^(NSInteger code) {}];
                 }
                 else {
                     TLog(@"非本机 ----------- info.deviceID = %@",info.deviceID);
@@ -118,8 +118,8 @@ typedef enum : NSUInteger {
             }
             else {
                 [weakSelf.deviceList addObject:info];
-                [[KHJDeviceManager sharedManager] connect_with_deviceID:info.deviceID
-                                                               password:info.devicePassword resultBlock:^(NSInteger code) {}];
+                [[TTFirmwareInterface_API sharedManager] connect_with_deviceID:info.deviceID
+                                                               password:info.devicePassword reBlock:^(NSInteger code) {}];
             }
         }
     }];
@@ -243,8 +243,8 @@ typedef enum : NSUInteger {
     }
     else if ([info.deviceStatus isEqualToString:@"-6"]) {
         // 离线，重连
-        [[KHJDeviceManager sharedManager] disconnect_with_deviceID:info.deviceID resultBlock:^(NSInteger code) {
-            [[KHJDeviceManager sharedManager] connect_with_deviceID:info.deviceID password:info.devicePassword resultBlock:^(NSInteger code) {}];
+        [[TTFirmwareInterface_API sharedManager] disconnect_with_deviceID:info.deviceID reBlock:^(NSInteger code) {
+            [[TTFirmwareInterface_API sharedManager] connect_with_deviceID:info.deviceID password:info.devicePassword reBlock:^(NSInteger code) {}];
         }];
     }
     else {
@@ -263,7 +263,7 @@ typedef enum : NSUInteger {
         [weakSelf.navigationController pushViewController:vc animated:YES];
     }];
     UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"dltDev_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [[KHJDataBase sharedDataBase] deleteDeviceInfo_with_deviceInfo:deviceInfo resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
+        [[KHJDataBase sharedDataBase] deleteDeviceInfo_with_deviceInfo:deviceInfo reBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
             if ([weakSelf.deviceList containsObject:deviceInfo]) {
                 NSInteger index = [weakSelf.deviceList indexOfObject:deviceInfo];
                 [weakSelf.deviceList removeObject:deviceInfo];
@@ -285,8 +285,8 @@ typedef enum : NSUInteger {
     
     UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"reCnctDev_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         // 离线，重连
-        [[KHJDeviceManager sharedManager] disconnect_with_deviceID:deviceInfo.deviceID resultBlock:^(NSInteger code) {
-            [[KHJDeviceManager sharedManager] connect_with_deviceID:deviceInfo.deviceID password:deviceInfo.devicePassword resultBlock:^(NSInteger code) {}];
+        [[TTFirmwareInterface_API sharedManager] disconnect_with_deviceID:deviceInfo.deviceID reBlock:^(NSInteger code) {
+            [[TTFirmwareInterface_API sharedManager] connect_with_deviceID:deviceInfo.deviceID password:deviceInfo.devicePassword reBlock:^(NSInteger code) {}];
         }];
     }];
     UIAlertAction *config3 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"highCfg_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -310,8 +310,8 @@ typedef enum : NSUInteger {
 - (void)addDeviceNoti
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(netStateChange:) name:@"netStateChange" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getDeviceStatus:) name:noti_onStatus_KEY object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadNewDeviceList) name:noti_addDevice_KEY object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getDeviceStatus:) name:TT_onStatus_noti_KEY object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadNewDeviceList) name:TT_addDevice_noti_KEY object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNewDeviceTellUser:) name:@"addNewDevice_noti_key" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getPhoneWifi) name: UIApplicationWillEnterForegroundNotification object:nil];
 }

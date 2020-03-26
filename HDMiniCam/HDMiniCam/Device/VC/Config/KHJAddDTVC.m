@@ -1,9 +1,9 @@
 //
 //  KHJAddDTVC.m
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by kevin on 2020/3/24.
-//  Copyright © 2020 王涛. All rights reserved.
+//  Copyright © 2020 kevin. All rights reserved.
 //
 
 #import "KHJAddDTVC.h"

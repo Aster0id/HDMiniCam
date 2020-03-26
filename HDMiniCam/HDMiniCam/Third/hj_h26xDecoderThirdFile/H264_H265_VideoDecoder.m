@@ -1,12 +1,12 @@
 //
-//  H26xHwDecoder.m
+//  H264_H265_VideoDecoder.m
 //  test3
 //
 //  Created by kevin on 2020/2/21.
 //  Copyright © 2020 fenzhi. All rights reserved.
 //
 
-#import "H26xHwDecoder.h"
+#import "H264_H265_VideoDecoder.h"
 #import <CoreImage/CoreImage.h>
 #import "pthread.h"
 #import "list.h"
@@ -35,7 +35,7 @@ typedef struct {
 	struct list_head list;
 }VideoFramePackage;
 
-@interface H26xHwDecoder ()
+@interface H264_H265_VideoDecoder ()
 {
     VTDecompressionSessionRef mDeocderSession;
     CMVideoFormatDescriptionRef mDecoderFormatDescription;
@@ -72,7 +72,7 @@ static void didDecompress(void *decompressionOutputRefCon, void *sourceFrameRefC
     *outputPixelBuffer = CVPixelBufferRetain(pixelBuffer);
 }
 
-@implementation H26xHwDecoder
+@implementation H264_H265_VideoDecoder
 
 - (instancetype)init
 {
@@ -99,17 +99,17 @@ static void didDecompress(void *decompressionOutputRefCon, void *sourceFrameRefC
 
 - (void)dealloc
 {
-    [self releaseH26xHwDecoder];
+    [self releaseH264_H265_VideoDecoder];
 }
  
-- (BOOL)initH26xHwDecoder:(VideoEncodeFormat)videoType
+- (BOOL)initH264_H265_VideoDecoder:(VideoEncodeFormat)videoType
 {
     if (mDeocderSession) {
         return YES;
     }
     
     videoFormat = videoType;
-    NSLog(@"initH26xHwDecoder videoFormat:%d", (int)videoFormat);
+    NSLog(@"initH264_H265_VideoDecoder videoFormat:%d", (int)videoFormat);
     OSStatus status=-1;
     if (videoFormat == H264EncodeFormat) {
         const uint8_t *const parameterSetPointers[2] = {pSPS,pPPS};
@@ -182,7 +182,7 @@ static void didDecompress(void *decompressionOutputRefCon, void *sourceFrameRefC
     return YES;
 }
  
-- (void)removeH26xHwDecoder
+- (void)removeH264_H265_VideoDecoder
 {
     if(mDeocderSession) {
         VTDecompressionSessionInvalidate(mDeocderSession);
@@ -197,7 +197,7 @@ static void didDecompress(void *decompressionOutputRefCon, void *sourceFrameRefC
 }
 
 static int exitFlag = -1;
-- (void)releaseH26xHwDecoder
+- (void)releaseH264_H265_VideoDecoder
 {
 	pthread_mutex_lock(&mVideoFramePackageListLock);
 	BOOL decodeThreadRunning = mDecodeThreadRunning;
@@ -222,7 +222,7 @@ static int exitFlag = -1;
 	//delete all the package
 	NSLog(@"All the video package should be delete here to free memory on list");
 	
-    [self removeH26xHwDecoder];
+    [self removeH264_H265_VideoDecoder];
     [self releaseSliceInfo];
     
     if (_pixelBuffer) {
@@ -281,7 +281,7 @@ static int exitFlag = -1;
         HWVideoFrameType frameFlag = [self analyticalData:videoData size:videoSize];
         if (mIsNeedReinit || formatChanged) {
             mIsNeedReinit = NO;
-            [self removeH26xHwDecoder];
+            [self removeH264_H265_VideoDecoder];
         }
         
         if (pSPS && pPPS && (frameFlag == HWVideoFrameType_I || frameFlag == HWVideoFrameType_P || frameFlag == HWVideoFrameType_B)) {
@@ -304,7 +304,7 @@ static int exitFlag = -1;
             *pNalSize = CFSwapInt32HostToBig(nalSize);
             
             CVPixelBufferRef pixelBuffer = NULL;
-            if ([self initH26xHwDecoder:videoType]) {
+            if ([self initH264_H265_VideoDecoder:videoType]) {
                 pixelBuffer = [self decode:buffer videoSize:videoSize];
                 
                 if(pixelBuffer) {
@@ -411,7 +411,7 @@ static int exitFlag = -1;
                     outputPixelBuffer = NULL;
                 } else if(decodeStatus == kVTInvalidSessionErr) {
                     NSLog(@"Invalid session, reset decoder session");
-                    [self removeH26xHwDecoder];
+                    [self removeH264_H265_VideoDecoder];
                 } else if(decodeStatus == kVTVideoDecoderBadDataErr) {
                     NSLog(@"%@", [NSString stringWithFormat:@"Decode failed status=%d(Bad data)", (int)decodeStatus]);
                 } else if(decodeStatus != noErr) {

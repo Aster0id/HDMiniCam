@@ -1,6 +1,6 @@
 //
 //  KHJWIFIConfigVC.m
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by 王涛 on 2020/1/18.
 //  Copyright © 2020年 王涛. All rights reserved.
@@ -9,7 +9,7 @@
 #import "KHJWIFIConfigVC.h"
 #import "KHJWIFIConfigCell.h"
 #import "ZQAlterField.h"
-#import "KHJDeviceManager.h"
+#import "TTFirmwareInterface_API.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 
 @interface KHJWIFIConfigVC ()<UITableViewDelegate, UITableViewDataSource>
@@ -33,8 +33,7 @@
 
     self.titleLab.text = KHJLocalizedString(@"wfSetp_", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
-    [[KHJDeviceManager sharedManager] getDeviceWiFi_with_deviceID:self.deviceInfo.deviceID
-                                                      resultBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] getDeviceWiFi_with_deviceID:self.deviceInfo.deviceID reBlock:^(NSInteger code) {}];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(OnGetDeviceWiFi_CmdResult:)
                                                  name:noti_OnGetDeviceWiFi_CmdResult_KEY
@@ -70,7 +69,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             self->wifiName.text = body[@"SSID"];
         });
-        [[KHJDeviceManager sharedManager] searchDeviceWiFi_with_deviceID:self.deviceInfo.deviceID resultBlock:^(NSInteger code) {}];
+        [[TTFirmwareInterface_API sharedManager] searchDeviceWiFi_with_deviceID:self.deviceInfo.deviceID reBlock:^(NSInteger code) {}];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OnSearchDeviceWiFi_CmdResult:) name:noti_OnSearchDeviceWiFi_CmdResult_KEY object:nil];
     }
     else {
@@ -154,7 +153,7 @@
 
 - (void)changeConnectWifi:(NSDictionary *)body password:(NSString *)password
 {
-    [[KHJDeviceManager sharedManager] setDeviceWiFi_with_deviceID:self.deviceInfo.deviceID ssid:body[@"SSID"] password:password encType:body[@"EncType"] resultBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] setDeviceWiFi_with_deviceID:self.deviceInfo.deviceID ssid:body[@"SSID"] password:password encType:body[@"EncType"] reBlock:^(NSInteger code) {}];
     TTWeakSelf
     [self.view makeToast:KHJLocalizedString(@"wtReconect_", nil)];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

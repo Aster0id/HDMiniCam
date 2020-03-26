@@ -277,34 +277,26 @@
 // 宽度1所代表的秒数
 - (float)secondsOfIntervalValue
 {
-    if (scaleType == ScaleTypeBig) {
-        // 一个格子代表的秒数
+    if (scaleType == ScaleTypeBig)
         return 6.0*60.0/intervalValue;
-    }
-    else if (scaleType == ScaleTypeSmall) {
+    else if (scaleType == ScaleTypeSmall)
         return 60.0/intervalValue;
-    }
     return 6.0*60.0/intervalValue;
 }
 
 - (float)getIntervalForPoint:(NSTimeInterval)inter
 {
-    if (scaleType == ScaleTypeBig) {
-       return  (inter * intervalValue)/(6.0*60.0);
-//        return 6.0*60.0/intervalValue;//一个格子代表的秒数
-    }
-    else if (scaleType == ScaleTypeSmall) {
-        return  (inter * intervalValue)/(60.0);
-        return 60.0/intervalValue;
-    }
-    return  (inter * intervalValue)/(6.0*60.0);
+    if (scaleType == ScaleTypeBig)
+       return  (inter * intervalValue)/(6 * 60.0);
+    else if (scaleType == ScaleTypeSmall)
+        return (inter * intervalValue)/60.0;
+    return  (inter * intervalValue)/(6 * 60.0);
 }
 
 - (void)updateTime:(NSTimeInterval)time
 {
     currentInterval = time;
-    NSString *timeStr = [self currentShowTimeStr];
-    self->timeLab.text = timeStr;
+    timeLab.text = [self currentShowTimeStr];
 }
 
 //更新时间轴
@@ -407,8 +399,8 @@
     [self drawBottomLine:rect.size.height context:contex width:rect.size.width];
     [self drawTopLine:rect.size.height context:contex width:rect.size.width];
 
-    NSString *timeStr = [self currentShowTimeStr];
-    self->timeLab.text = timeStr;
+//    NSString *timeStr = [self currentShowTimeStr];
+//    self->timeLab.text = timeStr;
 
 //    TTWeakSelf
 //    dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -619,8 +611,8 @@
         return;
     }
     CGContextBeginPath(ctx);
-    CGContextMoveToPoint(ctx, x-0.5, 17);
-    CGContextAddLineToPoint(ctx, x-0.5, 35);
+    CGContextMoveToPoint(ctx, x - 0.5, 17);
+    CGContextAddLineToPoint(ctx, x - 0.5, 35);
     CGContextSetLineWidth(ctx, 1.0);
     CGContextSetStrokeColorWithColor(ctx, [UIColor grayColor].CGColor);
     CGContextStrokePath(ctx);

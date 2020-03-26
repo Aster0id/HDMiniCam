@@ -1,9 +1,9 @@
 //
 //  KHJDataBase.m
-//  HDMiniCam
+//  SuperIPC
 //
 //  Created by kevin on 2020/2/18.
-//  Copyright © 2020 王涛. All rights reserved.
+//  Copyright © 2020 kevin. All rights reserved.
 //
 
 #import "KHJDataBase.h"
@@ -157,14 +157,14 @@ static KHJDataBase *_db = nil;
     NSArray *arr = [[KHJDataBase sharedDataBase] getAllDeviceInfo];
     for (int i = 0; i < arr.count; i++) {
         KHJDeviceInfo *info = arr[i];
-        [self deleteDeviceInfo_with_deviceInfo:info resultBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
+        [self deleteDeviceInfo_with_deviceInfo:info reBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
             TLog(@"deviecID = %@，已删除",info.deviceID);
         }];
     }
 }
 
 // 添加设备
-- (void)addDeviceInfo_with_deviceInfo:(KHJDeviceInfo *)deviceInfo resultBlock:(void(^)(KHJDeviceInfo *info,int code))resultBlock
+- (void)addDeviceInfo_with_deviceInfo:(KHJDeviceInfo *)deviceInfo reBlock:(void(^)(KHJDeviceInfo *info,int code))reBlock
 {
     NSString *sql = [NSString stringWithFormat:@"INSERT INTO DeviceInfoListTable (deviceID,deviceStatus, devicePassword,deviceName,deviceType,reserve1,reserve2,reserve3,reserve4,reserve5,reserve6,reserve7,reserve8,reserve9,reserve10,reserve11,reserve12,reserve13,reserve14,reserve15) VALUES ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",
                      deviceInfo.deviceID,
@@ -192,17 +192,17 @@ static KHJDataBase *_db = nil;
         BOOL result = [db executeUpdate:sql];
         if (result) {
             NSLog(@"插入数据成功");
-            resultBlock(deviceInfo, 1);
+            reBlock(deviceInfo, 1);
         }
         else {
             NSLog(@"插入数据失败");
-            resultBlock(deviceInfo, 0);
+            reBlock(deviceInfo, 0);
         }
     }];
 }
 
 // 删除设备
-- (void)deleteDeviceInfo_with_deviceInfo:(KHJDeviceInfo *)deviceInfo resultBlock:(void(^)(KHJDeviceInfo *info,int code))resultBlock
+- (void)deleteDeviceInfo_with_deviceInfo:(KHJDeviceInfo *)deviceInfo reBlock:(void(^)(KHJDeviceInfo *info,int code))reBlock
 {
     [self.queue inDatabase:^(FMDatabase *db) {
         NSString *sql = [NSString stringWithFormat:@"delete FROM DeviceInfoListTable WHERE deviceID='%@'",deviceInfo.deviceID];
@@ -210,18 +210,18 @@ static KHJDataBase *_db = nil;
         dispatch_async(dispatch_get_main_queue(), ^{
             if (result) {
                 NSLog(@"删除数据成功");
-                resultBlock(deviceInfo, 1);
+                reBlock(deviceInfo, 1);
             }
             else {
                 NSLog(@"删除数据失败");
-                resultBlock(deviceInfo, 0);
+                reBlock(deviceInfo, 0);
             }
         });
     }];
 }
 
 // 更新设备
-- (void)updateDeviceInfo_with_deviceInfo:(KHJDeviceInfo *)deviceInfo resultBlock:(void(^)(KHJDeviceInfo *info,int code))resultBlock
+- (void)updateDeviceInfo_with_deviceInfo:(KHJDeviceInfo *)deviceInfo reBlock:(void(^)(KHJDeviceInfo *info,int code))reBlock
 {
     [self.queue inDatabase:^(FMDatabase *db) {
         NSString *sql = [NSString stringWithFormat:@"UPDATE DeviceInfoListTable SET deviceID='%@',deviceStatus='%@',devicePassword='%@',deviceName='%@',deviceType='%@',reserve1='%@',reserve2='%@',reserve3='%@',reserve4='%@',reserve5='%@',reserve6='%@',reserve7='%@',reserve8='%@',reserve9='%@',reserve10='%@',reserve11='%@',reserve12='%@',reserve13='%@',reserve14='%@',reserve15='%@'",
@@ -248,17 +248,17 @@ static KHJDataBase *_db = nil;
         BOOL result = [db executeUpdate:sql];
         if (result) {
             NSLog(@"更新数据成功，当前设备状态.............. \n deviceID = %@ \n deviceStatus = %@",deviceInfo.deviceID,deviceInfo.deviceStatus);
-            resultBlock(deviceInfo, 1);
+            reBlock(deviceInfo, 1);
         }
         else {
             NSLog(@"更新数据失败");
-            resultBlock(deviceInfo, 0);
+            reBlock(deviceInfo, 0);
         }
     }];
 }
 
 // 查找设备
-- (void)selectDeviceInfo_with_deviceInfo:(NSString *)deviceID resultBlock:(void(^)(KHJDeviceInfo *info,int code))resultBlock
+- (void)selectDeviceInfo_with_deviceInfo:(NSString *)deviceID reBlock:(void(^)(KHJDeviceInfo *info,int code))reBlock
 {
     KHJDeviceInfo *deviceInfo = [[KHJDeviceInfo alloc] init];
     __block int code = 0;
@@ -312,7 +312,7 @@ static KHJDataBase *_db = nil;
             code = 1;
         }
     }];
-    resultBlock(deviceInfo, code);
+    reBlock(deviceInfo, code);
 }
 
 @end
