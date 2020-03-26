@@ -26,7 +26,7 @@
     [self registerLJWKeyboardHandler];
     timeView.layer.borderWidth = 1;
     timeView.layer.borderColor = UIColorFromRGB(0xF5F5F5).CGColor;
-    self.titleLab.text = KHJLocalizedString(@"rcodSet_", nil);
+    self.titleLab.text = TTLocalString(@"rcodSet_", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -54,17 +54,17 @@
 
 - (void)addFenBianLv
 {
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"fenbianlv_", nil)
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:TTLocalString(@"fenbianlv_", nil)
                                                                        message:nil
                                                                 preferredStyle:UIAlertControllerStyleAlert];
     TTWeakSelf
-    UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"1080P", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config = [UIAlertAction actionWithTitle:TTLocalString(@"1080P", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf setAlarmTypeWith:1];
     }];
-    UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"720P", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config1 = [UIAlertAction actionWithTitle:TTLocalString(@"720P", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf setAlarmTypeWith:2];
     }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"取消", nil) style:UIAlertActionStyleCancel handler:nil];
     [alertview addAction:config];
     [alertview addAction:config1];
     [alertview addAction:cancel];

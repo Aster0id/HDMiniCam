@@ -69,7 +69,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.titleLab.text = KHJLocalizedString(@"二维码扫描", nil);
+    self.titleLab.text = TTLocalString(@"二维码扫描", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     
     self.view.backgroundColor = [UIColor clearColor];

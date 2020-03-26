@@ -12,12 +12,10 @@
 //
 #import "JSONStructProtocal.h"
 //
-#import "TTPlayVoiceManager.h"
 #import <Photos/Photos.h>
 #import <Photos/PHPhotoLibrary.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "AppDelegate.h"
-#import "UIDevice+TFDevice.h"
 
 //  当前解码类型
 extern TTDecordeType decoderType;
@@ -134,7 +132,7 @@ extern TTAudioRecorder *audioRecorder;
 {
     [activeView startAnimating];
     qualityLevel = 0;
-    qualityLab.text = KHJLocalizedString(@"sd_", nil);
+    qualityLab.text = TTLocalString(@"sd_", nil);
     [[TTFirmwareInterface_API sharedManager] startGetVideo_with_deviceID:self.deviceID quality:1 reBlock:^(NSInteger code) {}];
 }
 
@@ -154,7 +152,7 @@ extern TTAudioRecorder *audioRecorder;
             isHengping = NO;
             AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
             appDelegate.canLandscape = NO;//关闭横屏仅允许竖屏
-            [UIDevice switchNewOrientation:UIInterfaceOrientationPortrait];
+            [UIDevice TTurnAroundDirection:UIInterfaceOrientationPortrait];
             naviView.alpha = 1;
             hpBackBtn.alpha = 0;
             hpNaviView.alpha = 0;
@@ -186,7 +184,7 @@ extern TTAudioRecorder *audioRecorder;
             naviViewCH.constant = 0;
             AppDelegate *appDelegate    = (AppDelegate *)[UIApplication sharedApplication].delegate;
             appDelegate.canLandscape   = YES;
-            [UIDevice switchNewOrientation:UIInterfaceOrientationLandscapeRight];
+            [UIDevice TTurnAroundDirection:UIInterfaceOrientationLandscapeRight];
         }
     }
 }
@@ -241,19 +239,19 @@ extern TTAudioRecorder *audioRecorder;
 {
     // 0 标清，1 高清，2 4K超清
     if (qualityLevel == 0) {
-        qualityLab.text = KHJLocalizedString(@"sd_", nil);
+        qualityLab.text = TTLocalString(@"sd_", nil);
     }
     else if (qualityLevel == 1) {
-        qualityLab.text = KHJLocalizedString(@"hd_", nil);
+        qualityLab.text = TTLocalString(@"hd_", nil);
     }
     else if (qualityLevel == 2) {
-        qualityLab.text = KHJLocalizedString(@"kd_", nil);
+        qualityLab.text = TTLocalString(@"kd_", nil);
     }
 }
 
 - (void)OnSetFilpCmdResult
 {
-    [self.view makeToast:KHJLocalizedString(@"chgSucc_", nil)];
+    [self.view makeToast:TTLocalString(@"chgSucc_", nil)];
 }
 
 // 获取 彩色/黑色 画面
@@ -269,7 +267,7 @@ extern TTAudioRecorder *audioRecorder;
 
 - (void)OnSetIRModeCmdResult
 {
-    [self.view makeToast:KHJLocalizedString(@"chgSucc_", nil)];
+    [self.view makeToast:TTLocalString(@"chgSucc_", nil)];
 }
 
 - (void)OnSetSaturationLevelCmdResult
@@ -278,7 +276,7 @@ extern TTAudioRecorder *audioRecorder;
         NSString *key = self.change_1497_body.allKeys.firstObject;
         NSString *value = self.change_1497_body.allValues.firstObject;
         [self._1497_body setValue:value forKey:key];
-        [self.view makeToast:KHJLocalizedString(@"setSucc_", nil)];
+        [self.view makeToast:TTLocalString(@"setSucc_", nil)];
     }
 }
 
@@ -347,7 +345,7 @@ extern TTAudioRecorder *audioRecorder;
         isHengping = NO;
         AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
         appDelegate.canLandscape = NO;//关闭横屏仅允许竖屏
-        [UIDevice switchNewOrientation:UIInterfaceOrientationPortrait];
+        [UIDevice TTurnAroundDirection:UIInterfaceOrientationPortrait];
         naviView.alpha = 1;
         hpBackBtn.alpha = 0;
         hpNaviView.alpha = 0;
@@ -440,7 +438,7 @@ extern TTAudioRecorder *audioRecorder;
         isHengping = YES;
         AppDelegate *appDelegate    = (AppDelegate *)[UIApplication sharedApplication].delegate;
         appDelegate.canLandscape   = YES;
-        [UIDevice switchNewOrientation:UIInterfaceOrientationLandscapeRight];
+        [UIDevice TTurnAroundDirection:UIInterfaceOrientationLandscapeRight];
     }
     else if (sender.tag == 20) {
         // 设置
@@ -518,37 +516,37 @@ extern TTAudioRecorder *audioRecorder;
 
 - (void)gotoSetup
 {
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"HMSet_", nil)
-                                                                       message:KHJLocalizedString(@"SXSet_", nil)
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:TTLocalString(@"HMSet_", nil)
+                                                                       message:TTLocalString(@"SXSet_", nil)
                                                                 preferredStyle:UIAlertControllerStyleAlert];
     TTWeakSelf
-    UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"baohedu_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config = [UIAlertAction actionWithTitle:TTLocalString(@"baohedu_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:1];
     }];
-    UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"liangdu_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config1 = [UIAlertAction actionWithTitle:TTLocalString(@"liangdu_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:2];
     }];
-    UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"ruidu_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config2 = [UIAlertAction actionWithTitle:TTLocalString(@"ruidu_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:3];
     }];
-    UIAlertAction *config3 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"duibidu_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config3 = [UIAlertAction actionWithTitle:TTLocalString(@"duibidu_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:4];
     }];
     
-    NSString *picColor = colorCfg.Type == 0 ? KHJLocalizedString(@"colorView_", nil) : KHJLocalizedString(@"blackView_", nil);
+    NSString *picColor = colorCfg.Type == 0 ? TTLocalString(@"colorView_", nil) : TTLocalString(@"blackView_", nil);
     UIAlertAction *config4 = [UIAlertAction actionWithTitle:picColor style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:5];
     }];
-    UIAlertAction *config5 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"chuizhijingxiang_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config5 = [UIAlertAction actionWithTitle:TTLocalString(@"chuizhijingxiang_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:6];
     }];
-    UIAlertAction *config6 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"shuipingjingxiang_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config6 = [UIAlertAction actionWithTitle:TTLocalString(@"shuipingjingxiang_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:7];
     }];
-    UIAlertAction *config7 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"defatValue_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config7 = [UIAlertAction actionWithTitle:TTLocalString(@"defatValue_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:8];
     }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
 
     [alertview addAction:config];
     [alertview addAction:config1];
@@ -565,37 +563,37 @@ extern TTAudioRecorder *audioRecorder;
 - (void)chooseSetupWith:(NSInteger)index
 {
     NSArray *arr = @[
-    KHJLocalizedString(@"baohedu_", nil),
-    KHJLocalizedString(@"liangdu_", nil),
-    KHJLocalizedString(@"ruidu_", nil),
-    KHJLocalizedString(@"duibidu_", nil),
-    KHJLocalizedString(@"color/black_", nil),
-    KHJLocalizedString(@"chuizhijingxiang_", nil),
-    KHJLocalizedString(@"shuipingjingxiang_", nil),
-    KHJLocalizedString(@"defatValue_", nil)];
+    TTLocalString(@"baohedu_", nil),
+    TTLocalString(@"liangdu_", nil),
+    TTLocalString(@"ruidu_", nil),
+    TTLocalString(@"duibidu_", nil),
+    TTLocalString(@"color/black_", nil),
+    TTLocalString(@"chuizhijingxiang_", nil),
+    TTLocalString(@"shuipingjingxiang_", nil),
+    TTLocalString(@"defatValue_", nil)];
     
     sliderNameLab.text = arr[index - 1];
     if (index == 1 || index == 2 || index == 3 || index == 4) {
         slideView.hidden = NO;
-        if ([sliderNameLab.text isEqualToString:KHJLocalizedString(@"baohedu_", nil)]) {
+        if ([sliderNameLab.text isEqualToString:TTLocalString(@"baohedu_", nil)]) {
             float percent = [self._1497_body[@"Saturtion"] intValue]/255.0;
             sliderControl.value = percent;
-            sliderPercentLab.text = KHJString(@"%d%%",(int)(percent*100));
+            sliderPercentLab.text = TTStr(@"%d%%",(int)(percent*100));
         }
-        else if ([sliderNameLab.text isEqualToString:KHJLocalizedString(@"liangdu_", nil)]) {
+        else if ([sliderNameLab.text isEqualToString:TTLocalString(@"liangdu_", nil)]) {
             float percent = [self._1497_body[@"Brightness"] intValue]/255.0;
             sliderControl.value = percent;
-            sliderPercentLab.text = KHJString(@"%d%%",(int)(percent*100));
+            sliderPercentLab.text = TTStr(@"%d%%",(int)(percent*100));
         }
-        else if ([sliderNameLab.text isEqualToString:KHJLocalizedString(@"ruidu_", nil)]) {
+        else if ([sliderNameLab.text isEqualToString:TTLocalString(@"ruidu_", nil)]) {
             float percent = [self._1497_body[@"Acutance"] intValue]/255.0;
             sliderControl.value = percent;
-            sliderPercentLab.text = KHJString(@"%d%%",(int)(percent*100));
+            sliderPercentLab.text = TTStr(@"%d%%",(int)(percent*100));
         }
-        else if ([sliderNameLab.text isEqualToString:KHJLocalizedString(@"duibidu_", nil)]) {
+        else if ([sliderNameLab.text isEqualToString:TTLocalString(@"duibidu_", nil)]) {
             float percent = [self._1497_body[@"Contrast"] intValue]/255.0;
             sliderControl.value = percent;
-            sliderPercentLab.text = KHJString(@"%d%%",(int)(percent*100));
+            sliderPercentLab.text = TTStr(@"%d%%",(int)(percent*100));
         }
     }
     else if (index == 5) {
@@ -622,10 +620,10 @@ extern TTAudioRecorder *audioRecorder;
         TTWeakSelf
         [[TTFirmwareInterface_API sharedManager] setDefault_with_deviceID:self.deviceID reBlock:^(NSInteger code) {
             if (code >= 0) {
-                [weakSelf.view makeToast:KHJLocalizedString(@"devBecomeDft_", nil)];
+                [weakSelf.view makeToast:TTLocalString(@"devBecomeDft_", nil)];
             }
             else {
-                [weakSelf.view makeToast:KHJLocalizedString(@"reTry_", nil)];
+                [weakSelf.view makeToast:TTLocalString(@"reTry_", nil)];
             }
         }];
     }
@@ -638,22 +636,22 @@ extern TTAudioRecorder *audioRecorder;
 {
     int persent = (int)(sender.value*100);
     int value = persent*2.55;
-    sliderPercentLab.text = KHJString(@"%d%%",persent);
+    sliderPercentLab.text = TTStr(@"%d%%",persent);
     [self.change_1497_body removeAllObjects];
-    if ([sliderNameLab.text isEqualToString:KHJLocalizedString(@"baohedu_", nil)]) {
-        [self.change_1497_body setValue:KHJString(@"%d",value) forKey:@"Saturtion"];
+    if ([sliderNameLab.text isEqualToString:TTLocalString(@"baohedu_", nil)]) {
+        [self.change_1497_body setValue:TTStr(@"%d",value) forKey:@"Saturtion"];
         [[TTFirmwareInterface_API sharedManager] setSaturationLevel_with_deviceID:self.deviceID level:value reBlock:^(NSInteger code) {}];
     }
-    else if ([sliderNameLab.text isEqualToString:KHJLocalizedString(@"liangdu_", nil)]) {
-        [self.change_1497_body setValue:KHJString(@"%d",value) forKey:@"Brightness"];
+    else if ([sliderNameLab.text isEqualToString:TTLocalString(@"liangdu_", nil)]) {
+        [self.change_1497_body setValue:TTStr(@"%d",value) forKey:@"Brightness"];
         [[TTFirmwareInterface_API sharedManager] setBrightnessLevel_with_deviceID:self.deviceID level:value reBlock:^(NSInteger code) {}];
     }
-    else if ([sliderNameLab.text isEqualToString:KHJLocalizedString(@"ruidu_", nil)]) {
-        [self.change_1497_body setValue:KHJString(@"%d",value) forKey:@"Acutance"];
+    else if ([sliderNameLab.text isEqualToString:TTLocalString(@"ruidu_", nil)]) {
+        [self.change_1497_body setValue:TTStr(@"%d",value) forKey:@"Acutance"];
         [[TTFirmwareInterface_API sharedManager] setAcutanceLevel_with_deviceID:self.deviceID level:value reBlock:^(NSInteger code) {}];
     }
-    else if ([sliderNameLab.text isEqualToString:KHJLocalizedString(@"duibidu_", nil)]) {
-        [self.change_1497_body setValue:KHJString(@"%d",value) forKey:@"Contrast"];
+    else if ([sliderNameLab.text isEqualToString:TTLocalString(@"duibidu_", nil)]) {
+        [self.change_1497_body setValue:TTStr(@"%d",value) forKey:@"Contrast"];
         [[TTFirmwareInterface_API sharedManager] setCompareColorLevel_with_deviceID:self.deviceID level:value reBlock:^(NSInteger code) {}];
     }
 }
@@ -667,7 +665,7 @@ extern TTAudioRecorder *audioRecorder;
     [self fireTimer];
     // 直播录屏，截取数据
     liveRecordType = TTRecordLive_Record;
-    liveRecordPath = [[[TTFileManager sharedModel] get_live_recordVideo_DocPath_with_deviceID:self.deviceID] stringByAppendingPathComponent:[[TTFileManager sharedModel] get_videoName_With_fileType:@"mp4" deviceID:self.deviceID]];
+    liveRecordPath = [[[TTFileManager sharedModel] getLiveRecordVideoWithDeviceID:self.deviceID] stringByAppendingPathComponent:[[TTFileManager sharedModel] getVideoNameWithFileType:@"mp4" deviceID:self.deviceID]];
 }
 
 /// 停止录像
@@ -683,21 +681,21 @@ extern TTAudioRecorder *audioRecorder;
 
 - (void)gotoChangeQuality
 {
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"setQualty_", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:TTLocalString(@"setQualty_", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
     TTWeakSelf
-    UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"kd_", nil)
+    UIAlertAction *config = [UIAlertAction actionWithTitle:TTLocalString(@"kd_", nil)
                                                      style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf setQualityWith:2];
     }];
-    UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"hd_", nil)
+    UIAlertAction *config1 = [UIAlertAction actionWithTitle:TTLocalString(@"hd_", nil)
                                                       style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf setQualityWith:1];
     }];
-    UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sd_", nil)
+    UIAlertAction *config2 = [UIAlertAction actionWithTitle:TTLocalString(@"sd_", nil)
                                                       style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf setQualityWith:0];
     }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil)
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cancel_", nil)
                                                      style:UIAlertActionStyleCancel handler:nil];
 
     [alertview addAction:config];
@@ -747,12 +745,11 @@ extern TTAudioRecorder *audioRecorder;
 - (void)takePhoto
 {
     //播放拍照声音
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"screenShot" ofType:@"mp3"];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"TT_screenShot" ofType:@"mp3"];
     NSURL *url = [NSURL fileURLWithPath:filePath];
-    [[TTPlayVoiceManager shareInstance] playVoiceWithURL:url];
+    [[TTCommon share] playVoiceWithURL:url];
     
-    NSString *savedImagePath = [[[TTFileManager sharedModel] get_live_screenShot_DocPath_with_deviceID:self.deviceID] stringByAppendingPathComponent:[[TTFileManager sharedModel] get_videoName_With_fileType:@"jpg" deviceID:self.deviceID]];
-    TLog(@"saveImagePath = %@",savedImagePath);
+    NSString *savedImagePath = [[[TTFileManager sharedModel] getliveScreenShotWithDeviceID:self.deviceID] stringByAppendingPathComponent:[[TTFileManager sharedModel] getVideoNameWithFileType:@"jpg" deviceID:self.deviceID]];
 
     //截取指定区域图片
     UIImage *screenImage = [self snapsHotView:playerView];
@@ -764,7 +761,7 @@ extern TTAudioRecorder *audioRecorder;
         [self loadImageFinished:[[UIImage alloc] initWithContentsOfFile:savedImagePath]];
     }
     else {
-        [[TTHub shareHub] showText:KHJLocalizedString(@"picFail_", nil) addToView:self.view];
+        [[TTHub shareHub] showText:TTLocalString(@"picFail_", nil) addToView:self.view];
     }
 }
 - (UIImage *)snapsHotView:(UIView *)view
@@ -780,10 +777,10 @@ extern TTAudioRecorder *audioRecorder;
 {
     PHAuthorizationStatus status =  [PHPhotoLibrary authorizationStatus];
    if (status == PHAuthorizationStatusRestricted || status == PHAuthorizationStatusDenied) {
-       UIAlertController *alertController = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"tips_", nil)
-                                                                                message:KHJLocalizedString(@"setPhotoQuanX_", nil)
+       UIAlertController *alertController = [UIAlertController alertControllerWithTitle:TTLocalString(@"tips_", nil)
+                                                                                message:TTLocalString(@"setPhotoQuanX_", nil)
                                                                          preferredStyle:(UIAlertControllerStyleAlert)];
-       UIAlertAction *action = [UIAlertAction actionWithTitle:KHJLocalizedString(@"IGeit", nil)
+       UIAlertAction *action = [UIAlertAction actionWithTitle:TTLocalString(@"IGeit", nil)
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction * _Nonnull action) {
            
@@ -817,7 +814,7 @@ extern TTAudioRecorder *audioRecorder;
     int min  = (int)(recordTimes - hour * 3600) / 60;
     int sec  = (int)(recordTimes - hour * 3600 - min * 60);
     recordTimes ++;
-    recordTimeLab.text = KHJString(@"%02d:%02d:%02d", hour, min, sec);
+    recordTimeLab.text = TTStr(@"%02d:%02d:%02d", hour, min, sec);
 }
 
 /* 停止倒计时 */
@@ -846,10 +843,10 @@ extern TTAudioRecorder *audioRecorder;
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSCalendarUnit unit = kCFCalendarUnitYear|kCFCalendarUnitMonth|kCFCalendarUnitDay;
     NSDateComponents *components = [calendar components:unit fromDate:today];
-    NSString *year = KHJString(@"%ld", (long)[components year]);
-    NSString *month = KHJString(@"%02ld", (long)[components month]);
-    NSString *day = KHJString(@"%02ld", (long)[components day]);
-    NSString *imagePath1 = [[[TTFileManager sharedModel] get_screenShot_DocPath_deviceID:self.deviceInfo.deviceID] stringByAppendingPathComponent:KHJString(@"%@%@%@.png",year,month,day)];
+    NSString *year = TTStr(@"%ld", (long)[components year]);
+    NSString *month = TTStr(@"%02ld", (long)[components month]);
+    NSString *day = TTStr(@"%02ld", (long)[components day]);
+    NSString *imagePath1 = [[[TTFileManager sharedModel] getScreenShotWithDeviceID:self.deviceInfo.deviceID] stringByAppendingPathComponent:TTStr(@"%@%@%@.png",year,month,day)];
     [UIImagePNGRepresentation(screenImage) writeToFile:imagePath1 atomically:YES];
 }
 

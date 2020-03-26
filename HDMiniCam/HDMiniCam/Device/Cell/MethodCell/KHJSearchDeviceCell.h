@@ -6,13 +6,13 @@
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJBaseCell.h"
+#import "TTBaseCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^KHJSearchDeviceCellBlock)(NSInteger);
 
-@interface KHJSearchDeviceCell : KHJBaseCell
+@interface KHJSearchDeviceCell : TTBaseCell
 
 @property (weak, nonatomic) IBOutlet UILabel *idd;
 @property (nonatomic, copy) KHJSearchDeviceCellBlock block;

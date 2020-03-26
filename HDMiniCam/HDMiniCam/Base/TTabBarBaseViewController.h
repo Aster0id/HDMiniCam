@@ -1,5 +1,5 @@
 //
-//  KHJTabBarBaseVC.h
+//  TTabBarBaseViewController.h
 //  SuperIPC
 //
 //  Created by 王涛 on 2020/1/12.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KHJTabBarBaseVC : UITabBarController
+@interface TTabBarBaseViewController : UITabBarController
 
 @end

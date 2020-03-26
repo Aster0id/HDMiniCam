@@ -1,5 +1,5 @@
 //
-//  KHJDeviceListVC.m
+//  TTDeviceListViewController.m
 //  SuperIPC
 //
 //  Created by kevin on 2020/1/15.
@@ -7,15 +7,14 @@
 //
 
 #import "AppDelegate.h"
-#import "UIDevice+TFDevice.h"
-#import "KHJDeviceListVC.h"
+#import "TTDeviceListViewController.h"
 #import "KHJOnlineVC.h"
 #import "KHJDeviceListCell.h"
 #import "KHJWIFIConfigVC.h"
 //
 #import "TTFirmwareInterface_API.h"
 //
-#import "KHJDeviceInfo.h"
+#import "TTDeviceInfo.h"
 #import "KHJAddDeviceListVC.h"
 #import "KHJSearchDeviceVC.h"
 #import "KHJMutilScreenVC.h"
@@ -30,7 +29,7 @@ typedef enum : NSUInteger {
     hotPointType_more,
 } hotPointType;
 
-@interface KHJDeviceListVC ()<UITableViewDelegate, UITableViewDataSource, KHJDeviceListCellDelegate, KHJVideoPlayer_sp_VCDelegate>
+@interface TTDeviceListViewController ()<UITableViewDelegate, UITableViewDataSource, KHJDeviceListCellDelegate, KHJVideoPlayer_sp_VCDelegate>
 {
     hotPointType hotPoint;
     __weak IBOutlet UITableView *contentTBV;
@@ -42,7 +41,7 @@ typedef enum : NSUInteger {
 
 @end
 
-@implementation KHJDeviceListVC
+@implementation TTDeviceListViewController
 
 - (NSMutableDictionary *)ensureDeviceBody
 {
@@ -71,7 +70,7 @@ typedef enum : NSUInteger {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.deviceList addObjectsFromArray:[[KHJDataBase sharedDataBase] getAllDeviceInfo]];
+    [self.deviceList addObjectsFromArray:[[TTDataBase shareDB] getAllDeviceInfo]];
     [self addDeviceNoti];
     [self reloadNewDeviceList];
     
@@ -91,13 +90,13 @@ typedef enum : NSUInteger {
 {
 
     NSArray *subDeviceList = [self.deviceList copy];
-    NSArray *array = [[KHJDataBase sharedDataBase] getAllDeviceInfo];
+    NSArray *array = [[TTDataBase shareDB] getAllDeviceInfo];
     TTWeakSelf
     [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        KHJDeviceInfo *info = (KHJDeviceInfo *)obj;
+        TTDeviceInfo *info = (TTDeviceInfo *)obj;
         __block BOOL isExit = NO;
         [subDeviceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            KHJDeviceInfo *subInfo = (KHJDeviceInfo *)obj;
+            TTDeviceInfo *subInfo = (TTDeviceInfo *)obj;
             if ([info.deviceID isEqualToString:subInfo.deviceID]) {
                 isExit = YES;
                 *stop = YES;
@@ -145,7 +144,7 @@ typedef enum : NSUInteger {
     TTWeakSelf
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         for (int i = 0; i < passDeviceList.count; i++) {
-            KHJDeviceInfo *info = passDeviceList[i];
+            TTDeviceInfo *info = passDeviceList[i];
             if ([info.deviceStatus isEqualToString:@"0"]) {
                 [list addObject:info.deviceID];
             }
@@ -154,7 +153,7 @@ typedef enum : NSUInteger {
             /* 显示多个视频 */
             AppDelegate *appDelegate    = (AppDelegate *)[UIApplication sharedApplication].delegate;
             appDelegate.canLandscape   = YES;
-            [UIDevice switchNewOrientation:UIInterfaceOrientationLandscapeRight];
+            [UIDevice TTurnAroundDirection:UIInterfaceOrientationLandscapeRight];
             [weakSelf.navigationController setNavigationBarHidden:YES animated:YES];
             KHJMutilScreenVC *vc = [[KHJMutilScreenVC alloc] init];
             vc.list = [list copy];
@@ -183,27 +182,26 @@ typedef enum : NSUInteger {
     if (cell == nil) {
         cell = [[NSBundle mainBundle] loadNibNamed:@"KHJDeviceListCell" owner:nil options:nil][0];
     }
-    KHJDeviceInfo *info = [[KHJDeviceInfo alloc] init];
+    TTDeviceInfo *info = [[TTDeviceInfo alloc] init];
     info = self.deviceList[indexPath.row];
     
     cell.deviceID = info.deviceID;
     cell.idd.text = info.deviceID;
     cell.name.text = info.deviceName;
     
-    if ([info.deviceStatus isEqualToString:@"0"]) {
-        cell.status.text = KHJLocalizedString(@"onLn_", nil);
-    }
-    else if ([info.deviceStatus isEqualToString:@"-6"]) {
-        cell.status.text = KHJLocalizedString(@"ofLn_", nil);
-    }
-    else if ([info.deviceStatus isEqualToString:@"-26"]) {
-        cell.status.text = KHJLocalizedString(@"pwdErr_", nil);
-    }
-    else {
-        cell.status.text = KHJLocalizedString(@"cneting_", nil);
-    }
+    if ([info.deviceStatus isEqualToString:@"0"])
+        cell.status.text = TTLocalString(@"onLn_", nil);
+    else if ([info.deviceStatus isEqualToString:@"-6"])
+        cell.status.text = TTLocalString(@"ofLn_", nil);
+    else if ([info.deviceStatus isEqualToString:@"-26"])
+        cell.status.text = TTLocalString(@"pwdErr_", nil);
+    else
+        cell.status.text = TTLocalString(@"cneting_", nil);
+    
     cell.delegate = self;
+    
     cell.tag = indexPath.row + FLAG_TAG;
+    
     return cell;
 }
 
@@ -213,20 +211,20 @@ typedef enum : NSUInteger {
 {
     __block NSInteger index = 0;
     [self.deviceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        KHJDeviceInfo *deviceInfo = (KHJDeviceInfo *)obj;
+        TTDeviceInfo *deviceInfo = (TTDeviceInfo *)obj;
         if ([deviceID isEqualToString:deviceInfo.deviceID]) {
             index = idx;
             *stop = YES;
         }
     }];
-    KHJDeviceInfo *deviceInfo = self.deviceList[index];
+    TTDeviceInfo *deviceInfo = self.deviceList[index];
     [self showSetupWith:deviceInfo];
 }
 
 - (void)gotoVideoWithIndex:(NSInteger)index
 {
     TLog(@"进入第 %ld 个视频播放界面",index);
-    KHJDeviceInfo *info = self.deviceList[index];
+    TTDeviceInfo *info = self.deviceList[index];
     if ([info.deviceStatus isEqualToString:@"0"]) {
         KHJVideoPlayer_sp_VC *vc = [[KHJVideoPlayer_sp_VC alloc] init];
         vc.delegate     = self;
@@ -239,7 +237,7 @@ typedef enum : NSUInteger {
     }
     else if ([info.deviceStatus isEqualToString:@"-26"]) {
         // 密码错误，请重新设置
-        [self.view makeToast:KHJLocalizedString(@"pwdErSet_", nil)];
+        [self.view makeToast:TTLocalString(@"pwdErSet_", nil)];
     }
     else if ([info.deviceStatus isEqualToString:@"-6"]) {
         // 离线，重连
@@ -252,50 +250,50 @@ typedef enum : NSUInteger {
     }
 }
 
-- (void)showSetupWith:(KHJDeviceInfo *)deviceInfo
+- (void)showSetupWith:(TTDeviceInfo *)deviceInfo
 {
     TTWeakSelf
     UIAlertController *alertview = [UIAlertController alertControllerWithTitle:deviceInfo.deviceName message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"chageDev_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config = [UIAlertAction actionWithTitle:TTLocalString(@"chageDev_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         KHJOnlineVC *vc = [[KHJOnlineVC alloc] init];
         vc.deviceInfo = deviceInfo;
         vc.hidesBottomBarWhenPushed = YES;
         [weakSelf.navigationController pushViewController:vc animated:YES];
     }];
-    UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"dltDev_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [[KHJDataBase sharedDataBase] deleteDeviceInfo_with_deviceInfo:deviceInfo reBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
+    UIAlertAction *config1 = [UIAlertAction actionWithTitle:TTLocalString(@"dltDev_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[TTDataBase shareDB] deleteDeviceInfo_with_deviceInfo:deviceInfo reBlock:^(TTDeviceInfo * _Nonnull info, int code) {
             if ([weakSelf.deviceList containsObject:deviceInfo]) {
                 NSInteger index = [weakSelf.deviceList indexOfObject:deviceInfo];
                 [weakSelf.deviceList removeObject:deviceInfo];
                 [self->contentTBV deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
-                [weakSelf.view makeToast:KHJLocalizedString(@"dltSuc_", nil)];
+                [weakSelf.view makeToast:TTLocalString(@"dltSuc_", nil)];
                 
                 
                 NSString *path_document = NSHomeDirectory();
                 NSString *pString = [NSString stringWithFormat:@"/Documents/%@.png",deviceInfo.deviceID];
                 NSString *imagePath = [path_document stringByAppendingString:pString];
-                NSString *screenShotPath = [[TTFileManager sharedModel] get_screenShot_DocPath_deviceID:deviceInfo.deviceID];
-                NSString *recordScreenShotPath = [[TTFileManager sharedModel] get_recordVideo_screenShot_DocPath_with_deviceID:deviceInfo.deviceID];
-                [[TTFileManager sharedModel] delete_videoFile_With_path:imagePath];
-                [[TTFileManager sharedModel] delete_videoFile_With_path:screenShotPath];
-                [[TTFileManager sharedModel] delete_videoFile_With_path:recordScreenShotPath];
+                NSString *screenShotPath = [[TTFileManager sharedModel] getScreenShotWithDeviceID:deviceInfo.deviceID];
+                NSString *recordScreenShotPath = [[TTFileManager sharedModel] getRecordScreenShotWithDeviceID:deviceInfo.deviceID];
+                [[TTFileManager sharedModel] deleteVideoFileWithFilePath:imagePath];
+                [[TTFileManager sharedModel] deleteVideoFileWithFilePath:screenShotPath];
+                [[TTFileManager sharedModel] deleteVideoFileWithFilePath:recordScreenShotPath];
             }
         }];
     }];
     
-    UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"reCnctDev_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config2 = [UIAlertAction actionWithTitle:TTLocalString(@"reCnctDev_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         // 离线，重连
         [[TTFirmwareInterface_API sharedManager] disconnect_with_deviceID:deviceInfo.deviceID reBlock:^(NSInteger code) {
             [[TTFirmwareInterface_API sharedManager] connect_with_deviceID:deviceInfo.deviceID password:deviceInfo.devicePassword reBlock:^(NSInteger code) {}];
         }];
     }];
-    UIAlertAction *config3 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"highCfg_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config3 = [UIAlertAction actionWithTitle:TTLocalString(@"highCfg_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         KHJDeviceConfVC *vc = [[KHJDeviceConfVC alloc] init];
         vc.deviceInfo = deviceInfo;
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
 
     [alertview addAction:config];
     [alertview addAction:config1];
@@ -347,9 +345,9 @@ typedef enum : NSUInteger {
 //                }
 //                else {
             
-                [weakSelf.view makeToast:KHJString(@"%@ %@ %@",KHJLocalizedString(@"phadCnet_", nil),wifiName,KHJLocalizedString(@"devHot_", nil))];
+                [weakSelf.view makeToast:TTStr(@"%@ %@ %@",TTLocalString(@"phadCnet_", nil),wifiName,TTLocalString(@"devHot_", nil))];
 //                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                    [weakSelf.view makeToast:KHJString(@"%@ %@ %@",KHJLocalizedString(@"请给", nil),wifiName,KHJLocalizedString(@"配置网络", nil))];
+//                    [weakSelf.view makeToast:TTStr(@"%@ %@ %@",TTLocalString(@"请给", nil),wifiName,TTLocalString(@"配置网络", nil))];
 //                });
 //                }
             }
@@ -364,10 +362,10 @@ typedef enum : NSUInteger {
 - (void)addNewDeviceTellUser:(NSNotification *)noti
 {
     if ([wifiName hasPrefix:@"IPC"]) {
-        KHJDeviceInfo *info = (KHJDeviceInfo *)noti.object;
-        UIAlertController *alertview = [UIAlertController alertControllerWithTitle:@"" message:KHJLocalizedString(@"tips_", nil)
+        TTDeviceInfo *info = (TTDeviceInfo *)noti.object;
+        UIAlertController *alertview = [UIAlertController alertControllerWithTitle:@"" message:TTLocalString(@"tips_", nil)
                                                                     preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJString(@"%@ \" %@ \" %@",KHJLocalizedString(@"toDev_", nil),info.deviceID,KHJLocalizedString(@"adNet_", nil))
+        UIAlertAction *defult = [UIAlertAction actionWithTitle:TTStr(@"%@ \" %@ \" %@",TTLocalString(@"toDev_", nil),info.deviceID,TTLocalString(@"adNet_", nil))
                                                          style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * _Nonnull action) {
             KHJWIFIConfigVC *vc = [[KHJWIFIConfigVC alloc] init];
@@ -409,8 +407,8 @@ typedef enum : NSUInteger {
 - (void)getDeviceStatus:(NSNotification *)noti
 {
     NSDictionary *body = (NSDictionary *)noti.object;
-    NSString *deviceID = KHJString(@"%@",body[@"deviceID"]);
-    NSString *deviceStatus = KHJString(@"%@",body[@"deviceStatus"]);
+    NSString *deviceID = TTStr(@"%@",body[@"deviceID"]);
+    NSString *deviceStatus = TTStr(@"%@",body[@"deviceStatus"]);
     
     if ([wifiName hasPrefix:@"IPC"]) {
         TLog(@"当前连接的是热点");
@@ -422,7 +420,7 @@ typedef enum : NSUInteger {
                 TLog(@"wifiName ============ %@",wifiName);
                 TLog(@"当前连接的是正常Wi-Fi");
                 [self.deviceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    KHJDeviceInfo *info = (KHJDeviceInfo *)obj;
+                    TTDeviceInfo *info = (TTDeviceInfo *)obj;
                     if ([info.deviceID isEqualToString:deviceID]) {
                         // 设备状态不保存在数据库，只临时赋值给对象
                         info.deviceStatus = deviceStatus;
@@ -439,7 +437,7 @@ typedef enum : NSUInteger {
     else {
         TLog(@"当前连接的是正常Wi-Fi");
         [self.deviceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            KHJDeviceInfo *info = (KHJDeviceInfo *)obj;
+            TTDeviceInfo *info = (TTDeviceInfo *)obj;
             if ([info.deviceID isEqualToString:deviceID]) {
                 // 设备状态不保存在数据库，只临时赋值给对象
                 info.deviceStatus = deviceStatus;
@@ -502,7 +500,7 @@ typedef enum : NSUInteger {
 - (void)loadCellPic:(NSInteger)row
 {
     KHJDeviceListCell *cell = [contentTBV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
-    KHJDeviceInfo *info = self.deviceList[row];
+    TTDeviceInfo *info = self.deviceList[row];
     cell.deviceID = info.deviceID;
 }
 

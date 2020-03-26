@@ -234,8 +234,8 @@
             filePath = "HDMiniCam/Device/VC/KHJVideoPlayer_sp_VC.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "385"
-            endingLineNumber = "385"
+            startingLineNumber = "383"
+            endingLineNumber = "383"
             landmarkName = "-hpSixBtnAction:"
             landmarkType = "7">
          </BreakpointContent>
@@ -250,8 +250,8 @@
             filePath = "HDMiniCam/Device/VC/KHJVideoPlayer_sp_VC.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "390"
-            endingLineNumber = "390"
+            startingLineNumber = "388"
+            endingLineNumber = "388"
             landmarkName = "-hpSixBtnAction:"
             landmarkType = "7">
          </BreakpointContent>

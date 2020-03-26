@@ -6,13 +6,13 @@
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJBaseVC.h"
+#import "TTBaseViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJOnlineVC : KHJBaseVC
+@interface KHJOnlineVC : TTBaseViewController
 
-@property (nonatomic, strong) KHJDeviceInfo *deviceInfo;
+@property (nonatomic, strong) TTDeviceInfo *deviceInfo;
 
 @end
 

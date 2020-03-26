@@ -48,22 +48,22 @@ UITableViewDelegate, UITableViewDataSource>
     firstOn = YES;
     secondOn = YES;
     thirdOn = YES;
-    moveLmd = KHJLocalizedString(@"中", nil);
-    moveTime = KHJLocalizedString(@"每天", nil);
-    moveArr = @[KHJLocalizedString(@"灵敏度", nil),
-                KHJLocalizedString(@"侦测区域设置", nil),
-                KHJLocalizedString(@"布防时间", nil),
-                KHJLocalizedString(@"触发操作", nil)];
-    bodyTime = KHJLocalizedString(@"每天", nil);
-    bodyArr = @[KHJLocalizedString(@"侦测区域设置", nil),
-                KHJLocalizedString(@"布防时间", nil),
-                KHJLocalizedString(@"触发操作", nil)];
-    cryTime = KHJLocalizedString(@"每天", nil);
-    cryLmd = KHJLocalizedString(@"中", nil);
-    cryArr = @[KHJLocalizedString(@"灵敏度", nil),
-               KHJLocalizedString(@"布防时间", nil),
-               KHJLocalizedString(@"触发操作", nil)];
-    self.titleLab.text = KHJLocalizedString(@"alarSet_", nil);
+    moveLmd = TTLocalString(@"中", nil);
+    moveTime = TTLocalString(@"每天", nil);
+    moveArr = @[TTLocalString(@"灵敏度", nil),
+                TTLocalString(@"侦测区域设置", nil),
+                TTLocalString(@"布防时间", nil),
+                TTLocalString(@"触发操作", nil)];
+    bodyTime = TTLocalString(@"每天", nil);
+    bodyArr = @[TTLocalString(@"侦测区域设置", nil),
+                TTLocalString(@"布防时间", nil),
+                TTLocalString(@"触发操作", nil)];
+    cryTime = TTLocalString(@"每天", nil);
+    cryLmd = TTLocalString(@"中", nil);
+    cryArr = @[TTLocalString(@"灵敏度", nil),
+               TTLocalString(@"布防时间", nil),
+               TTLocalString(@"触发操作", nil)];
+    self.titleLab.text = TTLocalString(@"alarSet_", nil);
     [self.leftBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     
     areaContentView.layer.cornerRadius = 2;
@@ -105,7 +105,7 @@ UITableViewDelegate, UITableViewDataSource>
         head.delegate = self;
         head.switchBtn.on = firstOn;
         head.switchBtn.transform = CGAffineTransformMakeScale(0.8, 0.8);
-        head.nameLab.text = KHJLocalizedString(@"开启移动侦测", nil);
+        head.nameLab.text = TTLocalString(@"开启移动侦测", nil);
         return head;
     }
     else if (section == 1) {
@@ -114,7 +114,7 @@ UITableViewDelegate, UITableViewDataSource>
         head.delegate = self;
         head.switchBtn.on = secondOn;
         head.switchBtn.transform = CGAffineTransformMakeScale(0.8, 0.8);
-        head.nameLab.text = KHJLocalizedString(@"人形识别报警", nil);
+        head.nameLab.text = TTLocalString(@"人形识别报警", nil);
         return head;
     }
     else if (section == 2) {
@@ -123,7 +123,7 @@ UITableViewDelegate, UITableViewDataSource>
         head.delegate = self;
         head.switchBtn.on = thirdOn;
         head.switchBtn.transform = CGAffineTransformMakeScale(0.8, 0.8);
-        head.nameLab.text = KHJLocalizedString(@"哭声识别报警", nil);
+        head.nameLab.text = TTLocalString(@"哭声识别报警", nil);
         return head;
     }
     return nil;
@@ -240,43 +240,43 @@ UITableViewDelegate, UITableViewDataSource>
 // 选择灵敏度
 - (void)chooseTimeWith:(NSInteger)index
 {
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"选择灵敏度", nil)
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:TTLocalString(@"选择灵敏度", nil)
                                                                        message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"高", nil)
+    UIAlertAction *config = [UIAlertAction actionWithTitle:TTLocalString(@"高", nil)
                                                      style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if (index == 0) {
-            self->moveLmd = KHJLocalizedString(@"高", nil);
+            self->moveLmd = TTLocalString(@"高", nil);
             [self->contentTBV reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
         }
         else if (index == 2) {
-            self->cryLmd = KHJLocalizedString(@"高", nil);
+            self->cryLmd = TTLocalString(@"高", nil);
             [self->contentTBV reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:2]] withRowAnimation:UITableViewRowAnimationNone];
         }
     }];
-    UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"中", nil)
+    UIAlertAction *config1 = [UIAlertAction actionWithTitle:TTLocalString(@"中", nil)
                                                       style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if (index == 0) {
-            self->moveLmd = KHJLocalizedString(@"中", nil);
+            self->moveLmd = TTLocalString(@"中", nil);
             [self->contentTBV reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
         }
         else if (index == 2) {
-            self->cryLmd = KHJLocalizedString(@"中", nil);
+            self->cryLmd = TTLocalString(@"中", nil);
             [self->contentTBV reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:2]] withRowAnimation:UITableViewRowAnimationNone];
         }
     }];
     
-    UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"低", nil)
+    UIAlertAction *config2 = [UIAlertAction actionWithTitle:TTLocalString(@"低", nil)
                                                       style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if (index == 0) {
-            self->moveLmd = KHJLocalizedString(@"低", nil);
+            self->moveLmd = TTLocalString(@"低", nil);
             [self->contentTBV reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
         }
         else if (index == 2) {
-            self->cryLmd = KHJLocalizedString(@"低", nil);
+            self->cryLmd = TTLocalString(@"低", nil);
             [self->contentTBV reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:2]] withRowAnimation:UITableViewRowAnimationNone];
         }
     }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
 
     [alertview addAction:config];
     [alertview addAction:config1];
@@ -289,43 +289,43 @@ UITableViewDelegate, UITableViewDataSource>
 // 选择灵敏度
 - (void)chooseLmdWith:(NSInteger)index
 {
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"选择灵敏度", nil)
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:TTLocalString(@"选择灵敏度", nil)
                                                                        message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *config = [UIAlertAction actionWithTitle:KHJLocalizedString(@"高", nil)
+    UIAlertAction *config = [UIAlertAction actionWithTitle:TTLocalString(@"高", nil)
                                                      style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if (index == 0) {
-            self->moveLmd = KHJLocalizedString(@"高", nil);
+            self->moveLmd = TTLocalString(@"高", nil);
             [self->contentTBV reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
         }
         else if (index == 2) {
-            self->cryLmd = KHJLocalizedString(@"高", nil);
+            self->cryLmd = TTLocalString(@"高", nil);
             [self->contentTBV reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:2]] withRowAnimation:UITableViewRowAnimationNone];
         }
     }];
-    UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"中", nil)
+    UIAlertAction *config1 = [UIAlertAction actionWithTitle:TTLocalString(@"中", nil)
                                                       style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if (index == 0) {
-            self->moveLmd = KHJLocalizedString(@"中", nil);
+            self->moveLmd = TTLocalString(@"中", nil);
             [self->contentTBV reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
         }
         else if (index == 2) {
-            self->cryLmd = KHJLocalizedString(@"中", nil);
+            self->cryLmd = TTLocalString(@"中", nil);
             [self->contentTBV reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:2]] withRowAnimation:UITableViewRowAnimationNone];
         }
     }];
     
-    UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"低", nil)
+    UIAlertAction *config2 = [UIAlertAction actionWithTitle:TTLocalString(@"低", nil)
                                                       style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if (index == 0) {
-            self->moveLmd = KHJLocalizedString(@"低", nil);
+            self->moveLmd = TTLocalString(@"低", nil);
             [self->contentTBV reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
         }
         else if (index == 2) {
-            self->cryLmd = KHJLocalizedString(@"低", nil);
+            self->cryLmd = TTLocalString(@"低", nil);
             [self->contentTBV reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:2]] withRowAnimation:UITableViewRowAnimationNone];
         }
     }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
 
     [alertview addAction:config];
     [alertview addAction:config1];

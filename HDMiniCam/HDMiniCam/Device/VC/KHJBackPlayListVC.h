@@ -6,7 +6,7 @@
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJBaseVC.h"
+#import "TTBaseViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface KHJBackPlayListVC : KHJBaseVC
+@interface KHJBackPlayListVC : TTBaseViewController
 
 @property (nonatomic, copy) NSString *date;
 @property (nonatomic, assign) BOOL exitVideoList;

@@ -31,12 +31,12 @@
     [super viewDidLoad];
     [[TTHub shareHub] showText:@"" addToView:self.view type:0];
 
-    self.titleLab.text = KHJLocalizedString(@"wfSetp_", nil);
+    self.titleLab.text = TTLocalString(@"wfSetp_", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     [[TTFirmwareInterface_API sharedManager] getDeviceWiFi_with_deviceID:self.deviceInfo.deviceID reBlock:^(NSInteger code) {}];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(OnGetDeviceWiFi_CmdResult:)
-                                                 name:noti_OnGetDeviceWiFi_CmdResult_KEY
+                                             selector:@selector(OnGetDeviceWiFi:)
+                                                 name:TT_getDeviceWiFiCmdResult_noti_KEY
                                                object:nil];
 }
 
@@ -59,7 +59,7 @@
     }
 }
 
-- (void)OnGetDeviceWiFi_CmdResult:(NSNotification *)noti
+- (void)OnGetDeviceWiFi:(NSNotification *)noti
 {
     
     NSDictionary *result = (NSDictionary *)noti.object;
@@ -70,14 +70,14 @@
             self->wifiName.text = body[@"SSID"];
         });
         [[TTFirmwareInterface_API sharedManager] searchDeviceWiFi_with_deviceID:self.deviceInfo.deviceID reBlock:^(NSInteger code) {}];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OnSearchDeviceWiFi_CmdResult:) name:noti_OnSearchDeviceWiFi_CmdResult_KEY object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getSearchDeviceWiFi:) name:TT_getSearchDeviceWiFi_noti_KEY object:nil];
     }
     else {
-        [self.view makeToast:KHJLocalizedString(@"gtDevWfFaile_", nil)];
+        [self.view makeToast:TTLocalString(@"gtDevWfFaile_", nil)];
     }
 }
 
-- (void)OnSearchDeviceWiFi_CmdResult:(NSNotification *)noti
+- (void)getSearchDeviceWiFi:(NSNotification *)noti
 {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [TTHub shareHub].hud.hidden = YES;
@@ -101,7 +101,7 @@
         });
     }
     else {
-        [self.view makeToast:KHJLocalizedString(@"gtDevWfFaile_", nil)];
+        [self.view makeToast:TTLocalString(@"gtDevWfFaile_", nil)];
     }
 }
 
@@ -129,8 +129,8 @@
         [weakSelf changewifi:body];
     };
     cell.name.text = body[@"SSID"];
-    cell.safeLab.text = KHJString(@"%@：%@",KHJLocalizedString(@"sfe_", nil),body[@"EncType"]);
-    cell.stronglyLab.text = KHJString(@"%@：%@",KHJLocalizedString(@"singStrog_", nil),body[@"RSSI"]);
+    cell.safeLab.text = TTStr(@"%@：%@",TTLocalString(@"sfe_", nil),body[@"EncType"]);
+    cell.stronglyLab.text = TTStr(@"%@：%@",TTLocalString(@"singStrog_", nil),body[@"RSSI"]);
     return cell;
 }
 
@@ -138,8 +138,8 @@
 {
     TTWeakSelf
     ZQAlterField *alertView = [ZQAlterField alertView];
-    alertView.title = KHJString(@"%@：%@",KHJLocalizedString(@"changeWF_", nil),body[@"SSID"]);
-    alertView.placeholder = KHJLocalizedString(@"inputWFPwd_", nil);
+    alertView.title = TTStr(@"%@：%@",TTLocalString(@"changeWF_", nil),body[@"SSID"]);
+    alertView.placeholder = TTLocalString(@"inputWFPwd_", nil);
     alertView.Maxlength = 50;
     alertView.ensureBgColor = TTCommon.appMainColor;
     [alertView ensureClickBlock:^(NSString *inputString) {
@@ -155,7 +155,7 @@
 {
     [[TTFirmwareInterface_API sharedManager] setDeviceWiFi_with_deviceID:self.deviceInfo.deviceID ssid:body[@"SSID"] password:password encType:body[@"EncType"] reBlock:^(NSInteger code) {}];
     TTWeakSelf
-    [self.view makeToast:KHJLocalizedString(@"wtReconect_", nil)];
+    [self.view makeToast:TTLocalString(@"wtReconect_", nil)];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakSelf.navigationController popToRootViewControllerAnimated:YES];
     });

@@ -6,7 +6,7 @@
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJVideoPlayerBaseVC.h"
+#import "TTPlayerBaseViewController.h"
 #import "IPCNetManagerInterface.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
@@ -20,13 +20,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface KHJVideoPlayer_sp_VC : KHJVideoPlayerBaseVC
+@interface KHJVideoPlayer_sp_VC : TTPlayerBaseViewController
 
 @property (nonatomic, assign) NSInteger row;
 
 @property (nonatomic, copy) NSString *deviceID;
 @property (nonatomic, copy) NSString *password;
-@property (nonatomic, strong) KHJDeviceInfo *deviceInfo;
+@property (nonatomic, strong) TTDeviceInfo *deviceInfo;
 @property (nonatomic, strong) id<KHJVideoPlayer_sp_VCDelegate> delegate;
 
 @end

@@ -1,16 +1,16 @@
 //
-//  UIDevice+TFDevice.m
-//  PLTest
+//  UIDevice+TTDevice.m
+//  HDMiniCam
 //
-//  Created by mac on 2017/12/9.
-//  Copyright © 2017年 腾飞. All rights reserved.
+//  Created by khj888 on 2020/3/26.
+//  Copyright © 2020 王涛. All rights reserved.
 //
 
-#import "UIDevice+TFDevice.h"
+#import "UIDevice+TTDevice.h"
 
-@implementation UIDevice (TFDevice)
+@implementation UIDevice (TTDevice)
 
-+ (void)switchNewOrientation:(UIInterfaceOrientation)interfaceOrientation
++ (void)TTurnAroundDirection:(UIInterfaceOrientation)interfaceOrientation
 {
     NSNumber *resetOrientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
     [[UIDevice currentDevice] setValue:resetOrientationTarget forKey:@"orientation"];

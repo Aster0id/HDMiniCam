@@ -20,8 +20,8 @@
 - (void)setStartDate:(NSString *)startDate
 {
     _startDate = startDate;
-//    NSString *time = KHJString(@"%@ 00:00:00",[_startDate substringWithRange:NSMakeRange(0, 10)]);
-    NSString *time = KHJString(@"%@ 00:00:00",_startDate);
+//    NSString *time = TTStr(@"%@ 00:00:00",[_startDate substringWithRange:NSMakeRange(0, 10)]);
+    NSString *time = TTStr(@"%@ 00:00:00",_startDate);
     NSDate *date = [self nsstringConversionNSDate:time];
     _startTimeIntervalDay = _startTime - [self dateConversionTimeStamp:date];
 }
@@ -29,8 +29,8 @@
 - (void)setEndDate:(NSString *)endDate
 {
     _endDate = endDate;
-//    NSString *time = KHJString(@"%@ 00:00:00",[_endDate substringWithRange:NSMakeRange(0, 10)]);
-    NSString *time = KHJString(@"%@ 00:00:00",_endDate);
+//    NSString *time = TTStr(@"%@ 00:00:00",[_endDate substringWithRange:NSMakeRange(0, 10)]);
+    NSString *time = TTStr(@"%@ 00:00:00",_endDate);
     NSDate *date = [self nsstringConversionNSDate:time];
     _endTimeIntervalDay = _endTime - [self dateConversionTimeStamp:date];
 }
@@ -58,7 +58,7 @@
 
 - (NSInteger)dateConversionTimeStamp:(NSDate *)date
 {
-    NSInteger timeSp = [KHJString(@"%ld", (long)[date timeIntervalSince1970]) integerValue];
+    NSInteger timeSp = [TTStr(@"%ld", (long)[date timeIntervalSince1970]) integerValue];
     return timeSp;
 }
 

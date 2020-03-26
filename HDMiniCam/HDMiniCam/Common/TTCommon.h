@@ -9,10 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import <Foundation/Foundation.h>
+#import <AVFoundation/AVFoundation.h>
+
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TTCommon : NSObject
+#pragma mark - 公共方法
 
 + (UIColor *)appMainColor;
 + (UIColor *)ios13_systemColor:(UIColor *)newColor earlier_systemColoer:(UIColor *)oldColor;
@@ -49,6 +53,14 @@ NS_ASSUME_NONNULL_BEGIN
 /// 根据文字 + 字体 + 最大size 计算label的宽高
 + (CGSize)sizeWithText:(NSString *)text maxSize:(CGSize)maxSize;
 
+
+#pragma mark - 本地音频播放
+@property(nonatomic, strong) AVAudioPlayer *audioPlayer;
++ (TTCommon *)share;
+// 播放本地音频
+- (void)playVoiceWithURL:(NSURL *)voiceURL;
+// 停止播放本地音频
+- (void)stopPlayVoice;
 
 
 @end

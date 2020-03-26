@@ -62,7 +62,7 @@
     [super viewDidLoad];
     [self addNoti];
     scrollHeight = SCREEN_HEIGHT - 120 - TTTabBarHeight - 44;
-    [imagePathArr addObjectsFromArray:[[TTFileManager sharedModel] get_all_video_and_pic_File]];
+    [imagePathArr addObjectsFromArray:[[TTFileManager sharedModel] getAllVideoAndPictureFile]];
     totalNumber = imagePathArr.count;
     [self.view addSubview:self.scroll_one];
     [self.view sendSubviewToBack:self.scroll_one];
@@ -80,7 +80,7 @@
             NSArray *array2 = [self->imagePathArr copy];
             [self->imagePathArr removeAllObjects];
             [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                NSString *string = KHJString(@"%@",obj);
+                NSString *string = TTStr(@"%@",obj);
                 [array2 enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                     if ([obj containsString:string]) {
                         [self->imagePathArr addObject:obj];
@@ -92,7 +92,7 @@
             [arr1 removeAllObjects];
             for (NSString *imagePth  in self->imagePathArr) {
                 NSArray *aa  = [imagePth componentsSeparatedByString:@"/"];
-                NSString *imageName = KHJString(@"%@/%@",aa[1],aa[2]);
+                NSString *imageName = TTStr(@"%@/%@",aa[1],aa[2]);
                 [arr1 addObject:imageName];
             }
             self->imagePathArr = [arr1 mutableCopy];
@@ -113,7 +113,7 @@
 - (void)reloadScrollView_CollectionView
 {
     [imagePathArr removeAllObjects];
-    [imagePathArr addObjectsFromArray:[[TTFileManager sharedModel] get_all_video_and_pic_File]];
+    [imagePathArr addObjectsFromArray:[[TTFileManager sharedModel] getAllVideoAndPictureFile]];
     TTWeakSelf
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         if (self->imagePathArr.count > 0) {
@@ -126,7 +126,7 @@
             NSArray *array2 = [self->imagePathArr copy];
             [self->imagePathArr removeAllObjects];
             [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                NSString *string = KHJString(@"%@",obj);
+                NSString *string = TTStr(@"%@",obj);
                 [array2 enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                     if ([obj containsString:string]) {
                         [self->imagePathArr addObject:obj];
@@ -137,7 +137,7 @@
             [arr1 removeAllObjects];
             for (NSString *imagePth  in self->imagePathArr) {
                 NSArray *aa  = [imagePth componentsSeparatedByString:@"/"];
-                NSString *imageName = KHJString(@"%@/%@",aa[1],aa[2]);
+                NSString *imageName = TTStr(@"%@/%@",aa[1],aa[2]);
                 [arr1 addObject:imageName];
             }
             self->imagePathArr = [arr1 mutableCopy];
@@ -205,7 +205,7 @@
     }
     else {
         ZoomView.needScale = YES;
-        path = KHJString(@"%@/%@",[[TTFileManager sharedModel] get_live_screenShot_DocPath_with_deviceID:@""],imagePathArr[index]);;
+        path = TTStr(@"%@/%@",[[TTFileManager sharedModel] getliveScreenShotWithDeviceID:@""],imagePathArr[index]);;
         ZoomView.imageView.image = [[UIImage alloc] initWithContentsOfFile:path];
         [ZoomView showNoCover];
     }
@@ -290,12 +290,12 @@
 {
     self.scroll_one.contentSize = CGSizeMake(totalNumber * (int)SCREEN_WIDTH, 0);
     if (_currentIndex == totalNumber) {
-        _showLabel.text = KHJString(@"%ld/%ld",(long)_currentIndex,(long)totalNumber);
+        _showLabel.text = TTStr(@"%ld/%ld",(long)_currentIndex,(long)totalNumber);
         [self.scroll_one setContentOffset:CGPointMake(SCREEN_WIDTH *(_currentIndex - 1), 0)];
         [self reloadCurrentImageSize:_currentIndex - 1];
     }
     else {
-        _showLabel.text = KHJString(@"%ld/%ld",_currentIndex + 1,(long)totalNumber);
+        _showLabel.text = TTStr(@"%ld/%ld",_currentIndex + 1,(long)totalNumber);
         [self.scroll_one setContentOffset:CGPointMake(SCREEN_WIDTH *_currentIndex, 0)];
         [self reloadCurrentImageSize:_currentIndex];
     }
@@ -331,11 +331,11 @@
 - (void)showAlert:(NSString *)pathStr
 {
     TTWeakSelf
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"dltFile_", nil) message:KHJLocalizedString(@"sureDlt_", nil) preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
-    UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:TTLocalString(@"dltFile_", nil) message:TTLocalString(@"sureDlt_", nil) preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *defult = [UIAlertAction actionWithTitle:TTLocalString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-        BOOL ret = [[TTFileManager sharedModel] delete_videoFile_With_path:pathStr];
+        BOOL ret = [[TTFileManager sharedModel] deleteVideoFileWithFilePath:pathStr];
         if (ret) {
             TLog(@"删除成功");
             if (weakSelf.deleteBlock) {
@@ -343,11 +343,11 @@
             }
             [self->imagePathArr removeObject:pathStr];
             [weakSelf setCurrentIndex];
-            [weakSelf.view makeToast:KHJLocalizedString(@"dltSuc_", nil)];
+            [weakSelf.view makeToast:TTLocalString(@"dltSuc_", nil)];
         }
         else {
             TLog(@"删除失败");
-            [weakSelf.view makeToast:KHJLocalizedString(@"dltFail_", nil)];
+            [weakSelf.view makeToast:TTLocalString(@"dltFail_", nil)];
         }
     }];
     [alertview addAction:cancel];
@@ -409,7 +409,7 @@
         [weakSelf.scroll_one setContentOffset:CGPointMake(row*SCREEN_WIDTH, 0) animated:YES];
     };
     cell.path = imagePathArr[indexPath.row];
-    NSString *path = KHJString(@"%@/%@",[[TTFileManager sharedModel] get_live_screenShot_DocPath_with_deviceID:@""],imagePathArr[indexPath.row]);
+    NSString *path = TTStr(@"%@/%@",[[TTFileManager sharedModel] getliveScreenShotWithDeviceID:@""],imagePathArr[indexPath.row]);
     UIImage *image = [[UIImage alloc] initWithContentsOfFile:path];
     cell.imageView.image = image;
     return cell;
@@ -423,7 +423,7 @@
 - (void)shareClick
 {
     if (imagePathArr.count > 0 && _currentIndex < imagePathArr.count) {
-        NSString *path = KHJString(@"%@/%@",[[TTFileManager sharedModel] get_live_screenShot_DocPath_with_deviceID:@""],imagePathArr[_currentIndex]);
+        NSString *path = TTStr(@"%@/%@",[[TTFileManager sharedModel] getliveScreenShotWithDeviceID:@""],imagePathArr[_currentIndex]);
         NSURL *urlToShare = [NSURL fileURLWithPath:path];
         NSArray *activityItems = [[NSArray alloc] initWithObjects:urlToShare,nil];
         UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:activityItems applicationActivities:nil];
@@ -456,12 +456,12 @@
 {
     NSInteger row = [imagePathArr indexOfObject:path];
     TLog(@"长按 row = %ld",row);
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"isDltPic_", nil) message:@""
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:TTLocalString(@"isDltPic_", nil) message:@""
                                                             preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cancel_", nil) style:UIAlertActionStyleCancel
                                                    handler:nil];
     TTWeakSelf
-    UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sure", nil) style:UIAlertActionStyleDefault
+    UIAlertAction *defult = [UIAlertAction actionWithTitle:TTLocalString(@"sure", nil) style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf deletePic:row];
     }];
@@ -472,8 +472,8 @@
 
 - (void)deletePic:(NSInteger)row
 {
-    NSString *path = KHJString(@"%@/%@",[[TTFileManager sharedModel] get_live_screenShot_DocPath_with_deviceID:@""],imagePathArr[row]);
-    if ([[TTFileManager sharedModel] delete_videoFile_With_path:path]) {
+    NSString *path = TTStr(@"%@/%@",[[TTFileManager sharedModel] getliveScreenShotWithDeviceID:@""],imagePathArr[row]);
+    if ([[TTFileManager sharedModel] deleteVideoFileWithFilePath:path]) {
         [self deleteImageWith:row];
         [collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:row inSection:0]]];
     }
@@ -494,7 +494,7 @@
             NSArray *array2 = [self->imagePathArr copy];
             [self->imagePathArr removeAllObjects];
             [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                NSString *string = KHJString(@"%@",obj);
+                NSString *string = TTStr(@"%@",obj);
                 [array2 enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                     if ([obj containsString:string]) {
                         [self->imagePathArr addObject:obj];
@@ -507,7 +507,7 @@
                 NSArray *aa  = [imagePth componentsSeparatedByString:@"/"];
                 NSString *imageName = @"";
                 if (aa.count == 3) {
-                    imageName = KHJString(@"%@/%@",aa[1],aa[2]);
+                    imageName = TTStr(@"%@/%@",aa[1],aa[2]);
                 }
                 else {
                     imageName = imagePth;

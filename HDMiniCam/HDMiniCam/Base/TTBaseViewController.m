@@ -1,19 +1,19 @@
 //
-//  KHJBaseVC.m
+//  TTBaseViewController.m
 //  SuperIPC
 //
 //  Created by 王涛 on 2020/1/12.
 //  Copyright © 2020年 王涛. All rights reserved.
 //
 
-#import "KHJBaseVC.h"
+#import "TTBaseViewController.h"
 #import "H264_H265_VideoDecoder.h"
 
-@interface KHJBaseVC ()
+@interface TTBaseViewController ()
 
 @end
 
-@implementation KHJBaseVC
+@implementation TTBaseViewController
 
 - (void)viewDidLoad
 {
@@ -38,16 +38,6 @@
     titleLab.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = titleLab;
     return titleLab;
-}
-
-- (UIButton *)rightBtn
-{
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightBtn.frame = CGRectMake(0, 0, 66, 44);
-    rightBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -40, 0, 0);
-    UIBarButtonItem  *barBut = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = barBut;
-    return rightBtn;
 }
 
 

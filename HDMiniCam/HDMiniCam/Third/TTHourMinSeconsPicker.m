@@ -61,7 +61,7 @@
     self.backgroundColor = [TTCommon ios13_systemColor:UIColor.blackColor earlier_systemColoer:UIColor.whiteColor];
     
     UIView *llView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
-    llView.backgroundColor = [TTCommon ios13_systemColor:UIColor.darkGrayColor earlier_systemColoer:KHJRGB(240, 240, 240)];
+    llView.backgroundColor = [TTCommon ios13_systemColor:UIColor.darkGrayColor earlier_systemColoer:TTRGB(240, 240, 240)];
     [llView addSubview:self.confirmButton];
     [llView addSubview:self.cancelButton];
     llView.userInteractionEnabled = YES;
@@ -96,7 +96,7 @@
         _confirmButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH -100, 0, 100, 44)];
         _confirmButton.backgroundColor = UIColor.clearColor;
         _confirmButton.titleLabel.font = [UIFont systemFontOfSize:18.0];
-        NSString *title = KHJLocalizedString(@"sure", nil);
+        NSString *title = TTLocalString(@"sure", nil);
         [_confirmButton setTitle:title forState:UIControlStateNormal];
         [_confirmButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_confirmButton addTarget:self action:@selector(confirm:) forControlEvents:UIControlEventTouchUpInside];
@@ -110,7 +110,7 @@
         _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
         _cancelButton.backgroundColor = UIColor.clearColor;
         _cancelButton.titleLabel.font = [UIFont systemFontOfSize:18.0];
-        NSString *title =KHJLocalizedString(@"cancel_", nil);
+        NSString *title =TTLocalString(@"cancel_", nil);
         [_cancelButton setTitle:title forState:UIControlStateNormal];
         [_cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_cancelButton addTarget:self action:@selector(cancel:) forControlEvents:UIControlEventTouchUpInside];
@@ -166,15 +166,15 @@
     if (component == 0)
         return [hourArr objectAtIndex:row];
     else if (component == 1)
-        return KHJLocalizedString(@"hous_", nil);
+        return TTLocalString(@"hous_", nil);
     else if (component == 2)
         return [minArr objectAtIndex:row];
     else if (component == 3)
-        return KHJLocalizedString(@"mins_", nil);
+        return TTLocalString(@"mins_", nil);
     else if (component == 4)
         return [secArr objectAtIndex:row];
     else if (component == 5)
-        return KHJLocalizedString(@"secs_", nil);
+        return TTLocalString(@"secs_", nil);
     return 0;
 }
 

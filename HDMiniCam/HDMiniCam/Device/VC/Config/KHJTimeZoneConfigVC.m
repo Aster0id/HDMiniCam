@@ -20,7 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.titleLab.text = KHJLocalizedString(@"tmZoneSetup_", nil);
+    self.titleLab.text = TTLocalString(@"tmZoneSetup_", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
@@ -55,146 +55,146 @@
 
 - (void)chooseTimeZone
 {
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"chooseTimeZone_", nil)
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:TTLocalString(@"chooseTimeZone_", nil)
                                                                        message:nil
                                                                 preferredStyle:UIAlertControllerStyleAlert];
     TTWeakSelf
-    UIAlertAction *config = [UIAlertAction actionWithTitle:KHJString(@"(GMT-11:00) %@",KHJLocalizedString(@"ztd_", nil))
+    UIAlertAction *config = [UIAlertAction actionWithTitle:TTStr(@"(GMT-11:00) %@",TTLocalString(@"ztd_", nil))
                                                      style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * _Nonnull action) {
-                                                       [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-11:00) %@",KHJLocalizedString(@"ztd_", nil))];
+                                                       [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT-11:00) %@",TTLocalString(@"ztd_", nil))];
     }];
-    UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-10:00) %@",KHJLocalizedString(@"xwy_", nil), nil)
+    UIAlertAction *config1 = [UIAlertAction actionWithTitle:TTStr(@"(GMT-10:00) %@",TTLocalString(@"xwy_", nil), nil)
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-10:00) %@",KHJLocalizedString(@"xwy_", nil), nil)];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT-10:00) %@",TTLocalString(@"xwy_", nil), nil)];
     }];
-    UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-09:00) %@",KHJLocalizedString(@"alsj_", nil), nil)
+    UIAlertAction *config2 = [UIAlertAction actionWithTitle:TTStr(@"(GMT-09:00) %@",TTLocalString(@"alsj_", nil), nil)
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-09:00) %@",KHJLocalizedString(@"alsj_", nil), nil)];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT-09:00) %@",TTLocalString(@"alsj_", nil), nil)];
                                                     }];
-    UIAlertAction *config3 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-08:00) %@",KHJLocalizedString(@"tpy_", nil))
+    UIAlertAction *config3 = [UIAlertAction actionWithTitle:TTStr(@"(GMT-08:00) %@",TTLocalString(@"tpy_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-08:00) %@",KHJLocalizedString(@"tpy_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT-08:00) %@",TTLocalString(@"tpy_", nil))];
                                                     }];
-    UIAlertAction *config4 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-07:00) %@",KHJLocalizedString(@"sdsj_", nil))
+    UIAlertAction *config4 = [UIAlertAction actionWithTitle:TTStr(@"(GMT-07:00) %@",TTLocalString(@"sdsj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-07:00) %@",KHJLocalizedString(@"sdsj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT-07:00) %@",TTLocalString(@"sdsj_", nil))];
                                                     }];
-    UIAlertAction *config5 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-06:00) %@",KHJLocalizedString(@"zysj_", nil))
+    UIAlertAction *config5 = [UIAlertAction actionWithTitle:TTStr(@"(GMT-06:00) %@",TTLocalString(@"zysj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-06:00) %@",KHJLocalizedString(@"zysj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT-06:00) %@",TTLocalString(@"zysj_", nil))];
                                                     }];
-    UIAlertAction *config6 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-05:00)%@",KHJLocalizedString(@"dbsj_", nil))
+    UIAlertAction *config6 = [UIAlertAction actionWithTitle:TTStr(@"(GMT-05:00)%@",TTLocalString(@"dbsj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-05:00)%@",KHJLocalizedString(@"dbsj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT-05:00)%@",TTLocalString(@"dbsj_", nil))];
                                                     }];
-    UIAlertAction *config7 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-04:00)%@",KHJLocalizedString(@"dxysj_", nil))
+    UIAlertAction *config7 = [UIAlertAction actionWithTitle:TTStr(@"(GMT-04:00)%@",TTLocalString(@"dxysj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-04:00)%@",KHJLocalizedString(@"dxysj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT-04:00)%@",TTLocalString(@"dxysj_", nil))];
                                                     }];
-    UIAlertAction *config8 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-03:30)%@",KHJLocalizedString(@"nflsj_", nil))
+    UIAlertAction *config8 = [UIAlertAction actionWithTitle:TTStr(@"(GMT-03:30)%@",TTLocalString(@"nflsj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-03:30)%@",KHJLocalizedString(@"nflsj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT-03:30)%@",TTLocalString(@"nflsj_", nil))];
                                                     }];
-    UIAlertAction *config9 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-03:00)%@",KHJLocalizedString(@"gllsj_", nil))
+    UIAlertAction *config9 = [UIAlertAction actionWithTitle:TTStr(@"(GMT-03:00)%@",TTLocalString(@"gllsj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-03:00)%@",KHJLocalizedString(@"gllsj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT-03:00)%@",TTLocalString(@"gllsj_", nil))];
                                                     }];
-    UIAlertAction *confi10 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-02:00)%@",KHJLocalizedString(@"zdxysj_", nil))
+    UIAlertAction *confi10 = [UIAlertAction actionWithTitle:TTStr(@"(GMT-02:00)%@",TTLocalString(@"zdxysj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-02:00)%@",KHJLocalizedString(@"zdxysj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT-02:00)%@",TTLocalString(@"zdxysj_", nil))];
                                                     }];
-    UIAlertAction *confi11 = [UIAlertAction actionWithTitle:KHJString(@"(GMT-01:00)%@",KHJLocalizedString(@"ysrqdsj_", nil))
+    UIAlertAction *confi11 = [UIAlertAction actionWithTitle:TTStr(@"(GMT-01:00)%@",TTLocalString(@"ysrqdsj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT-01:00)%@",KHJLocalizedString(@"ysrqdsj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT-01:00)%@",TTLocalString(@"ysrqdsj_", nil))];
                                                     }];
-    UIAlertAction *confi12 = [UIAlertAction actionWithTitle:KHJString(@"(GMT)%@",KHJLocalizedString(@"mlgsj_", nil))
+    UIAlertAction *confi12 = [UIAlertAction actionWithTitle:TTStr(@"(GMT)%@",TTLocalString(@"mlgsj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT)%@",KHJLocalizedString(@"mlgsj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT)%@",TTLocalString(@"mlgsj_", nil))];
                                                     }];
-    UIAlertAction *confi13 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+01:00) %@",KHJLocalizedString(@"jksj_", nil))
+    UIAlertAction *confi13 = [UIAlertAction actionWithTitle:TTStr(@"(GMT+01:00) %@",TTLocalString(@"jksj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+01:00) %@",KHJLocalizedString(@"jksj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT+01:00) %@",TTLocalString(@"jksj_", nil))];
                                                     }];
-    UIAlertAction *confi14 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+02:00) %@",KHJLocalizedString(@"wklsj_", nil))
+    UIAlertAction *confi14 = [UIAlertAction actionWithTitle:TTStr(@"(GMT+02:00) %@",TTLocalString(@"wklsj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+02:00) %@",KHJLocalizedString(@"wklsj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT+02:00) %@",TTLocalString(@"wklsj_", nil))];
                                                     }];
-    UIAlertAction *confi15 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+03:00) %@",KHJLocalizedString(@"ylksj_", nil))
+    UIAlertAction *confi15 = [UIAlertAction actionWithTitle:TTStr(@"(GMT+03:00) %@",TTLocalString(@"ylksj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+03:00) %@",KHJLocalizedString(@"ylksj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT+03:00) %@",TTLocalString(@"ylksj_", nil))];
                                                     }];
-    UIAlertAction *confi16 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+03:30) %@",KHJLocalizedString(@"mskdlsj_", nil))
+    UIAlertAction *confi16 = [UIAlertAction actionWithTitle:TTStr(@"(GMT+03:30) %@",TTLocalString(@"mskdlsj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+03:30) %@",KHJLocalizedString(@"mskdlsj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT+03:30) %@",TTLocalString(@"mskdlsj_", nil))];
                                                     }];
-    UIAlertAction *confi17 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+04:00) %@",KHJLocalizedString(@"ymnysj_", nil))
+    UIAlertAction *confi17 = [UIAlertAction actionWithTitle:TTStr(@"(GMT+04:00) %@",TTLocalString(@"ymnysj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+04:00) %@",KHJLocalizedString(@"ymnysj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT+04:00) %@",TTLocalString(@"ymnysj_", nil))];
                                                     }];
-    UIAlertAction *confi18 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+05:00) %@",KHJLocalizedString(@"bjstsj_", nil))
+    UIAlertAction *confi18 = [UIAlertAction actionWithTitle:TTStr(@"(GMT+05:00) %@",TTLocalString(@"bjstsj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+05:00) %@",KHJLocalizedString(@"bjstsj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT+05:00) %@",TTLocalString(@"bjstsj_", nil))];
                                                     }];
-    UIAlertAction *confi19 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+05:30) %@",KHJLocalizedString(@"ydsj_", nil))
+    UIAlertAction *confi19 = [UIAlertAction actionWithTitle:TTStr(@"(GMT+05:30) %@",TTLocalString(@"ydsj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+05:30) %@",KHJLocalizedString(@"ydsj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT+05:30) %@",TTLocalString(@"ydsj_", nil))];
                                                     }];
-    UIAlertAction *confi20 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+06:00) %@",KHJLocalizedString(@"elssj_", nil))
+    UIAlertAction *confi20 = [UIAlertAction actionWithTitle:TTStr(@"(GMT+06:00) %@",TTLocalString(@"elssj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+06:00) %@",KHJLocalizedString(@"elssj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT+06:00) %@",TTLocalString(@"elssj_", nil))];
                                                     }];
-    UIAlertAction *confi21 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+07:00) %@",KHJLocalizedString(@"tgsj_", nil))
+    UIAlertAction *confi21 = [UIAlertAction actionWithTitle:TTStr(@"(GMT+07:00) %@",TTLocalString(@"tgsj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+07:00) %@",KHJLocalizedString(@"tgsj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT+07:00) %@",TTLocalString(@"tgsj_", nil))];
                                                     }];
-    UIAlertAction *confi22 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+08:00) %@",KHJLocalizedString(@"bjsj_", nil))
+    UIAlertAction *confi22 = [UIAlertAction actionWithTitle:TTStr(@"(GMT+08:00) %@",TTLocalString(@"bjsj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+08:00) %@",KHJLocalizedString(@"bjsj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT+08:00) %@",TTLocalString(@"bjsj_", nil))];
                                                     }];
-    UIAlertAction *confi23 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+09:00) %@",KHJLocalizedString(@"rbsj_", nil))
+    UIAlertAction *confi23 = [UIAlertAction actionWithTitle:TTStr(@"(GMT+09:00) %@",TTLocalString(@"rbsj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+09:00) %@",KHJLocalizedString(@"rbsj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT+09:00) %@",TTLocalString(@"rbsj_", nil))];
                                                     }];
-    UIAlertAction *confi24 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+10:00) %@",KHJLocalizedString(@"gdsj_", nil))
+    UIAlertAction *confi24 = [UIAlertAction actionWithTitle:TTStr(@"(GMT+10:00) %@",TTLocalString(@"gdsj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+10:00) %@",KHJLocalizedString(@"gdsj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT+10:00) %@",TTLocalString(@"gdsj_", nil))];
                                                     }];
-    UIAlertAction *confi25 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+11:00) %@",KHJLocalizedString(@"slmsj_", nil))
+    UIAlertAction *confi25 = [UIAlertAction actionWithTitle:TTStr(@"(GMT+11:00) %@",TTLocalString(@"slmsj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+11:00) %@",KHJLocalizedString(@"slmsj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT+11:00) %@",TTLocalString(@"slmsj_", nil))];
                                                     }];
-    UIAlertAction *confi26 = [UIAlertAction actionWithTitle:KHJString(@"(GMT+12:00) %@",KHJLocalizedString(@"hldsj_", nil))
+    UIAlertAction *confi26 = [UIAlertAction actionWithTitle:TTStr(@"(GMT+12:00) %@",TTLocalString(@"hldsj_", nil))
                                                       style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                        [weakSelf setTimeZoneWith:0 title:KHJString(@"(GMT+12:00) %@",KHJLocalizedString(@"hldsj_", nil))];
+                                                        [weakSelf setTimeZoneWith:0 title:TTStr(@"(GMT+12:00) %@",TTLocalString(@"hldsj_", nil))];
                                                     }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil)
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cancel_", nil)
                                                      style:UIAlertActionStyleCancel
                                                    handler:nil];
     [alertview addAction:config];

@@ -41,7 +41,7 @@
     alarmRecordSB.transform = CGAffineTransformMakeScale(0.8, 0.8);
     alarmPreRecordSB.transform = CGAffineTransformMakeScale(0.8, 0.8);
 
-    self.titleLab.text = KHJLocalizedString(@"报警触发设置", nil);
+    self.titleLab.text = TTLocalString(@"报警触发设置", nil);
     [self.leftBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
 }
 

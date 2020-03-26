@@ -68,7 +68,7 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-    self.deviceList = [[KHJDataBase sharedDataBase] getAllDeviceInfo];
+    self.deviceList = [[TTDataBase shareDB] getAllDeviceInfo];
     [contentTBV reloadData];
 }
 
@@ -112,12 +112,12 @@
     }
     cell.delegate = self;
     cell.tag = FLAG_TAG + indexPath.row;
-    KHJDeviceInfo *info = self.deviceList[indexPath.row];
+    TTDeviceInfo *info = self.deviceList[indexPath.row];
     cell.idLab.text = info.deviceName;
     cell.nameLab.text = info.deviceID;
     if (currentIndex == 0) {
-        NSArray *list = [[TTFileManager sharedModel] get_live_record_VideoArray_with_deviceID:info.deviceID];
-        cell.numberLab.text = KHJString(@"%@ %d %@",KHJLocalizedString(@"共", nil),(int)list.count,KHJLocalizedString(@"个", nil));
+        NSArray *list = [[TTFileManager sharedModel] getLiveRecordVideoArrayWithDeviceID:info.deviceID];
+        cell.numberLab.text = TTStr(@"%@ %d %@",TTLocalString(@"共", nil),(int)list.count,TTLocalString(@"个", nil));
     }
     else if (currentIndex == 1) {
         cell.numberLab.text = @"";
@@ -165,7 +165,7 @@
 - (void)contentWith:(NSInteger)row
 {
     TLog(@"contentWith Row = %ld",(long)row);
-    KHJDeviceInfo *info = self.deviceList[row];
+    TTDeviceInfo *info = self.deviceList[row];
     if (currentIndex == 0) {
         KHJRecordListVC_Two *vc = [[KHJRecordListVC_Two alloc] init];
         vc.info = info;

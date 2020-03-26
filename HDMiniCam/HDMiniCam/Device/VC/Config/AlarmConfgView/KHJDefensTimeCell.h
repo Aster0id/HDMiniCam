@@ -6,7 +6,7 @@
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJBaseCell.h"
+#import "TTBaseCell.h"
 
 @protocol KHJDefensTimeCellDelegate <NSObject>
 
@@ -16,7 +16,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJDefensTimeCell : KHJBaseCell
+@interface KHJDefensTimeCell : TTBaseCell
 
 @property (nonatomic, assign) NSInteger section;
 @property (weak, nonatomic) IBOutlet UILabel *timeLab;

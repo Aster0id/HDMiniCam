@@ -1,5 +1,5 @@
 //
-//  KHJBaseNavigationController.h
+//  TTBaseNC.h
 //  SuperIPC
 //
 //  Created by 王涛 on 2020/1/12.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KHJBaseNavigationController : UINavigationController
+@interface TTBaseNC : UINavigationController
 
 @end

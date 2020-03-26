@@ -68,7 +68,7 @@ extern IPCNetRecordCfg_st recordCfg;
     int sec  = totalTime - hour * 3600 - min * 60;
     sliderView.minimumValue = 0;
     sliderView.maximumValue = totalTime;
-    endTimeLab.text = KHJString(@"%02d:%02d:%02d", hour, min, sec);
+    endTimeLab.text = TTStr(@"%02d:%02d:%02d", hour, min, sec);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endPlayer_noti) name:@"endPlayer_noti" object:nil];
 }
 
@@ -162,7 +162,7 @@ extern IPCNetRecordCfg_st recordCfg;
             int hour = time / 3600;
             int min  = (time - hour * 3600) / 60;
             int sec  = time - hour * 3600 - min * 60;
-            self->startTimeLab.text = KHJString(@"%02d:%02d:%02d", hour, min, sec);
+            self->startTimeLab.text = TTStr(@"%02d:%02d:%02d", hour, min, sec);
             if (self->sliderView.value != self->totalTime) {
                 // 未播完
                 if (self->isPlay) {
@@ -188,7 +188,7 @@ extern IPCNetRecordCfg_st recordCfg;
             int hour = time / 3600;
             int min  = (time - hour * 3600) / 60;
             int sec  = time - hour * 3600 - min * 60;
-            self->startTimeLab.text = KHJString(@"%02d:%02d:%02d", hour, min, sec);
+            self->startTimeLab.text = TTStr(@"%02d:%02d:%02d", hour, min, sec);
             if (self->sliderView.value != self->totalTime) {
                 // 未播完
                 if (self->isPlay) {

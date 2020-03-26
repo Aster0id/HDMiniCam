@@ -1,5 +1,5 @@
 //
-//  KHJDeviceInfo.h
+//  TTDeviceInfo.h
 //  SuperIPC
 //
 //  Created by kevin on 2020/2/18.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJDeviceInfo : NSObject
+@interface TTDeviceInfo : NSObject
 
 /// 设备id
 @property (nonatomic, copy) NSString *deviceID;

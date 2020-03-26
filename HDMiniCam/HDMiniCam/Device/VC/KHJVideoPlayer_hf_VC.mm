@@ -9,7 +9,7 @@
 #import "KHJVideoPlayer_hf_VC.h"
 #import "TTFirmwareInterface_API.h"
 #import "ZFTimeLine.h"
-#import "NSDate+JLZero.h"
+#import "NSDate+TTDate.h"
 #import "KHJBackPlayListVC.h"
 // 
 #import "TuyaTimeLineModel.h"
@@ -137,8 +137,8 @@ TYCameraTimeLineScrollView_oldDelegate>
 //    [timeLineContent addSubview:self.timeLineView];
     NSDate *date = [NSDate date];
     self.currentTimeInterval = [date timeIntervalSince1970];
-    self.todayTimeInterval = [NSDate getZeroWithTimeInterverl:self.currentTimeInterval];
-    self.zeroTimeInterval = [NSDate getZeroWithTimeInterverl:self.currentTimeInterval];
+    self.todayTimeInterval = [NSDate get_todayZeroInterverlWith:self.currentTimeInterval];
+    self.zeroTimeInterval = [NSDate get_todayZeroInterverlWith:self.currentTimeInterval];
     NSDateFormatter *formatter1 = [[NSDateFormatter alloc] init];
     [formatter1 setDateFormat:@"yyyy_MM_dd"];
     dateLAB.text = [formatter1 stringFromDate:date];
@@ -150,10 +150,10 @@ TYCameraTimeLineScrollView_oldDelegate>
 
 - (void)addNoti
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti_timeLineInfo_1075_key:) name:noti_timeLineInfo_1075_KEY object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTimeLineInfo:) name:TT_getTimeLineInfo_noti_KEY object:nil];
 }
 
-- (void)noti_timeLineInfo_1075_key:(NSNotification *)noti
+- (void)getTimeLineInfo:(NSNotification *)noti
 {
     TTWeakSelf
     [self addMP4_tasks:^{
@@ -163,8 +163,8 @@ TYCameraTimeLineScrollView_oldDelegate>
             for (int i = 0; i < backPlayList.count; i++) {
                 NSDictionary *body = backPlayList[i];
                 int type                = [body[@"type"] intValue];
-                NSString *startString   = KHJString(@"%06d",[body[@"start"] intValue]);
-                NSString *endString     = KHJString(@"%06d",[body[@"end"] intValue]);
+                NSString *startString   = TTStr(@"%06d",[body[@"start"] intValue]);
+                NSString *endString     = TTStr(@"%06d",[body[@"end"] intValue]);
 
                 int startHour   = [[startString substringWithRange:NSMakeRange(0, 2)] intValue];
                 int startMin    = [[startString substringWithRange:NSMakeRange(2, 2)] intValue];
@@ -205,8 +205,8 @@ TYCameraTimeLineScrollView_oldDelegate>
 //            for (int i = 0; i < backPlayList.count; i++) {
 //                NSDictionary *body = backPlayList[i];
 //                int type                = [body[@"type"] intValue];
-//                NSString *startString   = KHJString(@"%06d",[body[@"start"] intValue]);
-//                NSString *endString     = KHJString(@"%06d",[body[@"end"] intValue]);
+//                NSString *startString   = TTStr(@"%06d",[body[@"start"] intValue]);
+//                NSString *endString     = TTStr(@"%06d",[body[@"end"] intValue]);
 //                int startHour   = [[startString substringWithRange:NSMakeRange(0, 2)] intValue];
 //                int startMin    = [[startString substringWithRange:NSMakeRange(2, 2)] intValue];
 //                int startSec    = [[startString substringWithRange:NSMakeRange(4, 2)] intValue];
@@ -360,10 +360,10 @@ TYCameraTimeLineScrollView_oldDelegate>
         return;
     }
     if (index == -1) {
-        [self.view makeToast:KHJLocalizedString(@"noVide_", nil)];
+        [self.view makeToast:TTLocalString(@"noVide_", nil)];
     }
     else {
-//        [self.view makeToast:KHJString(@"当前第 %ld 个视频，总共 %ld 个视频", index, self.videoList.count)];
+//        [self.view makeToast:TTStr(@"当前第 %ld 个视频，总共 %ld 个视频", index, self.videoList.count)];
         int date_int = [[dateLAB.text stringByReplacingOccurrencesOfString:@"_" withString:@""] intValue];
         NSDateFormatter *formatterShow = [[NSDateFormatter alloc]init];
         [formatterShow setDateFormat:@"HHmmss"];
@@ -427,7 +427,7 @@ TYCameraTimeLineScrollView_oldDelegate>
     int min  = (int)(recordTimes - hour * 3600) / 60;
     int sec  = (int)(recordTimes - hour * 3600 - min * 60);
     recordTimes ++;
-    recordTimeLab.text = KHJString(@"%02d:%02d:%02d", hour, min, sec);
+    recordTimeLab.text = TTStr(@"%02d:%02d:%02d", hour, min, sec);
 }
 
 /* 停止倒计时 */
@@ -561,7 +561,7 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
     [self fireRecordTimer];
     // 回放录屏，截取数据
     rebackPlayRecordType = TTRecordBack_Record;
-    rebackRecordPath = [[[TTFileManager sharedModel] get_reback_recordVideo_DocPath_with_deviceID:self.deviceID] stringByAppendingPathComponent:[[TTFileManager sharedModel] get_videoName_With_fileType:@"mp4" deviceID:self.deviceID]];
+    rebackRecordPath = [[[TTFileManager sharedModel] getRebackRecordVideoWithDeviceID:self.deviceID] stringByAppendingPathComponent:[[TTFileManager sharedModel] getVideoNameWithFileType:@"mp4" deviceID:self.deviceID]];
 }
 
 /// 停止录像
@@ -616,9 +616,9 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
 {
     NSTimeInterval tt       = [TTCommon UTCDateFromLocalString2:date];
     NSTimeInterval cTime    = [[NSDate date] timeIntervalSince1970];
-    NSTimeInterval ct = _currentTimeInterval - [NSDate getZeroWithTimeInterverl:_currentTimeInterval];
+    NSTimeInterval ct = _currentTimeInterval - [NSDate get_todayZeroInterverlWith:_currentTimeInterval];
     _currentTimeInterval = tt + ct;
-    _zeroTimeInterval = [NSDate getZeroWithTimeInterverl:_currentTimeInterval];
+    _zeroTimeInterval = [NSDate get_todayZeroInterverlWith:_currentTimeInterval];
     if (cTime - tt < 24*60*60) {//是当前日期
         nextDayBtn.hidden = _zeroTimeInterval == _todayTimeInterval;
     }
@@ -665,7 +665,7 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
 //        // 播放回放视频
 //        TTWeakSelf
 //        [[TTFirmwareInterface_API sharedManager] starPlayback_timeLine_with_deviceID:self.deviceID vi:0 date:date_int time:timestamp_int reBlock:^(NSInteger code) {
-//            [weakSelf.view makeToast:KHJString(@"正在播放，第%ld段视频 ------------------------",(long)weakSelf.currentIndex)];
+//            [weakSelf.view makeToast:TTStr(@"正在播放，第%ld段视频 ------------------------",(long)weakSelf.currentIndex)];
 //        }];
 //    }
 //    else {
@@ -700,7 +700,7 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
                         weakSelf.activityView.hidden = YES;
                         [weakSelf.activityView stopAnimating];
                     }
-                    [weakSelf.view makeToast:KHJLocalizedString(@"noVidePly_", nil)];
+                    [weakSelf.view makeToast:TTLocalString(@"noVidePly_", nil)];
                 });
             }
         });

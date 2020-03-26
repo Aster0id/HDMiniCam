@@ -6,13 +6,13 @@
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJBaseVC.h"
+#import "TTBaseViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJRecordListVC_Two : KHJBaseVC
+@interface KHJRecordListVC_Two : TTBaseViewController
 
-@property (nonatomic, strong) KHJDeviceInfo *info;
+@property (nonatomic, strong) TTDeviceInfo *info;
 @property (nonatomic, assign) NSInteger currentIndex;
 
 @end

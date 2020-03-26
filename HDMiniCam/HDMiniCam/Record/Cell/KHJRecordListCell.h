@@ -6,7 +6,7 @@
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJBaseCell.h"
+#import "TTBaseCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface KHJRecordListCell : KHJBaseCell
+@interface KHJRecordListCell : TTBaseCell
 
 @property (weak, nonatomic) IBOutlet UILabel *idLab;
 @property (weak, nonatomic) IBOutlet UILabel *nameLab;

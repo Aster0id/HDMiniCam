@@ -54,10 +54,10 @@
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         NSArray *array = [NSArray array];
         if (self.currentIndex == 0) {
-            array = [[[TTFileManager sharedModel] get_live_record_VideoArray_with_deviceID:self.info.deviceID] copy];
+            array = [[[TTFileManager sharedModel] getLiveRecordVideoArrayWithDeviceID:self.info.deviceID] copy];
         }
         else if (self.currentIndex == 1) {
-            array = [[[TTFileManager sharedModel] get_reback_record_videoArray_with_deviceID:self.info.deviceID] copy];
+            array = [[[TTFileManager sharedModel] getRebackRecordVideoArrayWithDeviceID:self.info.deviceID] copy];
         }
         for (int i = 0; i < array.count; i++) {
             NSString *videoUrl = array[i];
@@ -75,7 +75,7 @@
 {
     rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     rightBtn.frame = CGRectMake(0,0,44,44);
-    [rightBtn setTitle:KHJLocalizedString(@"edit_", nil) forState:UIControlStateNormal];
+    [rightBtn setTitle:TTLocalString(@"edit_", nil) forState:UIControlStateNormal];
     [rightBtn setTitleColor:TTCommon.appMainColor forState:UIControlStateNormal];
     [rightBtn addTarget:self action:@selector(editAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
@@ -86,10 +86,10 @@
 {
     delete = !delete;
     if (delete) {
-        [rightBtn setTitle:KHJLocalizedString(@"finsh_", nil) forState:UIControlStateNormal];
+        [rightBtn setTitle:TTLocalString(@"finsh_", nil) forState:UIControlStateNormal];
     }
     else {
-        [rightBtn setTitle:KHJLocalizedString(@"edit_", nil) forState:UIControlStateNormal];
+        [rightBtn setTitle:TTLocalString(@"edit_", nil) forState:UIControlStateNormal];
     }
     [collectionView reloadData];
 }
@@ -132,12 +132,12 @@
     
     NSString *path = @"";
     if (self.currentIndex == 0) {
-        path = [[TTFileManager sharedModel] get_live_recordVideo_DocPath_with_deviceID:self.info.deviceID];
+        path = [[TTFileManager sharedModel] getLiveRecordVideoWithDeviceID:self.info.deviceID];
     }
     else if (self.currentIndex == 1) {
-        path = [[TTFileManager sharedModel] get_reback_recordVideo_DocPath_with_deviceID:self.info.deviceID];
+        path = [[TTFileManager sharedModel] getRebackRecordVideoWithDeviceID:self.info.deviceID];
     }
-    NSString *dir   = KHJString(@"%@/%@",path,name);
+    NSString *dir   = TTStr(@"%@/%@",path,name);
     cell.videoImgView.image = [self getScreenShotImageFromVideoPath:dir];
     
     NSDictionary *infoDict = [self getFileInfo:dir];
@@ -152,10 +152,10 @@
     int min  = (int)(time - hour * 3600) / 60;
     int sec  = (int)(time - hour * 3600 - min * 60);
     if (hour > 0) {
-        cell.videoTimeLab.text = KHJString(@"%02d:%02d:%02d", hour, min, sec);
+        cell.videoTimeLab.text = TTStr(@"%02d:%02d:%02d", hour, min, sec);
     }
     else {
-        cell.videoTimeLab.text = KHJString(@"%02d:%02d", min, sec);
+        cell.videoTimeLab.text = TTStr(@"%02d:%02d", min, sec);
     }
     return cell;
 }
@@ -208,13 +208,13 @@
     NSString *name = self.videoList[row];
     NSString *path = @"";
     if (self.currentIndex == 0) {
-        path = [[TTFileManager sharedModel] get_live_recordVideo_DocPath_with_deviceID:self.info.deviceID];
+        path = [[TTFileManager sharedModel] getLiveRecordVideoWithDeviceID:self.info.deviceID];
     }
     else if (self.currentIndex == 1) {
-        path = [[TTFileManager sharedModel] get_reback_recordVideo_DocPath_with_deviceID:self.info.deviceID];
+        path = [[TTFileManager sharedModel] getRebackRecordVideoWithDeviceID:self.info.deviceID];
     }
     AVPlayerViewController * av = [[AVPlayerViewController alloc] init];
-    av.player = [AVPlayer playerWithURL:[NSURL fileURLWithPath:KHJString(@"%@/%@",path,name)]];
+    av.player = [AVPlayer playerWithURL:[NSURL fileURLWithPath:TTStr(@"%@/%@",path,name)]];
     [self presentViewController:av animated:YES completion:^{}];
 }
 
@@ -228,13 +228,13 @@
     NSString *name = self.videoList[row];
     NSString *path = @"";
     if (self.currentIndex == 0) {
-        path = [[TTFileManager sharedModel] get_live_recordVideo_DocPath_with_deviceID:self.info.deviceID];
+        path = [[TTFileManager sharedModel] getLiveRecordVideoWithDeviceID:self.info.deviceID];
     }
     else if (self.currentIndex == 1) {
-        path = [[TTFileManager sharedModel] get_reback_recordVideo_DocPath_with_deviceID:self.info.deviceID];
+        path = [[TTFileManager sharedModel] getRebackRecordVideoWithDeviceID:self.info.deviceID];
     }
-    NSString *dir = KHJString(@"%@/%@",path,name);
-    BOOL success = [[TTFileManager sharedModel] delete_videoFile_With_path:dir];
+    NSString *dir = TTStr(@"%@/%@",path,name);
+    BOOL success = [[TTFileManager sharedModel] deleteVideoFileWithFilePath:dir];
     
     if (success) {
         [self.videoList removeObjectAtIndex:row];
@@ -250,7 +250,7 @@
         [TTHub shareHub].hud.hidden = YES;
     }
     else {
-        [self.view makeToast:KHJLocalizedString(@"dltFail_", nil)];
+        [self.view makeToast:TTLocalString(@"dltFail_", nil)];
         isDeleting = NO;
         [TTHub shareHub].hud.hidden = YES;
     }

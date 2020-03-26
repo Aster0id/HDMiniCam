@@ -1,16 +1,16 @@
 //
-//  NSDate+JLZero.m
-//  KHJCamera
+//  NSDate+TTDate.m
+//  HDMiniCam
 //
-//  Created by hezewen on 2018/9/7.
-//  Copyright © 2018年 khj. All rights reserved.
+//  Created by khj888 on 2020/3/26.
+//  Copyright © 2020 王涛. All rights reserved.
 //
 
-#import "NSDate+JLZero.h"
+#import "NSDate+TTDate.h"
 
-@implementation NSDate (JLZero)
+@implementation NSDate (TTDate)
 
-+ (NSTimeInterval)getZeroWithTimeInterverl:(NSTimeInterval)timeInterval
++ (NSTimeInterval)get_todayZeroInterverlWith:(NSTimeInterval)timeInterval
 {
     NSDate *originalDate            = [NSDate dateWithTimeIntervalSince1970:timeInterval];
     NSDateFormatter *dateFomater    = [[NSDateFormatter alloc]init];
@@ -19,5 +19,6 @@
     NSDate *ZeroDate        = [dateFomater dateFromString:original];
     return [ZeroDate timeIntervalSince1970];
 }
+
 
 @end

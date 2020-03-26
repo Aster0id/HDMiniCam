@@ -6,13 +6,13 @@
 //  Copyright © 2020年 王涛. All rights reserved.
 //
 
-#import "KHJBaseCell.h"
+#import "TTBaseCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^KHJWIFIConfigCellBlock)(NSInteger);
 
-@interface KHJWIFIConfigCell : KHJBaseCell
+@interface KHJWIFIConfigCell : TTBaseCell
 
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *safeLab;

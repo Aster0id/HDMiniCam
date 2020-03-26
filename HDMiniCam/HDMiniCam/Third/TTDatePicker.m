@@ -90,13 +90,13 @@
     
     
     #pragma mark - 适配iOS13
-    UIColor *color = [TTCommon ios13_systemColor:UIColor.blackColor earlier_systemColoer:KHJRGB(245, 245, 245)];
+    UIColor *color = [TTCommon ios13_systemColor:UIColor.blackColor earlier_systemColoer:TTRGB(245, 245, 245)];
     viewbottom.backgroundColor = color;
     
     [self addSubview:viewbottom];
     
     buttonCancle = [[UIButton alloc]initWithFrame:CGRectMake(16,2, 80, 36)];
-    [buttonCancle setTitle:KHJLocalizedString(@"cancel_", nil) forState:UIControlStateNormal];
+    [buttonCancle setTitle:TTLocalString(@"cancel_", nil) forState:UIControlStateNormal];
     buttonCancle.titleLabel.font = [UIFont systemFontOfSize:17];
     [buttonCancle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [buttonCancle.titleLabel sizeToFit];
@@ -106,7 +106,7 @@
     buttonSure = [[UIButton alloc]initWithFrame:CGRectMake(KWindowWidth-56-44,2, 80, 36)];
 //    buttonSure.titleLabel.font = [UIFont systemFontOfSize:14];
     [buttonSure setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [buttonSure setTitle:KHJLocalizedString(@"sure", nil) forState:UIControlStateNormal];
+    [buttonSure setTitle:TTLocalString(@"sure", nil) forState:UIControlStateNormal];
     buttonSure.titleLabel.font = [UIFont systemFontOfSize:17];
     [buttonSure.titleLabel sizeToFit];
     [buttonSure addTarget:self action:@selector(clickSure) forControlEvents:UIControlEventTouchUpInside];

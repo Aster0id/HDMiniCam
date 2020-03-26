@@ -32,27 +32,27 @@
 {
     [super viewDidLoad];
     self.deviceID = self.deviceInfo.deviceID;
-    self.titleLab.text = KHJLocalizedString(@"highCfg_", nil);
+    self.titleLab.text = TTLocalString(@"highCfg_", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     
-    iconArr = @[KHJIMAGE(@"config_alarm"),
-                KHJIMAGE(@"config_wifi"),
-                KHJIMAGE(@"config_sd"),
-//                KHJIMAGE(@"config_lamp"),
-                KHJIMAGE(@"config_time"),
-                KHJIMAGE(@"config_changepassword"),
-                KHJIMAGE(@"config_restart"),
-                KHJIMAGE(@"config_reboot")];
-//                KHJIMAGE(@"config_app")];
-    titleArr = @[KHJLocalizedString(@"alarCfg_", nil),
-                 KHJLocalizedString(@"WiFiConectCfg_", nil),
-                 KHJLocalizedString(@"SDCadCfg_", nil),
-//                 KHJLocalizedString(@"杂项设置", nil),
-                 KHJLocalizedString(@"timeCfg_", nil),
-                 KHJLocalizedString(@"chagPwd_", nil),
-                 KHJLocalizedString(@"restartDev_", nil),
-                 KHJLocalizedString(@"rset_", nil)];
-//                 KHJLocalizedString(@"APP密码", nil)];
+    iconArr = @[TTIMG(@"config_alarm"),
+                TTIMG(@"config_wifi"),
+                TTIMG(@"config_sd"),
+//                TTIMG(@"config_lamp"),
+                TTIMG(@"config_time"),
+                TTIMG(@"config_changepassword"),
+                TTIMG(@"config_restart"),
+                TTIMG(@"config_reboot")];
+//                TTIMG(@"config_app")];
+    titleArr = @[TTLocalString(@"alarCfg_", nil),
+                 TTLocalString(@"WiFiConectCfg_", nil),
+                 TTLocalString(@"SDCadCfg_", nil),
+//                 TTLocalString(@"杂项设置", nil),
+                 TTLocalString(@"timeCfg_", nil),
+                 TTLocalString(@"chagPwd_", nil),
+                 TTLocalString(@"restartDev_", nil),
+                 TTLocalString(@"rset_", nil)];
+//                 TTLocalString(@"APP密码", nil)];
 }
 
 - (void)backAction
@@ -124,35 +124,35 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
     else if (row == 5) {
-        UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:KHJLocalizedString(@"surestart_", nil) preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:TTLocalString(@"surestart_", nil) preferredStyle:UIAlertControllerStyleAlert];
         TTWeakSelf
-        UIAlertAction *delete = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *delete = [UIAlertAction actionWithTitle:TTLocalString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [[TTFirmwareInterface_API sharedManager] rebootDevice_with_deviceID:weakSelf.deviceInfo.deviceID reBlock:^(NSInteger code) {
-                [weakSelf.view makeToast:KHJLocalizedString(@"设备已重启", nil)];
+                [weakSelf.view makeToast:TTLocalString(@"设备已重启", nil)];
             }];
         }];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
         [alertview addAction:delete];
         [alertview addAction:cancel];
         [self presentViewController:alertview animated:YES completion:nil];
     }
     else if (row == 6) {
-        UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:KHJLocalizedString(@"sureSet_", nil) preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:TTLocalString(@"sureSet_", nil) preferredStyle:UIAlertControllerStyleAlert];
         TTWeakSelf
-        UIAlertAction *delete = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *delete = [UIAlertAction actionWithTitle:TTLocalString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [[TTFirmwareInterface_API sharedManager] resetDevice_with_deviceID:weakSelf.deviceInfo.deviceID reBlock:^(NSInteger code) {
                 if (code >= 0) {
-                    [weakSelf.view makeToast:KHJLocalizedString(@"正在恢复出厂设置，3秒后将返回设备列表", nil)];
+                    [weakSelf.view makeToast:TTLocalString(@"正在恢复出厂设置，3秒后将返回设备列表", nil)];
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         [weakSelf.navigationController popViewControllerAnimated:YES];
                     });
                 }
                 else {
-                    [weakSelf.view makeToast:KHJLocalizedString(@"恢复出厂设置失败", nil)];
+                    [weakSelf.view makeToast:TTLocalString(@"恢复出厂设置失败", nil)];
                 }
             }];
         }];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
         [alertview addAction:delete];
         [alertview addAction:cancel];
         [self presentViewController:alertview animated:YES completion:nil];

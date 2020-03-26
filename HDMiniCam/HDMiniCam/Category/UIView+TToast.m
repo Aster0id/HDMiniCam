@@ -1,23 +1,17 @@
 //
-//  Toast+UIView.m
-//  Toast
-//  Version 2.0
+//  UIView+TToast.m
+//  HDMiniCam
 //
-//  Copyright 2013 Charles Scalesse.
+//  Created by khj888 on 2020/3/26.
+//  Copyright © 2020 王涛. All rights reserved.
 //
 
-#import "Toast+UIView.h"
+#import "UIView+TToast.h"
 #import <QuartzCore/QuartzCore.h>
 #import <objc/runtime.h>
 
-/*
- *  CONFIGURE THESE VALUES TO ADJUST LOOK & FEEL,
- *  DISPLAY DURATION, ETC.
- */
-
-// general appearance
-static const CGFloat CSToastMaxWidth            = 0.8;      // 80% of parent view width
-static const CGFloat CSToastMaxHeight           = 0.8;      // 80% of parent view height
+static const CGFloat CSToastMaxWidth            = 0.8;
+static const CGFloat CSToastMaxHeight           = 0.8;
 static const CGFloat CSToastHorizontalPadding   = 10.0;
 static const CGFloat CSToastVerticalPadding     = 10.0;
 static const CGFloat CSToastCornerRadius        = 5.0;
@@ -47,7 +41,6 @@ static const CGFloat CSToastActivityHeight      = 100.0;
 static const NSString * CSToastActivityDefaultPosition = @"center";
 static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 
-
 @interface UIView (ToastPrivate)
 
 - (CGPoint)centerPointForPosition:(id)position withToast:(UIView *)toast;
@@ -55,8 +48,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 
 @end
 
-
-@implementation UIView (Toast)
+@implementation UIView (TToast)
 
 #pragma mark - Toast Methods
 
@@ -66,22 +58,22 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 
 - (void)makeToast:(NSString *)message duration:(CGFloat)interval position:(id)position {
     UIView *toast = [self viewForMessage:message title:nil image:nil];
-    [self showToast:toast duration:interval position:position];  
+    [self showToast:toast duration:interval position:position];
 }
 
 - (void)makeToast:(NSString *)message duration:(CGFloat)interval position:(id)position title:(NSString *)title {
     UIView *toast = [self viewForMessage:message title:title image:nil];
-    [self showToast:toast duration:interval position:position];  
+    [self showToast:toast duration:interval position:position];
 }
 
 - (void)makeToast:(NSString *)message duration:(CGFloat)interval position:(id)position image:(UIImage *)image {
     UIView *toast = [self viewForMessage:message title:nil image:image];
-    [self showToast:toast duration:interval position:position];  
+    [self showToast:toast duration:interval position:position];
 }
 
 - (void)makeToast:(NSString *)message duration:(CGFloat)interval  position:(id)position title:(NSString *)title image:(UIImage *)image {
     UIView *toast = [self viewForMessage:message title:title image:image];
-    [self showToast:toast duration:interval position:position];  
+    [self showToast:toast duration:interval position:position];
 }
 
 - (void)showToast:(UIView *)toast {
@@ -289,7 +281,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     CGFloat longerLeft = MAX(titleLeft, messageLeft);
     
     // wrapper width uses the longerWidth or the image width, whatever is larger. same logic applies to the wrapper height
-    CGFloat wrapperWidth = MAX((imageWidth + (CSToastHorizontalPadding * 2)), (longerLeft + longerWidth + CSToastHorizontalPadding));    
+    CGFloat wrapperWidth = MAX((imageWidth + (CSToastHorizontalPadding * 2)), (longerLeft + longerWidth + CSToastHorizontalPadding));
     CGFloat wrapperHeight = MAX((messageTop + messageHeight + CSToastVerticalPadding), (imageHeight + (CSToastVerticalPadding * 2)));
                          
     wrapperView.frame = CGRectMake(0.0, 0.0, wrapperWidth, wrapperHeight);

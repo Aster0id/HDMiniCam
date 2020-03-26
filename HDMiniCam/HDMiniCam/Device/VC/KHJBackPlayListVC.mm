@@ -61,20 +61,20 @@ extern RemoteDirInfo_t *remoteDirInfo;
 {
     [[TTFirmwareInterface_API sharedManager] getRecordConfig_with_deviceID:self.deviceID json:@"" reBlock:^(NSInteger code) {}];
     // 1、获取录像配置信息：获取文件路径
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti_1073_key:) name:noti_1073_KEY object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getRecordConf:) name:TT_getRecordConf_noti_KEY object:nil];
     // 2、结构体 remoteDirInfo 保存 列表成功，通知刷新列表
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti_1077_key:) name:noti_1077_KEY object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getListRemotePageFile:) name:TT_getListRemotePageFile_noti_KEY object:nil];
     // 删除回放视频通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti_OnDeleteRemoteFileCmdResult_key:) name:noti_OnDeleteRemoteFileCmdResult_KEY object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteRemoteFile:) name:TT_deleteRemoteFile_noti_KEY object:nil];
 }
 
-- (void)noti_OnDeleteRemoteFileCmdResult_key:(NSNotification *)noti
+- (void)deleteRemoteFile:(NSNotification *)noti
 {
     NSDictionary *body = self.listArr[deleteIndex];
     [self.listArr removeObjectAtIndex:deleteIndex];
     [contentList deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:deleteIndex inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
     [contentList reloadData];
-    [self.view makeToast:KHJString(@"%@,%@",body[@"name"],KHJLocalizedString(@"dltSuc_", nil))];
+    [self.view makeToast:TTStr(@"%@,%@",body[@"name"],TTLocalString(@"dltSuc_", nil))];
 }
 
 - (void)backAction
@@ -119,14 +119,14 @@ extern RemoteDirInfo_t *remoteDirInfo;
         int hour = (int)time / 3600;
         int min  = (int)(time - hour * 3600) / 60;
         int sec  = (int)(time - hour * 3600 - min * 60);
-        NSString *times = KHJString(@"%02d:%02d:%02d", hour, min, sec);
+        NSString *times = TTStr(@"%02d:%02d:%02d", hour, min, sec);
         
         long size = [body[@"size"] longLongValue];
         NSString *sizeUnit = [self imageSizeString:size];
 
         dispatch_async(dispatch_get_main_queue(), ^{
             cell.nameLab.text = body[@"name"];
-            cell.detailsLab.text = KHJString(@"%@-%@ (%@ %@M)",weakSelf.date,body[@"start"],times, sizeUnit);
+            cell.detailsLab.text = TTStr(@"%@-%@ (%@ %@M)",weakSelf.date,body[@"start"],times, sizeUnit);
         });
     });
     return cell;
@@ -141,37 +141,37 @@ extern RemoteDirInfo_t *remoteDirInfo;
     int hour = (int)time / 3600;
     int min  = (int)(time - hour * 3600) / 60;
     int sec  = (int)(time - hour * 3600 - min * 60);
-    NSString *times = KHJString(@"%02d:%02d:%02d", hour, min, sec);
+    NSString *times = TTStr(@"%02d:%02d:%02d", hour, min, sec);
     long size = [body[@"size"] longLongValue];
     NSString *sizeUnit = [self imageSizeString:size];
     
     TTWeakSelf
     UIAlertController *alertview    = [UIAlertController alertControllerWithTitle:body[@"name"] message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *config           = [UIAlertAction actionWithTitle:KHJLocalizedString(@"plyVideo_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config           = [UIAlertAction actionWithTitle:TTLocalString(@"plyVideo_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         KHJBackPlayerList_playerVC *vc = [[KHJBackPlayerList_playerVC alloc] init];
         vc.body = body;
         vc.deviceID = weakSelf.deviceID;
         [weakSelf.navigationController pushViewController:vc animated:YES];
     }];
-    UIAlertAction *config1 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"deltVideo_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config1 = [UIAlertAction actionWithTitle:TTLocalString(@"deltVideo_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self->deleteIndex = index;
         [[TTFirmwareInterface_API sharedManager] deleteRemoteFile_with_deviceID:self.deviceID path:body[@"videoPath"] reBlock:^(NSInteger code) {}];
     }];
-    UIAlertAction *config2 = [UIAlertAction actionWithTitle:KHJLocalizedString(@"flDetaIf_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self->fileNameLab.text = KHJString(@"%@：%@",KHJLocalizedString(@"flNm_", nil),body[@"name"]);
-        self->fileSizeLab.text = KHJString(@"%@：%@M",KHJLocalizedString(@"flSiz_", nil),sizeUnit);
+    UIAlertAction *config2 = [UIAlertAction actionWithTitle:TTLocalString(@"flDetaIf_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self->fileNameLab.text = TTStr(@"%@：%@",TTLocalString(@"flNm_", nil),body[@"name"]);
+        self->fileSizeLab.text = TTStr(@"%@：%@M",TTLocalString(@"flSiz_", nil),sizeUnit);
         if (min > 0) {
-            self->fileDurationLab.text = KHJString(@"%@：%ld%@%ld%@",KHJLocalizedString(@"recdTms_", nil),(long)min,KHJLocalizedString(@"mins_", nil),(long)sec,KHJLocalizedString(@"secs_", nil));
+            self->fileDurationLab.text = TTStr(@"%@：%ld%@%ld%@",TTLocalString(@"recdTms_", nil),(long)min,TTLocalString(@"mins_", nil),(long)sec,TTLocalString(@"secs_", nil));
         }
         else {
-            self->fileDurationLab.text = KHJString(@"%@：%ld%@",KHJLocalizedString(@"recdTms_", nil),(long)sec,KHJLocalizedString(@"secs_", nil));
+            self->fileDurationLab.text = TTStr(@"%@：%ld%@",TTLocalString(@"recdTms_", nil),(long)sec,TTLocalString(@"secs_", nil));
         }
-        self->fileStartTimeLab.text = KHJString(@"%@-%@",weakSelf.date,times);
+        self->fileStartTimeLab.text = TTStr(@"%@-%@",weakSelf.date,times);
         [UIView animateWithDuration:0.25 animations:^{
             self->fileView.alpha = 1;
         }];
     }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
     [alertview addAction:config];
     [alertview addAction:config1];
     [alertview addAction:config2];
@@ -195,7 +195,7 @@ extern RemoteDirInfo_t *remoteDirInfo;
 
 #pragma mark - 获取录像配置信息：获取文件路径
 
-- (void)noti_1073_key:(NSNotification *)obj
+- (void)getRecordConf:(NSNotification *)obj
 {
     [self getBackPlayList];
 }
@@ -205,8 +205,8 @@ extern RemoteDirInfo_t *remoteDirInfo;
     self.date = [self.date stringByReplacingOccurrencesOfString:@"_" withString:@""];
     NSString *one = [self.date substringWithRange:NSMakeRange(0, 6)];
     NSString *two = [self.date substringWithRange:NSMakeRange(6, 2)];
-    NSString *date1 = KHJString(@"%@/%@",one,two);
-    NSString *rootdir = KHJString(@"%@/%@",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],date1);
+    NSString *date1 = TTStr(@"%@/%@",one,two);
+    NSString *rootdir = TTStr(@"%@/%@",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],date1);
     checkRemoteVideoList_Date = date1.UTF8String;
     
     int vi = 0;
@@ -235,7 +235,7 @@ extern RemoteDirInfo_t *remoteDirInfo;
 
 #pragma mark - 通过文件路径 + 文件数量 => 获取 回放视频列表 (存入)
 
-- (void)noti_1077_key:(NSNotification *)obj
+- (void)getListRemotePageFile:(NSNotification *)obj
 {
     [self reloadTableView];
 }
@@ -273,7 +273,7 @@ extern RemoteDirInfo_t *remoteDirInfo;
                     [weakSelf.delegate exitListData:NO];
                 }
             }
-            self->numLab.text = KHJString(@"%@%ld%@",KHJLocalizedString(@"ttl_", nil),weakSelf.listArr.count,KHJLocalizedString(@"unt_", nil));
+            self->numLab.text = TTStr(@"%@%ld%@",TTLocalString(@"ttl_", nil),weakSelf.listArr.count,TTLocalString(@"unt_", nil));
             [self->contentList reloadData];
         });
     });

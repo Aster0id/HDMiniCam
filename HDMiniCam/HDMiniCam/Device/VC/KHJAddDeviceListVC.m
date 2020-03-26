@@ -50,15 +50,15 @@ extern NSString *wifiName;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSArray *hadArray = [NSArray arrayWithArray:[[KHJDataBase sharedDataBase] getAllDeviceInfo]];
+    NSArray *hadArray = [NSArray arrayWithArray:[[TTDataBase shareDB] getAllDeviceInfo]];
     TTWeakSelf
     [hadArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        KHJDeviceInfo *info = (KHJDeviceInfo *)obj;
+        TTDeviceInfo *info = (TTDeviceInfo *)obj;
         [weakSelf.deviceList_old addObject:info.deviceID];
     }];
     
     [self addNoti];
-    self.titleLab.text = KHJLocalizedString(@"adDev_", nil);
+    self.titleLab.text = TTLocalString(@"adDev_", nil);
     [weakSelf fireRecordTimer];
 
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
@@ -76,8 +76,8 @@ extern NSString *wifiName;
         NSDictionary *body = (NSDictionary *)noti.object;
         [arr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSDictionary *dict = (NSDictionary *)obj;
-            NSString *deviceID = KHJString(@"%@",body[@""]);
-            NSString *deviceID2 = KHJString(@"%@",dict[@""]);
+            NSString *deviceID = TTStr(@"%@",body[@""]);
+            NSString *deviceID2 = TTStr(@"%@",dict[@""]);
             if ([deviceID isEqualToString:deviceID2]) {
                 exit = YES;
                 *stop = YES;
@@ -169,8 +169,8 @@ extern NSString *wifiName;
                 break;
             }
             case AVAuthorizationStatusDenied: {
-                UIAlertController *alertC = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"tips", nil) message:KHJLocalizedString(@"cameraPrivacy", nil ) preferredStyle:(UIAlertControllerStyleAlert)];
-                UIAlertAction *alertA = [UIAlertAction actionWithTitle:KHJLocalizedString(@"commit", nil) style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                UIAlertController *alertC = [UIAlertController alertControllerWithTitle:TTLocalString(@"tips", nil) message:TTLocalString(@"cameraPrivacy", nil ) preferredStyle:(UIAlertControllerStyleAlert)];
+                UIAlertAction *alertA = [UIAlertAction actionWithTitle:TTLocalString(@"commit", nil) style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
                     
                 }];
                 [alertC addAction:alertA];
@@ -187,10 +187,10 @@ extern NSString *wifiName;
         return;
     }
     
-    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"温馨提示", nil)
-                                                                    message:KHJLocalizedString(@"未检测到您的相机", nil)
+    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:TTLocalString(@"温馨提示", nil)
+                                                                    message:TTLocalString(@"未检测到您的相机", nil)
                                                              preferredStyle:(UIAlertControllerStyleAlert)];
-    UIAlertAction *alertA = [UIAlertAction actionWithTitle:KHJLocalizedString(@"确定", nil)
+    UIAlertAction *alertA = [UIAlertAction actionWithTitle:TTLocalString(@"确定", nil)
                                                      style:(UIAlertActionStyleDefault)
                                                    handler:^(UIAlertAction * _Nonnull action) {
         
@@ -226,10 +226,10 @@ extern NSString *wifiName;
     cell.deviceIDLab.text = body[@"deviceIP"];
     cell.deviceNameLab.text = body[@"deviceID"];
     if ([self.deviceList_old containsObject:cell.deviceNameLab.text]) {
-        cell.deviceStatusLab.text = KHJLocalizedString(@"摄像机已存在", nil);
+        cell.deviceStatusLab.text = TTLocalString(@"摄像机已存在", nil);
     }
     else {
-        cell.deviceStatusLab.text = KHJLocalizedString(@"摄像机已添加", nil);
+        cell.deviceStatusLab.text = TTLocalString(@"摄像机已添加", nil);
         isQRCode = NO;
         [self addDevice_with_deviceID:body[@"deviceID"] deviceName:body[@"deviceName"] devicePassword:body[@"devicePassword"]];
     }
@@ -238,21 +238,21 @@ extern NSString *wifiName;
 
 - (void)addDevice_with_deviceID:(NSString *)deviceID deviceName:(NSString *)deviceName devicePassword:(NSString *)devicePassword
 {
-    KHJDeviceInfo *deviceInfo = [[KHJDeviceInfo alloc] init];
+    TTDeviceInfo *deviceInfo = [[TTDeviceInfo alloc] init];
     deviceInfo.deviceID = deviceID;
     deviceInfo.deviceName = deviceName;
     deviceInfo.devicePassword = devicePassword;
-    NSArray *deviceList = [[KHJDataBase sharedDataBase] getAllDeviceInfo];
+    NSArray *deviceList = [[TTDataBase shareDB] getAllDeviceInfo];
     __block BOOL exit = NO;
     [deviceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        KHJDeviceInfo *info = (KHJDeviceInfo *)obj;
+        TTDeviceInfo *info = (TTDeviceInfo *)obj;
         if ([info.deviceID isEqualToString:deviceInfo.deviceID]) {
             exit = YES;
         }
     }];
     if (!exit) {
         TTWeakSelf
-        [[KHJDataBase sharedDataBase] addDeviceInfo_with_deviceInfo:deviceInfo reBlock:^(KHJDeviceInfo * _Nonnull info, int code) {
+        [[TTDataBase shareDB] addDeviceInfo_with_deviceInfo:deviceInfo reBlock:^(TTDeviceInfo * _Nonnull info, int code) {
             if (code == 1) {
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     // 通知刷新设备列表
@@ -261,7 +261,7 @@ extern NSString *wifiName;
                 if (self->isQRCode) {
 #pragma mark - 扫码连接
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        [weakSelf.view makeToast:KHJLocalizedString(@"扫码添加成功", nil)];
+                        [weakSelf.view makeToast:TTLocalString(@"扫码添加成功", nil)];
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                             // 添加设备成功，发送通知到到设备列表，提示用户去连接可使用wifi
                             [[NSNotificationCenter defaultCenter] postNotificationName:@"addNewDevice_noti_key" object:deviceInfo];
@@ -304,12 +304,12 @@ extern NSString *wifiName;
         
         if (![wifiName hasPrefix:@"IPC_"]) {
             
-//            UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"setWF_", nil) message:@""
+//            UIAlertController *alertview = [UIAlertController alertControllerWithTitle:TTLocalString(@"setWF_", nil) message:@""
 //                                                                    preferredStyle:UIAlertControllerStyleAlert];
-//            UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel
+//            UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cancel_", nil) style:UIAlertActionStyleCancel
 //                                                           handler:nil];
 //            TTWeakSelf
-//            UIAlertAction *defult = [UIAlertAction actionWithTitle:KHJLocalizedString(@"sbMit_", nil) style:UIAlertActionStyleDefault
+//            UIAlertAction *defult = [UIAlertAction actionWithTitle:TTLocalString(@"sbMit_", nil) style:UIAlertActionStyleDefault
 //                                                           handler:^(UIAlertAction * _Nonnull action) {
 //                [weakSelf changeToDeviceHotpoint];
 //            }];
@@ -320,7 +320,7 @@ extern NSString *wifiName;
         }
         else {
             TLog(@"wifiName ============ %@",wifiName);
-            [self.view makeToast:KHJLocalizedString(@"正在搜索设备..", nil)];
+            [self.view makeToast:TTLocalString(@"正在搜索设备..", nil)];
             [self fireRecordTimer];
         }
     }

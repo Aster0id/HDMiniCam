@@ -6,7 +6,7 @@
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJBaseCell.h"
+#import "TTBaseCell.h"
 
 @protocol KHJAlarmConfCellDelegate <NSObject>
 
@@ -15,7 +15,7 @@
 @end
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJAlarmConfCell : KHJBaseCell
+@interface KHJAlarmConfCell : TTBaseCell
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLab;
 @property (weak, nonatomic) IBOutlet UILabel *subNameLab;

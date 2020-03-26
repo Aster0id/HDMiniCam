@@ -6,7 +6,7 @@
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJBaseVC.h"
+#import "TTBaseViewController.h"
 
 @protocol KHJAddDTVCDelegate <NSObject>
 
@@ -16,7 +16,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJAddDTVC : KHJBaseVC
+@interface KHJAddDTVC : TTBaseViewController
 
 @property (nonatomic, strong) NSArray *timeArr;
 @property (nonatomic, strong) id<KHJAddDTVCDelegate> delegate;

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KHJQRCodeScanningVC : KHJBaseVC
+@interface KHJQRCodeScanningVC : TTBaseViewController
 
 @end

@@ -392,7 +392,7 @@ void OnGetPausePlaybackCmdResult(int cmd,const char*uuid,const char*json)
 }
 void OnGetDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:noti_OnGetDeviceWiFi_CmdResult_KEY object:[TTCommon cString_changto_ocStringWith:json]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:TT_getDeviceWiFiCmdResult_noti_KEY object:[TTCommon cString_changto_ocStringWith:json]];
 }
 
 #pragma mark - 设置设备Wi-Fi
@@ -412,7 +412,7 @@ void OnGetDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
 
 void OnSearchDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:noti_OnSearchDeviceWiFi_CmdResult_KEY object:[TTCommon cString_changto_ocStringWith:json]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:TT_getSearchDeviceWiFi_noti_KEY object:[TTCommon cString_changto_ocStringWith:json]];
 }
 
 #pragma mark - 开始搜索附近Wi-Fi列表
@@ -424,9 +424,9 @@ void OnSearchDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
 
 void OnSearchDeviceResult(struct DevInfo *device)
 {
-    NSString *uuid = KHJString(@"%s",device->mUUID);
-    NSString *deviceIP = KHJString(@"%s",device->mIP);
-    NSString *name = KHJString(@"%s",device->mDevName);
+    NSString *uuid = TTStr(@"%s",device->mUUID);
+    NSString *deviceIP = TTStr(@"%s",device->mIP);
+    NSString *name = TTStr(@"%s",device->mDevName);
     NSMutableDictionary *body = [NSMutableDictionary dictionary];
     [body setValue:uuid forKey:@"deviceID"];
     [body setValue:name forKey:@"deviceName"];
@@ -495,7 +495,7 @@ void OnGetRecordConfCmdResult(int cmd,const char*uuid,const char*json)
     recordCfg.parseJSON(jsdata);
     IPCNetReleaseCmdResource(cmd,uuid,OnGetRecordConfCmdResult);
     dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:noti_1073_KEY object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:TT_getRecordConf_noti_KEY object:nil];
     });
 }
 
@@ -536,7 +536,7 @@ void OnListRemoteDirInfoCmdResult(int cmd,const char*uuid,const char*json)
 
     /// 组织json字符串，lp是list path简写， p为path简写，s是start简写，c是count简写
     char jsonbuff[1024] = {0};
-    NSString *path = KHJString(@"%@/%s",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],checkRemoteVideoList_Date);
+    NSString *path = TTStr(@"%@/%s",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],checkRemoteVideoList_Date);
     sprintf(jsonbuff,"{\"lp\":{\"p\":\"%s\",\"s\":%d,\"c\":%d}}", path.UTF8String, in_de_x, requireNum);
     /// 按索引获取目录下的文件名，结果通过 OnListRemotePageFileCmdResult2 返回
     IPCNetListRemotePageFileR(uuid, jsonbuff, OnListRemotePageFileCmdResult2);
@@ -550,7 +550,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
     // 创建 RemoteDirInfo_t 对象
     RemoteDirInfo_t *rdi = new RemoteDirInfo_t;
 
-    NSString *diskInfo_path = KHJString(@"%@/%s",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],checkRemoteVideoList_Date);
+    NSString *diskInfo_path = TTStr(@"%@/%s",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],checkRemoteVideoList_Date);
 
     rdi->path = diskInfo_path.UTF8String;
     rdi->parseJSON(jsdata);
@@ -584,14 +584,14 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
             requireNum = 10;
 
         start_index += requireNum;
-        NSString *path = KHJString(@"%@/%s",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],checkRemoteVideoList_Date);
+        NSString *path = TTStr(@"%@/%s",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],checkRemoteVideoList_Date);
         sprintf(jsonbuff,"{\"lp\":{\"p\":\"%s\",\"s\":%d,\"c\":%d}}", path.UTF8String, in_de_x, requireNum);
         //释放命令绑定资源
         IPCNetListRemotePageFileR(uuid,jsonbuff,OnListRemotePageFileCmdResult2);
     }
     else {
 #pragma mark - 获取数据后，没有数据，发出更新提示
-        [[NSNotificationCenter defaultCenter] postNotificationName:noti_1077_KEY object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:TT_getListRemotePageFile_noti_KEY object:nil];
     }
 }
 
@@ -612,7 +612,7 @@ void OnGetRemoteDirInfo_timeLine_CmdResult(int cmd,const char*uuid,const char*js
     NSDictionary *backPlay_result = [TTCommon cString_changto_ocStringWith:json];
     NSArray *result_array = backPlay_result[@"RecInfo"][@"period"];
     TLog(@"OnGetRemoteDirInfo_timeLine_CmdResult = %ld",(long)result_array.count);
-    [[NSNotificationCenter defaultCenter] postNotificationName:noti_timeLineInfo_1075_KEY object:result_array];
+    [[NSNotificationCenter defaultCenter] postNotificationName:TT_getTimeLineInfo_noti_KEY object:result_array];
 }
 
 #pragma mark - 播放时间轴回放视频
@@ -631,7 +631,7 @@ void OnStarPlayback_timeLine_CmdResult(int cmd,const char*uuid,const char*json)
 //    NSDictionary *backPlay_result = [TTCommon cString_changto_ocStringWith:json];
 //    NSArray *result_array = backPlay_result[@"RecInfo"][@"period"];
 //    TLog(@"result_array.count = %ld",(long)result_array.count);
-//    [[NSNotificationCenter defaultCenter] postNotificationName:noti_timeLineInfo_1075_KEY object:result_array];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:TT_getTimeLineInfo_noti_KEY object:result_array];
 }
 
 #pragma mark - 删除远程文件
@@ -649,7 +649,7 @@ void OnDeleteRemoteFileCmdResult(int cmd,const char*uuid,const char*json)
     dispatch_async(dispatch_get_main_queue(), ^{
         int ret = [result[@"ret"] intValue];
         if (ret == 0) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:noti_OnDeleteRemoteFileCmdResult_KEY object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:TT_deleteRemoteFile_noti_KEY object:nil];
         }
     });
 }

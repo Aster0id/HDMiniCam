@@ -1,5 +1,5 @@
 //
-//  KHJBaseCell.h
+//  TTBaseCell.h
 //  SuperIPC
 //
 //  Created by 王涛 on 2020/1/12.
@@ -10,9 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJBaseCell : UITableViewCell
-
-@property (nonatomic, strong) UIView *lineView;
+@interface TTBaseCell : UITableViewCell
 
 @end
 

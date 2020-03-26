@@ -22,7 +22,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.titleLab.text = KHJLocalizedString(@"添加报警时间", nil);
+    self.titleLab.text = TTLocalString(@"添加报警时间", nil);
     [self.leftBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -53,7 +53,7 @@
         
         if (self.timeArr.count > 0) {
             if (_delegate && [_delegate respondsToSelector:@selector(addDefinesTime:)]) {
-                [_delegate addDefinesTime:KHJString(@"%@ - %@",startTimeLab.text,endTimeLab.text)];
+                [_delegate addDefinesTime:TTStr(@"%@ - %@",startTimeLab.text,endTimeLab.text)];
                 [self.navigationController popViewControllerAnimated:YES];
             }
         }
@@ -97,14 +97,14 @@
             }];
             
             if (!exit) {
-                TLog(@"添加的时间 = %@",KHJString(@"%@ - %@",startTimeLab.text,endTimeLab.text));
+                TLog(@"添加的时间 = %@",TTStr(@"%@ - %@",startTimeLab.text,endTimeLab.text));
 //                if (_delegate && [_delegate respondsToSelector:@selector(addDefinesTime:)]) {
-//                    [_delegate addDefinesTime:KHJString(@"%@ - %@",startTimeLab.text,endTimeLab.text)];
+//                    [_delegate addDefinesTime:TTStr(@"%@ - %@",startTimeLab.text,endTimeLab.text)];
 //                    [self.navigationController popViewControllerAnimated:YES];
 //                }
             }
             else {
-                [weakSelf.view makeToast:KHJLocalizedString(@"计划已包含该时间", nil)];
+                [weakSelf.view makeToast:TTLocalString(@"计划已包含该时间", nil)];
             }
         }
     }

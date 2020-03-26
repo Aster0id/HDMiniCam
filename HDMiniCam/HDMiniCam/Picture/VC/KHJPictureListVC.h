@@ -9,7 +9,7 @@
 
 typedef void(^KHJDeleteItemBlock)(NSString *path);
 
-@interface KHJPictureListVC : KHJBaseVC
+@interface KHJPictureListVC : TTBaseViewController
 
 @property (nonatomic, copy) KHJDeleteItemBlock deleteBlock;
 

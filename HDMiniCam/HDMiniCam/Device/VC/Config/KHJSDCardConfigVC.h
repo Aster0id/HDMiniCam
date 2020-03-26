@@ -6,11 +6,11 @@
 //  Copyright © 2020年 王涛. All rights reserved.
 //
 
-#import "KHJBaseVC.h"
+#import "TTBaseViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJSDCardConfigVC : KHJBaseVC
+@interface KHJSDCardConfigVC : TTBaseViewController
 
 @end
 

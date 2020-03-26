@@ -8,11 +8,10 @@
 
 #import "KHJMutilScreenVC.h"
 #import "AppDelegate.h"
-#import "UIDevice+TFDevice.h"
 #import "TTFirmwareInterface_API.h"
 
 // 设备列表
-extern NSMutableArray *mutliDidArr;
+extern NSMutableArray *mutliArr;
 // 当前解码类型
 extern TTDecordeType decoderType;
 
@@ -38,13 +37,13 @@ extern TTDecordeType decoderType;
 {
     [super viewDidLoad];
     decoderType = TTDecorde_moreLive;
-    if (mutliDidArr) {
+    if (mutliArr) {
         for (int i = 0; i < 4; i++) {
-            [mutliDidArr addObject:@""];
+            [mutliArr addObject:@""];
         }
     }
     else
-        mutliDidArr = [NSMutableArray array];
+        mutliArr = [NSMutableArray array];
 
     [self addDeviceNoti];
 }
@@ -57,14 +56,14 @@ extern TTDecordeType decoderType;
 - (void)getDeviceStatus:(NSNotification *)noti
 {
     NSDictionary *body      = (NSDictionary *)noti.object;
-    NSString *deviceID      = KHJString(@"%@",body[@"deviceID"]);
-    NSString *deviceStatus  = KHJString(@"%@",body[@"deviceStatus"]);
+    NSString *deviceID      = TTStr(@"%@",body[@"deviceID"]);
+    NSString *deviceStatus  = TTStr(@"%@",body[@"deviceStatus"]);
     if ([deviceStatus isEqualToString:@"0"]) {
         TTWeakSelf
         dispatch_async(dispatch_get_main_queue(), ^{
             if (![weakSelf.deviceList containsObject:deviceID]) {
                 [weakSelf.deviceList addObject:deviceID];
-                [weakSelf.view makeToast:KHJLocalizedString(@"caAdNewDev_", nil)];
+                [weakSelf.view makeToast:TTLocalString(@"caAdNewDev_", nil)];
             }
         });
     }
@@ -83,14 +82,14 @@ extern TTDecordeType decoderType;
     /* 显示多个视频 */
     AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     appDelegate.canLandscape = NO;
-    [UIDevice switchNewOrientation:UIInterfaceOrientationPortrait];
+    [UIDevice TTurnAroundDirection:UIInterfaceOrientationPortrait];
     [UIApplication sharedApplication].statusBarHidden = NO;
     
     self.initMutliDecorder = NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:TT_onStatus_noti_KEY object:nil];
     
     // 停止播放视频
-    [mutliDidArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [mutliArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [[TTFirmwareInterface_API sharedManager] stopGetVideo_with_deviceID:obj reBlock:^(NSInteger code) {}];
     }];
     
@@ -104,7 +103,7 @@ extern TTDecordeType decoderType;
     /* 显示多个视频 */
     AppDelegate *appDelegate    = (AppDelegate *)[UIApplication sharedApplication].delegate;
     appDelegate.canLandscape   = YES;
-    [UIDevice switchNewOrientation:UIInterfaceOrientationLandscapeRight];
+    [UIDevice TTurnAroundDirection:UIInterfaceOrientationLandscapeRight];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
@@ -123,7 +122,7 @@ extern TTDecordeType decoderType;
 {
     chooseIndex = sender.tag;
     NSArray *passDeviceList = [self.deviceList copy];
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:KHJLocalizedString(@"adDev_", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:TTLocalString(@"adDev_", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
     TTWeakSelf
     for (int i = 0; i < passDeviceList.count; i++) {
         UIAlertAction *config = [UIAlertAction actionWithTitle:passDeviceList[i]
@@ -133,7 +132,7 @@ extern TTDecordeType decoderType;
         }];
         [alertview addAction:config];
     }
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:KHJLocalizedString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
     [alertview addAction:cancel];
     [self presentViewController:alertview animated:YES completion:nil];
 }
@@ -141,7 +140,7 @@ extern TTDecordeType decoderType;
 - (void)chooseItemWith:(NSInteger)row
 {
     NSString *deviceID = self.deviceList[row];
-    [mutliDidArr replaceObjectAtIndex:chooseIndex withObject:deviceID];
+    [mutliArr replaceObjectAtIndex:chooseIndex withObject:deviceID];
     if (chooseIndex == 0)
         oneImgView.alpha = 1;
     else if (chooseIndex == 1)
@@ -165,7 +164,7 @@ extern TTDecordeType decoderType;
 
 - (void)getImageWith:(UIImage * _Nullable)image imageSize:(CGSize)imageSize deviceID:(NSString *)deviceID
 {
-    NSInteger index = [mutliDidArr indexOfObject:deviceID];
+    NSInteger index = [mutliArr indexOfObject:deviceID];
     switch (index) {
         case 0:
             oneImgView.image = image;

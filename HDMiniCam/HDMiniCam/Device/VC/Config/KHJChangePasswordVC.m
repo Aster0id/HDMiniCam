@@ -21,11 +21,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     if (self.isFinderPassword) {
-        self.titleLab.text = KHJLocalizedString(@"chagPwd_", nil);
+        self.titleLab.text = TTLocalString(@"chagPwd_", nil);
     }
     else {
-        self.titleLab.text = KHJLocalizedString(@"APPwd_", nil);
-        oldtf.placeholder = KHJLocalizedString(@"APPDeftNull_", nil);
+        self.titleLab.text = TTLocalString(@"APPwd_", nil);
+        oldtf.placeholder = TTLocalString(@"APPDeftNull_", nil);
     }
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
 }

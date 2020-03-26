@@ -8,7 +8,7 @@
 
 #import "ZFTimeLine.h"
 #import "KHJVideoModel.h"
-#import "NSDate+JLZero.h"
+#import "NSDate+TTDate.h"
 
 //
 #import "TuyaTimeLineModel.h"
@@ -119,8 +119,8 @@
             return ;
         }
         // 左右临界点判断
-        NSTimeInterval ddInt = [NSDate getZeroWithTimeInterverl:currentInterval];
-        NSTimeInterval eeInt = [NSDate getZeroWithTimeInterverl:currentInterval]+24*60*60-1;
+        NSTimeInterval ddInt = [NSDate get_todayZeroInterverlWith:currentInterval];
+        NSTimeInterval eeInt = [NSDate get_todayZeroInterverlWith:currentInterval]+24*60*60-1;
         
         currentInterval = currentInterval - [self secondsOfIntervalValue] * x;
         moveStart = point;
@@ -341,7 +341,7 @@
                 }
                 else if(tInfo.recType == 4) {
                     //4是声音侦测
-                    [self drawColorRect:startX Context:contex length:length withColor:KHJRGB(0x2a, 0xb9, 0xb7)];
+                    [self drawColorRect:startX Context:contex length:length withColor:TTRGB(0x2a, 0xb9, 0xb7)];
                 }
                 else if(tInfo.recType ==6 ){
                     //6移动和声音
@@ -441,7 +441,7 @@
 //                    else if(tInfo.recType == 4) {
 //                        //4是声音侦测
 //                        dispatch_async(dispatch_get_main_queue(), ^{
-//                            [weakSelf drawColorRect:startX Context:contex length:length withColor:KHJRGB(0x2a, 0xb9, 0xb7)];
+//                            [weakSelf drawColorRect:startX Context:contex length:length withColor:TTRGB(0x2a, 0xb9, 0xb7)];
 //                        });
 //                    }
 //                    else if(tInfo.recType ==6 ){
@@ -521,7 +521,7 @@
 {
     float centerX = self.frame.size.width/2.0;
     NSTimeInterval leftInterval = currentInterval - centerX * [self secondsOfIntervalValue];
-    NSTimeInterval ddInt2 = [NSDate getZeroWithTimeInterverl:currentInterval];//当前0点时间戳
+    NSTimeInterval ddInt2 = [NSDate get_todayZeroInterverlWith:currentInterval];//当前0点时间戳
     
     int bb = 0;
     if (scaleType == ScaleTypeBig) {
@@ -710,7 +710,7 @@
     float centerX = self.frame.size.width/2;
     //这个1/2屏幕所占的时间戳+当前时间搓 = 右边的时间搓
     NSTimeInterval rightInterval = centerX * [self secondsOfIntervalValue]+currentInterval;
-    NSTimeInterval interVal24 = [NSDate getZeroWithTimeInterverl:currentInterval]+24*60*60;
+    NSTimeInterval interVal24 = [NSDate get_todayZeroInterverlWith:currentInterval]+24*60*60;
     int bb = 0;
     if (scaleType == ScaleTypeBig) {
         bb = 60 * 6;
@@ -726,7 +726,7 @@
 {
     float centerX = self.frame.size.width/2.0;
     NSTimeInterval leftInterval = currentInterval - centerX * [self secondsOfIntervalValue];
-    NSTimeInterval interVal24 = [NSDate getZeroWithTimeInterverl:currentInterval]+24*60*60;
+    NSTimeInterval interVal24 = [NSDate get_todayZeroInterverlWith:currentInterval]+24*60*60;
     CGFloat ff = [self getIntervalForPoint:(interVal24 -leftInterval)];
     return ff;
 }

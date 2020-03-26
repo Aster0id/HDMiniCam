@@ -18,7 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.titleLab.text = KHJLocalizedString(@"杂项设置", nil);
+    self.titleLab.text = TTLocalString(@"杂项设置", nil);
     [self.leftBtn addTarget:self action:@selector(backActon) forControlEvents:UIControlEventTouchUpInside];
 }
 

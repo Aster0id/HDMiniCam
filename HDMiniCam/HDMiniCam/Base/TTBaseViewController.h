@@ -1,5 +1,5 @@
 //
-//  KHJBaseVC.h
+//  TTBaseViewController.h
 //  SuperIPC
 //
 //  Created by 王涛 on 2020/1/12.
@@ -8,12 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KHJBaseVC : UIViewController
+@interface TTBaseViewController : UIViewController
 
 @property (nonatomic, strong) UIButton *leftBtn;
 @property (nonatomic, strong) UILabel  *titleLab;
-@property (nonatomic, strong) UIButton *rightBtn;
-@property (nonatomic, strong) UIButton *right_leftBtn;
 
 @end
 

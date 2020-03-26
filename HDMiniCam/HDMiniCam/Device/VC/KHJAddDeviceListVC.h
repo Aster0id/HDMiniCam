@@ -6,11 +6,11 @@
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJBaseVC.h"
+#import "TTBaseViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJAddDeviceListVC : KHJBaseVC
+@interface KHJAddDeviceListVC : TTBaseViewController
 
 @end
 

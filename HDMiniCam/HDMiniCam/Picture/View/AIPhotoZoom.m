@@ -48,7 +48,7 @@
 - (void)panisdnaisndal:(CGRect)frame
 {
     pImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
-    pImgView.image = KHJIMAGE(@"play_icon");
+    pImgView.image = TTIMG(@"play_icon");
 
     [self addSubview:pImgView];
     pImgView.center = CGPointMake(frame.size.width/2, frame.size.height/2);

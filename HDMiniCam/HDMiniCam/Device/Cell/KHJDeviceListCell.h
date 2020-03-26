@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface KHJDeviceListCell : KHJBaseCell
+@interface KHJDeviceListCell : TTBaseCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *bigIMGV;
 @property (weak, nonatomic) IBOutlet UILabel *name;

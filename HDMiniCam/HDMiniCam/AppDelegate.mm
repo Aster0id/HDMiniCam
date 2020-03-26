@@ -7,15 +7,15 @@
 //
 
 #import "AppDelegate.h"
-#import "KHJDeviceListVC.h"
-#import "KHJBaseNavigationController.h"
+#import "TTDeviceListViewController.h"
+#import "TTBaseNC.h"
 #import "KHJPictureListVC.h"
 #import "KHJRecordListVC.h"
 #import "KHJVideoPlayer_hf_VC.h"
 #pragma mark - ios13 开启地理位置权限，获取Wi-Fi名称
 #import <CoreLocation/CoreLocation.h>
 #import "TTFirmwareInterface_API.h"
-#import "KHJDataBase.h"
+//#import "TTDataBase.h"
 #import "AFNetworkReachabilityManager.h"
 
 @interface AppDelegate ()<CLLocationManagerDelegate>
@@ -37,11 +37,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     #pragma mark - 启动时，调动底层
-    KHJDataBase *db = [KHJDataBase sharedDataBase];
+    TTDataBase *db = [TTDataBase shareDB];
     [db initDataBase];
-    NSArray *list = [[KHJDataBase sharedDataBase] getAllDeviceInfo];
+    NSArray *list = [[TTDataBase shareDB] getAllDeviceInfo];
     for (int i = 0; i < list.count; i++) {
-        KHJDeviceInfo *info = [[KHJDeviceInfo alloc] init];
+        TTDeviceInfo *info = [[TTDeviceInfo alloc] init];
         info = list[i];
         [[TTFirmwareInterface_API sharedManager] connect_with_deviceID:info.deviceID password:info.devicePassword reBlock:^(NSInteger code) {}];
     }
@@ -64,20 +64,20 @@
         [UIApplication sharedApplication].delegate.window.rootViewController = nil;
         appDelegate.rootTabBarVC = nil;
     }
-    KHJTabBarBaseVC * tabbar = [[KHJTabBarBaseVC alloc] init];
+    TTabBarBaseViewController * tabbar = [[TTabBarBaseViewController alloc] init];
     appDelegate.rootTabBarVC = tabbar;//关闭横屏仅允许竖屏
     
-    KHJDeviceListVC *vc1 = [[KHJDeviceListVC alloc] init];
-    KHJBaseNavigationController *deviceListNavi = [[KHJBaseNavigationController  alloc] initWithRootViewController:vc1];
-    deviceListNavi.tabBarItem.title = KHJLocalizedString(@"vide_", nil);
+    TTDeviceListViewController *vc1 = [[TTDeviceListViewController alloc] init];
+    TTBaseNC *deviceListNavi = [[TTBaseNC  alloc] initWithRootViewController:vc1];
+    deviceListNavi.tabBarItem.title = TTLocalString(@"vide_", nil);
     
     KHJPictureListVC *vc2 = [[KHJPictureListVC alloc] init];
-    KHJBaseNavigationController *pictureNavi = [[KHJBaseNavigationController  alloc] initWithRootViewController:vc2];
-    pictureNavi.tabBarItem.title = KHJLocalizedString(@"pic_", nil);
+    TTBaseNC *pictureNavi = [[TTBaseNC  alloc] initWithRootViewController:vc2];
+    pictureNavi.tabBarItem.title = TTLocalString(@"pic_", nil);
     
     KHJRecordListVC *vc3 = [[KHJRecordListVC alloc] init];
-    KHJBaseNavigationController *recordNavi = [[KHJBaseNavigationController  alloc] initWithRootViewController:vc3];
-    recordNavi.tabBarItem.title = KHJLocalizedString(@"recrd_", nil);
+    TTBaseNC *recordNavi = [[TTBaseNC  alloc] initWithRootViewController:vc3];
+    recordNavi.tabBarItem.title = TTLocalString(@"recrd_", nil);
     
     [deviceListNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TTCommon.appMainColor}
                                              forState:UIControlStateSelected];
@@ -93,12 +93,12 @@
                                          forState:UIControlStateNormal];
     [tabbar setViewControllers:@[deviceListNavi, pictureNavi, recordNavi]];
     
-    pictureNavi.tabBarItem.image            = [KHJIMAGE(@"picture_n") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    pictureNavi.tabBarItem.selectedImage    = [KHJIMAGE(@"picture_s") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] ;
-    recordNavi.tabBarItem.image             = [KHJIMAGE(@"record_n") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    recordNavi.tabBarItem.selectedImage     = [KHJIMAGE(@"record_s") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    deviceListNavi.tabBarItem.image         = [KHJIMAGE(@"video_n") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    deviceListNavi.tabBarItem.selectedImage = [KHJIMAGE(@"video_s") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    pictureNavi.tabBarItem.image            = [TTIMG(@"picture_n") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    pictureNavi.tabBarItem.selectedImage    = [TTIMG(@"picture_s") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] ;
+    recordNavi.tabBarItem.image             = [TTIMG(@"record_n") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    recordNavi.tabBarItem.selectedImage     = [TTIMG(@"record_s") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    deviceListNavi.tabBarItem.image         = [TTIMG(@"video_n") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    deviceListNavi.tabBarItem.selectedImage = [TTIMG(@"video_s") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     [UIApplication sharedApplication].delegate.window.rootViewController = appDelegate.rootTabBarVC;
     [self.window makeKeyAndVisible];
 }

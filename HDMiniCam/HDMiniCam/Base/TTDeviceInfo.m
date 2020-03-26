@@ -1,14 +1,14 @@
 //
-//  KHJDeviceInfo.m
+//  TTDeviceInfo.m
 //  SuperIPC
 //
 //  Created by kevin on 2020/2/18.
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJDeviceInfo.h"
+#import "TTDeviceInfo.h"
 
-@implementation KHJDeviceInfo
+@implementation TTDeviceInfo
 
 - (instancetype)init
 {

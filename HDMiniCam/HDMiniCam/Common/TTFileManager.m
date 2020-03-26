@@ -41,7 +41,7 @@
 
 #pragma mark - 获取当前用户文件夹下所有视频和图片文件
 
-- (NSArray *)get_all_video_and_pic_File
+- (NSArray *)getAllVideoAndPictureFile
 {
     NSArray *files = [fileManager subpathsOfDirectoryAtPath:docPath error:nil];
     //倒序输出，最新的在最前面
@@ -75,7 +75,7 @@
 
 #pragma mark - 获取直播视频截图文件路径
 
-- (NSString *)get_live_screenShot_DocPath_with_deviceID:(NSString *)deviceID
+- (NSString *)getliveScreenShotWithDeviceID:(NSString *)deviceID
 {
     NSString *picPath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Camera/%@",deviceID]];
     BOOL isDir = NO;
@@ -88,7 +88,7 @@
 
 #pragma mark - 视频每日最后一张截图保存的文件夹路径
 
-- (NSString *)get_screenShot_DocPath_deviceID:(NSString *)deviceID
+- (NSString *)getScreenShotWithDeviceID:(NSString *)deviceID
 {
     NSString *screenShotPath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Date_ScreenShot/%@",deviceID]];
     BOOL isDir = NO;
@@ -101,7 +101,7 @@
 
 #pragma mark - 视频每日录屏的截图保存的文件夹路径
 
-- (NSString *)get_recordVideo_screenShot_DocPath_with_deviceID:(NSString *)deviceID
+- (NSString *)getRecordScreenShotWithDeviceID:(NSString *)deviceID
 {
     NSString *screenShotPath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Date_ScreenShot/%@/recordScreenShot",deviceID]];
     BOOL isDir = NO;
@@ -114,7 +114,7 @@
 
 #pragma mark - 获取视频或图片的名称
 
-- (NSString *)get_videoName_With_fileType:(NSString *)fileType deviceID:(NSString *)deviceID
+- (NSString *)getVideoNameWithFileType:(NSString *)fileType deviceID:(NSString *)deviceID
 {
     NSDictionary *dicDay = [self getTodayDate] ;
     NSString *khjtoday = [NSString stringWithFormat:@"%@%@%@",dicDay[@"year"],dicDay[@"month"],dicDay[@"day"]] ;
@@ -151,9 +151,9 @@
 
 #pragma mark - 获取 直播录屏 文件夹 路径 NSFileManager
 
-- (NSArray *)get_live_record_VideoArray_with_deviceID:(NSString *)deviceID
+- (NSArray *)getLiveRecordVideoArrayWithDeviceID:(NSString *)deviceID
 {
-    NSArray *files = [fileManager subpathsAtPath:[self get_live_recordVideo_DocPath_with_deviceID:deviceID]];
+    NSArray *files = [fileManager subpathsAtPath:[self getLiveRecordVideoWithDeviceID:deviceID]];
     NSMutableArray *file = [files mutableCopy];
     if ([deviceID isEqualToString:@""]) {
         [files enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -169,7 +169,7 @@
 
 #pragma mark - 获取 直播录屏 存放路径
 
-- (NSString *)get_live_recordVideo_DocPath_with_deviceID:(NSString *)deviceID
+- (NSString *)getLiveRecordVideoWithDeviceID:(NSString *)deviceID
 {
     NSString *videoPath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Video/%@",deviceID]];
     BOOL isDir = NO;
@@ -182,9 +182,9 @@
 
 #pragma mark - 获取 回放录屏 文件夹 路径 NSFileManager
 
-- (NSArray *)get_reback_record_videoArray_with_deviceID:(NSString *)deviceID
+- (NSArray *)getRebackRecordVideoArrayWithDeviceID:(NSString *)deviceID
 {
-    NSArray *files = [fileManager subpathsAtPath:[self get_reback_recordVideo_DocPath_with_deviceID:deviceID]];
+    NSArray *files = [fileManager subpathsAtPath:[self getRebackRecordVideoWithDeviceID:deviceID]];
     NSMutableArray *file = [files mutableCopy];
     if ([deviceID isEqualToString:@""]) {
         [files enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -200,7 +200,7 @@
 
 #pragma mark - 获取 回放录屏 存放路径
 
-- (NSString *)get_reback_recordVideo_DocPath_with_deviceID:(NSString *)deviceID
+- (NSString *)getRebackRecordVideoWithDeviceID:(NSString *)deviceID
 {
     NSString *videoPath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"RebackPlayVideo/%@",deviceID]];
     BOOL isDir = NO;
@@ -221,7 +221,7 @@
 
 #pragma mark - 删除文件
 
-- (BOOL)delete_videoFile_With_path:(NSString *)path
+- (BOOL)deleteVideoFileWithFilePath:(NSString *)path
 {
     BOOL is = [fileManager removeItemAtPath:path error:nil];
     return is;

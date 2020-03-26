@@ -42,7 +42,7 @@
 {
     [super viewDidLoad];
     isEveryDay = NO;
-    self.titleLab.text = KHJLocalizedString(@"定时设置", nil);
+    self.titleLab.text = TTLocalString(@"定时设置", nil);
     [self.leftBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -149,7 +149,7 @@
             head.delegate = self;
             head.switchBtn.on = !isEveryDay;
             head.switchBtn.transform = CGAffineTransformMakeScale(0.8, 0.8);
-            head.nameLab.text = KHJLocalizedString(@"每天", nil);
+            head.nameLab.text = TTLocalString(@"每天", nil);
             return head;
         }
     }
@@ -160,7 +160,7 @@
             head.delegate = self;
             head.switchBtn.on = !isEveryDay;
             head.switchBtn.transform = CGAffineTransformMakeScale(0.8, 0.8);
-            head.nameLab.text = KHJLocalizedString(@"每天", nil);
+            head.nameLab.text = TTLocalString(@"每天", nil);
             return head;
         }
         else if (section == 1) {
@@ -169,7 +169,7 @@
             head.delegate = self;
             head.switchBtn.on = !sevenOn;
             head.switchBtn.transform = CGAffineTransformMakeScale(0.8, 0.8);
-            head.nameLab.text = KHJLocalizedString(@"周日", nil);
+            head.nameLab.text = TTLocalString(@"周日", nil);
             return head;
         }
         else if (section == 2) {
@@ -178,7 +178,7 @@
             head.delegate = self;
             head.switchBtn.on = !firstOn;
             head.switchBtn.transform = CGAffineTransformMakeScale(0.8, 0.8);
-            head.nameLab.text = KHJLocalizedString(@"周一", nil);
+            head.nameLab.text = TTLocalString(@"周一", nil);
             return head;
         }
         else if (section == 3) {
@@ -187,7 +187,7 @@
             head.delegate = self;
             head.switchBtn.on = !secondOn;
             head.switchBtn.transform = CGAffineTransformMakeScale(0.8, 0.8);
-            head.nameLab.text = KHJLocalizedString(@"周二", nil);
+            head.nameLab.text = TTLocalString(@"周二", nil);
             return head;
         }
         else if (section == 4) {
@@ -196,7 +196,7 @@
             head.delegate = self;
             head.switchBtn.on = !thirdOn;
             head.switchBtn.transform = CGAffineTransformMakeScale(0.8, 0.8);
-            head.nameLab.text = KHJLocalizedString(@"周三", nil);
+            head.nameLab.text = TTLocalString(@"周三", nil);
             return head;
         }
         else if (section == 5) {
@@ -205,7 +205,7 @@
             head.delegate = self;
             head.switchBtn.on = !fourOn;
             head.switchBtn.transform = CGAffineTransformMakeScale(0.8, 0.8);
-            head.nameLab.text = KHJLocalizedString(@"周四", nil);
+            head.nameLab.text = TTLocalString(@"周四", nil);
             return head;
         }
         else if (section == 6) {
@@ -214,7 +214,7 @@
             head.delegate = self;
             head.switchBtn.on = !fiveOn;
             head.switchBtn.transform = CGAffineTransformMakeScale(0.8, 0.8);
-            head.nameLab.text = KHJLocalizedString(@"周五", nil);
+            head.nameLab.text = TTLocalString(@"周五", nil);
             return head;
         }
         else if (section == 7) {
@@ -223,7 +223,7 @@
             head.delegate = self;
             head.switchBtn.on = !sixOn;
             head.switchBtn.transform = CGAffineTransformMakeScale(0.8, 0.8);
-            head.nameLab.text = KHJLocalizedString(@"周六", nil);
+            head.nameLab.text = TTLocalString(@"周六", nil);
             return head;
         }
     }

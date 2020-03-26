@@ -7,13 +7,23 @@
 //
 
 #import "TTCommon.h"
-#import <AVFoundation/AVFoundation.h>
+#include <net/if.h>
 #include <ifaddrs.h>
 #include <arpa/inet.h>
-#include <net/if.h>
 #import "KHJVideoModel.h"
 
 @implementation TTCommon
+
+static TTCommon *common = nil;
+
++ (TTCommon *)share
+{
+    static dispatch_once_t onceToken ;
+    dispatch_once(&onceToken, ^{
+        common = [[TTCommon alloc] init] ;
+    }) ;
+    return common;
+}
 
 /**
  主题色
@@ -335,5 +345,20 @@
     return [text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attrs context:nil].size;
 }
 
+// 播放本地音频
+- (void)playVoiceWithURL:(NSURL *)voiceURL
+{
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:voiceURL error:nil];
+    [self.audioPlayer setVolume:1];
+    [self.audioPlayer prepareToPlay];
+    [self.audioPlayer play];
+}
+
+// 停止播放本地音频
+- (void)stopPlayVoice
+{
+    [self.audioPlayer stop];
+    self.audioPlayer = nil;
+}
 
 @end

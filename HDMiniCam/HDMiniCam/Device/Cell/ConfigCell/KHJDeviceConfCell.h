@@ -6,13 +6,13 @@
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJBaseCell.h"
+#import "TTBaseCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^KHJDeviceConfCellBlock)(NSInteger);
 
-@interface KHJDeviceConfCell : KHJBaseCell
+@interface KHJDeviceConfCell : TTBaseCell
 
 @property (nonatomic, copy) KHJDeviceConfCellBlock block;
 

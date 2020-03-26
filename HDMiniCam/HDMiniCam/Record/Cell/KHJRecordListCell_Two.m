@@ -18,7 +18,7 @@
 
 - (void)setDeviceID:(NSString *)deviceID
 {
-    NSString *imagePath     = [[[TTFileManager sharedModel] get_screenShot_DocPath_deviceID:deviceID] stringByAppendingPathComponent:KHJString(@"%@.png",self.date)];
+    NSString *imagePath     = [[[TTFileManager sharedModel] getScreenShotWithDeviceID:deviceID] stringByAppendingPathComponent:TTStr(@"%@.png",self.date)];
     self.picImgView.image   = [UIImage imageWithContentsOfFile:imagePath];
 }
 

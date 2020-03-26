@@ -6,7 +6,7 @@
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJBaseCell.h"
+#import "TTBaseCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface KHJRecordListCell_Two : KHJBaseCell
+@interface KHJRecordListCell_Two : TTBaseCell
 
 @property (nonatomic, copy) NSString *deviceID;
 @property (nonatomic, copy) NSString *date;

@@ -50,10 +50,10 @@
 {
     [super viewWillAppear:animated];
     if (self.currentIndex == 0) {
-        self.videoList = [[[TTFileManager sharedModel] get_live_record_VideoArray_with_deviceID:self.info.deviceID] copy];
+        self.videoList = [[[TTFileManager sharedModel] getLiveRecordVideoArrayWithDeviceID:self.info.deviceID] copy];
     }
     else if (self.currentIndex == 1) {
-        self.videoList = [[[TTFileManager sharedModel] get_reback_record_videoArray_with_deviceID:self.info.deviceID] copy];
+        self.videoList = [[[TTFileManager sharedModel] getRebackRecordVideoArrayWithDeviceID:self.info.deviceID] copy];
     }
     [self.dateList removeAllObjects];
     [self.dateList_num removeAllObjects];
@@ -61,7 +61,7 @@
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
         [weakSelf.videoList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            NSString *videoName = KHJString(@"%@",obj);
+            NSString *videoName = TTStr(@"%@",obj);
             NSString *date = [videoName componentsSeparatedByString:@"-"].firstObject;
             // 是否包含，包含的话，
             if ([weakSelf.dateList containsObject:date]) {
@@ -101,8 +101,8 @@
     cell.delegate = self;
     cell.tag = FLAG_TAG + indexPath.row;
     cell.date = self.dateList[indexPath.row];
-    cell.timeLab.text = KHJString(@"%@：%@", KHJLocalizedString(@"cameraTime_", nil),self.dateList[indexPath.row]);
-    cell.numLab.text = KHJString(@"%@ %@ %@", KHJLocalizedString(@"ttl_", nil),self.dateList_num[indexPath.row],KHJLocalizedString(@"unt_", nil));
+    cell.timeLab.text = TTStr(@"%@：%@", TTLocalString(@"cameraTime_", nil),self.dateList[indexPath.row]);
+    cell.numLab.text = TTStr(@"%@ %@ %@", TTLocalString(@"ttl_", nil),self.dateList_num[indexPath.row],TTLocalString(@"unt_", nil));
     
     cell.deviceID = self.info.deviceID;
     return cell;

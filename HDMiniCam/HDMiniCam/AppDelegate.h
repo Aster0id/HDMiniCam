@@ -14,7 +14,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "KHJTabBarBaseVC.h"
+#import "TTabBarBaseViewController.h"
 
 // IPCA000015WAABW 84567
 // IPCA000002AINYZ admin
@@ -24,7 +24,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, assign) BOOL canLandscape;
-@property (strong, nonatomic) KHJTabBarBaseVC *rootTabBarVC;
+@property (strong, nonatomic) TTabBarBaseViewController *rootTabBarVC;
 
 @end
 

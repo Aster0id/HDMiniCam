@@ -6,12 +6,12 @@
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJVideoPlayerBaseVC.h"
+#import "TTPlayerBaseViewController.h"
 #import "H264_H265_VideoDecoder.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJMutilScreenVC : KHJVideoPlayerBaseVC
+@interface KHJMutilScreenVC : TTPlayerBaseViewController
 
 @property (nonatomic, strong) NSArray *list;
 

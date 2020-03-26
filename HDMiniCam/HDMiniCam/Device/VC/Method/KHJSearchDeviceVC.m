@@ -20,7 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.titleLab.text = KHJLocalizedString(@"serchNet_", nil);
+    self.titleLab.text = TTLocalString(@"serchNet_", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     
     

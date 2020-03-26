@@ -19,7 +19,7 @@
 {
     _deviceID = deviceID;
     NSString *path_document = NSHomeDirectory();
-    NSString *pString       = KHJString(@"/Documents/%@.png",deviceID);
+    NSString *pString       = TTStr(@"/Documents/%@.png",deviceID);
     NSString *imagePath     = [path_document stringByAppendingString:pString];
     UIImage *image          = [UIImage imageWithContentsOfFile:imagePath];
     if (image) {
