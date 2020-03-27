@@ -1,5 +1,5 @@
 //
-//  KHJRecordListVC_Three.h
+//  TTDeviceSingleDayVC.h
 //  SuperIPC
 //
 //  Created by kevin on 2020/3/4.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJRecordListVC_Three : TTBaseViewController
+@interface TTDeviceSingleDayVC : TTBaseViewController
 
 @property (nonatomic, copy) NSString *date;
 @property (nonatomic, strong) TTDeviceInfo *info;

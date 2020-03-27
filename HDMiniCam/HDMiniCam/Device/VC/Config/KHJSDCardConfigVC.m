@@ -21,9 +21,10 @@
 
 @implementation KHJSDCardConfigVC
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    [self registerLJWKeyboardHandler];
+    [self TT_register_kBoard_Handler];
     timeView.layer.borderWidth = 1;
     timeView.layer.borderColor = UIColorFromRGB(0xF5F5F5).CGColor;
     self.titleLab.text = TTLocalString(@"rcodSet_", nil);

@@ -1,14 +1,14 @@
 //
-//  KHJCollectionViewCell_three.m
+//  TTDeviceSingleDayCell.m
 //  SuperIPC
 //
 //  Created by kevin on 2020/3/4.
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJCollectionViewCell_three.h"
+#import "TTDeviceSingleDayCell.h"
 
-@implementation KHJCollectionViewCell_three
+@implementation TTDeviceSingleDayCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];

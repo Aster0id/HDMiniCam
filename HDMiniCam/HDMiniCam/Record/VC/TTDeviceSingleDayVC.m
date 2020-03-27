@@ -1,29 +1,28 @@
 //
-//  KHJRecordListVC_Three.m
+//  TTDeviceSingleDayVC.m
 //  SuperIPC
 //
 //  Created by kevin on 2020/3/4.
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJRecordListVC_Three.h"
-#import "KHJCollectionViewCell_three.h"
+#import "TTDeviceSingleDayVC.h"
+#import "TTDeviceSingleDayCell.h"
 #import <AVKit/AVKit.h>
 
-@interface KHJRecordListVC_Three ()<KHJCollectionViewCell_threeDelegate>
-
+@interface TTDeviceSingleDayVC ()<TTDeviceSingleDayCellDelegate>
 {
-    __weak IBOutlet UICollectionView *collectionView;
     BOOL delete;
     BOOL isDeleting;
     UIButton *rightBtn;
+    __weak IBOutlet UICollectionView *collectionView;
 }
 
 @property (nonatomic, strong) NSMutableArray *videoList;
 
 @end
 
-@implementation KHJRecordListVC_Three
+@implementation TTDeviceSingleDayVC
 
 - (NSMutableArray *)videoList
 {
@@ -107,7 +106,7 @@
     collectionView.collectionViewLayout = layout;
     collectionView.showsVerticalScrollIndicator = NO;
     collectionView.showsHorizontalScrollIndicator = NO;
-    [collectionView registerNib:[UINib nibWithNibName:@"KHJCollectionViewCell_three" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"KHJCollectionViewCell_three"];
+    [collectionView registerNib:[UINib nibWithNibName:@"TTDeviceSingleDayCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"TTDeviceSingleDayCell"];
     [self.view addSubview:collectionView];
 }
 
@@ -120,8 +119,8 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *identifierCell = @"KHJCollectionViewCell_three";
-    KHJCollectionViewCell_three *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifierCell forIndexPath:indexPath];
+    static NSString *identifierCell = @"TTDeviceSingleDayCell";
+    TTDeviceSingleDayCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifierCell forIndexPath:indexPath];
     cell.layer.borderWidth = 1;
     cell.layer.borderColor = UIColorFromRGB(0xf5f5f5).CGColor;
     
@@ -198,7 +197,7 @@
     return totalMilliseconds;
 }
 
-#pragma mark - KHJCollectionViewCell_threeDelegate
+#pragma mark - TTDeviceSingleDayCellDelegate
 
 - (void)chooseItemWith:(NSInteger)row
 {
@@ -241,7 +240,7 @@
         [collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:row inSection:0]]];
         
         NSInteger tag = 0;
-        for (KHJCollectionViewCell_three *cell in collectionView.visibleCells) {
+        for (TTDeviceSingleDayCell *cell in collectionView.visibleCells) {
             cell.tag = tag + FLAG_TAG;
             TLog(@"cell.tag = %ld",(long)tag);
             tag++;

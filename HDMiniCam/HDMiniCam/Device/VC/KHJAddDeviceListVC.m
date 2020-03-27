@@ -11,8 +11,8 @@
 #import "TTFirmwareInterface_API.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 
-#import "KHJOnlineVC.h"
-#import "KHJQRCodeScanningVC.h"
+#import "TTOnlineVC.h"
+#import "TTScanningVC.h"
 
 extern NSString *wifiName;
 
@@ -141,7 +141,7 @@ extern NSString *wifiName;
 - (IBAction)QRCode:(id)sender
 {
     isHotPoint = NO;
-    KHJQRCodeScanningVC *vc = [[KHJQRCodeScanningVC alloc] init];
+    TTScanningVC *vc = [[TTScanningVC alloc] init];
     [self QRCodeScanVC:vc];
 }
 
@@ -204,7 +204,7 @@ extern NSString *wifiName;
 - (IBAction)handAdd:(id)sender
 {
     isHotPoint = NO;
-    KHJOnlineVC *vc = [[KHJOnlineVC alloc] init];
+    TTOnlineVC *vc = [[TTOnlineVC alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

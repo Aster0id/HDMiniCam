@@ -9,8 +9,8 @@
 #import "AppDelegate.h"
 #import "TTDeviceListViewController.h"
 #import "TTBaseNC.h"
-#import "KHJPictureListVC.h"
-#import "KHJRecordListVC.h"
+#import "TTZoomPictureListVC.h"
+#import "TTAllDeviceVC.h"
 #import "KHJVideoPlayer_hf_VC.h"
 #pragma mark - ios13 开启地理位置权限，获取Wi-Fi名称
 #import <CoreLocation/CoreLocation.h>
@@ -71,11 +71,11 @@
     TTBaseNC *deviceListNavi = [[TTBaseNC  alloc] initWithRootViewController:vc1];
     deviceListNavi.tabBarItem.title = TTLocalString(@"vide_", nil);
     
-    KHJPictureListVC *vc2 = [[KHJPictureListVC alloc] init];
+    TTZoomPictureListVC *vc2 = [[TTZoomPictureListVC alloc] init];
     TTBaseNC *pictureNavi = [[TTBaseNC  alloc] initWithRootViewController:vc2];
     pictureNavi.tabBarItem.title = TTLocalString(@"pic_", nil);
     
-    KHJRecordListVC *vc3 = [[KHJRecordListVC alloc] init];
+    TTAllDeviceVC *vc3 = [[TTAllDeviceVC alloc] init];
     TTBaseNC *recordNavi = [[TTBaseNC  alloc] initWithRootViewController:vc3];
     recordNavi.tabBarItem.title = TTLocalString(@"recrd_", nil);
     

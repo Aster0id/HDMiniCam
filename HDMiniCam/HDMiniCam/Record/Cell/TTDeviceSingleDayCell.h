@@ -1,5 +1,5 @@
 //
-//  KHJCollectionViewCell_three.h
+//  TTDeviceSingleDayCell.h
 //  SuperIPC
 //
 //  Created by kevin on 2020/3/4.
@@ -10,19 +10,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol KHJCollectionViewCell_threeDelegate <NSObject>
+@protocol TTDeviceSingleDayCellDelegate <NSObject>
 
 - (void)chooseItemWith:(NSInteger)row;
 - (void)deleteItemWith:(NSInteger)row;
 
 @end
 
-@interface KHJCollectionViewCell_three : UICollectionViewCell
+@interface TTDeviceSingleDayCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
 @property (weak, nonatomic) IBOutlet UILabel *videoTimeLab;
 @property (weak, nonatomic) IBOutlet UIImageView *videoImgView;
-@property (nonatomic, strong) id<KHJCollectionViewCell_threeDelegate> delegate;
+@property (nonatomic, strong) id<TTDeviceSingleDayCellDelegate> delegate;
 
 @end
 

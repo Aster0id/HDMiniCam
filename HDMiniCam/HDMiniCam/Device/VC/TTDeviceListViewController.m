@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "TTDeviceListViewController.h"
-#import "KHJOnlineVC.h"
+#import "TTOnlineVC.h"
 #import "KHJDeviceListCell.h"
 #import "KHJWIFIConfigVC.h"
 //
@@ -255,7 +255,7 @@ typedef enum : NSUInteger {
     TTWeakSelf
     UIAlertController *alertview = [UIAlertController alertControllerWithTitle:deviceInfo.deviceName message:nil preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *config = [UIAlertAction actionWithTitle:TTLocalString(@"chageDev_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        KHJOnlineVC *vc = [[KHJOnlineVC alloc] init];
+        TTOnlineVC *vc = [[TTOnlineVC alloc] init];
         vc.deviceInfo = deviceInfo;
         vc.hidesBottomBarWhenPushed = YES;
         [weakSelf.navigationController pushViewController:vc animated:YES];

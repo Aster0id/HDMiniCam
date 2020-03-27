@@ -72,6 +72,8 @@ typedef enum : NSUInteger {
 } TTRecordBackStatus;
 
 #define TTTabBarHeight      ((IS_IPHONE_X == YES) ? 83.0f : 49.0f)
+#define TTStatusBarHeight   ((IS_IPHONE_X == YES) ? 44.0f: 20.0f)
+#define TTNavBarHeight      ((IS_IPHONE_X == YES) ? 88.0f: 64.0f)
 #define IS_IPHONE_X         (SCREEN_HEIGHT >= 812.0f) ? YES : NO
 #define IS_IPHONE_5         (SCREEN_HEIGHT == 568.0f) ? YES : NO
 

@@ -1,14 +1,14 @@
 //
-//  KHJPicture_oneCell.m
+//  TTZoomPictureCell.m
 //  SuperIPC
 //
 //  Created by kevin on 2020/1/15.
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJPicture_oneCell.h"
+#import "TTZoomPictureCell.h"
 
-@implementation KHJPicture_oneCell
+@implementation TTZoomPictureCell
 
 - (void)awakeFromNib
 {
@@ -17,11 +17,17 @@
     [self addGestureRecognizer:longPress];
 }
 
+- (void)setImagePath:(NSString *)imagePath
+{
+    TLog(@"imagePath = %@",imagePath);
+    _imagePath = imagePath;
+}
+
 - (void)longPressAction:(UILongPressGestureRecognizer *)longPress
 {
     if (longPress.state == UIGestureRecognizerStateBegan) {
         if (_delegate && [_delegate respondsToSelector:@selector(longPressWith:)]) {
-            [_delegate longPressWith:self.path];
+            [_delegate longPressWith:_imagePath];
         }
     }
 }
@@ -29,7 +35,7 @@
 - (IBAction)chooseIcon:(id)sender
 {
     if (_block) {
-        _block(self.path);
+        _block(_imagePath);
     }
 }
 

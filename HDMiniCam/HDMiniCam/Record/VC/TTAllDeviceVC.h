@@ -1,5 +1,5 @@
 //
-//  KHJRecordListVC.h
+//  TTAllDeviceVC.h
 //  SuperIPC
 //
 //  Created by kevin on 2020/1/15.
@@ -10,9 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJRecordListVC : TTBaseViewController
-
-
+@interface TTAllDeviceVC : TTBaseViewController
 
 @end
 

@@ -72,7 +72,7 @@
  *
  *  @return handler实例
  */
-- (LJWKeyboardHandler *)registerLJWKeyboardHandler
+- (LJWKeyboardHandler *)TT_register_kBoard_Handler
 {
     self.ljwKeyboardHandler = [[LJWKeyboardHandler alloc] init];
     

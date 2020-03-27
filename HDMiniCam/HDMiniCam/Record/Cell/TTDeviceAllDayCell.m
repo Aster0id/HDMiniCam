@@ -1,15 +1,15 @@
 //
-//  KHJRecordListCell_Two.m
+//  TTDeviceAllDayCell.m
 //  SuperIPC
 //
 //  Created by kevin on 2020/3/4.
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJRecordListCell_Two.h"
+#import "TTDeviceAllDayCell.h"
 #import "TTFileManager.h"
 
-@implementation KHJRecordListCell_Two
+@implementation TTDeviceAllDayCell
 
 - (void)awakeFromNib
 {

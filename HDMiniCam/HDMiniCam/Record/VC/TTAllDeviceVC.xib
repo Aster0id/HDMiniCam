@@ -8,18 +8,14 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KHJRecordListVC">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TTAllDeviceVC">
             <connections>
-                <outlet property="contentNavi" destination="40W-Hk-fCm" id="548-pq-YHA"/>
-                <outlet property="contentTBV" destination="MJt-V2-Ede" id="TNW-jh-qCT"/>
-                <outlet property="naviFour" destination="Bjk-cp-yct" id="oLh-On-Nah"/>
-                <outlet property="naviFourIMGV" destination="Lmu-ns-1Hi" id="yFS-mh-3Vf"/>
-                <outlet property="naviOne" destination="tdT-9V-FGy" id="L5p-xe-veA"/>
-                <outlet property="naviOneIMGV" destination="sSZ-mX-zsi" id="2bR-lW-Vka"/>
-                <outlet property="naviThree" destination="ee6-rm-HkK" id="Tcl-ma-1Nn"/>
-                <outlet property="naviThreeIMGV" destination="SzF-fJ-y3m" id="1DR-ws-YSO"/>
-                <outlet property="naviTwo" destination="93l-Lx-Ar3" id="xKQ-eH-JkQ"/>
-                <outlet property="naviTwoIMGV" destination="Xa5-aF-YkI" id="NHT-Pm-O3R"/>
+                <outlet property="TTableView" destination="MJt-V2-Ede" id="o49-bm-1vN"/>
+                <outlet property="phoneImgView" destination="sSZ-mX-zsi" id="A1R-zj-FPn"/>
+                <outlet property="phoneView" destination="tdT-9V-FGy" id="GJN-3q-cQK"/>
+                <outlet property="sdCardImgView" destination="Xa5-aF-YkI" id="N9I-h9-dkO"/>
+                <outlet property="sdCardView" destination="93l-Lx-Ar3" id="N3M-al-DMH"/>
+                <outlet property="segmentView" destination="40W-Hk-fCm" id="IbS-ep-KFu"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -41,62 +37,6 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="40W-Hk-fCm">
                             <rect key="frame" x="157" y="6" width="100" height="29"/>
                             <subviews>
-                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bjk-cp-yct">
-                                    <rect key="frame" x="100" y="1" width="0.0" height="27"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloaded_icon_n" highlightedImage="downloaded_icon_s" translatesAutoresizingMaskIntoConstraints="NO" id="Lmu-ns-1Hi">
-                                            <rect key="frame" x="-10.5" y="3" width="21" height="21"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="Lmu-ns-1Hi" secondAttribute="height" multiplier="1:1" id="iaX-RC-Oe0"/>
-                                                <constraint firstAttribute="width" constant="21" id="ksC-SK-OIj"/>
-                                            </constraints>
-                                        </imageView>
-                                        <button opaque="NO" tag="50" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="io9-Jw-qWD">
-                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="27"/>
-                                            <connections>
-                                                <action selector="btn:" destination="-1" eventType="touchUpInside" id="vtG-SX-4K7"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstItem="Lmu-ns-1Hi" firstAttribute="centerX" secondItem="Bjk-cp-yct" secondAttribute="centerX" id="20Y-vg-65a"/>
-                                        <constraint firstItem="io9-Jw-qWD" firstAttribute="leading" secondItem="Bjk-cp-yct" secondAttribute="leading" id="3h0-aq-g2S"/>
-                                        <constraint firstAttribute="trailing" secondItem="io9-Jw-qWD" secondAttribute="trailing" id="6dt-li-d5n"/>
-                                        <constraint firstItem="io9-Jw-qWD" firstAttribute="top" secondItem="Bjk-cp-yct" secondAttribute="top" id="6wV-Ac-IRb"/>
-                                        <constraint firstAttribute="width" id="A2s-fA-nEf"/>
-                                        <constraint firstAttribute="bottom" secondItem="io9-Jw-qWD" secondAttribute="bottom" id="Pqg-Wt-Gkn"/>
-                                        <constraint firstItem="Lmu-ns-1Hi" firstAttribute="centerY" secondItem="Bjk-cp-yct" secondAttribute="centerY" id="WOi-UL-BEa"/>
-                                    </constraints>
-                                </view>
-                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ee6-rm-HkK">
-                                    <rect key="frame" x="100" y="0.0" width="0.0" height="29"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloading_icon_n" highlightedImage="downloading_icon_s" translatesAutoresizingMaskIntoConstraints="NO" id="SzF-fJ-y3m">
-                                            <rect key="frame" x="-16.5" y="4" width="33" height="21"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="33" id="aYy-Bj-MvX"/>
-                                                <constraint firstAttribute="height" constant="21" id="cO9-58-C3g"/>
-                                            </constraints>
-                                        </imageView>
-                                        <button opaque="NO" tag="40" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l5D-yG-J0G">
-                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="29"/>
-                                            <connections>
-                                                <action selector="btn:" destination="-1" eventType="touchUpInside" id="6zc-PR-OO2"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstItem="SzF-fJ-y3m" firstAttribute="centerX" secondItem="ee6-rm-HkK" secondAttribute="centerX" id="11N-bB-oUU"/>
-                                        <constraint firstItem="SzF-fJ-y3m" firstAttribute="centerY" secondItem="ee6-rm-HkK" secondAttribute="centerY" id="4Ro-yj-y4o"/>
-                                        <constraint firstAttribute="bottom" secondItem="l5D-yG-J0G" secondAttribute="bottom" id="UlD-9Z-MgU"/>
-                                        <constraint firstAttribute="width" id="fd0-6k-WoY"/>
-                                        <constraint firstItem="l5D-yG-J0G" firstAttribute="top" secondItem="ee6-rm-HkK" secondAttribute="top" id="m18-QZ-KMw"/>
-                                        <constraint firstAttribute="trailing" secondItem="l5D-yG-J0G" secondAttribute="trailing" id="oVE-fP-IWF"/>
-                                        <constraint firstItem="l5D-yG-J0G" firstAttribute="leading" secondItem="ee6-rm-HkK" secondAttribute="leading" id="yMc-Go-hPd"/>
-                                    </constraints>
-                                </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="93l-Lx-Ar3">
                                     <rect key="frame" x="51" y="0.0" width="50" height="29"/>
                                     <subviews>
@@ -110,7 +50,7 @@
                                         <button opaque="NO" tag="30" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BZK-7q-P0N">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="29"/>
                                             <connections>
-                                                <action selector="btn:" destination="-1" eventType="touchUpInside" id="EBo-ue-L1l"/>
+                                                <action selector="sdCardBtnAction:" destination="-1" eventType="touchUpInside" id="McN-PE-dCy"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -137,7 +77,7 @@
                                         <button opaque="NO" tag="20" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IZg-V3-WAl">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="27"/>
                                             <connections>
-                                                <action selector="btn:" destination="-1" eventType="touchUpInside" id="RB9-aL-2yi"/>
+                                                <action selector="phoneBtnAction:" destination="-1" eventType="touchUpInside" id="OXH-yJ-HvV"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -155,19 +95,13 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="Bjk-cp-yct" firstAttribute="height" secondItem="tdT-9V-FGy" secondAttribute="height" id="0MD-k8-0B8"/>
                                 <constraint firstItem="93l-Lx-Ar3" firstAttribute="width" secondItem="tdT-9V-FGy" secondAttribute="width" id="0zc-2V-fO6"/>
                                 <constraint firstItem="93l-Lx-Ar3" firstAttribute="centerY" secondItem="tdT-9V-FGy" secondAttribute="centerY" id="AB0-KX-ISE"/>
                                 <constraint firstAttribute="width" constant="100" id="Br7-EP-QBB"/>
                                 <constraint firstItem="tdT-9V-FGy" firstAttribute="top" secondItem="40W-Hk-fCm" secondAttribute="top" constant="1" id="EVY-Er-vRz"/>
-                                <constraint firstItem="Bjk-cp-yct" firstAttribute="leading" secondItem="ee6-rm-HkK" secondAttribute="trailing" id="Njr-4r-aWD"/>
-                                <constraint firstItem="ee6-rm-HkK" firstAttribute="leading" secondItem="93l-Lx-Ar3" secondAttribute="trailing" constant="-1" id="Odi-sn-5jK"/>
                                 <constraint firstItem="93l-Lx-Ar3" firstAttribute="leading" secondItem="tdT-9V-FGy" secondAttribute="trailing" id="PhF-gl-lgY"/>
-                                <constraint firstItem="Bjk-cp-yct" firstAttribute="centerY" secondItem="tdT-9V-FGy" secondAttribute="centerY" id="Yic-cW-KRB"/>
-                                <constraint firstItem="ee6-rm-HkK" firstAttribute="height" secondItem="tdT-9V-FGy" secondAttribute="height" constant="2" id="dRI-Gu-3iw"/>
                                 <constraint firstItem="tdT-9V-FGy" firstAttribute="leading" secondItem="40W-Hk-fCm" secondAttribute="leading" constant="1" id="gD9-S1-iIn"/>
                                 <constraint firstItem="93l-Lx-Ar3" firstAttribute="height" secondItem="tdT-9V-FGy" secondAttribute="height" constant="2" id="jfZ-IL-hG7"/>
-                                <constraint firstItem="ee6-rm-HkK" firstAttribute="centerY" secondItem="tdT-9V-FGy" secondAttribute="centerY" id="oo8-Xj-gXY"/>
                                 <constraint firstAttribute="bottom" secondItem="tdT-9V-FGy" secondAttribute="bottom" constant="1" id="r1U-yb-d15"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
@@ -219,10 +153,6 @@
         </view>
     </objects>
     <resources>
-        <image name="downloaded_icon_n" width="32" height="32"/>
-        <image name="downloaded_icon_s" width="32" height="32"/>
-        <image name="downloading_icon_n" width="32" height="32"/>
-        <image name="downloading_icon_s" width="32" height="32"/>
         <image name="iphone_icon_n" width="64" height="64"/>
         <image name="iphone_icon_s" width="64" height="64"/>
         <image name="sdCard_icon_n" width="64" height="64"/>

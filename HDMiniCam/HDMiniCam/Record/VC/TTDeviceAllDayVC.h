@@ -1,8 +1,8 @@
 //
-//  KHJOnlineVC.h
+//  TTDeviceAllDayVC.h
 //  SuperIPC
 //
-//  Created by kevin on 2020/1/16.
+//  Created by kevin on 2020/3/4.
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
@@ -10,9 +10,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJOnlineVC : TTBaseViewController
+@interface TTDeviceAllDayVC : TTBaseViewController
 
 @property (nonatomic, strong) TTDeviceInfo *deviceInfo;
+@property (nonatomic, assign) NSInteger isLiveOrRecordBack;
 
 @end
 
