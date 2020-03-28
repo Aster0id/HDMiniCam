@@ -1,0 +1,24 @@
+//
+//  TTAlarmConfigHeadView.m
+//  SuperIPC
+//
+//  Created by kevin on 2020/3/23.
+//  Copyright © 2020 kevin. All rights reserved.
+//
+
+#import "TTAlarmConfigHeadView.h"
+
+@implementation TTAlarmConfigHeadView
+
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+
+- (IBAction)switchBtnAction:(UISwitch *)sender
+{
+    if (_delegate && [_delegate respondsToSelector:@selector(clickHeadWith:)]) {
+        [_delegate clickHeadWith:self.tag - FLAG_TAG];
+    }
+}
+
+@end

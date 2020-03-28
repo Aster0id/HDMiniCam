@@ -14,28 +14,53 @@
 
 @implementation TTBaseNC
 
+- (BOOL)shouldAutorotate
+{
+    return [self.topViewController shouldAutorotate];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     UINavigationBar *navBar = self.navigationBar;
-    UIImage *image = [self imageFromColor:UIColor.whiteColor withSize:CGSizeMake(SCREEN_WIDTH, 64)];
+    CGRect rect = CGRectMake(0, 0, SCREEN_WIDTH, 64);
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, [UIScreen mainScreen].scale);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context,UIColor.whiteColor.CGColor);
+    CGContextFillRect(context, rect);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
     [navBar setTranslucent:false];
     [navBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
     [navBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:19],NSForegroundColorAttributeName:[UIColor whiteColor]}];
 }
 
-- (nullable UIImage *)imageFromColor:(nonnull UIColor *)color withSize:(CGSize)size
+- (void)viewWillAppear:(BOOL)animated
 {
-    CGRect rect = CGRectMake(0, 0, size.width, size.height);
-    UIGraphicsBeginImageContextWithOptions(rect.size, NO, [UIScreen mainScreen].scale);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(context,color.CGColor);
-    CGContextFillRect(context, rect);
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
-
+    [super viewWillAppear:animated];
 }
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+}
+
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
+{
+    return [self.topViewController preferredInterfaceOrientationForPresentation];
+}
+
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
@@ -43,19 +68,11 @@
     [self setNavigationBarHidden:NO animated:YES];
 }
 
-- (BOOL)shouldAutorotate
-{
-    return [self.topViewController shouldAutorotate];
-}
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     return [self.topViewController supportedInterfaceOrientations];
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
-{
-    return [self.topViewController preferredInterfaceOrientationForPresentation];
-}
 
 @end

@@ -10,16 +10,15 @@
 #import "TTDeviceListViewController.h"
 #import "TTOnlineVC.h"
 #import "KHJDeviceListCell.h"
-#import "KHJWIFIConfigVC.h"
+#import "TTWiFiConfigViewController.h"
 //
 #import "TTFirmwareInterface_API.h"
 //
 #import "TTDeviceInfo.h"
 #import "KHJAddDeviceListVC.h"
-#import "KHJSearchDeviceVC.h"
 #import "KHJMutilScreenVC.h"
 #import "KHJVideoPlayer_sp_VC.h"
-#import "KHJDeviceConfVC.h"
+#import "TTHighConfigViewController.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 
 NSString *wifiName;
@@ -288,7 +287,7 @@ typedef enum : NSUInteger {
         }];
     }];
     UIAlertAction *config3 = [UIAlertAction actionWithTitle:TTLocalString(@"highCfg_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        KHJDeviceConfVC *vc = [[KHJDeviceConfVC alloc] init];
+        TTHighConfigViewController *vc = [[TTHighConfigViewController alloc] init];
         vc.deviceInfo = deviceInfo;
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
@@ -368,7 +367,7 @@ typedef enum : NSUInteger {
         UIAlertAction *defult = [UIAlertAction actionWithTitle:TTStr(@"%@ \" %@ \" %@",TTLocalString(@"toDev_", nil),info.deviceID,TTLocalString(@"adNet_", nil))
                                                          style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * _Nonnull action) {
-            KHJWIFIConfigVC *vc = [[KHJWIFIConfigVC alloc] init];
+            TTWiFiConfigViewController *vc = [[TTWiFiConfigViewController alloc] init];
             vc.deviceInfo = info;
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
