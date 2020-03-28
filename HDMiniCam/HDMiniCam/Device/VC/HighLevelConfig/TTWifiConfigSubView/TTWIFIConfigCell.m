@@ -1,14 +1,14 @@
 //
-//  KHJWIFIConfigCell.m
+//  TTWIFIConfigCell.m
 //  SuperIPC
 //
 //  Created by 王涛 on 2020/1/19.
 //  Copyright © 2020年 王涛. All rights reserved.
 //
 
-#import "KHJWIFIConfigCell.h"
+#import "TTWIFIConfigCell.h"
 
-@implementation KHJWIFIConfigCell
+@implementation TTWIFIConfigCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -23,8 +23,8 @@
 
 - (IBAction)btn:(id)sender
 {
-    if (_block) {
-        _block(self.tag - FLAG_TAG);
+    if (_delegate && [_delegate respondsToSelector:@selector(chooseWifiWith:)]) {
+        [_delegate chooseWifiWith:self.tag - FLAG_TAG];
     }
 }
 

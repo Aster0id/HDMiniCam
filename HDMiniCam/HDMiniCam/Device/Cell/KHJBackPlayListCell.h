@@ -18,8 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KHJBackPlayListCell : TTBaseCell
 
-@property (weak, nonatomic) IBOutlet UILabel *nameLab;
-@property (weak, nonatomic) IBOutlet UILabel *detailsLab;
+@property (weak, nonatomic) IBOutlet UILabel *firstLab;
+@property (weak, nonatomic) IBOutlet UILabel *secondLab;
 @property (nonatomic, strong) id<KHJBackPlayListCellDelegate> delegate;
 
 @end

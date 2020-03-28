@@ -338,7 +338,7 @@ extern TTAudioRecorder *audioRecorder;
     else if (sender.tag == 50) {
         // 预置点
         KHJVideoPlayer_hf_VC *vc = [[KHJVideoPlayer_hf_VC alloc] init];
-        vc.deviceID = self.deviceID;
+        vc.info = self.deviceInfo;
         [self.navigationController pushViewController:vc animated:YES];
     }
     else if (sender.tag == 60) {

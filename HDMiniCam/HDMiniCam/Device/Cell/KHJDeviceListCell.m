@@ -35,7 +35,7 @@
 
 - (IBAction)btn1:(id)sender{
     if (_delegate && [_delegate respondsToSelector:@selector(gotoVideoWithIndex:)]){
-        [_delegate gotoVideoWithIndex:self.tag - FLAG_TAG];
+        [_delegate gotoVideoWithIndex:self.deviceID];
     }
 }
 

@@ -1,13 +1,12 @@
 //
-//  KHJAddDeviceListVC.m
+//  TTAddTypeListVC.m
 //  SuperIPC
 //
 //  Created by kevin on 2020/1/16.
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJAddDeviceListVC.h"
-#import "KHJAddDeviceListCell.h"
+#import "TTAddTypeListVC.h"
 #import "TTFirmwareInterface_API.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 
@@ -16,63 +15,74 @@
 
 extern NSString *wifiName;
 
-@interface KHJAddDeviceListVC ()<UITableViewDataSource>
+@interface TTAddTypeListVC ()<UITableViewDataSource>
 {
     BOOL isHotPoint;
     NSTimer *timer;
-    __weak IBOutlet UITableView *contentTBV;
     BOOL isQRCode;
+    __weak IBOutlet UILabel *hotLab;
+    __weak IBOutlet UILabel *QRLab;
+    __weak IBOutlet UILabel *handLab;
+    __weak IBOutlet UITableView *ttableView;
+
+    NSMutableArray *deviceArray;
+    NSMutableArray *allDeviceIDArray;
 }
-
-@property (nonatomic, strong) NSMutableArray *deviceList;
-@property (nonatomic, strong) NSMutableArray *deviceList_old;
-
 @end
 
-@implementation KHJAddDeviceListVC
-
-- (NSMutableArray *)deviceList
-{
-    if (!_deviceList) {
-        _deviceList = [NSMutableArray array];
-    }
-    return _deviceList;
-}
-
-- (NSMutableArray *)deviceList_old
-{
-    if (!_deviceList_old) {
-        _deviceList_old = [NSMutableArray array];
-    }
-    return _deviceList_old;
-}
+@implementation TTAddTypeListVC
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSArray *hadArray = [NSArray arrayWithArray:[[TTDataBase shareDB] getAllDeviceInfo]];
-    TTWeakSelf
-    [hadArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        TTDeviceInfo *info = (TTDeviceInfo *)obj;
-        [weakSelf.deviceList_old addObject:info.deviceID];
-    }];
-    
-    [self addNoti];
-    self.titleLab.text = TTLocalString(@"adDev_", nil);
-    [weakSelf fireRecordTimer];
+    [self customizeDataSource];
+    [self customizeAppearance];
+    [self addNotification];
+}
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"getQRCode_noti" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"OnSearchDeviceResult_noti_key" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+}
+
+- (void)customizeDataSource
+{
+    deviceArray = [NSMutableArray array];
+    allDeviceIDArray = [NSMutableArray array];
+    hotLab.backgroundColor = TTCommon.appMainColor;
+    QRLab.backgroundColor = TTCommon.appMainColor;
+    handLab.backgroundColor = TTCommon.appMainColor;
+}
+
+- (void)customizeAppearance
+{
+    [self fireRecordTimer];
+    self.titleLab.text = TTLocalString(@"adDev_", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    NSArray *pass = [NSArray arrayWithArray:[[TTDataBase shareDB] getAllDeviceInfo]];
+    [pass enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        TTDeviceInfo *info = (TTDeviceInfo *)obj;
+        [self->allDeviceIDArray addObject:info.deviceID];
+    }];
+}
+
+- (void)addNotification
+{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getSearchDeviceResult:) name:@"OnSearchDeviceResult_noti_key" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getQRCode_noti:) name:@"getQRCode_noti" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(EnterBackground) name: UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(EnterForeground) name: UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)getSearchDeviceResult:(NSNotification *)noti
 {
     __block BOOL exit = NO;
-    NSArray *arr = [self.deviceList copy];
-    TTWeakSelf
+    NSArray *arr = [deviceArray copy];
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        
         NSDictionary *body = (NSDictionary *)noti.object;
         [arr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSDictionary *dict = (NSDictionary *)obj;
@@ -83,11 +93,10 @@ extern NSString *wifiName;
                 *stop = YES;
             }
         }];
-        
         dispatch_async(dispatch_get_main_queue(), ^{
             if (!exit) {
-                [weakSelf.deviceList addObject:body];
-                [self->contentTBV reloadData];
+                [self->deviceArray addObject:body];
+                [self->ttableView reloadData];
             }
         });
     });
@@ -96,16 +105,14 @@ extern NSString *wifiName;
 - (void)getQRCode_noti:(NSNotification *)noti
 {
     isQRCode = YES;
-    NSString *deviceID = (NSString *)noti.object;
-    [self addDevice_with_deviceID:deviceID deviceName:@"IPC_QR" devicePassword:@"admin"];
+    [self addDevice_with_deviceID:(NSString *)noti.object deviceName:@"IPC_QR" devicePassword:@"admin"];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (isHotPoint) {
+    if (isHotPoint)
         [self getPhoneWifi];
-    }
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
@@ -117,6 +124,7 @@ extern NSString *wifiName;
 
 - (void)backAction
 {
+    [self stopRecordTimer];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -124,18 +132,19 @@ extern NSString *wifiName;
 
 - (IBAction)hotPoint:(id)sender
 {
-        NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();
-        for (NSString *item in ifs) {
-            NSDictionary *info = [NSDictionary dictionaryWithDictionary:(__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)item)];
-            wifiName = info[@"SSID"];
-            if ([wifiName hasPrefix:@"IPC_"]) {
-                [self fireRecordTimer];
-            }
-            else {
-                isHotPoint = YES;
-                [self changeToDeviceHotpoint];
-            }
+    NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();
+    for (NSString *item in ifs) {
+        NSDictionary *info = [NSDictionary dictionaryWithDictionary:(__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)item)];
+        wifiName = info[@"SSID"];
+        if ([wifiName hasPrefix:@"IPC_"]) {
+            [self fireRecordTimer];
+            [self.view makeToast:TTLocalString(@"正在搜索设备..", nil)];
         }
+        else {
+            isHotPoint = YES;
+            [self changeToDeviceHotpoint];
+        }
+    }
 }
 
 - (IBAction)QRCode:(id)sender
@@ -158,7 +167,8 @@ extern NSString *wifiName;
                             [self.navigationController pushViewController:scanVC animated:YES];
                         });
                         NSLog(@"用户第一次同意了访问相机权限 - - %@", [NSThread currentThread]);
-                    } else {
+                    }
+                    else {
                         NSLog(@"用户第一次拒绝了访问相机权限 - - %@", [NSThread currentThread]);
                     }
                 }];
@@ -212,24 +222,26 @@ extern NSString *wifiName;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.deviceList.count;
+    return deviceArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    KHJAddDeviceListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KHJAddDeviceListCell"];
-    if (cell == nil) {
-        cell = [[NSBundle mainBundle] loadNibNamed:@"KHJAddDeviceListCell" owner:nil options:nil][0];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UITableViewCell"];
     }
     cell.tag = indexPath.row + FLAG_TAG;
-    NSDictionary *body = self.deviceList[indexPath.row];
-    cell.deviceIDLab.text = body[@"deviceIP"];
-    cell.deviceNameLab.text = body[@"deviceID"];
-    if ([self.deviceList_old containsObject:cell.deviceNameLab.text]) {
-        cell.deviceStatusLab.text = TTLocalString(@"摄像机已存在", nil);
+    NSDictionary *body = deviceArray[indexPath.row];
+    cell.imageView.image = TTIMG(@"camera_black");
+    cell.textLabel.text = body[@"deviceID"];
+    cell.detailTextLabel.text = @"detailTextLabel";
+
+    if ([allDeviceIDArray containsObject:cell.textLabel.text]) {
+        cell.detailTextLabel.text = TTLocalString(@"摄像机已存在", nil);
     }
     else {
-        cell.deviceStatusLab.text = TTLocalString(@"摄像机已添加", nil);
+        cell.detailTextLabel.text = TTLocalString(@"摄像机已添加", nil);
         isQRCode = NO;
         [self addDevice_with_deviceID:body[@"deviceID"] deviceName:body[@"deviceName"] devicePassword:body[@"devicePassword"]];
     }
@@ -274,11 +286,6 @@ extern NSString *wifiName;
     }
 }
 
-- (void)addNoti
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(EnterBackground) name: UIApplicationDidEnterBackgroundNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(EnterForeground) name: UIApplicationWillEnterForegroundNotification object:nil];
-}
 
 - (void)EnterBackground
 {
@@ -302,29 +309,15 @@ extern NSString *wifiName;
         NSDictionary *info = [NSDictionary dictionaryWithDictionary:(__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)item)];
         wifiName = info[@"SSID"];
         
-        if (![wifiName hasPrefix:@"IPC_"]) {
-            
-//            UIAlertController *alertview = [UIAlertController alertControllerWithTitle:TTLocalString(@"setWF_", nil) message:@""
-//                                                                    preferredStyle:UIAlertControllerStyleAlert];
-//            UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cancel_", nil) style:UIAlertActionStyleCancel
-//                                                           handler:nil];
-//            TTWeakSelf
-//            UIAlertAction *defult = [UIAlertAction actionWithTitle:TTLocalString(@"sbMit_", nil) style:UIAlertActionStyleDefault
-//                                                           handler:^(UIAlertAction * _Nonnull action) {
-//                [weakSelf changeToDeviceHotpoint];
-//            }];
-//            [alertview addAction:cancel];
-//            [alertview addAction:defult];
-//            [self presentViewController:alertview animated:YES completion:nil];
-            
-        }
-        else {
+        if ([wifiName hasPrefix:@"IPC_"]) {
             TLog(@"wifiName ============ %@",wifiName);
             [self.view makeToast:TTLocalString(@"正在搜索设备..", nil)];
             [self fireRecordTimer];
         }
     }
 }
+
+#pragma mark -
 
 - (void)changeToDeviceHotpoint
 {
@@ -352,11 +345,7 @@ extern NSString *wifiName;
     return [NSURL URLWithString:url];
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
-}
+#pragma mark - Timer
 
 /* 开启倒计时 */
 - (void)fireRecordTimer
@@ -385,6 +374,7 @@ extern NSString *wifiName;
         [timer invalidate];
         timer = nil;
     }
+    [[TTFirmwareInterface_API sharedManager] stopSearchDevice_with_reBlock:^(NSInteger code) {}];
 }
 
 @end

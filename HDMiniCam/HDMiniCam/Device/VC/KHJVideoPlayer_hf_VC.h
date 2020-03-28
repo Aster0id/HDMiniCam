@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KHJVideoPlayer_hf_VC : TTPlayerBaseViewController
 
-@property (nonatomic, copy) NSString *deviceID;
+@property (nonatomic, strong) TTDeviceInfo *info;
 
 @end
 

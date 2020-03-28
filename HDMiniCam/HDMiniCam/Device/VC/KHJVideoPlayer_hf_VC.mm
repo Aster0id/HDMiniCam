@@ -10,7 +10,7 @@
 #import "TTFirmwareInterface_API.h"
 #import "ZFTimeLine.h"
 #import "NSDate+TTDate.h"
-#import "KHJBackPlayListVC.h"
+#import "TTBackPlayListViewController.h"
 // 
 #import "TuyaTimeLineModel.h"
 #import "TYCameraTimeLineScrollView_old.h"
@@ -18,6 +18,10 @@
 #import "TTDatePicker.h"
 #import "KHJVideoModel.h"
 #import "JSONStructProtocal.h"
+// 拍照保存
+#import <Photos/Photos.h>
+#import <Photos/PHPhotoLibrary.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
 typedef void(^runloopBlock)(void);
 
@@ -26,11 +30,11 @@ extern IPCNetRecordCfg_st recordCfg;
 
 @interface KHJVideoPlayer_hf_VC ()
 <ZFTimeLineDelegate,
-KHJBackPlayListVCSaveListDelegate,
+TTBackPlayListViewControllerDelegate,
 H264_H265_VideoDecoderDelegate,
 TYCameraTimeLineScrollView_oldDelegate>
 {
-    __weak IBOutlet UILabel *nameLab;
+
     __weak IBOutlet UIView *reconnectView;
     __weak IBOutlet UIImageView *playerImageView;
     __weak IBOutlet UIButton *preDayBtn;
@@ -43,7 +47,7 @@ TYCameraTimeLineScrollView_oldDelegate>
     __weak IBOutlet UILabel *listenLab;
     __weak IBOutlet UIImageView *listenImgView;
     
-    BOOL exitVideoList;
+    BOOL haveBackPlayData_now;
     NSTimer *delayHiddenTimer;
     
     H264_H265_VideoDecoder *h264Decode;
@@ -59,6 +63,10 @@ TYCameraTimeLineScrollView_oldDelegate>
     __weak IBOutlet UIView *recordTimeView;
     __weak IBOutlet UILabel *recordTimeLab;
 }
+
+#pragma mark - params
+@property (weak, nonatomic) IBOutlet UILabel *navName;
+
 
 @property (nonatomic, assign) NSInteger delayHiddenTimes;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
@@ -119,37 +127,44 @@ TYCameraTimeLineScrollView_oldDelegate>
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    nameLab.text = self.deviceID;
-    isRebackPlaying = NO;
-    self.delayHiddenTimes = 2;
-    nextDayBtn.hidden = YES;
-    _RSession = NULL;
-    recordQueue = dispatch_queue_create("recordQueue", DISPATCH_QUEUE_SERIAL);
     [self customizeDataSource];
+    [self customizeApeparance];
 }
 
 - (void)customizeDataSource
 {
+    _delayHiddenTimes   = 2;
+    isRebackPlaying     = NO;
+    _RSession           = NULL;
+    _navName.text       = self.info.deviceID;
+    recordQueue         = dispatch_queue_create("recordQueue", DISPATCH_QUEUE_SERIAL);
     h264Decode = [[H264_H265_VideoDecoder alloc] init];
     h264Decode.delegate = self;
-    
-    [timeLineContent addSubview:self.zfTimeView];
-//    [timeLineContent addSubview:self.timeLineView];
-    NSDate *date = [NSDate date];
-    self.currentTimeInterval = [date timeIntervalSince1970];
-    self.todayTimeInterval = [NSDate get_todayZeroInterverlWith:self.currentTimeInterval];
-    self.zeroTimeInterval = [NSDate get_todayZeroInterverlWith:self.currentTimeInterval];
-    NSDateFormatter *formatter1 = [[NSDateFormatter alloc] init];
-    [formatter1 setDateFormat:@"yyyy_MM_dd"];
-    dateLAB.text = [formatter1 stringFromDate:date];
-    [self fireTimer];
-    [self getTimeLineDataWith:dateLAB.text];
-    [self addMP4_RunloopObserver];
-    [self addNoti];
 }
 
-- (void)addNoti
+- (void)customizeApeparance
 {
+    nextDayBtn.hidden = YES;
+    [timeLineContent addSubview:self.zfTimeView];
+    
+    NSDate *date = [NSDate date];
+    // 当前时间戳
+    self.currentTimeInterval    = [date timeIntervalSince1970];
+    // 今天零点时间戳
+    self.todayTimeInterval      = [NSDate get_todayZeroInterverlWith:self.currentTimeInterval];
+    // 查询的零点时间戳
+    self.zeroTimeInterval       = [NSDate get_todayZeroInterverlWith:self.currentTimeInterval];
+    
+    NSDateFormatter *formatter1 = [[NSDateFormatter alloc] init];
+    [formatter1 setDateFormat:@"yyyy_MM_dd"];
+    dateLAB.text                = [formatter1 stringFromDate:date];
+    
+    [self fireTimer];
+    
+    [self getTimeLineDataWith:dateLAB.text];
+    
+    [self addMP4_RunloopObserver];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTimeLineInfo:) name:TT_getTimeLineInfo_noti_KEY object:nil];
 }
 
@@ -158,44 +173,7 @@ TYCameraTimeLineScrollView_oldDelegate>
     TTWeakSelf
     [self addMP4_tasks:^{
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            NSArray *backPlayList = [NSArray arrayWithArray:(NSArray *)noti.object];
-
-            for (int i = 0; i < backPlayList.count; i++) {
-                NSDictionary *body = backPlayList[i];
-                int type                = [body[@"type"] intValue];
-                NSString *startString   = TTStr(@"%06d",[body[@"start"] intValue]);
-                NSString *endString     = TTStr(@"%06d",[body[@"end"] intValue]);
-
-                int startHour   = [[startString substringWithRange:NSMakeRange(0, 2)] intValue];
-                int startMin    = [[startString substringWithRange:NSMakeRange(2, 2)] intValue];
-                int startSec    = [[startString substringWithRange:NSMakeRange(4, 2)] intValue];
-                int startTimeInterval   = startHour * 3600 + startMin * 60 + startSec;
-
-                int endHour = [[endString substringWithRange:NSMakeRange(0, 2)] intValue];
-                int endMin  = [[endString substringWithRange:NSMakeRange(2, 2)] intValue];
-                int endSec  = [[endString substringWithRange:NSMakeRange(4, 2)] intValue];
-                int endTimeInterval = endHour * 3600 + endMin * 60 + endSec;
-
-                KHJVideoModel *model = [[KHJVideoModel alloc] init];
-                model.startTime = startTimeInterval + weakSelf.zeroTimeInterval; // 起始时间
-                model.durationTime = endTimeInterval - startTimeInterval;// 视频时长
-                if (type == 0) {        // 正常录制
-                    model.recType = 0;
-                }
-                else if (type == 1) {   // 移动检测录制
-                    model.recType = 2;
-                }
-                else if (type == 3) {   // 声音检测录制
-                    model.recType = 4;
-                }
-                [weakSelf.videoList addObject:model];
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                weakSelf.zfTimeView.timesArr = weakSelf.videoList;
-                TLog(@"currentTimeInterval ==================================================================== %f",weakSelf.currentTimeInterval);
-
-                [weakSelf.zfTimeView updateCurrentInterval:weakSelf.currentTimeInterval];
-            });
+            [weakSelf addTaskType:noti];
         });
     }];
 //    [self addMP4_tasks:^{
@@ -241,6 +219,48 @@ TYCameraTimeLineScrollView_oldDelegate>
 //    }];
 }
 
+- (void)addTaskType:(NSNotification *)noti
+{
+    NSArray *backPlayList = [NSArray arrayWithArray:(NSArray *)noti.object];
+
+    for (int i = 0; i < backPlayList.count; i++) {
+        NSDictionary *body      = backPlayList[i];
+        NSString *startString   = TTStr(@"%06d",[body[@"start"] intValue]);
+        NSString *endString     = TTStr(@"%06d",[body[@"end"] intValue]);
+
+        int startHour   = [[startString substringWithRange:NSMakeRange(0, 2)] intValue];
+        int startMin    = [[startString substringWithRange:NSMakeRange(2, 2)] intValue];
+        int startSec    = [[startString substringWithRange:NSMakeRange(4, 2)] intValue];
+        int startTimeInterval   = startHour * 3600 + startMin * 60 + startSec;
+
+        int endHour = [[endString substringWithRange:NSMakeRange(0, 2)] intValue];
+        int endMin  = [[endString substringWithRange:NSMakeRange(2, 2)] intValue];
+        int endSec  = [[endString substringWithRange:NSMakeRange(4, 2)] intValue];
+        int endTimeInterval     = endHour * 3600 + endMin * 60 + endSec;
+
+        KHJVideoModel *model    = [[KHJVideoModel alloc] init];
+        model.startTime         = startTimeInterval + self.zeroTimeInterval; // 起始时间
+        model.durationTime      = endTimeInterval - startTimeInterval;// 视频时长
+        if ([body[@"type"] intValue] == 0)          // 正常录制
+            model.recType = 0;
+        else if ([body[@"type"] intValue] == 1)     // 移动检测录制
+            model.recType = 2;
+        else if ([body[@"type"] intValue] == 3)     // 声音检测录制
+            model.recType = 4;
+        [self.videoList addObject:model];
+    }
+    TTWeakSelf
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [weakSelf aaaa];
+    });
+}
+
+- (void)aaaa
+{
+    self.zfTimeView.timesArr = self.videoList;
+    [self.zfTimeView updateCurrentInterval:self.currentTimeInterval];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -253,95 +273,151 @@ TYCameraTimeLineScrollView_oldDelegate>
     [self registerCallBack];
 };
 
-// 注册回放监听
-- (void)registerCallBack
-{
-    TTWeakSelf
-    [[TTFirmwareInterface_API sharedManager] setPlaybackAudioVideoDataCallBack_with_deviceID:self.deviceID reBlock:^(const char * _Nonnull uuid, int type, unsigned char * _Nonnull data, int len, long timestamp) {
-        self->isRebackPlaying = YES;
-        [weakSelf.activityView stopAnimating];
-        self->playerImageView.hidden = NO;
-        if (type < 20) {
-            // h264数据
-//            TLog(@"h264数据");
-            [weakSelf getPlayBackVideo_With_deviceID:uuid dataType:type data:data length:len timeStamps:timestamp];
-        }
-        else if (type >= 50) {
-            // h265数据
-//            TLog(@"h265数据");
-            [weakSelf getPlayBackVideo_With_deviceID:uuid dataType:type data:data length:len timeStamps:timestamp];
-        }
-        else {
-            // 音频数据
-        }
-    }];
-}
-
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [[TTFirmwareInterface_API sharedManager] stopPlayback_with_deviceID:self.deviceID reBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] stopPlayback_with_deviceID:self.info.deviceID reBlock:^(NSInteger code) {}];
     [super viewWillDisappear:animated];
 }
 
-- (IBAction)btnAction:(UIButton *)sender
+#pragma mark - 返回
+
+- (IBAction)backAction:(id)sender
 {
-    if (sender.tag == 10) {
-        [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - 前一天
+
+- (IBAction)preDayAction:(id)sender
+{
+    [self preDay];
+}
+
+#pragma mark - 后一天
+
+- (IBAction)nextDayActoin:(id)sender
+{
+    [self nextDay];
+}
+
+#pragma mark - 选择日历
+
+- (IBAction)chooseDate:(id)sender
+{
+    [self chooseDate];
+}
+
+#pragma mark - 录屏
+
+- (IBAction)recordAction:(id)sender
+{
+    recordBtn.selected = !recordBtn.selected;
+    if (recordBtn.selected)
+        [self gotoStartRecord]; // 开始
+    else
+        [self gotoStopRecord];  // 结束
+}
+
+#pragma mark - 监听
+
+- (IBAction)listenAction:(id)sender
+{
+    listenImgView.highlighted = !listenImgView.highlighted;
+}
+
+#pragma mark - 浏览
+
+- (IBAction)liulanAction:(id)sender
+{
+    TTBackPlayListViewController *vc = [[TTBackPlayListViewController alloc] init];
+    vc.delegate = self;
+    vc.seekList_currentDate = dateLAB.text;
+    vc.did = self.info.deviceID;
+    vc.haveBackPlayData_now = haveBackPlayData_now;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - 拍照
+
+- (IBAction)takePhotoAction:(id)sender
+{
+    [self takePhoto];
+}
+
+- (void)takePhoto
+{
+    //播放拍照声音
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"TT_screenShot" ofType:@"mp3"];
+    NSURL *url = [NSURL fileURLWithPath:filePath];
+    [[TTCommon share] playVoiceWithURL:url];
+    
+    NSString *savedImagePath = [[[TTFileManager sharedModel] getliveScreenShotWithDeviceID:self.info.deviceID] stringByAppendingPathComponent:[[TTFileManager sharedModel] getVideoNameWithFileType:@"jpg" deviceID:self.info.deviceID]];
+
+    //截取指定区域图片
+    UIImage *screenImage = [self snapsHotView:playerImageView];
+    // png格式的二进制
+    NSData *imagedata = UIImageJPEGRepresentation(screenImage,0.5);
+    BOOL is = [imagedata writeToFile:savedImagePath atomically:YES];
+    if (is) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadPictureVC_noti" object:nil];
+        [self loadImageFinished:[[UIImage alloc] initWithContentsOfFile:savedImagePath]];
     }
-    else if (sender.tag == 20) {
-        // 连接失败，点击重连
-    }
-    else if (sender.tag == 30) {
-        // 前一天
-        [self preDay];
-    }
-    else if (sender.tag == 40) {
-        // 选择日历
-        [self chooseDate];
-    }
-    else if (sender.tag == 50) {
-        // 后一天
-        [self nextDay];
-    }
-    else if (sender.tag == 60) {
-        // 拍照
-    }
-    else if (sender.tag == 70) {
-        recordBtn.selected = !recordBtn.selected;
-        if (recordBtn.selected) {
-            // 开始录屏
-            [self gotoStartRecord];
-        }
-        else {
-            // 停止录屏
-            [self gotoStopRecord];
-        }
-    }
-    else if (sender.tag == 80) {
-        // 监听
-        listenImgView.highlighted = !listenImgView.highlighted;
-    }
-    else if (sender.tag == 90) {
-        // 浏览
-        KHJBackPlayListVC *vc = [[KHJBackPlayListVC alloc] init];
-        vc.delegate = self;
-        vc.date = dateLAB.text;
-        vc.deviceID = self.deviceID;
-        vc.exitVideoList = exitVideoList;
-        [self.navigationController pushViewController:vc animated:YES];
+    else {
+        [[TTHub shareHub] showText:TTLocalString(@"picFail_", nil) addToView:self.view];
     }
 }
+
+- (UIImage *)snapsHotView:(UIView *)view
+{
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size,YES,[UIScreen mainScreen].scale);
+    [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:NO];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
+- (void)loadImageFinished:(UIImage *)image
+{
+    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+   if (status == PHAuthorizationStatusRestricted || status == PHAuthorizationStatusDenied) {
+       UIAlertController *alertController = [UIAlertController alertControllerWithTitle:TTLocalString(@"tips_", nil)
+                                                                                message:TTLocalString(@"setPhotoQuanX_", nil)
+                                                                         preferredStyle:(UIAlertControllerStyleAlert)];
+       UIAlertAction *action = [UIAlertAction actionWithTitle:TTLocalString(@"IGeit", nil)
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction * _Nonnull action) {
+           
+       }];
+       [alertController addAction:action];
+       [self presentViewController:alertController animated:YES completion:nil];
+   }
+   else {
+       [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+           [PHAssetChangeRequest creationRequestForAssetFromImage:image];
+       } completionHandler:^(BOOL success, NSError * _Nullable error) {
+           NSLog(@"保存相册success = %d, error = %@", success, error);
+       }];
+   }
+}
+
+#pragma mark - 重连
+
+- (IBAction)reconnectAction:(id)sender
+{
+    [[TTFirmwareInterface_API sharedManager] disconnect_with_deviceID:self.info.deviceID reBlock:^(NSInteger code) {
+        [[TTFirmwareInterface_API sharedManager] connect_with_deviceID:self.info.deviceID password:@"" reBlock:^(NSInteger code) {}];
+    }];
+}
+
+#pragma mark - 查询远程回放的配置信息
 
 - (void)getTimeLineDataWith:(NSString *)date
 {
-    NSString *time = [date stringByReplacingOccurrencesOfString:@"_" withString:@""];
-    // 获取远程回放的配置信息
-    [[TTFirmwareInterface_API sharedManager] getRemoteDirInfo_timeLine_with_deviceID:self.deviceID vi:0 date:[time intValue] reBlock:^(NSInteger code) {}];
-}
-
-- (void)exitListData:(BOOL)isExit
-{
-    exitVideoList = isExit;
+    int timeDate = [[date stringByReplacingOccurrencesOfString:@"_" withString:@""] intValue];
+    [[TTFirmwareInterface_API sharedManager] getRemoteDirInfo_timeLine_with_deviceID:self.info.deviceID
+                                                                                  vi:0
+                                                                                date:timeDate
+                                                                             reBlock:^(NSInteger code) {}];
 }
 
 #pragma mark - 时间轴滑动
@@ -349,7 +425,7 @@ TYCameraTimeLineScrollView_oldDelegate>
 - (void)LineBeginMove
 {
     TLog(@"LineBeginMove 停止回放");
-    [[TTFirmwareInterface_API sharedManager] stopPlayback_with_deviceID:self.deviceID reBlock:^(NSInteger code) {}];
+    [[TTFirmwareInterface_API sharedManager] stopPlayback_with_deviceID:self.info.deviceID reBlock:^(NSInteger code) {}];
 }
 
 - (void)timeLine:(ZFTimeLine *)timeLine moveToDate:(NSTimeInterval)date
@@ -370,74 +446,9 @@ TYCameraTimeLineScrollView_oldDelegate>
         NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:date];
         int timestamp_int = [[formatterShow stringFromDate:date1] intValue];
         // 播放回放视频
-        [[TTFirmwareInterface_API sharedManager] starPlayback_timeLine_with_deviceID:self.deviceID vi:0 date:date_int time:timestamp_int reBlock:^(NSInteger code) {}];
+        [[TTFirmwareInterface_API sharedManager] starPlayback_timeLine_with_deviceID:self.info.deviceID vi:0 date:date_int time:timestamp_int reBlock:^(NSInteger code) {}];
     }
     self.currentIndex = index;
-}
-
-#pragma mark - Timer ---------------------------------------------------------------
-
-/* 开启倒计时 */
-- (void)fireTimer
-{
-    [self stopTimer];
-    delayHiddenTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:delayHiddenTimer forMode:NSRunLoopCommonModes];
-    [delayHiddenTimer fire];
-}
-
-- (void)timerAction
-{
-    _delayHiddenTimes--;
-    if (_delayHiddenTimes == 0) {
-        [self stopTimer];
-        self.activityView.hidden = YES;
-    }
-    else {
-        self.activityView.hidden = NO;
-    }
-}
-
-/* 停止倒计时 */
-- (void)stopTimer
-{
-    if ([delayHiddenTimer isValid] || delayHiddenTimer != nil) {
-        [delayHiddenTimer invalidate];
-        _delayHiddenTimes = 2;
-        delayHiddenTimer = nil;
-    }
-}
-
-/* 开启倒计时 */
-- (void)fireRecordTimer
-{
-    [self stopRecordTimer];
-    recordTimer = [NSTimer scheduledTimerWithTimeInterval:1
-                                                   target:self
-                                                 selector:@selector(recordTimerAction)
-                                                 userInfo:nil
-                                                  repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:recordTimer forMode:NSRunLoopCommonModes];
-    [recordTimer fire];
-}
-
-- (void)recordTimerAction
-{
-    int hour = (int)recordTimes / 3600;
-    int min  = (int)(recordTimes - hour * 3600) / 60;
-    int sec  = (int)(recordTimes - hour * 3600 - min * 60);
-    recordTimes ++;
-    recordTimeLab.text = TTStr(@"%02d:%02d:%02d", hour, min, sec);
-}
-
-/* 停止倒计时 */
-- (void)stopRecordTimer
-{
-    if ([recordTimer isValid] || recordTimer != nil) {
-        [recordTimer invalidate];
-        recordTimer = nil;
-        recordTimes = 0;
-    }
 }
 
 #pragma mark - ---------------------------------------------------------------
@@ -561,7 +572,7 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
     [self fireRecordTimer];
     // 回放录屏，截取数据
     rebackPlayRecordType = TTRecordBack_Record;
-    rebackRecordPath = [[[TTFileManager sharedModel] getRebackRecordVideoWithDeviceID:self.deviceID] stringByAppendingPathComponent:[[TTFileManager sharedModel] getVideoNameWithFileType:@"mp4" deviceID:self.deviceID]];
+    rebackRecordPath = [[[TTFileManager sharedModel] getRebackRecordVideoWithDeviceID:self.info.deviceID] stringByAppendingPathComponent:[[TTFileManager sharedModel] getVideoNameWithFileType:@"mp4" deviceID:self.info.deviceID]];
 }
 
 /// 停止录像
@@ -635,7 +646,7 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
 {
     if (isRebackPlaying == YES) {
         TLog(@"开始拖拽 ============================= %f",timeLineView.currentTime);
-        [[TTFirmwareInterface_API sharedManager] stopPlayback_with_deviceID:self.deviceID reBlock:^(NSInteger code) {
+        [[TTFirmwareInterface_API sharedManager] stopPlayback_with_deviceID:self.info.deviceID reBlock:^(NSInteger code) {
             self->isRebackPlaying = NO;
         }];
     }
@@ -664,7 +675,7 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
 //        int timestamp_int = [[formatterShow stringFromDate:date1] intValue];
 //        // 播放回放视频
 //        TTWeakSelf
-//        [[TTFirmwareInterface_API sharedManager] starPlayback_timeLine_with_deviceID:self.deviceID vi:0 date:date_int time:timestamp_int reBlock:^(NSInteger code) {
+//        [[TTFirmwareInterface_API sharedManager] starPlayback_timeLine_with_deviceID:self.info.deviceID vi:0 date:date_int time:timestamp_int reBlock:^(NSInteger code) {
 //            [weakSelf.view makeToast:TTStr(@"正在播放，第%ld段视频 ------------------------",(long)weakSelf.currentIndex)];
 //        }];
 //    }
@@ -688,7 +699,7 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
                         NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:weakSelf.currentTimeInterval];
                         int timestamp_int = [[formatterShow stringFromDate:date1] intValue];
                         // 播放回放视频
-                        [[TTFirmwareInterface_API sharedManager] starPlayback_timeLine_with_deviceID:self.deviceID vi:0 date:date_int time:timestamp_int reBlock:^(NSInteger code) {}];
+                        [[TTFirmwareInterface_API sharedManager] starPlayback_timeLine_with_deviceID:self.info.deviceID vi:0 date:date_int time:timestamp_int reBlock:^(NSInteger code) {}];
                     });
                     break;
                 }
@@ -707,4 +718,106 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
 //    }
 }
 
+
+#pragma mark - TTBackPlayListViewControllerDelegate
+
+- (void)exitListData:(BOOL)isExit
+{
+    haveBackPlayData_now = isExit;
+}
+
+#pragma mark - Private
+
+#pragma mark - 注册回放监听
+
+- (void)registerCallBack
+{
+    TTWeakSelf
+    [[TTFirmwareInterface_API sharedManager] setPlaybackAudioVideoDataCallBack_with_deviceID:self.info.deviceID reBlock:^(const char * _Nonnull uuid, int type, unsigned char * _Nonnull data, int len, long timestamp) {
+        self->isRebackPlaying = YES;
+        [weakSelf.activityView stopAnimating];
+        self->playerImageView.hidden = NO;
+        if (type < 20) {
+            // h264数据
+            [weakSelf getPlayBackVideo_With_deviceID:uuid dataType:type data:data length:len timeStamps:timestamp];
+        }
+        else if (type >= 50) {
+            // h265数据
+            [weakSelf getPlayBackVideo_With_deviceID:uuid dataType:type data:data length:len timeStamps:timestamp];
+        }
+        else {
+            // 音频数据
+        }
+    }];
+}
+
+
+#pragma mark - Timer ---------------------------------------------------------------
+
+/* 开启倒计时 */
+- (void)fireTimer
+{
+    [self stopTimer];
+    delayHiddenTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:delayHiddenTimer forMode:NSRunLoopCommonModes];
+    [delayHiddenTimer fire];
+}
+
+- (void)timerAction
+{
+    _delayHiddenTimes--;
+    if (_delayHiddenTimes == 0) {
+        [self stopTimer];
+        self.activityView.hidden = YES;
+    }
+    else {
+        self.activityView.hidden = NO;
+    }
+}
+
+/* 停止倒计时 */
+- (void)stopTimer
+{
+    if ([delayHiddenTimer isValid] || delayHiddenTimer != nil) {
+        [delayHiddenTimer invalidate];
+        _delayHiddenTimes = 2;
+        delayHiddenTimer = nil;
+    }
+}
+
+/* 开启倒计时 */
+- (void)fireRecordTimer
+{
+    [self stopRecordTimer];
+    recordTimer = [NSTimer scheduledTimerWithTimeInterval:1
+                                                   target:self
+                                                 selector:@selector(recordTimerAction)
+                                                 userInfo:nil
+                                                  repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:recordTimer forMode:NSRunLoopCommonModes];
+    [recordTimer fire];
+}
+
+- (void)recordTimerAction
+{
+    int hour = (int)recordTimes / 3600;
+    int min  = (int)(recordTimes - hour * 3600) / 60;
+    int sec  = (int)(recordTimes - hour * 3600 - min * 60);
+    recordTimes ++;
+    recordTimeLab.text = TTStr(@"%02d:%02d:%02d", hour, min, sec);
+}
+
+/* 停止倒计时 */
+- (void)stopRecordTimer
+{
+    if ([recordTimer isValid] || recordTimer != nil) {
+        [recordTimer invalidate];
+        recordTimer = nil;
+        recordTimes = 0;
+    }
+}
+
+
 @end
+
+

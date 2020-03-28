@@ -734,13 +734,15 @@ Goto_Exit:
 	[NSThread exit];
 	//}
 }
+
 - (int)decodeH26xVideoData:(uint8_t *)videoData videoSize:(int)videoSize frameType:(int)frameType timestamp:(long)timestamp
 {
-	if(mDecodeThreadRunning!=TRUE){
+	if (mDecodeThreadRunning != TRUE){
+        TLog(@"mDecodeThreadRunning != TRUE - 1");
 		return -1;
 	}
 	if(videoData==NULL || videoSize<=0){
-		NSLog(@"param invalid! videoData:%p || videoSize:%d", videoData, videoSize);
+		TLog(@"param invalid! videoData:%p || videoSize:%d", videoData, videoSize);
 		return -1;
 	}
 	VideoFramePackage*vfp = (VideoFramePackage*)malloc(sizeof(VideoFramePackage) + videoSize);

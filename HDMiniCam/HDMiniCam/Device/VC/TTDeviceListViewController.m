@@ -15,7 +15,7 @@
 #import "TTFirmwareInterface_API.h"
 //
 #import "TTDeviceInfo.h"
-#import "KHJAddDeviceListVC.h"
+#import "TTAddTypeListVC.h"
 #import "KHJMutilScreenVC.h"
 #import "KHJVideoPlayer_sp_VC.h"
 #import "TTHighConfigViewController.h"
@@ -126,7 +126,7 @@ typedef enum : NSUInteger {
 
 - (IBAction)add:(id)sender
 {
-    KHJAddDeviceListVC *vc = [[KHJAddDeviceListVC alloc] init];
+    TTAddTypeListVC *vc = [[TTAddTypeListVC alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -220,9 +220,17 @@ typedef enum : NSUInteger {
     [self showSetupWith:deviceInfo];
 }
 
-- (void)gotoVideoWithIndex:(NSInteger)index
+- (void)gotoVideoWithIndex:(NSString *)deviceID
 {
-    TLog(@"进入第 %ld 个视频播放界面",index);
+    __block NSInteger index = 0;
+    [self.deviceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        TTDeviceInfo *deviceInfo = (TTDeviceInfo *)obj;
+        if ([deviceID isEqualToString:deviceInfo.deviceID]) {
+            index = idx;
+            *stop = YES;
+        }
+    }];
+    
     TTDeviceInfo *info = self.deviceList[index];
     if ([info.deviceStatus isEqualToString:@"0"]) {
         KHJVideoPlayer_sp_VC *vc = [[KHJVideoPlayer_sp_VC alloc] init];
@@ -334,7 +342,7 @@ typedef enum : NSUInteger {
 //                    self->hotPoint = hotPointType_once;
 //                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //
-//                        KHJAddDeviceListVC *vc = [[KHJAddDeviceListVC alloc] init];
+//                        TTAddTypeListVC *vc = [[TTAddTypeListVC alloc] init];
 //                        vc.hidesBottomBarWhenPushed = YES;
 //                        [weakSelf.navigationController pushViewController:vc animated:YES];
 //                    });

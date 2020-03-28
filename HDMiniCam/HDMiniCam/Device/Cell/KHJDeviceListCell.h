@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol KHJDeviceListCellDelegate <NSObject>
 
-- (void)gotoVideoWithIndex:(NSInteger)index;
+- (void)gotoVideoWithIndex:(NSString *)index;
 - (void)gotoSetupWithIndex:(NSString *)deviceID;
 
 @end

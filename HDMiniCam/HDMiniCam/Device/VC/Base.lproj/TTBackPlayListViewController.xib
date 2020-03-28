@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
@@ -8,25 +8,25 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KHJBackPlayListVC">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TTBackPlayListViewController">
             <connections>
-                <outlet property="contentList" destination="GLB-Uw-yYC" id="stJ-8v-4jF"/>
                 <outlet property="fileDurationLab" destination="P1U-45-q71" id="2m9-ai-bQV"/>
                 <outlet property="fileNameLab" destination="zid-f1-TGy" id="ZqC-4V-zcT"/>
                 <outlet property="fileSizeLab" destination="8Of-MZ-psD" id="gky-ES-jnE"/>
                 <outlet property="fileStartTimeLab" destination="Ufq-ye-nbe" id="p2j-lj-PmN"/>
                 <outlet property="fileView" destination="Oz0-PI-ehQ" id="QSf-4Q-XXV"/>
                 <outlet property="numLab" destination="HzZ-Rv-S4N" id="2rQ-Hq-a8j"/>
+                <outlet property="ttableView" destination="GLB-Uw-yYC" id="EcL-Gn-9D3"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7E3-U5-iUh">
-                    <rect key="frame" x="0.0" y="818" width="414" height="44"/>
+                    <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="共 0 个" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HzZ-Rv-S4N">
                             <rect key="frame" x="12" y="0.0" width="45" height="44"/>
@@ -34,47 +34,18 @@
                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button hidden="YES" opaque="NO" tag="20" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QRa-mj-mBP">
-                            <rect key="frame" x="342" y="0.0" width="60" height="44"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="60" id="QmI-rQ-5wi"/>
-                            </constraints>
-                            <state key="normal" title="返回">
-                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </state>
-                            <connections>
-                                <action selector="btnAction:" destination="-1" eventType="touchUpInside" id="1Hv-rC-za3"/>
-                            </connections>
-                        </button>
-                        <button hidden="YES" opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3dH-9p-bBc">
-                            <rect key="frame" x="282" y="0.0" width="60" height="44"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="60" id="Rcv-RV-KBG"/>
-                            </constraints>
-                            <state key="normal" title="刷新">
-                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </state>
-                            <connections>
-                                <action selector="btnAction:" destination="-1" eventType="touchUpInside" id="CRI-Ia-AsQ"/>
-                            </connections>
-                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="QRa-mj-mBP" secondAttribute="bottom" id="8Di-GA-y5F"/>
-                        <constraint firstItem="QRa-mj-mBP" firstAttribute="leading" secondItem="3dH-9p-bBc" secondAttribute="trailing" id="J7S-jb-OqA"/>
                         <constraint firstAttribute="height" constant="44" id="MGV-uT-swm"/>
-                        <constraint firstAttribute="trailing" secondItem="QRa-mj-mBP" secondAttribute="trailing" constant="12" id="Xvs-1Y-wY1"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="HzZ-Rv-S4N" secondAttribute="trailing" constant="20" symbolic="YES" id="XqJ-QM-Ujm"/>
                         <constraint firstItem="HzZ-Rv-S4N" firstAttribute="leading" secondItem="7E3-U5-iUh" secondAttribute="leading" constant="12" id="d3J-mg-C3n"/>
                         <constraint firstAttribute="bottom" secondItem="HzZ-Rv-S4N" secondAttribute="bottom" id="e6B-5O-KIb"/>
-                        <constraint firstAttribute="bottom" secondItem="3dH-9p-bBc" secondAttribute="bottom" id="pol-gp-7c6"/>
-                        <constraint firstItem="QRa-mj-mBP" firstAttribute="top" secondItem="7E3-U5-iUh" secondAttribute="top" id="q4a-Pw-VXu"/>
-                        <constraint firstItem="3dH-9p-bBc" firstAttribute="top" secondItem="7E3-U5-iUh" secondAttribute="top" id="ql1-9H-Qts"/>
                         <constraint firstItem="HzZ-Rv-S4N" firstAttribute="top" secondItem="7E3-U5-iUh" secondAttribute="top" id="xPg-Mp-5qw"/>
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="GLB-Uw-yYC">
-                    <rect key="frame" x="0.0" y="44" width="414" height="774"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="KVl-YU-ZDw"/>
@@ -82,14 +53,14 @@
                     </connections>
                 </tableView>
                 <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oz0-PI-ehQ">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <subviews>
                         <view alpha="0.14999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RWC-fk-KC2">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pC0-cy-WtC">
-                            <rect key="frame" x="67" y="348" width="280" height="200"/>
+                            <rect key="frame" x="20" y="184" width="280" height="200"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="文件名：" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zid-f1-TGy">
                                     <rect key="frame" x="0.0" y="0.0" width="280" height="40"/>
@@ -142,7 +113,7 @@
                                     <rect key="frame" x="90" y="155" width="100" height="30"/>
                                     <color key="backgroundColor" red="0.019607843140000001" green="0.51764705879999995" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="100" id="1KP-6b-IiP"/>
+                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="1KP-6b-IiP"/>
                                         <constraint firstAttribute="height" constant="30" id="HzO-W7-MiD"/>
                                     </constraints>
                                     <state key="normal" title="确定">
@@ -155,7 +126,7 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                     <connections>
-                                        <action selector="btnAction:" destination="-1" eventType="touchUpInside" id="itn-58-MXq"/>
+                                        <action selector="sureAction:" destination="-1" eventType="touchUpInside" id="kXk-JB-sAe"/>
                                     </connections>
                                 </button>
                             </subviews>

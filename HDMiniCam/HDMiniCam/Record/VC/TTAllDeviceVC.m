@@ -160,7 +160,7 @@ UITableViewDataSource
             break;
         case 1:
         {
-            backVC.deviceID = deviceInfoooo.deviceID;
+            backVC.info = deviceInfoooo;
             [self.navigationController pushViewController:backVC animated:YES];
         }
             break;

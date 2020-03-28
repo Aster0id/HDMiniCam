@@ -9,11 +9,6 @@
 #import "TTOnlineVC.h"
 
 @interface TTOnlineVC ()
-{
-    __weak IBOutlet UIView *nameView;
-    __weak IBOutlet UIView *uidView;
-    __weak IBOutlet UIView *passwordView;
-}
 
 @property (weak, nonatomic) IBOutlet UITextField *deviceTF;
 @property (weak, nonatomic) IBOutlet UITextField *nickTF;
@@ -38,13 +33,16 @@
 - (void)customizeAppearance
 {
     self.titleLab.text = TTLocalString(@"addHadAdd_", nil);
-    nameView.layer.borderColor = UIColorFromRGB(0xF5F5F5).CGColor;
     _deviceTF.text = self.deviceInfo.deviceID;
     _nickTF.text = self.deviceInfo.deviceName;
     _pwdTextField.text = self.deviceInfo.devicePassword;
-    passwordView.layer.borderColor = UIColorFromRGB(0xF5F5F5).CGColor;
     [self.leftBtn addTarget:self action:@selector(baction) forControlEvents:UIControlEventTouchUpInside];
-    uidView.layer.borderColor = UIColorFromRGB(0xF5F5F5).CGColor;
+
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
 }
 
 - (void)baction

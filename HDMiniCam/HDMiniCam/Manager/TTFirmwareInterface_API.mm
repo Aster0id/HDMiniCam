@@ -150,7 +150,7 @@ RemoteDirInfo_t *remoteDirInfo;
 
 
 // 查询远程视频列表的日期
-const char *checkRemoteVideoList_Date;
+const char *seekBackPlayList_Date;
 
 
 @implementation TTFirmwareInterface_API
@@ -392,7 +392,9 @@ void OnGetPausePlaybackCmdResult(int cmd,const char*uuid,const char*json)
 }
 void OnGetDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:TT_getDeviceWiFiCmdResult_noti_KEY object:[TTCommon cString_changto_ocStringWith:json]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:TT_getDeviceWiFiCmdResult_noti_KEY object:[TTCommon cString_changto_ocStringWith:json]];
+    });
 }
 
 #pragma mark - 设置设备Wi-Fi
@@ -412,7 +414,9 @@ void OnGetDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
 
 void OnSearchDeviceWiFi_CmdResult(int cmd,const char*uuid,const char*json)
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:TT_getSearchDeviceWiFi_noti_KEY object:[TTCommon cString_changto_ocStringWith:json]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:TT_getSearchDeviceWiFi_noti_KEY object:[TTCommon cString_changto_ocStringWith:json]];
+    });
 }
 
 #pragma mark - 开始搜索附近Wi-Fi列表
@@ -536,7 +540,7 @@ void OnListRemoteDirInfoCmdResult(int cmd,const char*uuid,const char*json)
 
     /// 组织json字符串，lp是list path简写， p为path简写，s是start简写，c是count简写
     char jsonbuff[1024] = {0};
-    NSString *path = TTStr(@"%@/%s",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],checkRemoteVideoList_Date);
+    NSString *path = TTStr(@"%@/%s",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],seekBackPlayList_Date);
     sprintf(jsonbuff,"{\"lp\":{\"p\":\"%s\",\"s\":%d,\"c\":%d}}", path.UTF8String, in_de_x, requireNum);
     /// 按索引获取目录下的文件名，结果通过 OnListRemotePageFileCmdResult2 返回
     IPCNetListRemotePageFileR(uuid, jsonbuff, OnListRemotePageFileCmdResult2);
@@ -550,7 +554,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
     // 创建 RemoteDirInfo_t 对象
     RemoteDirInfo_t *rdi = new RemoteDirInfo_t;
 
-    NSString *diskInfo_path = TTStr(@"%@/%s",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],checkRemoteVideoList_Date);
+    NSString *diskInfo_path = TTStr(@"%@/%s",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],seekBackPlayList_Date);
 
     rdi->path = diskInfo_path.UTF8String;
     rdi->parseJSON(jsdata);
@@ -584,7 +588,7 @@ void OnListRemotePageFileCmdResult2(int cmd,const char*uuid,const char*json)
             requireNum = 10;
 
         start_index += requireNum;
-        NSString *path = TTStr(@"%@/%s",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],checkRemoteVideoList_Date);
+        NSString *path = TTStr(@"%@/%s",[NSString stringWithUTF8String:recordCfg.DiskInfo->Path.c_str()],seekBackPlayList_Date);
         sprintf(jsonbuff,"{\"lp\":{\"p\":\"%s\",\"s\":%d,\"c\":%d}}", path.UTF8String, in_de_x, requireNum);
         //释放命令绑定资源
         IPCNetListRemotePageFileR(uuid,jsonbuff,OnListRemotePageFileCmdResult2);

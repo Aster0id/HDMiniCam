@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		936229BA24278721002A1EFB /* TTAlarmConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936229B824278721002A1EFB /* TTAlarmConfigViewController.m */; };
 		93A30C4C23D29889009A0F4C /* TTWiFiConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A30C4A23D29889009A0F4C /* TTWiFiConfigViewController.m */; };
-		93A30C6523D43378009A0F4C /* KHJWIFIConfigCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A30C6323D43378009A0F4C /* KHJWIFIConfigCell.m */; };
-		93A30C6623D43378009A0F4C /* KHJWIFIConfigCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93A30C6423D43378009A0F4C /* KHJWIFIConfigCell.xib */; };
+		93A30C6523D43378009A0F4C /* TTWIFIConfigCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A30C6323D43378009A0F4C /* TTWIFIConfigCell.m */; };
+		93A30C6623D43378009A0F4C /* TTWIFIConfigCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93A30C6423D43378009A0F4C /* TTWIFIConfigCell.xib */; };
 		93C3396223CB75BB00B44E5F /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 93C3396123CB75BB00B44E5F /* AppDelegate.mm */; };
 		93C3396823CB75BB00B44E5F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93C3396623CB75BB00B44E5F /* Main.storyboard */; };
 		93C3396A23CB75BE00B44E5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93C3396923CB75BE00B44E5F /* Assets.xcassets */; };
@@ -29,10 +29,8 @@
 		AB20E62123CED07300D2861C /* KHJDeviceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB20E61F23CED07300D2861C /* KHJDeviceListCell.m */; };
 		AB20E62223CED07300D2861C /* KHJDeviceListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB20E62023CED07300D2861C /* KHJDeviceListCell.xib */; };
 		AB20E62A23CEE33400D2861C /* TTSinglePictureScale.m in Sources */ = {isa = PBXBuildFile; fileRef = AB20E62823CEE33300D2861C /* TTSinglePictureScale.m */; };
-		AB30DA4523D05B0F005BD2A1 /* KHJAddDeviceListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB30DA4323D05B0F005BD2A1 /* KHJAddDeviceListVC.m */; };
+		AB30DA4523D05B0F005BD2A1 /* TTAddTypeListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB30DA4323D05B0F005BD2A1 /* TTAddTypeListVC.m */; };
 		AB30DA4B23D060F2005BD2A1 /* TTOnlineVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB30DA4923D060F2005BD2A1 /* TTOnlineVC.m */; };
-		AB30DA6523D1482F005BD2A1 /* KHJSearchDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB30DA6323D1482F005BD2A1 /* KHJSearchDeviceCell.m */; };
-		AB30DA6623D1482F005BD2A1 /* KHJSearchDeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB30DA6423D1482F005BD2A1 /* KHJSearchDeviceCell.xib */; };
 		AB30DA7523D163A4005BD2A1 /* TTHighConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB30DA7323D163A4005BD2A1 /* TTHighConfigViewController.m */; };
 		AB30DA7623D163A4005BD2A1 /* TTHighConfigViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB30DA7423D163A4005BD2A1 /* TTHighConfigViewController.xib */; };
 		AB30DA7B23D164AE005BD2A1 /* TTHighConfigCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB30DA7923D164AE005BD2A1 /* TTHighConfigCell.m */; };
@@ -41,16 +39,16 @@
 		AB32D4B523F53BE4008AFD1F /* ZFTimeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = AB32D4B323F53BE4008AFD1F /* ZFTimeLine.m */; };
 		AB32D4C123F54E7A008AFD1F /* KHJVideoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB32D4C023F54E7A008AFD1F /* KHJVideoModel.m */; };
 		AB32D4C423F54FE0008AFD1F /* TuyaTimeLineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB32D4C323F54FE0008AFD1F /* TuyaTimeLineModel.m */; };
-		AB32F9AC2408FF1B00687054 /* KHJBackPlayerList_playerVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB32F9AA2408FF1B00687054 /* KHJBackPlayerList_playerVC.mm */; };
+		AB32F9AC2408FF1B00687054 /* TTSingleBackPlayViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB32F9AA2408FF1B00687054 /* TTSingleBackPlayViewController.mm */; };
 		AB48274E241F0EDB008970A0 /* TYAsyncDisplayLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB48274C241F0EDB008970A0 /* TYAsyncDisplayLayer.m */; };
 		AB482751241F9BE8008970A0 /* TYCameraTimeLineScrollView_old.m in Sources */ = {isa = PBXBuildFile; fileRef = AB482750241F9BE8008970A0 /* TYCameraTimeLineScrollView_old.m */; };
 		AB482754241F9CE4008970A0 /* TYCameraTimeLineScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB482752241F9CE3008970A0 /* TYCameraTimeLineScrollView.m */; };
 		AB4827552420B666008970A0 /* TTDeviceListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4827572420B666008970A0 /* TTDeviceListViewController.xib */; };
 		AB48275C2420B698008970A0 /* KHJVideoPlayer_sp_VC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB48275E2420B698008970A0 /* KHJVideoPlayer_sp_VC.xib */; };
 		AB4827632420B6AE008970A0 /* KHJVideoPlayer_hf_VC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4827652420B6AE008970A0 /* KHJVideoPlayer_hf_VC.xib */; };
-		AB48276A2420B6DC008970A0 /* KHJBackPlayListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB48276C2420B6DC008970A0 /* KHJBackPlayListVC.xib */; };
-		AB4827712420B6F0008970A0 /* KHJBackPlayerList_playerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4827732420B6F0008970A0 /* KHJBackPlayerList_playerVC.xib */; };
-		AB4827782420B707008970A0 /* KHJAddDeviceListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB48277A2420B707008970A0 /* KHJAddDeviceListVC.xib */; };
+		AB48276A2420B6DC008970A0 /* TTBackPlayListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB48276C2420B6DC008970A0 /* TTBackPlayListViewController.xib */; };
+		AB4827712420B6F0008970A0 /* TTSingleBackPlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4827732420B6F0008970A0 /* TTSingleBackPlayViewController.xib */; };
+		AB4827782420B707008970A0 /* TTAddTypeListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB48277A2420B707008970A0 /* TTAddTypeListVC.xib */; };
 		AB4827862420B769008970A0 /* TTWiFiConfigViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4827882420B769008970A0 /* TTWiFiConfigViewController.xib */; };
 		AB48279B2420B7F4008970A0 /* TTOnlineVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB48279D2420B7F4008970A0 /* TTOnlineVC.xib */; };
 		AB4827A52420B845008970A0 /* TTZoomPictureListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4827A72420B845008970A0 /* TTZoomPictureListVC.xib */; };
@@ -92,8 +90,6 @@
 		AB4EFA7423F6B40000D584E7 /* libFBP2P.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB4EFA7223F6B40000D584E7 /* libFBP2P.a */; };
 		AB4EFA7E23F6D43600D584E7 /* TTFirmwareInterface_API.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB4EFA7D23F6D43600D584E7 /* TTFirmwareInterface_API.mm */; };
 		AB52C10D23F91FB200C921F1 /* TT_screenShot.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AB52C10C23F91FB200C921F1 /* TT_screenShot.mp3 */; };
-		AB52C11423FBEB0100C921F1 /* KHJAddDeviceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52C11223FBEB0100C921F1 /* KHJAddDeviceListCell.m */; };
-		AB52C11523FBEB0100C921F1 /* KHJAddDeviceListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB52C11323FBEB0100C921F1 /* KHJAddDeviceListCell.xib */; };
 		AB52C11823FC14A300C921F1 /* TTDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52C11723FC14A300C921F1 /* TTDataBase.m */; };
 		AB52C11B23FC153400C921F1 /* TTDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AB52C11A23FC153400C921F1 /* TTDeviceInfo.m */; };
 		AB5462C9240CA66A00A096ED /* liblibgpac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5462C6240CA66900A096ED /* liblibgpac.a */; };
@@ -117,7 +113,7 @@
 		AB597B3A240154D500F04F84 /* libIOTCAPIs_ALLT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB597B36240154D500F04F84 /* libIOTCAPIs_ALLT.a */; };
 		AB597B3B240154D500F04F84 /* libIOTCAPIs_ALL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB597B37240154D500F04F84 /* libIOTCAPIs_ALL.a */; };
 		AB597B3C240154D500F04F84 /* libIOTCAPIs_P2PTunnelT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB597B38240154D500F04F84 /* libIOTCAPIs_P2PTunnelT.a */; };
-		AB597B4024027A7600F04F84 /* KHJBackPlayListVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB597B3E24027A7600F04F84 /* KHJBackPlayListVC.mm */; };
+		AB597B4024027A7600F04F84 /* TTBackPlayListViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB597B3E24027A7600F04F84 /* TTBackPlayListViewController.mm */; };
 		AB597B4524027BC900F04F84 /* KHJBackPlayListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB597B4324027BC900F04F84 /* KHJBackPlayListCell.m */; };
 		AB597B4624027BC900F04F84 /* KHJBackPlayListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB597B4424027BC900F04F84 /* KHJBackPlayListCell.xib */; };
 		AB5D784A23F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB5D784823F3ACE6002044E2 /* KHJVideoPlayer_sp_VC.mm */; };
@@ -137,9 +133,9 @@
 		936229B824278721002A1EFB /* TTAlarmConfigViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TTAlarmConfigViewController.m; sourceTree = "<group>"; };
 		93A30C4923D29889009A0F4C /* TTWiFiConfigViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTWiFiConfigViewController.h; sourceTree = "<group>"; };
 		93A30C4A23D29889009A0F4C /* TTWiFiConfigViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TTWiFiConfigViewController.m; sourceTree = "<group>"; };
-		93A30C6223D43378009A0F4C /* KHJWIFIConfigCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJWIFIConfigCell.h; sourceTree = "<group>"; };
-		93A30C6323D43378009A0F4C /* KHJWIFIConfigCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJWIFIConfigCell.m; sourceTree = "<group>"; };
-		93A30C6423D43378009A0F4C /* KHJWIFIConfigCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJWIFIConfigCell.xib; sourceTree = "<group>"; };
+		93A30C6223D43378009A0F4C /* TTWIFIConfigCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTWIFIConfigCell.h; sourceTree = "<group>"; };
+		93A30C6323D43378009A0F4C /* TTWIFIConfigCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TTWIFIConfigCell.m; sourceTree = "<group>"; };
+		93A30C6423D43378009A0F4C /* TTWIFIConfigCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TTWIFIConfigCell.xib; sourceTree = "<group>"; };
 		93C3395D23CB75BB00B44E5F /* HDCamView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HDCamView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93C3396023CB75BB00B44E5F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		93C3396123CB75BB00B44E5F /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -176,13 +172,10 @@
 		AB20E62023CED07300D2861C /* KHJDeviceListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJDeviceListCell.xib; sourceTree = "<group>"; };
 		AB20E62823CEE33300D2861C /* TTSinglePictureScale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTSinglePictureScale.m; sourceTree = "<group>"; };
 		AB20E62923CEE33300D2861C /* TTSinglePictureScale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTSinglePictureScale.h; sourceTree = "<group>"; };
-		AB30DA4223D05B0F005BD2A1 /* KHJAddDeviceListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJAddDeviceListVC.h; sourceTree = "<group>"; };
-		AB30DA4323D05B0F005BD2A1 /* KHJAddDeviceListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJAddDeviceListVC.m; sourceTree = "<group>"; };
+		AB30DA4223D05B0F005BD2A1 /* TTAddTypeListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTAddTypeListVC.h; sourceTree = "<group>"; };
+		AB30DA4323D05B0F005BD2A1 /* TTAddTypeListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TTAddTypeListVC.m; sourceTree = "<group>"; };
 		AB30DA4823D060F2005BD2A1 /* TTOnlineVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTOnlineVC.h; sourceTree = "<group>"; };
 		AB30DA4923D060F2005BD2A1 /* TTOnlineVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TTOnlineVC.m; sourceTree = "<group>"; };
-		AB30DA6223D1482F005BD2A1 /* KHJSearchDeviceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJSearchDeviceCell.h; sourceTree = "<group>"; };
-		AB30DA6323D1482F005BD2A1 /* KHJSearchDeviceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJSearchDeviceCell.m; sourceTree = "<group>"; };
-		AB30DA6423D1482F005BD2A1 /* KHJSearchDeviceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJSearchDeviceCell.xib; sourceTree = "<group>"; };
 		AB30DA7223D163A4005BD2A1 /* TTHighConfigViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTHighConfigViewController.h; sourceTree = "<group>"; };
 		AB30DA7323D163A4005BD2A1 /* TTHighConfigViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TTHighConfigViewController.m; sourceTree = "<group>"; };
 		AB30DA7423D163A4005BD2A1 /* TTHighConfigViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TTHighConfigViewController.xib; sourceTree = "<group>"; };
@@ -197,8 +190,8 @@
 		AB32D4C023F54E7A008AFD1F /* KHJVideoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHJVideoModel.m; sourceTree = "<group>"; };
 		AB32D4C223F54FDF008AFD1F /* TuyaTimeLineModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaTimeLineModel.h; sourceTree = "<group>"; };
 		AB32D4C323F54FE0008AFD1F /* TuyaTimeLineModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaTimeLineModel.m; sourceTree = "<group>"; };
-		AB32F9A92408FF1B00687054 /* KHJBackPlayerList_playerVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJBackPlayerList_playerVC.h; sourceTree = "<group>"; };
-		AB32F9AA2408FF1B00687054 /* KHJBackPlayerList_playerVC.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KHJBackPlayerList_playerVC.mm; sourceTree = "<group>"; };
+		AB32F9A92408FF1B00687054 /* TTSingleBackPlayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTSingleBackPlayViewController.h; sourceTree = "<group>"; };
+		AB32F9AA2408FF1B00687054 /* TTSingleBackPlayViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TTSingleBackPlayViewController.mm; sourceTree = "<group>"; };
 		AB482749241F0EDB008970A0 /* TYAsyncDisplayLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYAsyncDisplayLayer.h; sourceTree = "<group>"; };
 		AB48274B241F0EDB008970A0 /* TYCameraTimeLineViewSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYCameraTimeLineViewSource.h; sourceTree = "<group>"; };
 		AB48274C241F0EDB008970A0 /* TYAsyncDisplayLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYAsyncDisplayLayer.m; sourceTree = "<group>"; };
@@ -215,13 +208,13 @@
 		AB4827642420B6AE008970A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/KHJVideoPlayer_hf_VC.xib; sourceTree = "<group>"; };
 		AB4827672420B6C7008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/KHJVideoPlayer_hf_VC.strings; sourceTree = "<group>"; };
 		AB4827692420B6C9008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/KHJVideoPlayer_hf_VC.strings"; sourceTree = "<group>"; };
-		AB48276B2420B6DC008970A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/KHJBackPlayListVC.xib; sourceTree = "<group>"; };
-		AB48276E2420B6E7008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/KHJBackPlayListVC.strings; sourceTree = "<group>"; };
-		AB4827702420B6E9008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/KHJBackPlayListVC.strings"; sourceTree = "<group>"; };
-		AB4827722420B6F0008970A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/KHJBackPlayerList_playerVC.xib; sourceTree = "<group>"; };
-		AB4827752420B6F8008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/KHJBackPlayerList_playerVC.strings; sourceTree = "<group>"; };
-		AB4827772420B6FD008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/KHJBackPlayerList_playerVC.strings"; sourceTree = "<group>"; };
-		AB4827792420B707008970A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/KHJAddDeviceListVC.xib; sourceTree = "<group>"; };
+		AB48276B2420B6DC008970A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TTBackPlayListViewController.xib; sourceTree = "<group>"; };
+		AB48276E2420B6E7008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TTBackPlayListViewController.strings; sourceTree = "<group>"; };
+		AB4827702420B6E9008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TTBackPlayListViewController.strings"; sourceTree = "<group>"; };
+		AB4827722420B6F0008970A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TTSingleBackPlayViewController.xib; sourceTree = "<group>"; };
+		AB4827752420B6F8008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TTSingleBackPlayViewController.strings; sourceTree = "<group>"; };
+		AB4827772420B6FD008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TTSingleBackPlayViewController.strings"; sourceTree = "<group>"; };
+		AB4827792420B707008970A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TTAddTypeListVC.xib; sourceTree = "<group>"; };
 		AB4827872420B769008970A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TTWiFiConfigViewController.xib; sourceTree = "<group>"; };
 		AB48278A2420B76F008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TTWiFiConfigViewController.strings; sourceTree = "<group>"; };
 		AB48278C2420B770008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TTWiFiConfigViewController.strings"; sourceTree = "<group>"; };
@@ -235,8 +228,8 @@
 		AB4827B62420CB4D008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		AB4827C62421FEED008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AB4827C82421FEF0008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		AB4E89862425BF6A0023152B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/KHJAddDeviceListVC.strings; sourceTree = "<group>"; };
-		AB4E89882425BF6D0023152B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/KHJAddDeviceListVC.strings"; sourceTree = "<group>"; };
+		AB4E89862425BF6A0023152B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TTAddTypeListVC.strings; sourceTree = "<group>"; };
+		AB4E89882425BF6D0023152B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TTAddTypeListVC.strings"; sourceTree = "<group>"; };
 		AB4E898924260AC10023152B /* TTScanningVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTScanningVC.m; sourceTree = "<group>"; };
 		AB4E898A24260AC10023152B /* TTScanningVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTScanningVC.h; sourceTree = "<group>"; };
 		AB4E89BB242883E10023152B /* TTAlarmConfigHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTAlarmConfigHeadView.h; sourceTree = "<group>"; };
@@ -303,9 +296,6 @@
 		AB4EFA7C23F6D43600D584E7 /* TTFirmwareInterface_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTFirmwareInterface_API.h; sourceTree = "<group>"; };
 		AB4EFA7D23F6D43600D584E7 /* TTFirmwareInterface_API.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TTFirmwareInterface_API.mm; sourceTree = "<group>"; };
 		AB52C10C23F91FB200C921F1 /* TT_screenShot.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TT_screenShot.mp3; sourceTree = "<group>"; };
-		AB52C11123FBEB0100C921F1 /* KHJAddDeviceListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJAddDeviceListCell.h; sourceTree = "<group>"; };
-		AB52C11223FBEB0100C921F1 /* KHJAddDeviceListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJAddDeviceListCell.m; sourceTree = "<group>"; };
-		AB52C11323FBEB0100C921F1 /* KHJAddDeviceListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJAddDeviceListCell.xib; sourceTree = "<group>"; };
 		AB52C11623FC14A300C921F1 /* TTDataBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTDataBase.h; sourceTree = "<group>"; };
 		AB52C11723FC14A300C921F1 /* TTDataBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TTDataBase.m; sourceTree = "<group>"; };
 		AB52C11923FC153400C921F1 /* TTDeviceInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTDeviceInfo.h; sourceTree = "<group>"; };
@@ -342,8 +332,8 @@
 		AB597B36240154D500F04F84 /* libIOTCAPIs_ALLT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIOTCAPIs_ALLT.a; sourceTree = "<group>"; };
 		AB597B37240154D500F04F84 /* libIOTCAPIs_ALL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIOTCAPIs_ALL.a; sourceTree = "<group>"; };
 		AB597B38240154D500F04F84 /* libIOTCAPIs_P2PTunnelT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIOTCAPIs_P2PTunnelT.a; sourceTree = "<group>"; };
-		AB597B3D24027A7600F04F84 /* KHJBackPlayListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJBackPlayListVC.h; sourceTree = "<group>"; };
-		AB597B3E24027A7600F04F84 /* KHJBackPlayListVC.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KHJBackPlayListVC.mm; sourceTree = "<group>"; };
+		AB597B3D24027A7600F04F84 /* TTBackPlayListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTBackPlayListViewController.h; sourceTree = "<group>"; };
+		AB597B3E24027A7600F04F84 /* TTBackPlayListViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TTBackPlayListViewController.mm; sourceTree = "<group>"; };
 		AB597B4224027BC900F04F84 /* KHJBackPlayListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHJBackPlayListCell.h; sourceTree = "<group>"; };
 		AB597B4324027BC900F04F84 /* KHJBackPlayListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHJBackPlayListCell.m; sourceTree = "<group>"; };
 		AB597B4424027BC900F04F84 /* KHJBackPlayListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KHJBackPlayListCell.xib; sourceTree = "<group>"; };
@@ -514,16 +504,14 @@
 				AB32D4AD23F4F476008AFD1F /* KHJVideoPlayer_hf_VC.h */,
 				AB32D4AE23F4F476008AFD1F /* KHJVideoPlayer_hf_VC.mm */,
 				AB4827652420B6AE008970A0 /* KHJVideoPlayer_hf_VC.xib */,
-				AB597B3D24027A7600F04F84 /* KHJBackPlayListVC.h */,
-				AB597B3E24027A7600F04F84 /* KHJBackPlayListVC.mm */,
-				AB48276C2420B6DC008970A0 /* KHJBackPlayListVC.xib */,
-				AB32F9A92408FF1B00687054 /* KHJBackPlayerList_playerVC.h */,
-				AB32F9AA2408FF1B00687054 /* KHJBackPlayerList_playerVC.mm */,
-				AB4827732420B6F0008970A0 /* KHJBackPlayerList_playerVC.xib */,
-				AB30DA4223D05B0F005BD2A1 /* KHJAddDeviceListVC.h */,
-				AB30DA4323D05B0F005BD2A1 /* KHJAddDeviceListVC.m */,
-				AB48277A2420B707008970A0 /* KHJAddDeviceListVC.xib */,
-				AB30DA7123D16342005BD2A1 /* Config */,
+				AB597B3D24027A7600F04F84 /* TTBackPlayListViewController.h */,
+				AB597B3E24027A7600F04F84 /* TTBackPlayListViewController.mm */,
+				AB48276C2420B6DC008970A0 /* TTBackPlayListViewController.xib */,
+				AB32F9A92408FF1B00687054 /* TTSingleBackPlayViewController.h */,
+				AB32F9AA2408FF1B00687054 /* TTSingleBackPlayViewController.mm */,
+				AB4827732420B6F0008970A0 /* TTSingleBackPlayViewController.xib */,
+				AB423B02242EFE6300564EAF /* AddDevice */,
+				AB30DA7123D16342005BD2A1 /* HighLevelConfig */,
 				AB4E8AFF242EDE090023152B /* AddOnlineDevice */,
 				AB30DA4723D060A2005BD2A1 /* ScanningAddDevice */,
 			);
@@ -539,8 +527,6 @@
 				AB597B4224027BC900F04F84 /* KHJBackPlayListCell.h */,
 				AB597B4324027BC900F04F84 /* KHJBackPlayListCell.m */,
 				AB597B4424027BC900F04F84 /* KHJBackPlayListCell.xib */,
-				AB30DA7723D16496005BD2A1 /* ConfigCell */,
-				AB30DA6123D14814005BD2A1 /* MethodCell */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -583,44 +569,20 @@
 			path = ScanningAddDevice;
 			sourceTree = "<group>";
 		};
-		AB30DA6123D14814005BD2A1 /* MethodCell */ = {
-			isa = PBXGroup;
-			children = (
-				AB30DA6223D1482F005BD2A1 /* KHJSearchDeviceCell.h */,
-				AB30DA6323D1482F005BD2A1 /* KHJSearchDeviceCell.m */,
-				AB30DA6423D1482F005BD2A1 /* KHJSearchDeviceCell.xib */,
-				AB52C11123FBEB0100C921F1 /* KHJAddDeviceListCell.h */,
-				AB52C11223FBEB0100C921F1 /* KHJAddDeviceListCell.m */,
-				AB52C11323FBEB0100C921F1 /* KHJAddDeviceListCell.xib */,
-			);
-			path = MethodCell;
-			sourceTree = "<group>";
-		};
-		AB30DA7123D16342005BD2A1 /* Config */ = {
+		AB30DA7123D16342005BD2A1 /* HighLevelConfig */ = {
 			isa = PBXGroup;
 			children = (
 				AB30DA7223D163A4005BD2A1 /* TTHighConfigViewController.h */,
 				AB30DA7323D163A4005BD2A1 /* TTHighConfigViewController.m */,
 				AB30DA7423D163A4005BD2A1 /* TTHighConfigViewController.xib */,
+				AB423B04242EFF2700564EAF /* TTHighConfigSubView */,
 				93A30C4923D29889009A0F4C /* TTWiFiConfigViewController.h */,
 				93A30C4A23D29889009A0F4C /* TTWiFiConfigViewController.m */,
 				AB4827882420B769008970A0 /* TTWiFiConfigViewController.xib */,
+				AB423B05242EFF4900564EAF /* TTWifiConfigSubView */,
 				AB4E8B00242EF4E90023152B /* AlarmConfg */,
 			);
-			path = Config;
-			sourceTree = "<group>";
-		};
-		AB30DA7723D16496005BD2A1 /* ConfigCell */ = {
-			isa = PBXGroup;
-			children = (
-				AB30DA7823D164AE005BD2A1 /* TTHighConfigCell.h */,
-				AB30DA7923D164AE005BD2A1 /* TTHighConfigCell.m */,
-				AB30DA7A23D164AE005BD2A1 /* TTHighConfigCell.xib */,
-				93A30C6223D43378009A0F4C /* KHJWIFIConfigCell.h */,
-				93A30C6323D43378009A0F4C /* KHJWIFIConfigCell.m */,
-				93A30C6423D43378009A0F4C /* KHJWIFIConfigCell.xib */,
-			);
-			path = ConfigCell;
+			path = HighLevelConfig;
 			sourceTree = "<group>";
 		};
 		AB32D4B223F53BCA008AFD1F /* View */ = {
@@ -633,6 +595,36 @@
 				AB482747241F0EDB008970A0 /* TuyaTimeLineView */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		AB423B02242EFE6300564EAF /* AddDevice */ = {
+			isa = PBXGroup;
+			children = (
+				AB30DA4223D05B0F005BD2A1 /* TTAddTypeListVC.h */,
+				AB30DA4323D05B0F005BD2A1 /* TTAddTypeListVC.m */,
+				AB48277A2420B707008970A0 /* TTAddTypeListVC.xib */,
+			);
+			path = AddDevice;
+			sourceTree = "<group>";
+		};
+		AB423B04242EFF2700564EAF /* TTHighConfigSubView */ = {
+			isa = PBXGroup;
+			children = (
+				AB30DA7823D164AE005BD2A1 /* TTHighConfigCell.h */,
+				AB30DA7923D164AE005BD2A1 /* TTHighConfigCell.m */,
+				AB30DA7A23D164AE005BD2A1 /* TTHighConfigCell.xib */,
+			);
+			path = TTHighConfigSubView;
+			sourceTree = "<group>";
+		};
+		AB423B05242EFF4900564EAF /* TTWifiConfigSubView */ = {
+			isa = PBXGroup;
+			children = (
+				93A30C6223D43378009A0F4C /* TTWIFIConfigCell.h */,
+				93A30C6323D43378009A0F4C /* TTWIFIConfigCell.m */,
+				93A30C6423D43378009A0F4C /* TTWIFIConfigCell.xib */,
+			);
+			path = TTWifiConfigSubView;
 			sourceTree = "<group>";
 		};
 		AB482747241F0EDB008970A0 /* TuyaTimeLineView */ = {
@@ -955,12 +947,11 @@
 				AB4E89E8242A043D0023152B /* TTAlarmConfigCollectionCell.xib in Resources */,
 				AB4E89D82428C0060023152B /* TTAlarmConfigFootView.xib in Resources */,
 				AB4E89E22429F2CC0023152B /* TTAlarmPushViewController.xib in Resources */,
-				AB30DA6623D1482F005BD2A1 /* KHJSearchDeviceCell.xib in Resources */,
 				AB771A2E24222979007B5E2E /* Info.plist in Resources */,
 				AB4827862420B769008970A0 /* TTWiFiConfigViewController.xib in Resources */,
 				AB4827552420B666008970A0 /* TTDeviceListViewController.xib in Resources */,
-				93A30C6623D43378009A0F4C /* KHJWIFIConfigCell.xib in Resources */,
-				AB4827782420B707008970A0 /* KHJAddDeviceListVC.xib in Resources */,
+				93A30C6623D43378009A0F4C /* TTWIFIConfigCell.xib in Resources */,
+				AB4827782420B707008970A0 /* TTAddTypeListVC.xib in Resources */,
 				AB5462D9240FB4FA00A096ED /* TTDeviceSingleDayVC.xib in Resources */,
 				AB4827632420B6AE008970A0 /* KHJVideoPlayer_hf_VC.xib in Resources */,
 				AB597B4624027BC900F04F84 /* KHJBackPlayListCell.xib in Resources */,
@@ -968,13 +959,12 @@
 				AB4E89BF242883F30023152B /* TTAlarmConfigHeadView.xib in Resources */,
 				AB5462FB2416453900A096ED /* KHJMutilScreenVC.xib in Resources */,
 				AB4E8AE5242B5C1A0023152B /* SGQRCode.bundle in Resources */,
-				AB52C11523FBEB0100C921F1 /* KHJAddDeviceListCell.xib in Resources */,
 				AB30DA7C23D164AE005BD2A1 /* TTHighConfigCell.xib in Resources */,
 				AB4827C52421FEED008970A0 /* InfoPlist.strings in Resources */,
 				AB5462E3240FB91000A096ED /* TTDeviceSingleDayCell.xib in Resources */,
-				AB48276A2420B6DC008970A0 /* KHJBackPlayListVC.xib in Resources */,
+				AB48276A2420B6DC008970A0 /* TTBackPlayListViewController.xib in Resources */,
 				AB4E8B03242EF9140023152B /* TTAlarmConfigViewController.xib in Resources */,
-				AB4827712420B6F0008970A0 /* KHJBackPlayerList_playerVC.xib in Resources */,
+				AB4827712420B6F0008970A0 /* TTSingleBackPlayViewController.xib in Resources */,
 				AB4827A52420B845008970A0 /* TTZoomPictureListVC.xib in Resources */,
 				AB48279B2420B7F4008970A0 /* TTOnlineVC.xib in Resources */,
 				AB20E61523CEBF2900D2861C /* TTAllDeviceVC.xib in Resources */,
@@ -1040,8 +1030,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				93C3398A23CE1BA900B44E5F /* TTBaseCell.m in Sources */,
-				AB597B4024027A7600F04F84 /* KHJBackPlayListVC.mm in Sources */,
-				AB30DA4523D05B0F005BD2A1 /* KHJAddDeviceListVC.m in Sources */,
+				AB597B4024027A7600F04F84 /* TTBackPlayListViewController.mm in Sources */,
+				AB30DA4523D05B0F005BD2A1 /* TTAddTypeListVC.m in Sources */,
 				AB4E8AEE242B6DE40023152B /* TTAlbumManager.m in Sources */,
 				AB5911DC23D0141A0060F05C /* TTAllDeviceCell.m in Sources */,
 				AB764975240617A300D6DE1C /* TTPlayerBaseViewController.mm in Sources */,
@@ -1059,7 +1049,6 @@
 				93FC9F7824057033000B9B51 /* H264_H265_VideoDecoder.m in Sources */,
 				AB4E8AFE242CB6670023152B /* NSDate+TTDate.m in Sources */,
 				93C3398823CE1BA900B44E5F /* TTabBarBaseViewController.m in Sources */,
-				AB52C11423FBEB0100C921F1 /* KHJAddDeviceListCell.m in Sources */,
 				AB4E89C824289B880023152B /* TTAlarmTriggerViewController.m in Sources */,
 				AB4E89DC2429C32D0023152B /* TTAddDefensTimeViewController.m in Sources */,
 				AB30DA7523D163A4005BD2A1 /* TTHighConfigViewController.m in Sources */,
@@ -1071,7 +1060,7 @@
 				AB54630324172A9C00A096ED /* TTAudioTool.m in Sources */,
 				AB32D4C123F54E7A008AFD1F /* KHJVideoModel.m in Sources */,
 				AB5462CE240FA0A900A096ED /* TTDeviceAllDayVC.m in Sources */,
-				93A30C6523D43378009A0F4C /* KHJWIFIConfigCell.m in Sources */,
+				93A30C6523D43378009A0F4C /* TTWIFIConfigCell.m in Sources */,
 				AB20E60823CEBEE500D2861C /* TTDeviceListViewController.m in Sources */,
 				AB4E8AFB242CAC9E0023152B /* NSBundle+TTMultiLanguage.m in Sources */,
 				93C33A7423CE1D0800B44E5F /* TTHub.m in Sources */,
@@ -1085,7 +1074,7 @@
 				AB7649782406794F00D6DE1C /* TTHourMinSeconsPicker.m in Sources */,
 				AB32D4B023F4F476008AFD1F /* KHJVideoPlayer_hf_VC.mm in Sources */,
 				AB20E62A23CEE33400D2861C /* TTSinglePictureScale.m in Sources */,
-				AB32F9AC2408FF1B00687054 /* KHJBackPlayerList_playerVC.mm in Sources */,
+				AB32F9AC2408FF1B00687054 /* TTSingleBackPlayViewController.mm in Sources */,
 				AB5462D3240FA1A100A096ED /* TTDeviceAllDayCell.m in Sources */,
 				AB7648662405132A00D6DE1C /* TTDatePicker.m in Sources */,
 				AB4E8AE8242B5C1A0023152B /* TTScanningView.m in Sources */,
@@ -1103,7 +1092,6 @@
 				AB482754241F9CE4008970A0 /* TYCameraTimeLineScrollView.m in Sources */,
 				AB54630424172A9C00A096ED /* TTAudioRecorder.m in Sources */,
 				AB4E89C3242887C70023152B /* TTAlarmConfigTableViewCell.m in Sources */,
-				AB30DA6523D1482F005BD2A1 /* KHJSearchDeviceCell.m in Sources */,
 				93A30C4C23D29889009A0F4C /* TTWiFiConfigViewController.m in Sources */,
 				ABEBCE0323CF1D5000581AFB /* TTZoomPictureCell.m in Sources */,
 				AB20E61423CEBF2900D2861C /* TTAllDeviceVC.m in Sources */,
@@ -1161,34 +1149,34 @@
 			name = KHJVideoPlayer_hf_VC.xib;
 			sourceTree = "<group>";
 		};
-		AB48276C2420B6DC008970A0 /* KHJBackPlayListVC.xib */ = {
+		AB48276C2420B6DC008970A0 /* TTBackPlayListViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				AB48276B2420B6DC008970A0 /* Base */,
 				AB48276E2420B6E7008970A0 /* en */,
 				AB4827702420B6E9008970A0 /* zh-Hans */,
 			);
-			name = KHJBackPlayListVC.xib;
+			name = TTBackPlayListViewController.xib;
 			sourceTree = "<group>";
 		};
-		AB4827732420B6F0008970A0 /* KHJBackPlayerList_playerVC.xib */ = {
+		AB4827732420B6F0008970A0 /* TTSingleBackPlayViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				AB4827722420B6F0008970A0 /* Base */,
 				AB4827752420B6F8008970A0 /* en */,
 				AB4827772420B6FD008970A0 /* zh-Hans */,
 			);
-			name = KHJBackPlayerList_playerVC.xib;
+			name = TTSingleBackPlayViewController.xib;
 			sourceTree = "<group>";
 		};
-		AB48277A2420B707008970A0 /* KHJAddDeviceListVC.xib */ = {
+		AB48277A2420B707008970A0 /* TTAddTypeListVC.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				AB4827792420B707008970A0 /* Base */,
 				AB4E89862425BF6A0023152B /* en */,
 				AB4E89882425BF6D0023152B /* zh-Hans */,
 			);
-			name = KHJAddDeviceListVC.xib;
+			name = TTAddTypeListVC.xib;
 			sourceTree = "<group>";
 		};
 		AB4827882420B769008970A0 /* TTWiFiConfigViewController.xib */ = {

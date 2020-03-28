@@ -48,11 +48,27 @@ TTAudioRecorder *audioRecorder;
     [self customizeDataSource];
 }
 
+- (instancetype)init
+{
+    if (self = [super init]) {
+        mutliArr            = [NSMutableArray array];
+        liveDecode          = [[H264_H265_VideoDecoder alloc] init];
+        liveDecode.delegate = self;
+    }
+    return self;
+}
+
+//- (instancetype)initWithFrame:(CGRect)frame
+//{
+//    if (self = [super initWithFrame:frame]) {
+//
+//    }
+//    return self;
+//}
+
 - (void)customizeDataSource
 {
-    mutliArr            = [NSMutableArray array];
-    liveDecode          = [[H264_H265_VideoDecoder alloc] init];
-    liveDecode.delegate = self;
+
 }
 
 - (void)getImageWith:(UIImage * _Nullable)image imageSize:(CGSize)imageSize deviceID:(NSString *)deviceID

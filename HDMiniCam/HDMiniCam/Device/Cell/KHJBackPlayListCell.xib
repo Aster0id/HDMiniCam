@@ -17,7 +17,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dus-rA-2Xa">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dus-rA-2Xa">
                         <rect key="frame" x="54" y="5" width="254" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="BRE-gt-ngN"/>
@@ -39,12 +39,12 @@
                             <action selector="btn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="GMu-1a-GxA"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uzH-a4-Urv">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uzH-a4-Urv">
                         <rect key="frame" x="54" y="30" width="254" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="8B1-pk-B5I"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -66,10 +66,10 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
-                <outlet property="detailsLab" destination="uzH-a4-Urv" id="gHu-ZN-GI8"/>
-                <outlet property="nameLab" destination="dus-rA-2Xa" id="AHX-eB-d4K"/>
+                <outlet property="firstLab" destination="dus-rA-2Xa" id="Opa-sf-Bm4"/>
+                <outlet property="secondLab" destination="uzH-a4-Urv" id="Ebl-4D-yg0"/>
             </connections>
-            <point key="canvasLocation" x="-65" y="110"/>
+            <point key="canvasLocation" x="113" y="103"/>
         </tableViewCell>
     </objects>
     <resources>

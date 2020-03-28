@@ -1,5 +1,5 @@
 //
-//  KHJAddDeviceListVC.h
+//  TTAddTypeListVC.h
 //  SuperIPC
 //
 //  Created by kevin on 2020/1/16.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJAddDeviceListVC : TTBaseViewController
+@interface TTAddTypeListVC : TTBaseViewController
 
 @end
 
