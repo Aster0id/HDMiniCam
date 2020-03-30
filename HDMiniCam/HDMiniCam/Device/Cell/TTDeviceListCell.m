@@ -1,14 +1,14 @@
 //
-//  KHJDeviceListCell.m
+//  TTDeviceListCell.m
 //  SuperIPC
 //
 //  Created by kevin on 2020/1/15.
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJDeviceListCell.h"
+#import "TTDeviceListCell.h"
 
-@implementation KHJDeviceListCell
+@implementation TTDeviceListCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];

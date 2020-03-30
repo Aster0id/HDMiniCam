@@ -9,7 +9,7 @@
 #import "TTAllDeviceVC.h"
 #import "TTAllDeviceCell.h"
 #import "TTDeviceAllDayVC.h"
-#import "KHJVideoPlayer_hf_VC.h"
+#import "TTRebackPlayViewController.h"
 
 @interface TTAllDeviceVC ()
 <
@@ -144,7 +144,7 @@ UITableViewDataSource
 - (void)chooseDeviceWithRow:(NSInteger)row
 {
     TTDeviceInfo *deviceInfoooo = _deviceDataSArray[row];
-    KHJVideoPlayer_hf_VC *backVC = [[KHJVideoPlayer_hf_VC alloc] init];
+    TTRebackPlayViewController *backVC = [[TTRebackPlayViewController alloc] init];
     TTDeviceAllDayVC *allDayVC = [[TTDeviceAllDayVC alloc] init];
     backVC.hidesBottomBarWhenPushed = YES;
     allDayVC.hidesBottomBarWhenPushed = YES;

@@ -7,7 +7,7 @@
 //
 
 #import "ZFTimeLine.h"
-#import "KHJVideoModel.h"
+#import "TTimeLineModel.h"
 #import "NSDate+TTDate.h"
 
 //
@@ -321,10 +321,10 @@
     CGContextRef contex = UIGraphicsGetCurrentContext();
     if (self.timesArr.count != 0) {
         //数组很大的时候，需要2分查找
-        for (KHJVideoModel *tInfo in self.timesArr) {
+        for (TTimeLineModel *tmodel in self.timesArr) {
 
-            NSTimeInterval start = tInfo.startTime;
-            NSTimeInterval end = tInfo.startTime + tInfo.durationTime;
+            NSTimeInterval start = tmodel.TT_startStamp;
+            NSTimeInterval end = tmodel.TT_startStamp + tmodel.TT_durationStamp;
 
             if ((start > leftInterval && start < rightInterval) ||
                 (end > leftInterval && end < rightInterval ) ||
@@ -333,24 +333,16 @@
                 float startX = (start-leftInterval)/[self secondsOfIntervalValue];
                 //计算时间长度对应的宽度
                 float length = (end - start)/[self secondsOfIntervalValue] + 0.5;
-                if (tInfo.recType == 0 || tInfo.recType == 1) {//灰色
+                if (tmodel.TT_dataType == 0 || tmodel.TT_dataType == 1)
                     [self drawColorRect:startX Context:contex length:length withColor:UIColor.lightGrayColor];
-                }
-                else if(tInfo.recType == 2) {//2移动侦测
+                else if(tmodel.TT_dataType == 2)
                     [self drawColorRect:startX Context:contex length:length withColor:UIColor.orangeColor];
-                }
-                else if(tInfo.recType == 4) {
-                    //4是声音侦测
+                else if(tmodel.TT_dataType == 4)
                     [self drawColorRect:startX Context:contex length:length withColor:TTRGB(0x2a, 0xb9, 0xb7)];
-                }
-                else if(tInfo.recType ==6 ){
-                    //6移动和声音
+                else if(tmodel.TT_dataType == 6)
                     [self drawColorRect:startX Context:contex length:length withColor:UIColor.redColor];
-                }
-                else {
-                    // 人脸人形检测（默认的报警类型）
+                else
                     [self drawColorRect:startX Context:contex length:length withColor:UIColor.orangeColor];
-                }
             }
             else {
 //                TLog(@"时间区域显示不正常！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
@@ -416,7 +408,7 @@
 //        CGContextRef contex = UIGraphicsGetCurrentContext();
 //        if (weakSelf.timesArr.count != 0) {
 //            //数组很大的时候，需要2分查找
-//            for (KHJVideoModel *tInfo in weakSelf.timesArr) {
+//            for (TTimeLineModel *tInfo in weakSelf.timesArr) {
 //
 //                NSTimeInterval start = tInfo.startTime;
 //                NSTimeInterval end = tInfo.startTime + tInfo.durationTime;

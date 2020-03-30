@@ -96,7 +96,7 @@
     [self addSubview:viewbottom];
     
     buttonCancle = [[UIButton alloc]initWithFrame:CGRectMake(16,2, 80, 36)];
-    [buttonCancle setTitle:TTLocalString(@"cancel_", nil) forState:UIControlStateNormal];
+    [buttonCancle setTitle:TTLocalString(@"cacel_", nil) forState:UIControlStateNormal];
     buttonCancle.titleLabel.font = [UIFont systemFontOfSize:17];
     [buttonCancle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [buttonCancle.titleLabel sizeToFit];

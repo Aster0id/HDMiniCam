@@ -11,9 +11,6 @@
 /* Class = "UITextField"; placeholder = "请输入UID"; ObjectID = "E7Y-VU-ZSH"; */
 "E7Y-VU-ZSH.placeholder" = "please enter UID";
 
-/* Class = "UITextField"; text = "IPCA000002AINYZ"; ObjectID = "E7Y-VU-ZSH"; */
-"E7Y-VU-ZSH.text" = "IPCA000002AINYZ";
-
 /* Class = "UITextField"; placeholder = "请输入设备名称"; ObjectID = "IBe-XX-Hc9"; */
 "IBe-XX-Hc9.placeholder" = "Please enter the device name";
 

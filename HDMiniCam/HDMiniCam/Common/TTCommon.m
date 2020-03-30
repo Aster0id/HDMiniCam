@@ -10,7 +10,7 @@
 #include <net/if.h>
 #include <ifaddrs.h>
 #include <arpa/inet.h>
-#import "KHJVideoModel.h"
+#import "TTimeLineModel.h"
 
 @implementation TTCommon
 
@@ -211,24 +211,24 @@ static TTCommon *common = nil;
     while (start + 1 < end) {//判断在两个视频的中间
 
         mid = start + (end - start) / 2;
-        KHJVideoModel *vModel = source[mid];
-        if (vModel.startTime == target) { // 相邻就退出
+        TTimeLineModel *vModel = source[mid];
+        if (vModel.TT_startStamp == target) { // 相邻就退出
             return mid;
         }
-        else if (vModel.startTime < target) {//大于起始时间
+        else if (vModel.TT_startStamp < target) {//大于起始时间
             start = mid;
         }
         else {
             end = mid;
         }
     }
-    KHJVideoModel *vModel = source[start];
+    TTimeLineModel *vModel = source[start];
 
-    if ( vModel.startTime <= target && (vModel.startTime+vModel.durationTime) >= target) {
+    if ( vModel.TT_startStamp <= target && (vModel.TT_startStamp+vModel.TT_durationStamp) >= target) {
         return start;
     }
     vModel = source[end];
-    if (vModel.startTime <= target && (vModel.startTime+vModel.durationTime) >= target) {
+    if (vModel.TT_startStamp <= target && (vModel.TT_startStamp+vModel.TT_durationStamp) >= target) {
         return end;
     }
     return -1;
@@ -244,34 +244,34 @@ static TTCommon *common = nil;
     while (start + 1 < end) {//判断在两个视频的中间
 
         mid = start + (end - start) / 2;
-        KHJVideoModel *vModel = source[mid];
-        if (vModel.startTime == target) { // 相邻就退出
+        TTimeLineModel *vModel = source[mid];
+        if (vModel.TT_startStamp == target) { // 相邻就退出
             return mid;
         }
-        else if (vModel.startTime < target) {//大于起始时间
+        else if (vModel.TT_startStamp < target) {//大于起始时间
             start = mid;
         }
         else {
             end = mid;
         }
     }
-    KHJVideoModel *firstModel = source.firstObject;
-    if (target < firstModel.startTime) {
+    TTimeLineModel *firstModel = source.firstObject;
+    if (target < firstModel.TT_startStamp) {
         return -1;
     }
-    KHJVideoModel *vModel = source[start];
-    if ( vModel.startTime <= target && vModel.startTime + vModel.durationTime >= target) {
+    TTimeLineModel *vModel = source[start];
+    if ( vModel.TT_startStamp <= target && vModel.TT_startStamp + vModel.TT_durationStamp >= target) {
         return start;
     }
-    KHJVideoModel *endModel = source[end];
-    if (endModel.startTime <= target && endModel.startTime + endModel.durationTime >= target) {
+    TTimeLineModel *endModel = source[end];
+    if (endModel.TT_startStamp <= target && endModel.TT_startStamp + endModel.TT_durationStamp >= target) {
         return end;
     }
-    if (target > endModel.startTime + endModel.durationTime) {
+    if (target > endModel.TT_startStamp + endModel.TT_durationStamp) {
         return -1;
     }
-    if (endModel.startTime - (vModel.startTime + vModel.durationTime) > 0 &&
-        endModel.startTime - (vModel.startTime + vModel.durationTime) <= 20 * 60) {
+    if (endModel.TT_startStamp - (vModel.TT_startStamp + vModel.TT_durationStamp) > 0 &&
+        endModel.TT_startStamp - (vModel.TT_startStamp + vModel.TT_durationStamp) <= 20 * 60) {
         return end;
     }
     return -1;

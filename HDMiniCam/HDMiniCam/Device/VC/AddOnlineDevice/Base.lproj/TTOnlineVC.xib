@@ -33,7 +33,7 @@
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Cam" placeholder="请输入设备名称" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IBe-XX-Hc9">
                             <rect key="frame" x="158" y="0.0" width="150" height="43"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="150" id="RsT-7w-pEj"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="RsT-7w-pEj"/>
                             </constraints>
                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -72,11 +72,8 @@
                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入UID" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E7Y-VU-ZSH">
-                            <rect key="frame" x="158" y="0.0" width="150" height="43"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="150" id="GKR-dE-PHT"/>
-                            </constraints>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="IPCA000008GAIWC" placeholder="请输入UID" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E7Y-VU-ZSH">
+                            <rect key="frame" x="178" y="0.0" width="130" height="43"/>
                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
@@ -114,10 +111,10 @@
                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入密码" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CHE-ni-ae7">
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="admin" placeholder="请输入密码" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CHE-ni-ae7">
                             <rect key="frame" x="158" y="0.0" width="150" height="49"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="150" id="qKx-4R-Os5"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="qKx-4R-Os5"/>
                             </constraints>
                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -133,6 +130,7 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="CHE-ni-ae7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jEu-G8-g0O" secondAttribute="trailing" constant="8" symbolic="YES" id="78Y-mZ-YdG"/>
                         <constraint firstItem="jEu-G8-g0O" firstAttribute="centerY" secondItem="54Y-rh-o5g" secondAttribute="centerY" id="EIt-d1-7K4"/>
                         <constraint firstAttribute="trailing" secondItem="2xm-e9-KlZ" secondAttribute="trailing" id="Eb9-o2-z1c"/>
                         <constraint firstAttribute="trailing" secondItem="CHE-ni-ae7" secondAttribute="trailing" constant="12" id="Fmp-8L-XgN"/>

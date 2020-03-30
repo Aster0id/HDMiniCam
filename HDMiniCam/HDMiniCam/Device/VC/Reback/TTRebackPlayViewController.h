@@ -1,5 +1,5 @@
 //
-//  KHJVideoPlayer_hf_VC.h
+//  TTRebackPlayViewController.h
 //  SuperIPC
 //
 //  Created by kevin on 2020/2/13.
@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJVideoPlayer_hf_VC : TTPlayerBaseViewController
+@interface TTRebackPlayViewController : TTPlayerBaseViewController
 
 @property (nonatomic, strong) TTDeviceInfo *info;
 

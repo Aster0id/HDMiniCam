@@ -208,7 +208,7 @@ TTZoomPictureCellDelegate
     NSInteger row = [imagePathArr indexOfObject:path];
     UIAlertController *alertview = [UIAlertController alertControllerWithTitle:TTLocalString(@"isDltPic_", nil) message:@""
                                                             preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cancel_", nil) style:UIAlertActionStyleCancel
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cacel_", nil) style:UIAlertActionStyleCancel
                                                    handler:nil];
     TTWeakSelf
     UIAlertAction *defult = [UIAlertAction actionWithTitle:TTLocalString(@"sure", nil) style:UIAlertActionStyleDefault

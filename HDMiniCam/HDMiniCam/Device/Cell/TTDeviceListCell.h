@@ -1,5 +1,5 @@
 //
-//  KHJDeviceListCell.h
+//  TTDeviceListCell.h
 //  SuperIPC
 //
 //  Created by kevin on 2020/1/15.
@@ -10,14 +10,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol KHJDeviceListCellDelegate <NSObject>
+@protocol TTDeviceListCellDelegate <NSObject>
 
 - (void)gotoVideoWithIndex:(NSString *)index;
 - (void)gotoSetupWithIndex:(NSString *)deviceID;
 
 @end
 
-@interface KHJDeviceListCell : TTBaseCell
+@interface TTDeviceListCell : TTBaseCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *bigIMGV;
 @property (weak, nonatomic) IBOutlet UILabel *name;
@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *deviceID;
 
-@property (nonatomic, weak) id<KHJDeviceListCellDelegate> delegate;
+@property (nonatomic, weak) id<TTDeviceListCellDelegate> delegate;
 
 @end
 

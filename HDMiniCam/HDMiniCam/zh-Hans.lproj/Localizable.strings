@@ -1,10 +1,9 @@
-"vide_"="视频";
-"pic_"="截图";
-"recrd_"="录像";
-"cancel_"="取消";
+"dvice_"="设备";
+"poto_"="图片";
+"sav_"="视频";
+"cacel_"="取消";
 "devAddNet_"="设备配网";
 "adHadDevNet_"="添加已配网的设备";
-"adDevNet_"="局域网下搜索设备";
 "onLn_"="在线";
 "ofLn_"="离线";
 "pwdErr_"="密码错误";

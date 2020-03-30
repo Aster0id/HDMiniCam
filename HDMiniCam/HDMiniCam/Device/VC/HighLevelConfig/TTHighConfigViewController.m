@@ -127,7 +127,7 @@ TTHighConfigCellDelegate
     UIAlertAction *delete = [UIAlertAction actionWithTitle:TTLocalString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf rebootDevice];
     }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cacel_", nil) style:UIAlertActionStyleCancel handler:nil];
     [alertview addAction:delete];
     [alertview addAction:cancel];
     [self presentViewController:alertview animated:YES completion:nil];
@@ -150,7 +150,7 @@ TTHighConfigCellDelegate
     UIAlertAction *delete = [UIAlertAction actionWithTitle:TTLocalString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf resetDevice];
     }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cacel_", nil) style:UIAlertActionStyleCancel handler:nil];
     [alertview addAction:delete];
     [alertview addAction:cancel];
     [self presentViewController:alertview animated:YES completion:nil];

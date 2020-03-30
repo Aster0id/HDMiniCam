@@ -1,15 +1,15 @@
 //
-//  TTBackPlayListViewController.m
+//  TTBrowseListViewController.m
 //  SuperIPC
 //
 //  Created by kevin on 2020/2/23.
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "TTBackPlayListViewController.h"
-#import "KHJBackPlayListCell.h"
+#import "TTBrowseListViewController.h"
+#import "TTBrowseListCell.h"
 #import "TTFirmwareInterface_API.h"
-#import "TTSingleBackPlayViewController.h"
+#import "TTBrowseSinglePlayerViewController.h"
 #import "JSONStructProtocal.h"
 
 #pragma mark - 用于获取sd卡视频存放路径    recordCfg.DiskInfo->Path.c_str()
@@ -19,11 +19,11 @@ extern const char *seekBackPlayList_Date;
 #pragma mark - 远程目录信息
 extern RemoteDirInfo_t *remoteDirInfo;
 
-@interface TTBackPlayListViewController ()
+@interface TTBrowseListViewController ()
 <
 UITableViewDelegate,
 UITableViewDataSource,
-KHJBackPlayListCellDelegate
+TTBrowseListCellDelegate
 >
 {
     NSInteger deleteItemWithIndex;
@@ -41,7 +41,7 @@ KHJBackPlayListCellDelegate
 
 @end
 
-@implementation TTBackPlayListViewController
+@implementation TTBrowseListViewController
 
 - (NSMutableArray *)listArr
 {
@@ -119,9 +119,9 @@ KHJBackPlayListCellDelegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    KHJBackPlayListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KHJBackPlayListCell"];
+    TTBrowseListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TTBrowseListCell"];
     if (cell == nil) {
-        cell = [[NSBundle mainBundle] loadNibNamed:@"KHJBackPlayListCell" owner:nil options:nil][0];
+        cell = [[NSBundle mainBundle] loadNibNamed:@"TTBrowseListCell" owner:nil options:nil][0];
     }
     cell.delegate = self;
     cell.tag = indexPath.row + FLAG_TAG;
@@ -132,7 +132,7 @@ KHJBackPlayListCellDelegate
     return cell;
 }
 
-- (void)ff:(NSInteger)row cell:(KHJBackPlayListCell *)cell
+- (void)ff:(NSInteger)row cell:(TTBrowseListCell *)cell
 {
     NSDictionary *body = self.listArr[row];
     NSInteger time = [body[@"end"] integerValue] - [body[@"start"] integerValue];
@@ -150,13 +150,13 @@ KHJBackPlayListCellDelegate
     });
 }
 
-- (void)gg:(KHJBackPlayListCell *)cell body:(NSDictionary *)body times:(NSString *)times sizeUnit:(NSString *)sizeUnit
+- (void)gg:(TTBrowseListCell *)cell body:(NSDictionary *)body times:(NSString *)times sizeUnit:(NSString *)sizeUnit
 {
     cell.firstLab.text = body[@"name"];
     cell.secondLab.text = TTStr(@"%@-%@ (%@ %@M)",self.seekList_currentDate,body[@"start"],times, sizeUnit);
 }
 
-#pragma mark - KHJBackPlayListCellDelegate
+#pragma mark - TTBrowseListCellDelegate
 
 - (void)chooseItemWith:(NSInteger)index
 {
@@ -198,7 +198,7 @@ KHJBackPlayListCellDelegate
     UIAlertAction *config2 = [UIAlertAction actionWithTitle:TTLocalString(@"flDetaIf_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf cc:min second:second body:body sizeUnit:sizeUnit times:times];
     }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cacel_", nil) style:UIAlertActionStyleCancel handler:nil];
     [alertview addAction:config];
     [alertview addAction:config1];
     [alertview addAction:config2];
@@ -208,7 +208,7 @@ KHJBackPlayListCellDelegate
 
 - (void)aa:(NSDictionary *)body
 {
-    TTSingleBackPlayViewController *vc = [[TTSingleBackPlayViewController alloc] init];
+    TTBrowseSinglePlayerViewController *vc = [[TTBrowseSinglePlayerViewController alloc] init];
     vc.body = body;
     vc.deviceID = _did;
     [self.navigationController pushViewController:vc animated:YES];

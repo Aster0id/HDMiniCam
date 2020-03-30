@@ -8,14 +8,14 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KHJMutilScreenVC">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TTMutilPlayerViewController">
             <connections>
-                <outlet property="fourImgView" destination="qNg-P1-55k" id="kmN-xe-8ZJ"/>
+                <outlet property="downLeftPlayer" destination="9Oi-s7-6lB" id="5ai-R4-3EY"/>
+                <outlet property="downRightPlayer" destination="qNg-P1-55k" id="sNr-Xp-oCz"/>
                 <outlet property="naviBtn" destination="VCS-Sk-Wpp" id="cCP-fj-1KK"/>
                 <outlet property="naviView" destination="Ofq-Hz-OBI" id="e33-nu-Pmf"/>
-                <outlet property="oneImgView" destination="u6N-kM-T06" id="ZFg-m9-rtM"/>
-                <outlet property="threeImgView" destination="9Oi-s7-6lB" id="sGh-HG-DKW"/>
-                <outlet property="twoImgView" destination="KSd-Gw-WNc" id="6FE-Ze-UkV"/>
+                <outlet property="upLeftPlayer" destination="u6N-kM-T06" id="CiT-qY-jq0"/>
+                <outlet property="upRightPlayer" destination="KSd-Gw-WNc" id="Uhh-5t-CuX"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

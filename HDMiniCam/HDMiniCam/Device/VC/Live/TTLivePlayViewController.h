@@ -1,5 +1,5 @@
 //
-//  KHJVideoPlayer_sp_VC.h
+//  TTLivePlayViewController.h
 //  SuperIPC
 //
 //  Created by kevin on 2020/2/12.
@@ -11,23 +11,24 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
 #import "H264_H265_VideoDecoder.h"
+#import "AppDelegate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol KHJVideoPlayer_sp_VCDelegate <NSObject>
+@protocol TTLivePlayViewControllerDelegate <NSObject>
 
 - (void)loadCellPic:(NSInteger)row;
 
 @end
 
-@interface KHJVideoPlayer_sp_VC : TTPlayerBaseViewController
+@interface TTLivePlayViewController : TTPlayerBaseViewController
 
 @property (nonatomic, assign) NSInteger row;
 
 @property (nonatomic, copy) NSString *deviceID;
 @property (nonatomic, copy) NSString *password;
 @property (nonatomic, strong) TTDeviceInfo *deviceInfo;
-@property (nonatomic, strong) id<KHJVideoPlayer_sp_VCDelegate> delegate;
+@property (nonatomic, strong) id<TTLivePlayViewControllerDelegate> delegate;
 
 @end
 

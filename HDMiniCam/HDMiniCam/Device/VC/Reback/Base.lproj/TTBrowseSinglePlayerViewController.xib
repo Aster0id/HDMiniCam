@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TTSingleBackPlayViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TTBrowseSinglePlayerViewController">
             <connections>
                 <outlet property="activeView" destination="4IX-Z3-feL" id="oKl-SL-PRA"/>
                 <outlet property="playBtn" destination="bAZ-au-Vla" id="O0Y-lI-j07"/>

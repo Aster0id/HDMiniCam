@@ -110,7 +110,7 @@
         _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
         _cancelButton.backgroundColor = UIColor.clearColor;
         _cancelButton.titleLabel.font = [UIFont systemFontOfSize:18.0];
-        NSString *title =TTLocalString(@"cancel_", nil);
+        NSString *title =TTLocalString(@"cacel_", nil);
         [_cancelButton setTitle:title forState:UIControlStateNormal];
         [_cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_cancelButton addTarget:self action:@selector(cancel:) forControlEvents:UIControlEventTouchUpInside];

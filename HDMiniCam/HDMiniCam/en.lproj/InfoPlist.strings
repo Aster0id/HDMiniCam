@@ -1,5 +1,6 @@
 
-"CFBundleDisplayName"="HDCamView";
+"CFBundleDisplayName"="SuperIPC";
+"NSCameraUsageDescription"="This app requires access to the camera permissions of your phone when scanning the QR code";
 "NSMicrophoneUsageDescription"="This app needs access to your phone ’s recording permissions when the device is talking";
 "NSPhotoLibraryUsageDescription"="When this app uses the screenshot function to save photos, you need to access the album permissions of your phone";
 "NSLocationWhenInUseUsageDescription"="When this app uses the ios13 system, it is necessary to obtain the mobile Wi-Fi information for the device to configure the network, so you need to access the positioning permissions of your mobile phone.";

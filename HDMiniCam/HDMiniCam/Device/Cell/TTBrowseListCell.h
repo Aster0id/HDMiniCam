@@ -1,5 +1,5 @@
 //
-//  KHJBackPlayListCell.h
+//  TTBrowseListCell.h
 //  SuperIPC
 //
 //  Created by kevin on 2020/2/23.
@@ -10,17 +10,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol KHJBackPlayListCellDelegate <NSObject>
+@protocol TTBrowseListCellDelegate <NSObject>
 
 - (void)chooseItemWith:(NSInteger)index;
 
 @end
 
-@interface KHJBackPlayListCell : TTBaseCell
+@interface TTBrowseListCell : TTBaseCell
 
 @property (weak, nonatomic) IBOutlet UILabel *firstLab;
 @property (weak, nonatomic) IBOutlet UILabel *secondLab;
-@property (nonatomic, strong) id<KHJBackPlayListCellDelegate> delegate;
+@property (nonatomic, strong) id<TTBrowseListCellDelegate> delegate;
 
 @end
 

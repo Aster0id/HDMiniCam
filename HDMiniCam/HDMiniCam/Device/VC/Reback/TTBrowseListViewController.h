@@ -1,5 +1,5 @@
 //
-//  TTBackPlayListViewController.h
+//  TTBrowseListViewController.h
 //  SuperIPC
 //
 //  Created by kevin on 2020/2/23.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol TTBackPlayListViewControllerDelegate <NSObject>
+@protocol TTBrowseListViewControllerDelegate <NSObject>
 
 - (void)exitListData:(BOOL)isExit;
 @optional
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface TTBackPlayListViewController : TTBaseViewController
+@interface TTBrowseListViewController : TTBaseViewController
 
 @property (nonatomic, copy) NSString *getid;
 
@@ -37,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL haveBackPlayData_now;
 
 
-@property (nonatomic, strong) id<TTBackPlayListViewControllerDelegate> delegate;
+@property (nonatomic, strong) id<TTBrowseListViewControllerDelegate> delegate;
 
 
 @end

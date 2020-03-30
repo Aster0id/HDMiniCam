@@ -1,14 +1,14 @@
 //
-//  KHJBackPlayListCell.m
+//  TTBrowseListCell.m
 //  SuperIPC
 //
 //  Created by kevin on 2020/2/23.
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "KHJBackPlayListCell.h"
+#import "TTBrowseListCell.h"
 
-@implementation KHJBackPlayListCell
+@implementation TTBrowseListCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];

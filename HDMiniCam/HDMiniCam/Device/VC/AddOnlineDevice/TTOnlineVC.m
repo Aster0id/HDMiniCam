@@ -33,9 +33,11 @@
 - (void)customizeAppearance
 {
     self.titleLab.text = TTLocalString(@"addHadAdd_", nil);
-    _deviceTF.text = self.deviceInfo.deviceID;
-    _nickTF.text = self.deviceInfo.deviceName;
-    _pwdTextField.text = self.deviceInfo.devicePassword;
+    if (self.deviceInfo) {
+        _deviceTF.text = self.deviceInfo.deviceID;
+        _nickTF.text = self.deviceInfo.deviceName;
+        _pwdTextField.text = self.deviceInfo.devicePassword;
+    }
     [self.leftBtn addTarget:self action:@selector(baction) forControlEvents:UIControlEventTouchUpInside];
 
 }
@@ -112,7 +114,7 @@
                 }];
             }];
         }];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cancel_", nil) style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cacel_", nil) style:UIAlertActionStyleCancel handler:nil];
         [alertview addAction:config];
         [alertview addAction:cancel];
         [self presentViewController:alertview animated:YES completion:nil];

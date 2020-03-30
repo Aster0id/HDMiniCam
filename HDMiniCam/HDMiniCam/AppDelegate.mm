@@ -11,7 +11,7 @@
 #import "TTBaseNC.h"
 #import "TTZoomPictureListVC.h"
 #import "TTAllDeviceVC.h"
-#import "KHJVideoPlayer_hf_VC.h"
+#import "TTRebackPlayViewController.h"
 #pragma mark - ios13 开启地理位置权限，获取Wi-Fi名称
 #import <CoreLocation/CoreLocation.h>
 #import "TTFirmwareInterface_API.h"
@@ -69,15 +69,15 @@
     
     TTDeviceListViewController *vc1 = [[TTDeviceListViewController alloc] init];
     TTBaseNC *deviceListNavi = [[TTBaseNC  alloc] initWithRootViewController:vc1];
-    deviceListNavi.tabBarItem.title = TTLocalString(@"vide_", nil);
+    deviceListNavi.tabBarItem.title = TTLocalString(@"dvice_", nil);
     
     TTZoomPictureListVC *vc2 = [[TTZoomPictureListVC alloc] init];
     TTBaseNC *pictureNavi = [[TTBaseNC  alloc] initWithRootViewController:vc2];
-    pictureNavi.tabBarItem.title = TTLocalString(@"pic_", nil);
+    pictureNavi.tabBarItem.title = TTLocalString(@"poto_", nil);
     
     TTAllDeviceVC *vc3 = [[TTAllDeviceVC alloc] init];
     TTBaseNC *recordNavi = [[TTBaseNC  alloc] initWithRootViewController:vc3];
-    recordNavi.tabBarItem.title = TTLocalString(@"recrd_", nil);
+    recordNavi.tabBarItem.title = TTLocalString(@"sav_", nil);
     
     [deviceListNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TTCommon.appMainColor}
                                              forState:UIControlStateSelected];

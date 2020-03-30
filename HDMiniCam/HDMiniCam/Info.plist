@@ -22,14 +22,14 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>此App在扫描二维码时,需访问您手机的相机权限</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>此App在ios13系统下，给设备配网时，必须获取手机Wi-Fi信息，故需要访问您手机的定位权限</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>此App在设备进行对讲时，需访问您手机的录音权限</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>此App在使用截图功能来保存照片时，需访问您手机的相册权限</string>
-	<key>NSCameraUsageDescription</key>
-	<string>此App在扫描二维码时，需访问您手机的相机权限</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

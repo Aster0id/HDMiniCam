@@ -1,5 +1,5 @@
 //
-//  KHJMutilScreenVC.h
+//  TTMutilPlayerViewController.h
 //  SuperIPC
 //
 //  Created by kevin on 2020/3/9.
@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KHJMutilScreenVC : TTPlayerBaseViewController
+@interface TTMutilPlayerViewController : TTPlayerBaseViewController
 
 @property (nonatomic, strong) NSArray *list;
 

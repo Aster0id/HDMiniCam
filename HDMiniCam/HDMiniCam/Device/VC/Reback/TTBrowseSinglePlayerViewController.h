@@ -1,5 +1,5 @@
 //
-//  TTSingleBackPlayViewController.h
+//  TTBrowseSinglePlayerViewController.h
 //  SuperIPC
 //
 //  Created by kevin on 2020/2/28.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TTSingleBackPlayViewController : TTBaseViewController
+@interface TTBrowseSinglePlayerViewController : TTBaseViewController
 
 @property (nonatomic, copy) NSString *deviceID;
 @property (nonatomic, strong) NSDictionary *body;

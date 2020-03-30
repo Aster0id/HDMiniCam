@@ -1,12 +1,12 @@
 //
-//  TTSingleBackPlayViewController.m
+//  TTBrowseSinglePlayerViewController.m
 //  SuperIPC
 //
 //  Created by kevin on 2020/2/28.
 //  Copyright © 2020 kevin. All rights reserved.
 //
 
-#import "TTSingleBackPlayViewController.h"
+#import "TTBrowseSinglePlayerViewController.h"
 //
 #import "H264_H265_VideoDecoder.h"
 #import "TTFirmwareInterface_API.h"
@@ -15,7 +15,7 @@
 
 extern IPCNetRecordCfg_st recordCfg;
 
-@interface TTSingleBackPlayViewController ()<H264_H265_VideoDecoderDelegate>
+@interface TTBrowseSinglePlayerViewController ()<H264_H265_VideoDecoderDelegate>
 {
     __weak IBOutlet UIImageView *playerImageView;
     NSInteger _hour;
@@ -38,7 +38,7 @@ extern IPCNetRecordCfg_st recordCfg;
 
 @end
 
-@implementation TTSingleBackPlayViewController
+@implementation TTBrowseSinglePlayerViewController
 
 - (void)viewDidLoad
 {
