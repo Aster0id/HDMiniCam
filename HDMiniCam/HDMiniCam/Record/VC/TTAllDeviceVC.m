@@ -56,7 +56,7 @@ UITableViewDataSource
 
 - (void)customizeAppearance
 {
-    segmentView.layer.borderColor = UIColorFromRGB(0x0584E0).CGColor;
+    segmentView.layer.borderColor = UIColor.whiteColor.CGColor;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -132,11 +132,11 @@ UITableViewDataSource
     if (self.pView) {
         self.pView.backgroundColor = UIColor.clearColor;
         self.pView = view;
-        self.pView.backgroundColor = UIColorFromRGB(0x0584E0);
+        self.pView.backgroundColor = UIColor.whiteColor;
     }
     else {
         self.pView = view;
-        self.pView.backgroundColor = UIColorFromRGB(0x0584E0);
+        self.pView.backgroundColor = UIColor.whiteColor;
     }
     [TTableView reloadData];
 }

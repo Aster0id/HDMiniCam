@@ -285,19 +285,19 @@ H264_H265_VideoDecoderDelegate
 {
     self.rightLab.text = TTStr(@"%d%%",persent);
     [self.pictureParams_second removeAllObjects];
-    if ([self.leftLab.text isEqualToString:TTLocalString(@"baohedu_", nil)]) {
+    if ([self.leftLab.text isEqualToString:TTLocalString(@"BaoHDu_", nil)]) {
         [self.pictureParams_second setValue:TTStr(@"%d",value) forKey:@"Saturtion"];
         [[TTFirmwareInterface_API sharedManager] setSaturationLevel_with_deviceID:self.deviceID level:value reBlock:^(NSInteger code) {}];
     }
-    else if ([self.leftLab.text isEqualToString:TTLocalString(@"liangdu_", nil)]) {
+    else if ([self.leftLab.text isEqualToString:TTLocalString(@"LiangDu_", nil)]) {
         [self.pictureParams_second setValue:TTStr(@"%d",value) forKey:@"Brightness"];
         [[TTFirmwareInterface_API sharedManager] setBrightnessLevel_with_deviceID:self.deviceID level:value reBlock:^(NSInteger code) {}];
     }
-    else if ([self.leftLab.text isEqualToString:TTLocalString(@"ruidu_", nil)]) {
+    else if ([self.leftLab.text isEqualToString:TTLocalString(@"RuiDu_", nil)]) {
         [self.pictureParams_second setValue:TTStr(@"%d",value) forKey:@"Acutance"];
         [[TTFirmwareInterface_API sharedManager] setAcutanceLevel_with_deviceID:self.deviceID level:value reBlock:^(NSInteger code) {}];
     }
-    else if ([self.leftLab.text isEqualToString:TTLocalString(@"duibidu_", nil)]) {
+    else if ([self.leftLab.text isEqualToString:TTLocalString(@"DuiBiDu_", nil)]) {
         [self.pictureParams_second setValue:TTStr(@"%d",value) forKey:@"Contrast"];
         [[TTFirmwareInterface_API sharedManager] setCompareColorLevel_with_deviceID:self.deviceID level:value reBlock:^(NSInteger code) {}];
     }
@@ -328,7 +328,7 @@ H264_H265_VideoDecoderDelegate
 
 - (void)gotoChangeQuality
 {
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:TTLocalString(@"setQualty_", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:TTLocalString(@"setPictQality_", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
     TTWeakSelf
     UIAlertAction *config = [UIAlertAction actionWithTitle:TTLocalString(@"kd_", nil)
                                                      style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -535,7 +535,7 @@ H264_H265_VideoDecoderDelegate
         NSString *key = self.pictureParams_second.allKeys.firstObject;
         NSString *value = self.pictureParams_second.allValues.firstObject;
         [self.pictureParams setValue:value forKey:key];
-        [self.view makeToast:TTLocalString(@"setSucc_", nil)];
+        [self.view makeToast:TTLocalString(@"setDevicInfoSucce_", nil)];
     }
 }
 
@@ -564,44 +564,55 @@ H264_H265_VideoDecoderDelegate
     if (orient == UIDeviceOrientationPortrait) {
         NSLog(@"竖屏");
         if (self.isLandscape) {
-            self.isLandscape = NO;
-            AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-            appDelegate.canLandscape = NO;//关闭横屏仅允许竖屏
-            [UIDevice TTurnAroundDirection:UIInterfaceOrientationPortrait];
-            self.naviTitleView.alpha = 1;
-            hpBackBtn.alpha = 0;
-            hpNaviView.alpha = 0;
-            hpTitleLab.alpha = 0;
-            hpQualityBtn.alpha = 0;
-            hpStackView.alpha = 0;
-            hpStackBackView.alpha = 0;
-            self.slideView.hidden = YES;
-            self.hpHiddenView1.hidden = NO;
-            self.hpHiddenView2.hidden = NO;
-            self.naviTitleViewCH.constant = 44;
+            [self becomeShuPing];
         }
     }
     else if (orient == UIDeviceOrientationLandscapeLeft || orient == UIDeviceOrientationLandscapeRight) {
         NSLog(@"横屏");
         if (!self.isLandscape) {
-            self.isLandscape = YES;
-            // 全屏
-            hpBackBtn.alpha = 1;
-            hpNaviView.alpha = 1;
-            hpTitleLab.alpha = 1;
-            hpQualityBtn.alpha = 0.25;
-            hpStackView.alpha = 1;
-            hpStackBackView.alpha = 0.25;
-            self.slideView.hidden = YES;
-            self.hpHiddenView1.hidden = YES;
-            self.hpHiddenView2.hidden = YES;
-            self.naviTitleView.alpha = 0;
-            self.naviTitleViewCH.constant = 0;
-            AppDelegate *appDelegate    = (AppDelegate *)[UIApplication sharedApplication].delegate;
-            appDelegate.canLandscape   = YES;
-            [UIDevice TTurnAroundDirection:UIInterfaceOrientationLandscapeRight];
+            [self becomeHengPing];
         }
     }
+}
+
+
+- (void)becomeShuPing
+{
+    self.isLandscape = NO;
+    AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    appDelegate.canLandscape = NO;//关闭横屏仅允许竖屏
+    [UIDevice TTurnAroundDirection:UIInterfaceOrientationPortrait];
+    self.naviTitleView.alpha = 1;
+    hpBackBtn.alpha = 0;
+    hpNaviView.alpha = 0;
+    hpTitleLab.alpha = 0;
+    hpQualityBtn.alpha = 0;
+    hpStackView.alpha = 0;
+    hpStackBackView.alpha = 0;
+    self.slideView.hidden = YES;
+    self.hpHiddenView1.hidden = NO;
+    self.hpHiddenView2.hidden = NO;
+    self.naviTitleViewCH.constant = 44;
+}
+
+- (void)becomeHengPing
+{
+    self.isLandscape = YES;
+    // 全屏
+    hpBackBtn.alpha = 1;
+    hpNaviView.alpha = 1;
+    hpTitleLab.alpha = 1;
+    hpQualityBtn.alpha = 0.25;
+    hpStackView.alpha = 1;
+    hpStackBackView.alpha = 0.25;
+    self.slideView.hidden = YES;
+    self.hpHiddenView1.hidden = YES;
+    self.hpHiddenView2.hidden = YES;
+    self.naviTitleView.alpha = 0;
+    self.naviTitleViewCH.constant = 0;
+    AppDelegate *appDelegate    = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    appDelegate.canLandscape   = YES;
+    [UIDevice TTurnAroundDirection:UIInterfaceOrientationLandscapeRight];
 }
 
 #pragma mark - 添加 @"OnSetQualityLevelCmdResult_noti_key" 通知
@@ -640,7 +651,6 @@ H264_H265_VideoDecoderDelegate
 }
 
 #pragma mark - 添加 @"OnSetQualityLevelCmdResult_noti_key" 通知
-
 - (void)addOnSetIRModeCmdResult
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OnSetIRModeCmdResult) name:@"OnSetIRModeCmdResult_noti_key" object:nil];
@@ -648,7 +658,7 @@ H264_H265_VideoDecoderDelegate
 
 - (void)OnSetIRModeCmdResult
 {
-    [self.view makeToast:TTLocalString(@"chgSucc_", nil)];
+    [self.view makeToast:TTLocalString(@"chageSucce_", nil)];
 }
 
 #pragma mark - 添加 @"OnSetQualityLevelCmdResult_noti_key" 通知
@@ -660,7 +670,7 @@ H264_H265_VideoDecoderDelegate
 
 - (void)OnSetFilpCmdResult
 {
-    [self.view makeToast:TTLocalString(@"chgSucc_", nil)];
+    [self.view makeToast:TTLocalString(@"chageSucce_", nil)];
 }
 
 #pragma mark - 返回上个界面
@@ -686,7 +696,7 @@ H264_H265_VideoDecoderDelegate
 {
     self.isLandscape = NO;
     AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    appDelegate.canLandscape = NO;//关闭横屏仅允许竖屏
+    appDelegate.canLandscape = NO;
     [UIDevice TTurnAroundDirection:UIInterfaceOrientationPortrait];
     hpBackBtn.alpha = 0;
     hpNaviView.alpha = 0;
@@ -745,7 +755,7 @@ H264_H265_VideoDecoderDelegate
         [self loadImageFinished:[[UIImage alloc] initWithContentsOfFile:savedImagePath]];
     }
     else {
-        [[TTHub shareHub] showText:TTLocalString(@"picFail_", nil) addToView:self.view];
+        [[TTHub shareHub] showText:TTLocalString(@"getPicFail_", nil) addToView:self.view];
     }
 }
 - (UIImage *)snapsHotView:(UIView *)view
@@ -764,7 +774,7 @@ H264_H265_VideoDecoderDelegate
        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:TTLocalString(@"tips_", nil)
                                                                                 message:TTLocalString(@"setPhotoQuanX_", nil)
                                                                          preferredStyle:(UIAlertControllerStyleAlert)];
-       UIAlertAction *action = [UIAlertAction actionWithTitle:TTLocalString(@"IGeit", nil)
+       UIAlertAction *action = [UIAlertAction actionWithTitle:TTLocalString(@"IGetttttt_it", nil)
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction * _Nonnull action) {
            
@@ -860,7 +870,7 @@ H264_H265_VideoDecoderDelegate
     TTWeakSelf
     [[TTFirmwareInterface_API sharedManager] setDefault_with_deviceID:self.deviceID reBlock:^(NSInteger code) {
         if (code >= 0) {
-            [weakSelf.view makeToast:TTLocalString(@"devBecomeDft_", nil)];
+            [weakSelf.view makeToast:TTLocalString(@"hadBcomeDefalt_", nil)];
         }
         else {
             [weakSelf.view makeToast:TTLocalString(@"reTry_", nil)];
@@ -907,33 +917,33 @@ H264_H265_VideoDecoderDelegate
 #pragma mark - 竖屏设置
 - (void)sp_setup
 {
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:TTLocalString(@"HMSet_", nil)
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:TTLocalString(@"picSet_", nil)
                                                                        message:TTLocalString(@"SXSet_", nil)
                                                                 preferredStyle:UIAlertControllerStyleAlert];
     TTWeakSelf
-    UIAlertAction *config = [UIAlertAction actionWithTitle:TTLocalString(@"baohedu_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config = [UIAlertAction actionWithTitle:TTLocalString(@"BaoHDu_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:1];
     }];
-    UIAlertAction *config1 = [UIAlertAction actionWithTitle:TTLocalString(@"liangdu_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config1 = [UIAlertAction actionWithTitle:TTLocalString(@"LiangDu_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:2];
     }];
-    UIAlertAction *config2 = [UIAlertAction actionWithTitle:TTLocalString(@"ruidu_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config2 = [UIAlertAction actionWithTitle:TTLocalString(@"RuiDu_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:3];
     }];
-    UIAlertAction *config3 = [UIAlertAction actionWithTitle:TTLocalString(@"duibidu_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config3 = [UIAlertAction actionWithTitle:TTLocalString(@"DuiBiDu_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:4];
     }];
-    NSString *picColor = colorCfg.Type == 0 ? TTLocalString(@"colorView_", nil) : TTLocalString(@"blackView_", nil);
+    NSString *picColor = colorCfg.Type == 0 ? TTLocalString(@"BcomeColr_", nil) : TTLocalString(@"BcomeBlac_", nil);
     UIAlertAction *config4 = [UIAlertAction actionWithTitle:picColor style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:5];
     }];
-    UIAlertAction *config5 = [UIAlertAction actionWithTitle:TTLocalString(@"chuizhijingxiang_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config5 = [UIAlertAction actionWithTitle:TTLocalString(@"ChuiZhiJingXiang_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:6];
     }];
-    UIAlertAction *config6 = [UIAlertAction actionWithTitle:TTLocalString(@"shuipingjingxiang_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config6 = [UIAlertAction actionWithTitle:TTLocalString(@"ShuiPingJingXiang_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:7];
     }];
-    UIAlertAction *config7 = [UIAlertAction actionWithTitle:TTLocalString(@"defatValue_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config7 = [UIAlertAction actionWithTitle:TTLocalString(@"BcomeDefatValu_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf chooseSetupWith:8];
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cacel_", nil) style:UIAlertActionStyleCancel handler:nil];
@@ -952,14 +962,14 @@ H264_H265_VideoDecoderDelegate
 - (void)chooseSetupWith:(NSInteger)index
 {
     NSArray *arr = @[
-    TTLocalString(@"baohedu_", nil),
-    TTLocalString(@"liangdu_", nil),
-    TTLocalString(@"ruidu_", nil),
-    TTLocalString(@"duibidu_", nil),
-    TTLocalString(@"color/black_", nil),
-    TTLocalString(@"chuizhijingxiang_", nil),
-    TTLocalString(@"shuipingjingxiang_", nil),
-    TTLocalString(@"defatValue_", nil)];
+    TTLocalString(@"BaoHDu_", nil),
+    TTLocalString(@"LiangDu_", nil),
+    TTLocalString(@"RuiDu_", nil),
+    TTLocalString(@"DuiBiDu_", nil),
+    TTLocalString(@"colo/blac_", nil),
+    TTLocalString(@"ChuiZhiJingXiang_", nil),
+    TTLocalString(@"ShuiPingJingXiang_", nil),
+    TTLocalString(@"BcomeDefatValu_", nil)];
     
     self.leftLab.text = arr[index - 1];
     if (index == 1 || index == 2 || index == 3 || index == 4) {
@@ -991,22 +1001,22 @@ H264_H265_VideoDecoderDelegate
 - (void)choosePicturePramas
 {
     self.slideView.hidden = NO;
-    if ([self.leftLab.text isEqualToString:TTLocalString(@"baohedu_", nil)]) {
+    if ([self.leftLab.text isEqualToString:TTLocalString(@"BaoHDu_", nil)]) {
         float percent = [self.pictureParams[@"Saturtion"] intValue]/255.0;
         self.slider.value = percent;
         self.rightLab.text = TTStr(@"%d%%",(int)(percent*100));
     }
-    else if ([self.leftLab.text isEqualToString:TTLocalString(@"liangdu_", nil)]) {
+    else if ([self.leftLab.text isEqualToString:TTLocalString(@"LiangDu_", nil)]) {
         float percent = [self.pictureParams[@"Brightness"] intValue]/255.0;
         self.slider.value = percent;
         self.rightLab.text = TTStr(@"%d%%",(int)(percent*100));
     }
-    else if ([self.leftLab.text isEqualToString:TTLocalString(@"ruidu_", nil)]) {
+    else if ([self.leftLab.text isEqualToString:TTLocalString(@"RuiDu_", nil)]) {
         float percent = [self.pictureParams[@"Acutance"] intValue]/255.0;
         self.slider.value = percent;
         self.rightLab.text = TTStr(@"%d%%",(int)(percent*100));
     }
-    else if ([self.leftLab.text isEqualToString:TTLocalString(@"duibidu_", nil)]) {
+    else if ([self.leftLab.text isEqualToString:TTLocalString(@"DuiBiDu_", nil)]) {
         float percent = [self.pictureParams[@"Contrast"] intValue]/255.0;
         self.slider.value = percent;
         self.rightLab.text = TTStr(@"%d%%",(int)(percent*100));

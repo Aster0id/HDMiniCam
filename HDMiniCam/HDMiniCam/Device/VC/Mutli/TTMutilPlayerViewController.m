@@ -116,7 +116,7 @@ H264_H265_VideoDecoderDelegate
 {
     _selectItems = sender.tag;
     NSArray *passDeviceList = [self.onlineArr copy];
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:TTLocalString(@"adDev_", nil)
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:TTLocalString(@"ad_Devic_", nil)
                                                                        message:nil
                                                                 preferredStyle:UIAlertControllerStyleAlert];
     TTWeakSelf
@@ -184,7 +184,7 @@ H264_H265_VideoDecoderDelegate
         dispatch_async(dispatch_get_main_queue(), ^{
             if (![weakSelf.onlineArr containsObject:deviceID]) {
                 [weakSelf.onlineArr addObject:deviceID];
-                [weakSelf.view makeToast:TTLocalString(@"caAdNewDev_", nil)];
+                [weakSelf.view makeToast:TTLocalString(@"findNewDevic_", nil)];
             }
         });
     }

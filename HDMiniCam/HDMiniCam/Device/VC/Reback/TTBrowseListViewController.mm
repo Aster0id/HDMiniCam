@@ -98,7 +98,7 @@ TTBrowseListCellDelegate
     [self.listArr removeObjectAtIndex:deleteItemWithIndex];
     [ttableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:deleteItemWithIndex inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
     [ttableView reloadData];
-    [self.view makeToast:TTStr(@"%@,%@",body[@"name"],TTLocalString(@"dltSuc_", nil))];
+    [self.view makeToast:TTStr(@"%@,%@",body[@"name"],TTLocalString(@"deletSucces_", nil))];
 }
 
 #pragma makr - Action
@@ -189,13 +189,13 @@ TTBrowseListCellDelegate
 {
     TTWeakSelf
     UIAlertController *alertview    = [UIAlertController alertControllerWithTitle:body[@"name"] message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *config           = [UIAlertAction actionWithTitle:TTLocalString(@"plyVideo_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config           = [UIAlertAction actionWithTitle:TTLocalString(@"plyVide_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf aa:body];
     }];
-    UIAlertAction *config1 = [UIAlertAction actionWithTitle:TTLocalString(@"deltVideo_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config1 = [UIAlertAction actionWithTitle:TTLocalString(@"delet_Vide_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf bb:index body:body];
     }];
-    UIAlertAction *config2 = [UIAlertAction actionWithTitle:TTLocalString(@"flDetaIf_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config2 = [UIAlertAction actionWithTitle:TTLocalString(@"DetaiFirInfo_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf cc:min second:second body:body sizeUnit:sizeUnit times:times];
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cacel_", nil) style:UIAlertActionStyleCancel handler:nil];
@@ -222,21 +222,21 @@ TTBrowseListCellDelegate
 
 - (void)cc:(int)min second:(int)second body:(NSDictionary *)body sizeUnit:(NSString *)sizeUnit times:(NSString *)times
 {
-    fileNameLab.text = TTStr(@"%@：%@",TTLocalString(@"flNm_", nil),body[@"name"]);
-    fileSizeLab.text = TTStr(@"%@：%@M",TTLocalString(@"flSiz_", nil),sizeUnit);
+    fileNameLab.text = TTStr(@"%@：%@",TTLocalString(@"firNam_", nil),body[@"name"]);
+    fileSizeLab.text = TTStr(@"%@：%@M",TTLocalString(@"firSiz_", nil),sizeUnit);
     if (min > 0) {
         fileDurationLab.text = TTStr(@"%@：%ld%@%ld%@",
                                      TTLocalString(@"recdTms_", nil),
                                      (long)min,
-                                     TTLocalString(@"mins_", nil),
+                                     TTLocalString(@"tim_min_", nil),
                                      (long)second,
-                                     TTLocalString(@"secs_", nil));
+                                     TTLocalString(@"tim_sec_", nil));
     }
     else {
         fileDurationLab.text = TTStr(@"%@：%ld%@",
                                      TTLocalString(@"recdTms_", nil),
                                      (long)second,
-                                     TTLocalString(@"secs_", nil));
+                                     TTLocalString(@"tim_sec_", nil));
     }
     fileStartTimeLab.text = TTStr(@"%@-%@",self.seekList_currentDate,times);
     [UIView animateWithDuration:0.25 animations:^{

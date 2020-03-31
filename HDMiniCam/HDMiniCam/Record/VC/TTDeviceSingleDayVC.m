@@ -74,8 +74,8 @@
 {
     rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     rightBtn.frame = CGRectMake(0,0,44,44);
-    [rightBtn setTitle:TTLocalString(@"edit_", nil) forState:UIControlStateNormal];
-    [rightBtn setTitleColor:TTCommon.appMainColor forState:UIControlStateNormal];
+    [rightBtn setTitle:TTLocalString(@"gotoEdit_", nil) forState:UIControlStateNormal];
+    [rightBtn setTitleColor:TTCommon.naviViewColor forState:UIControlStateNormal];
     [rightBtn addTarget:self action:@selector(editAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem  = rightItem;
@@ -85,10 +85,10 @@
 {
     delete = !delete;
     if (delete) {
-        [rightBtn setTitle:TTLocalString(@"finsh_", nil) forState:UIControlStateNormal];
+        [rightBtn setTitle:TTLocalString(@"gotoFinsh_", nil) forState:UIControlStateNormal];
     }
     else {
-        [rightBtn setTitle:TTLocalString(@"edit_", nil) forState:UIControlStateNormal];
+        [rightBtn setTitle:TTLocalString(@"gotoEdit_", nil) forState:UIControlStateNormal];
     }
     [collectionView reloadData];
 }
@@ -223,7 +223,7 @@
         return;
     }
     isDeleting = YES;
-    [[TTHub shareHub] showText:@"dltFailing_" addToView:[[UIApplication sharedApplication] keyWindow]];
+    [[TTHub shareHub] showText:@"deletFailing_" addToView:[[UIApplication sharedApplication] keyWindow]];
     NSString *name = self.videoList[row];
     NSString *path = @"";
     if (self.currentIndex == 0) {
@@ -249,7 +249,7 @@
         [TTHub shareHub].hud.hidden = YES;
     }
     else {
-        [self.view makeToast:TTLocalString(@"dltFail_", nil)];
+        [self.view makeToast:TTLocalString(@"deletFileFail_", nil)];
         isDeleting = NO;
         [TTHub shareHub].hud.hidden = YES;
     }

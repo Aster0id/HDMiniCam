@@ -148,7 +148,7 @@
     cell.deviceID = _deviceInfo.deviceID;
     
     
-    cell.timeLab.text = TTStr(@"%@：%@", TTLocalString(@"cameraTime_", nil), dateList[indexPath.row]);
+    cell.timeLab.text = TTStr(@"%@：%@", TTLocalString(@"camerTimKe_", nil), dateList[indexPath.row]);
     
     cell.numLab.text =
     TTStr(@"%@ %@ %@", TTLocalString(@"ttl_", nil),dateList_num[indexPath.row],TTLocalString(@"unt_", nil));

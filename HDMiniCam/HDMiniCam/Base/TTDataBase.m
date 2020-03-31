@@ -193,6 +193,24 @@ NSMutableCopying
     }];
 }
 
+- (void)deleteDeviceInfo_with_deviceID:(NSString *)deviceID reBlock:(void(^)(NSString *deviceID,int code))reBlock
+{
+    [self.queue inDatabase:^(FMDatabase *db) {
+        NSString *sqlite = [NSString stringWithFormat:@"delete FROM DeviceInfoListTable WHERE deviceID='%@'",deviceID];
+        BOOL result = [db executeUpdate:sqlite];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (result) {
+                TLog(@"删除数据成功");
+                reBlock(deviceID, 1);
+            }
+            else {
+                TLog(@"删除数据失败");
+                reBlock(deviceID, 0);
+            }
+        });
+    }];
+}
+
 #pragma mark - 更新设备
 
 - (void)updateDeviceInfo_with_deviceInfo:(TTDeviceInfo *)deviceInfo reBlock:(void(^)(TTDeviceInfo *info,int code))reBlock

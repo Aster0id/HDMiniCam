@@ -23,10 +23,10 @@
 {
     [super viewDidLoad];
     UINavigationBar *navBar = self.navigationBar;
-    CGRect rect = CGRectMake(0, 0, SCREEN_WIDTH, 64);
+    CGRect rect = CGRectMake(0, 0, SCREEN_WIDTH, TTNavBarHeight);
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, [UIScreen mainScreen].scale);
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(context,UIColor.whiteColor.CGColor);
+    CGContextSetFillColorWithColor(context,TTCommon.naviViewColor.CGColor);
     CGContextFillRect(context, rect);
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

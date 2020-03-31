@@ -71,10 +71,8 @@ TTLivePlayViewControllerDelegate
 - (void)customizeAppearance
 {
 #pragma mark - 添加通知
-    
     [self addDeviceNoti];
-    
-    [self reloadNewDeviceList];
+    [self loadDeviceList];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -125,6 +123,11 @@ TTLivePlayViewControllerDelegate
 
 #pragma mark - UITableViewDelegate && UITableViewDataSource
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return SCREEN_WIDTH*9/16.0 + 10;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return dataArray.count;
@@ -139,7 +142,8 @@ TTLivePlayViewControllerDelegate
     TTDeviceInfo *info = [[TTDeviceInfo alloc] init];
     
     info = dataArray[indexPath.row];
-      
+    
+    cell.deviceID = info.deviceID;
     cell.idd.text = info.deviceID;
     cell.name.text = info.deviceName;
     
@@ -147,16 +151,18 @@ TTLivePlayViewControllerDelegate
     NSString *pString       = TTStr(@"/Documents/%@.png",info.deviceID);
     NSString *imagePath     = [path_document stringByAppendingString:pString];
     UIImage *image          = [UIImage imageWithContentsOfFile:imagePath];
-    cell.bigIMGV.image      = image;
+    if (image) {
+        cell.bigIMGV.image  = image;
+    }
    
     if ([info.deviceStatus isEqualToString:@"0"])
         cell.status.text = TTLocalString(@"onLn_", nil);
     else if ([info.deviceStatus isEqualToString:@"-6"])
         cell.status.text = TTLocalString(@"ofLn_", nil);
     else if ([info.deviceStatus isEqualToString:@"-26"])
-        cell.status.text = TTLocalString(@"pwdErr_", nil);
+        cell.status.text = TTLocalString(@"paswrdErr_", nil);
     else
-        cell.status.text = TTLocalString(@"cneting_", nil);
+        cell.status.text = TTLocalString(@"conecting", nil);
     
     cell.delegate = self;
     
@@ -212,17 +218,17 @@ TTLivePlayViewControllerDelegate
     UIAlertController *alertview = [UIAlertController alertControllerWithTitle:info.deviceName
                                                                        message:nil
                                                                 preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *config = [UIAlertAction actionWithTitle:TTLocalString(@"chageDev_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config = [UIAlertAction actionWithTitle:TTLocalString(@"cagDevInfo_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf addOnline:info];
     }];
-    UIAlertAction *config1 = [UIAlertAction actionWithTitle:TTLocalString(@"dltDev_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config1 = [UIAlertAction actionWithTitle:TTLocalString(@"delteDevic_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf deleteDevice:info];
     }];
     
-    UIAlertAction *config2 = [UIAlertAction actionWithTitle:TTLocalString(@"reCnctDev_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config2 = [UIAlertAction actionWithTitle:TTLocalString(@"reConectDevic_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf reconnect:info];
     }];
-    UIAlertAction *config3 = [UIAlertAction actionWithTitle:TTLocalString(@"highCfg_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *config3 = [UIAlertAction actionWithTitle:TTLocalString(@"tallConfg_", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf togoHighSet:info];
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cacel_", nil) style:UIAlertActionStyleCancel handler:nil];
@@ -240,8 +246,8 @@ TTLivePlayViewControllerDelegate
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(netStateChange:) name:@"netStateChange" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getDeviceStatus:) name:TT_onStatus_noti_KEY object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadNewDeviceList) name:TT_addDevice_noti_KEY object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNewDeviceTellUser:) name:@"addNewDevice_noti_key" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onLine_addNewDevice:) name:TT_OnLine_AddDevice_noti_KEY object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(QR_addNewDeviceTellUser:) name:@"QRAddNewDevice_noti_key" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterForegroundNotification) name: UIApplicationWillEnterForegroundNotification object:nil];
 }
 
@@ -252,6 +258,14 @@ TTLivePlayViewControllerDelegate
     TTDeviceListCell *cell = [contentTBV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
     TTDeviceInfo *info = dataArray[row];
     cell.deviceID = info.deviceID;
+    
+    NSString *path_document = NSHomeDirectory();
+    NSString *pString       = TTStr(@"/Documents/%@.png",info.deviceID);
+    NSString *imagePath     = [path_document stringByAppendingString:pString];
+    UIImage *image          = [UIImage imageWithContentsOfFile:imagePath];
+    if (image) {
+        cell.bigIMGV.image  = image;
+    }
 }
 
 #pragma mark - 添加 @"netStateChange" 通知
@@ -270,23 +284,35 @@ TTLivePlayViewControllerDelegate
     NSString *deviceID = TTStr(@"%@",body[@"deviceID"]);
     NSString *deviceStatus = TTStr(@"%@",body[@"deviceStatus"]);
     
+#pragma mark - 获取设备连接的Wi-Fi，判断是热点还是正常Wi-Fi
     if ([wifiName hasPrefix:@"IPC"]) {
-        TLog(@"当前连接的是热点");
+#pragma mark - 热点连接
         NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();
         for (NSString *item in ifs) {
+            
             NSDictionary *info = [NSDictionary dictionaryWithDictionary:(__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)item)];
             wifiName = info[@"SSID"];
+            
+            
+#pragma mark - 如果设备切回到正常 Wi-Fi 时，需要时间，有可能在此时连接上了正常Wi-Fi
             if (![wifiName hasPrefix:@"IPC"]) {
-                TLog(@"wifiName ============ %@",wifiName);
-                TLog(@"当前连接的是正常Wi-Fi");
+                
+#pragma mark - 连接上正常 Wi-Fi 
                 [dataArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                     TTDeviceInfo *info = (TTDeviceInfo *)obj;
                     if ([info.deviceID isEqualToString:deviceID]) {
-                        // 设备状态不保存在数据库，只临时赋值给对象
+#pragma mark - 设备状态不保存在数据库，只临时赋值给对象
                         info.deviceStatus = deviceStatus;
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            [self->contentTBV reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]]
-                                                    withRowAnimation:UITableViewRowAnimationNone];
+                            TTDeviceListCell *cell = [self->contentTBV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:idx inSection:0]];
+                            if ([deviceStatus isEqualToString:@"0"])
+                                cell.status.text = TTLocalString(@"onLn_", nil);
+                            else if ([deviceStatus isEqualToString:@"-6"])
+                                cell.status.text = TTLocalString(@"ofLn_", nil);
+                            else if ([deviceStatus isEqualToString:@"-26"])
+                                cell.status.text = TTLocalString(@"paswrdErr_", nil);
+                            else
+                                cell.status.text = TTLocalString(@"conecting", nil);
                         });
                         *stop = YES;
                     }
@@ -295,15 +321,25 @@ TTLivePlayViewControllerDelegate
         }
     }
     else {
-        TLog(@"当前连接的是正常Wi-Fi");
+        
+#pragma mark - 当前连接的是正常Wi-Fi
+        TLog(@"______当前连接的是正常Wi-Fi______");
+        TLog(@"deviceStatus = %@",deviceStatus);
         [dataArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             TTDeviceInfo *info = (TTDeviceInfo *)obj;
             if ([info.deviceID isEqualToString:deviceID]) {
                 // 设备状态不保存在数据库，只临时赋值给对象
                 info.deviceStatus = deviceStatus;
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self->contentTBV reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]]
-                                            withRowAnimation:UITableViewRowAnimationNone];
+                    TTDeviceListCell *cell = [self->contentTBV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:idx inSection:0]];
+                    if ([deviceStatus isEqualToString:@"0"])
+                        cell.status.text = TTLocalString(@"onLn_", nil);
+                    else if ([deviceStatus isEqualToString:@"-6"])
+                        cell.status.text = TTLocalString(@"ofLn_", nil);
+                    else if ([deviceStatus isEqualToString:@"-26"])
+                        cell.status.text = TTLocalString(@"paswrdErr_", nil);
+                    else
+                        cell.status.text = TTLocalString(@"conecting", nil);
                 });
                 *stop = YES;
             }
@@ -311,17 +347,40 @@ TTLivePlayViewControllerDelegate
     }
 }
 
-#pragma mark - 添加 TT_addDevice_noti_KEY 通知
+#pragma mark - 添加 TT_OnLine_AddDevice_noti_KEY 通知
 
-- (void)reloadNewDeviceList
+- (void)onLine_addNewDevice:(NSNotification *)noti
 {
-    NSArray *array = [[TTDataBase shareDB] getAllDeviceInfo];
-    TTWeakSelf
-    [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        TTDeviceInfo *info = (TTDeviceInfo *)obj;
-        [weakSelf reloadSubDeviceArr:info];
+    TTDeviceInfo *info = (TTDeviceInfo *)noti.object;
+    // 下标
+    __block NSInteger index = FLAG_TAG;
+    NSString *deviceID = info.deviceID;
+    NSArray *subDeviceList = [dataArray copy];
+    [subDeviceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        TTDeviceInfo *subInfo = (TTDeviceInfo *)obj;
+        if ([deviceID isEqualToString:subInfo.deviceID]) {
+            index = idx;
+            *stop = YES;
+        }
     }];
-    [contentTBV reloadData];
+    [dataArray replaceObjectAtIndex:index withObject:info];
+    [[TTFirmwareInterface_API sharedManager] connect_with_deviceID:info.deviceID
+                                                          password:info.devicePassword reBlock:^(NSInteger code) {}];
+}
+
+- (void)loadDeviceList
+{
+    TTWeakSelf
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSArray *array = [[TTDataBase shareDB] getAllDeviceInfo];
+        [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            TTDeviceInfo *info = (TTDeviceInfo *)obj;
+            [weakSelf reloadSubDeviceArr:info];
+        }];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self->contentTBV reloadData];
+        });
+    });
 }
 
 - (void)reloadSubDeviceArr:(TTDeviceInfo *)info
@@ -341,7 +400,7 @@ TTLivePlayViewControllerDelegate
                 TLog(@"wifiName = %@, info.deviceID = %@",wifiName,info.deviceID);
                 [self->dataArray addObject:info];
                 [[TTFirmwareInterface_API sharedManager] connect_with_deviceID:info.deviceID
-                                                               password:info.devicePassword reBlock:^(NSInteger code) {}];
+                                                                      password:info.devicePassword reBlock:^(NSInteger code) {}];
             }
             else {
                 TLog(@"非本机 ----------- info.deviceID = %@",info.deviceID);
@@ -351,20 +410,20 @@ TTLivePlayViewControllerDelegate
         else {
             [self->dataArray addObject:info];
             [[TTFirmwareInterface_API sharedManager] connect_with_deviceID:info.deviceID
-                                                           password:info.devicePassword reBlock:^(NSInteger code) {}];
+                                                                  password:info.devicePassword reBlock:^(NSInteger code) {}];
         }
     }
 }
 
-#pragma mark - 添加 @"addNewDevice_noti_key" 通知
+#pragma mark - 添加 @"QRAddNewDevice_noti_key" 通知
 #pragma mark - 热点配网时，提示用户给设备进行网络配置
-- (void)addNewDeviceTellUser:(NSNotification *)noti
+- (void)QR_addNewDeviceTellUser:(NSNotification *)noti
 {
     if ([wifiName hasPrefix:@"IPC"]) {
         TTDeviceInfo *info = (TTDeviceInfo *)noti.object;
         UIAlertController *alertview = [UIAlertController alertControllerWithTitle:@"" message:TTLocalString(@"tips_", nil)
                                                                     preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *defult = [UIAlertAction actionWithTitle:TTStr(@"%@ \" %@ \" %@",TTLocalString(@"toDev_", nil),info.deviceID,TTLocalString(@"adNet_", nil))
+        UIAlertAction *defult = [UIAlertAction actionWithTitle:TTStr(@"%@ \" %@ \" %@",TTLocalString(@"forDevic_", nil),info.deviceID,TTLocalString(@"adNtwork_", nil))
                                                          style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * _Nonnull action) {
             TTWiFiConfigViewController *vc = [[TTWiFiConfigViewController alloc] init];
@@ -390,9 +449,9 @@ TTLivePlayViewControllerDelegate
             wifiName = info[@"SSID"];
             if ([wifiName hasPrefix:@"IPC_"]) {
                 [weakSelf.view makeToast:TTStr(@"%@ %@ %@",
-                                               TTLocalString(@"phadCnet_", nil),
+                                               TTLocalString(@"phonHadConeted_", nil),
                                                wifiName,
-                                               TTLocalString(@"devHot_", nil))];
+                                               TTLocalString(@"devicsHoPont_", nil))];
 
             }
             else {
@@ -423,7 +482,7 @@ TTLivePlayViewControllerDelegate
             NSInteger index = [self->dataArray indexOfObject:info];
             [self->dataArray removeObject:info];
             [self->contentTBV deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
-            [weakSelf.view makeToast:TTLocalString(@"dltSuc_", nil)];
+            [weakSelf.view makeToast:TTLocalString(@"deletSucces_", nil)];
             
             #pragma mark - 操作数据库
             [weakSelf handleTTFileManager:info];
@@ -486,7 +545,7 @@ TTLivePlayViewControllerDelegate
 - (void)equal_26
 {
     // 密码错误，请重新设置
-    [self.view makeToast:TTLocalString(@"pwdErSet_", nil)];
+    [self.view makeToast:TTLocalString(@"paswrdErr_Set_", nil)];
 }
 
 - (void)equal_6:(NSInteger)index

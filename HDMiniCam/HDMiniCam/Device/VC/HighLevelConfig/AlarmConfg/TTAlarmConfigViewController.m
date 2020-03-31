@@ -63,7 +63,7 @@ UITableViewDelegate, UITableViewDataSource>
     cryArr = @[TTLocalString(@"灵敏度", nil),
                TTLocalString(@"布防时间", nil),
                TTLocalString(@"触发操作", nil)];
-    self.titleLab.text = TTLocalString(@"alarSet_", nil);
+    self.titleLab.text = TTLocalString(@"alarmConfg_", nil);
     [self.leftBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     
     areaContentView.layer.cornerRadius = 2;

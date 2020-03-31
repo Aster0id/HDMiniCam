@@ -79,15 +79,15 @@
     TTBaseNC *recordNavi = [[TTBaseNC  alloc] initWithRootViewController:vc3];
     recordNavi.tabBarItem.title = TTLocalString(@"sav_", nil);
     
-    [deviceListNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TTCommon.appMainColor}
+    [deviceListNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TTCommon.naviViewColor}
                                              forState:UIControlStateSelected];
     [deviceListNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.blackColor}
                                              forState:UIControlStateNormal];
-    [pictureNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TTCommon.appMainColor}
+    [pictureNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TTCommon.naviViewColor}
                                           forState:UIControlStateSelected];
     [pictureNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.blackColor}
                                           forState:UIControlStateNormal];
-    [recordNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TTCommon.appMainColor}
+    [recordNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TTCommon.naviViewColor}
                                          forState:UIControlStateSelected];
     [recordNavi.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.blackColor}
                                          forState:UIControlStateNormal];
@@ -177,11 +177,11 @@
         if (status == AFNetworkReachabilityStatusReachableViaWWAN
            || status == AFNetworkReachabilityStatusReachableViaWiFi) {
             TLog(@"有网");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"netStateChange" object:@"手机有网络"];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"netStateChange" object:@"手机有网络"];
         }
         else {
             TLog(@"没网");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"netStateChange" object:@"手机无网络"];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"netStateChange" object:@"手机无网络"];
         }
     }];
 }

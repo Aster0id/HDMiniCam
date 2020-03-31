@@ -44,9 +44,9 @@ TTHighConfigCellDelegate
 {
     if (!_name) {
         _name = [NSMutableArray array];
-        [_name addObject:TTLocalString(@"WiFiConectCfg_", nil)];
-        [_name addObject:TTLocalString(@"restartDev_", nil)];
-        [_name addObject:TTLocalString(@"rset_", nil)];
+        [_name addObject:TTLocalString(@"WiFConectConfg_", nil)];
+        [_name addObject:TTLocalString(@"reStatDevic_", nil)];
+        [_name addObject:TTLocalString(@"resetDevic_", nil)];
     }
     return _name;
 }
@@ -65,7 +65,7 @@ TTHighConfigCellDelegate
 
 - (void)customizeAppearance
 {
-    self.titleLab.text = TTLocalString(@"highCfg_", nil);
+    self.titleLab.text = TTLocalString(@"tallConfg_", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -122,7 +122,7 @@ TTHighConfigCellDelegate
 
 - (void)gotoRestartDevice
 {
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:TTLocalString(@"surestart_", nil) preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:TTLocalString(@"canyousureRestartDevic_", nil) preferredStyle:UIAlertControllerStyleAlert];
     TTWeakSelf
     UIAlertAction *delete = [UIAlertAction actionWithTitle:TTLocalString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf rebootDevice];
@@ -145,7 +145,7 @@ TTHighConfigCellDelegate
 
 - (void)gotoResetDevice
 {
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:TTLocalString(@"sureSet_", nil) preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:self.deviceInfo.deviceName message:TTLocalString(@"canyousureSetDevic_", nil) preferredStyle:UIAlertControllerStyleAlert];
     TTWeakSelf
     UIAlertAction *delete = [UIAlertAction actionWithTitle:TTLocalString(@"sure", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf resetDevice];

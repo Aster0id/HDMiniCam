@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 删除设备
 - (void)deleteDeviceInfo_with_deviceInfo:(TTDeviceInfo *)deviceInfo reBlock:(void(^)(TTDeviceInfo *info,int code))reBlock;
+- (void)deleteDeviceInfo_with_deviceID:(NSString *)deviceID reBlock:(void(^)(NSString *deviceID,int code))reBlock;
 
 // 更新设备
 - (void)updateDeviceInfo_with_deviceInfo:(TTDeviceInfo *)deviceInfo reBlock:(void(^)(TTDeviceInfo *info,int code))reBlock;

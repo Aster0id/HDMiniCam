@@ -18,12 +18,13 @@ extern NSString *wifiName;
 @interface TTAddTypeListVC ()<UITableViewDataSource>
 {
     BOOL isHotPoint;
-    NSTimer *timer;
     BOOL isQRCode;
-    __weak IBOutlet UILabel *hotLab;
-    __weak IBOutlet UILabel *QRLab;
-    __weak IBOutlet UILabel *handLab;
+    NSTimer *timer;
+
     __weak IBOutlet UITableView *ttableView;
+    __weak IBOutlet UIButton *hotPointBtn;
+    __weak IBOutlet UIButton *handBtn;
+    __weak IBOutlet UIButton *QRBtn;
 
     NSMutableArray *deviceArray;
     NSMutableArray *allDeviceIDArray;
@@ -50,21 +51,21 @@ extern NSString *wifiName;
 
 - (void)customizeDataSource
 {
-    deviceArray = [NSMutableArray array];
-    allDeviceIDArray = [NSMutableArray array];
-    hotLab.backgroundColor = TTCommon.appMainColor;
-    QRLab.backgroundColor = TTCommon.appMainColor;
-    handLab.backgroundColor = TTCommon.appMainColor;
+    deviceArray         = [NSMutableArray array];
+    allDeviceIDArray    = [NSMutableArray array];
+    QRBtn.backgroundColor       = TTCommon.naviViewColor;
+    handBtn.backgroundColor     = TTCommon.naviViewColor;
+    hotPointBtn.backgroundColor = TTCommon.naviViewColor;
 }
 
 - (void)customizeAppearance
 {
     [self fireRecordTimer];
-    self.titleLab.text = TTLocalString(@"adDev_", nil);
+    self.titleLab.text = TTLocalString(@"ad_Devic_", nil);
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     
-    NSArray *pass = [NSArray arrayWithArray:[[TTDataBase shareDB] getAllDeviceInfo]];
-    [pass enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//    NSArray *pass = [NSArray arrayWithArray:[[TTDataBase shareDB] getAllDeviceInfo]];
+    [[[TTDataBase shareDB] getAllDeviceInfo] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         TTDeviceInfo *info = (TTDeviceInfo *)obj;
         [self->allDeviceIDArray addObject:info.deviceID];
     }];
@@ -268,7 +269,7 @@ extern NSString *wifiName;
             if (code == 1) {
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     // 通知刷新设备列表
-                    [[NSNotificationCenter defaultCenter] postNotificationName:TT_addDevice_noti_KEY object:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:TT_OnLine_AddDevice_noti_KEY object:deviceInfo];
                 });
                 if (self->isQRCode) {
 #pragma mark - 扫码连接
@@ -276,7 +277,7 @@ extern NSString *wifiName;
                         [weakSelf.view makeToast:TTLocalString(@"扫码添加成功", nil)];
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                             // 添加设备成功，发送通知到到设备列表，提示用户去连接可使用wifi
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"addNewDevice_noti_key" object:deviceInfo];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"QRAddNewDevice_noti_key" object:deviceInfo];
                             [weakSelf.navigationController popToRootViewControllerAnimated:YES];
                         });
                     });

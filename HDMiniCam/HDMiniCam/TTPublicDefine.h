@@ -12,7 +12,7 @@
 #define FLAG_TAG 20190515
 
 #define TT_onStatus_noti_KEY                    @"TT_onStatus_noti_KEY"                 // 设备状态更新通知
-#define TT_addDevice_noti_KEY                   @"TT_addDevice_noti_KEY"                // 添加设备通知
+#define TT_OnLine_AddDevice_noti_KEY                   @"TT_OnLine_AddDevice_noti_KEY"                // 添加设备通知
 #define TT_getRecordConf_noti_KEY               @"TT_getRecordConf_noti_KEY"            // 获取录像配置信息
 #define TT_getTimeLineInfo_noti_KEY             @"TT_getTimeLineInfo_noti_KEY"          // 获取设备时间轴信息
 #define TT_deleteRemoteFile_noti_KEY            @"TT_deleteRemoteFile_noti_KEY"         // 删除远程文件

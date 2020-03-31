@@ -166,15 +166,15 @@
     if (component == 0)
         return [hourArr objectAtIndex:row];
     else if (component == 1)
-        return TTLocalString(@"hous_", nil);
+        return TTLocalString(@"tim_hour_", nil);
     else if (component == 2)
         return [minArr objectAtIndex:row];
     else if (component == 3)
-        return TTLocalString(@"mins_", nil);
+        return TTLocalString(@"tim_min_", nil);
     else if (component == 4)
         return [secArr objectAtIndex:row];
     else if (component == 5)
-        return TTLocalString(@"secs_", nil);
+        return TTLocalString(@"tim_sec_", nil);
     return 0;
 }
 

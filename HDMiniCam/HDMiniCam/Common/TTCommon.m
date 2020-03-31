@@ -25,12 +25,15 @@ static TTCommon *common = nil;
     return common;
 }
 
-/**
- 主题色
- */
-+ (UIColor *)appMainColor
+
++ (UIColor *)naviViewColor
 {
-    return UIColorFromRGB(0x0584e0);
+    return UIColorFromRGB(0x0076bf);
+}
+
++ (UIColor *)btnBackgroundColor
+{
+    return UIColorFromRGB(0x58b9ff);
 }
 
 + (UIColor *)ios13_systemColor:(UIColor *)newColor earlier_systemColoer:(UIColor *)oldColor

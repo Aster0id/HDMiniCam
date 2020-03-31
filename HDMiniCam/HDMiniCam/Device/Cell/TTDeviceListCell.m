@@ -15,18 +15,6 @@
     // Initialization code
 }
 
-- (void)setDeviceID:(NSString *)deviceID
-{
-    _deviceID = deviceID;
-    NSString *path_document = NSHomeDirectory();
-    NSString *pString       = TTStr(@"/Documents/%@.png",deviceID);
-    NSString *imagePath     = [path_document stringByAppendingString:pString];
-    UIImage *image          = [UIImage imageWithContentsOfFile:imagePath];
-    if (image) {
-        self.bigIMGV.image  = image;
-    }
-}
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

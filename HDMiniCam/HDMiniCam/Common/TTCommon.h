@@ -18,7 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TTCommon : NSObject
 #pragma mark - 公共方法
 
-+ (UIColor *)appMainColor;
++ (UIColor *)naviViewColor;
++ (UIColor *)btnBackgroundColor;
 + (UIColor *)ios13_systemColor:(UIColor *)newColor earlier_systemColoer:(UIColor *)oldColor;
 + (NSDictionary *)cString_changto_ocStringWith:(const char *)cString;
 + (NSString *)convertToJsonData:(NSDictionary *)dict;

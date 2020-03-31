@@ -558,7 +558,7 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
                         self->activity.hidden = YES;
                         [self->activity stopAnimating];
                     }
-                    [weakSelf.view makeToast:TTLocalString(@"noVidePly_", nil)];
+                    [weakSelf.view makeToast:TTLocalString(@"noVide_to_Ply_", nil)];
                 });
             }
         });
@@ -850,7 +850,7 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
         [self loadImageFinished:[[UIImage alloc] initWithContentsOfFile:savedImagePath]];
     }
     else {
-        [[TTHub shareHub] showText:TTLocalString(@"picFail_", nil) addToView:self.view];
+        [[TTHub shareHub] showText:TTLocalString(@"getPicFail_", nil) addToView:self.view];
     }
 }
 
@@ -870,7 +870,7 @@ static void MP4_callBack(CFRunLoopObserverRef observer, CFRunLoopActivity activi
        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:TTLocalString(@"tips_", nil)
                                                                                 message:TTLocalString(@"setPhotoQuanX_", nil)
                                                                          preferredStyle:(UIAlertControllerStyleAlert)];
-       UIAlertAction *action = [UIAlertAction actionWithTitle:TTLocalString(@"IGeit", nil)
+       UIAlertAction *action = [UIAlertAction actionWithTitle:TTLocalString(@"IGetttttt_it", nil)
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction * _Nonnull action) {
            

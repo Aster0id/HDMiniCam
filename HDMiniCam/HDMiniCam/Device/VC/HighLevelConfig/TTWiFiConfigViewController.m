@@ -19,8 +19,10 @@ UITableViewDelegate,
 UITableViewDataSource,
 TTWIFIConfigCellDelegate
 >
+{
+    UILabel *wifiLab;
+}
 
-@property (weak, nonatomic) IBOutlet UILabel *wifiLab;
 @property (weak, nonatomic) IBOutlet UIView *hadConnectView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *hadConnectCH;
 @property (weak, nonatomic) IBOutlet UITableView *ttableView;
@@ -69,9 +71,6 @@ TTWIFIConfigCellDelegate
 - (void)getDeviceWiFi:(NSNotification *)noti
 {
     NSDictionary *result = (NSDictionary *)noti.object;
-    
-    TLog(@"result ============ %@",result);
-    
     int ret = [result[@"ret"] intValue];
     NSDictionary *body = [NSDictionary dictionaryWithDictionary:result[@"NetWork.Wireless"]];
     if (ret == 0) {
@@ -80,9 +79,9 @@ TTWIFIConfigCellDelegate
                                                  selector:@selector(searchDeviceWiFi:)
                                                      name:TT_getSearchDeviceWiFi_noti_KEY
                                                    object:nil];
-        
-        self.wifiLab.text = body[@"SSID"];
-        
+        wifiLab.text = TTStr(@"%@  ",body[@"SSID"]);
+        NSString *wifiName = self->wifiLab.text;
+        TLog(@"wifiName ====== %@",[wifiName substringWithRange:NSMakeRange(0, wifiName.length - 2)]);
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             [[TTFirmwareInterface_API sharedManager] searchDeviceWiFi_with_deviceID:self.deviceInfo.deviceID reBlock:^(NSInteger code) {}];
         });
@@ -90,7 +89,7 @@ TTWIFIConfigCellDelegate
     else {
         
         
-        [self.view makeToast:TTLocalString(@"gtDevWfFaile_", nil)];
+        [self.view makeToast:TTLocalString(@"getDevicWifFaile_", nil)];
     }
 }
 
@@ -101,7 +100,7 @@ TTWIFIConfigCellDelegate
 
 - (void)customizeAppearance
 {
-    self.titleLab.text = TTLocalString(@"wfSetp_", nil);
+    self.titleLab.text = TTLocalString(@"devicWif_", nil);
     [[TTHub shareHub] showText:@"" addToView:self.view type:0];
     [self.leftBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -117,12 +116,13 @@ TTWIFIConfigCellDelegate
     int ret = [result[@"ret"] intValue];
     if (ret == 0) {
         self.wifiArray = result[@"NetWork.WirelessSearch"][@"Aplist"];
+        NSString *wifiName = self->wifiLab.text;
+        // [wifiName substringWithRange:NSMakeRange(0, wifiName.length - 2)]
         NSMutableArray *array = [NSMutableArray arrayWithArray:self.wifiArray];
-        TTWeakSelf
         [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSDictionary *body = (NSDictionary *)obj;
             NSString *wifi = body[@"SSID"];
-            if ([wifi isEqualToString:weakSelf.wifiLab.text]) {
+            if ([wifi isEqualToString:[wifiName substringWithRange:NSMakeRange(0, wifiName.length - 2)]]) {
                 [array removeObject:body];
                 *stop = YES;
             }
@@ -131,7 +131,7 @@ TTWIFIConfigCellDelegate
         [self.ttableView reloadData];
     }
     else {
-        [self.view makeToast:TTLocalString(@"gtDevWfFaile_", nil)];
+        [self.view makeToast:TTLocalString(@"getDevicWifFaile_", nil)];
     }
 }
 
@@ -143,6 +143,34 @@ TTWIFIConfigCellDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.wifiArray.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 100;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 100)];
+    headView.backgroundColor = UIColorFromRGB(0xF5F5F5);
+    
+    UILabel *lab1 = [[UILabel alloc] initWithFrame:CGRectMake(12, 0, SCREEN_WIDTH - 24, 30)];
+    lab1.text = TTLocalString(@"已连接Wi-Fi网络", nil);
+    lab1.font = [UIFont systemFontOfSize:14];
+    [headView addSubview:lab1];
+    
+    wifiLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 30, SCREEN_WIDTH, 40)];
+    wifiLab.font = [UIFont systemFontOfSize:14];
+    wifiLab.textAlignment = NSTextAlignmentRight;
+    [headView addSubview:wifiLab];
+    
+    UILabel *lab2 = [[UILabel alloc] initWithFrame:CGRectMake(12, 70, SCREEN_WIDTH - 24, 30)];
+    lab2.text = TTLocalString(@"选择需要连接的Wi-Fi网络", nil);
+    lab2.font = [UIFont systemFontOfSize:14];
+    [headView addSubview:lab2];
+    
+    return headView;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -160,11 +188,11 @@ TTWIFIConfigCellDelegate
     
     cell.first.text     = body[@"SSID"];
     
-    cell.second.text    = TTStr(@"%@：%@",TTLocalString(@"sfe_", nil),body[@"EncType"]);
+    cell.second.text    = TTStr(@"%@：%@",TTLocalString(@"safty_", nil),body[@"EncType"]);
     
     
     
-    cell.third.text     = TTStr(@"%@：%@",TTLocalString(@"singStrog_", nil),body[@"RSSI"]);
+    cell.third.text     = TTStr(@"%@：%@",TTLocalString(@"singleStrogly_", nil),body[@"RSSI"]);
     
     return cell;
 
@@ -181,9 +209,9 @@ TTWIFIConfigCellDelegate
 {
     ZQAlterField *alertView = [ZQAlterField alertView];
     alertView.Maxlength = 50;
-    alertView.ensureBgColor = TTCommon.appMainColor;
-    alertView.placeholder = TTLocalString(@"inputWFPwd_", nil);
-    alertView.title = TTStr(@"%@：%@",TTLocalString(@"changeWF_", nil),body[@"SSID"]);
+    alertView.ensureBgColor = TTCommon.naviViewColor;
+    alertView.placeholder = TTLocalString(@"inputWiFiPaswrd_", nil);
+    alertView.title = TTStr(@"%@：%@",TTLocalString(@"chageWiFTo_", nil),body[@"SSID"]);
     TTWeakSelf
     [alertView ensureClickBlock:^(NSString *inputString) {
         
@@ -202,7 +230,7 @@ TTWIFIConfigCellDelegate
         }];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf.view makeToast:TTLocalString(@"wtReconect_", nil)];
+            [weakSelf.view makeToast:TTLocalString(@"chageWifing_waitReConect_", nil)];
         });
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [weakSelf.navigationController popToRootViewControllerAnimated:YES];

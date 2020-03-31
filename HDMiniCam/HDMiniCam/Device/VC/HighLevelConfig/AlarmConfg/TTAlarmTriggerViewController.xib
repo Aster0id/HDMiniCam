@@ -36,7 +36,7 @@
                     <subviews>
                         <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dq0-r8-i5q">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
-                            <color key="backgroundColor" red="0.019607843140000001" green="0.51764705879999995" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.0" green="0.46274509803921571" blue="0.74901960784313726" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="bzc-Mb-8dO"/>
                             </constraints>
@@ -51,7 +51,7 @@
                         </button>
                         <button opaque="NO" tag="20" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mOH-tr-aMA">
                             <rect key="frame" x="0.0" y="36" width="320" height="35"/>
-                            <color key="backgroundColor" red="0.019607843140000001" green="0.51764705879999995" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.0" green="0.46274509803921571" blue="0.74901960784313726" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="dAO-KL-Xk1"/>
                             </constraints>
@@ -90,6 +90,7 @@
                                 </label>
                                 <switch opaque="NO" tag="10" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rc9-To-bmi">
                                     <rect key="frame" x="259" y="4.5" width="51" height="31"/>
+                                    <color key="onTintColor" red="0.0" green="0.46274509803921571" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <connections>
                                         <action selector="switchBtnAction:" destination="-1" eventType="valueChanged" id="UEF-kH-slq"/>
                                     </connections>
@@ -198,6 +199,7 @@
                                 </label>
                                 <switch opaque="NO" tag="20" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WQU-0f-uMo">
                                     <rect key="frame" x="259" y="4.5" width="51" height="31"/>
+                                    <color key="onTintColor" red="0.0" green="0.46274509803921571" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <connections>
                                         <action selector="switchBtnAction:" destination="-1" eventType="valueChanged" id="cq3-U3-U1v"/>
                                     </connections>
@@ -266,6 +268,7 @@
                                 </label>
                                 <switch opaque="NO" tag="30" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W5K-e4-2iP">
                                     <rect key="frame" x="259" y="4.5" width="51" height="31"/>
+                                    <color key="onTintColor" red="0.0" green="0.46274509800000002" blue="0.74901960779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <connections>
                                         <action selector="switchBtnAction:" destination="-1" eventType="valueChanged" id="v5T-jd-lG3"/>
                                     </connections>
@@ -367,6 +370,7 @@
                                 </label>
                                 <switch opaque="NO" tag="40" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XjX-0N-Y2p">
                                     <rect key="frame" x="259" y="4.5" width="51" height="31"/>
+                                    <color key="onTintColor" red="0.0" green="0.46274509800000002" blue="0.74901960779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <connections>
                                         <action selector="switchBtnAction:" destination="-1" eventType="valueChanged" id="Wcv-qY-xBV"/>
                                     </connections>

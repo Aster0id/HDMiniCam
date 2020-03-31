@@ -50,6 +50,10 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q7n-YF-vIu">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                    <color key="backgroundColor" red="0.0" green="0.46274509803921571" blue="0.74901960784313726" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ud9-HS-f5O">
                     <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                     <subviews>
@@ -58,7 +62,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="60" id="mHD-AT-R8c"/>
                             </constraints>
-                            <state key="normal" image="back_icon"/>
+                            <state key="normal" image="back_white"/>
                             <connections>
                                 <action selector="topBtn:" destination="-1" eventType="touchUpInside" id="5V1-os-VGN"/>
                             </connections>
@@ -68,7 +72,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="60" id="q6n-z7-AEb"/>
                             </constraints>
-                            <state key="normal" image="reback_icon"/>
+                            <state key="normal" image="reback_white"/>
                             <connections>
                                 <action selector="topBtn:" destination="-1" eventType="touchUpInside" id="0DF-cT-SUq"/>
                             </connections>
@@ -79,11 +83,11 @@
                                 <constraint firstAttribute="width" constant="120" id="Z7I-x5-MEi"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" red="0.0" green="0.46274509803921571" blue="0.74901960784313726" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="fcz-LV-fKa" firstAttribute="centerX" secondItem="Ud9-HS-f5O" secondAttribute="centerX" id="229-gX-3WX"/>
                         <constraint firstItem="aYG-RB-s2n" firstAttribute="top" secondItem="Ud9-HS-f5O" secondAttribute="top" id="4l9-Ck-hgt"/>
@@ -553,15 +557,35 @@
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2uc-nC-b7i">
                                                             <rect key="frame" x="207.5" y="0.0" width="206.5" height="117"/>
-                                                            <color key="backgroundColor" red="0.83529411760000005" green="0.83529411760000005" blue="0.83529411760000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </view>
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="bUo-TV-Xhk">
                                                     <rect key="frame" x="0.0" y="235.5" width="414" height="116.5"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KTO-td-45q">
+                                                            <rect key="frame" x="0.0" y="0.0" width="206.5" height="116.5"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="15Q-nj-6Ar">
+                                                            <rect key="frame" x="207.5" y="0.0" width="206.5" height="116.5"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </view>
+                                                    </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="Btr-5M-AA6">
                                                     <rect key="frame" x="0.0" y="353" width="414" height="117"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rk8-hm-dah">
+                                                            <rect key="frame" x="0.0" y="0.0" width="206.5" height="117"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tt0-MW-zDg">
+                                                            <rect key="frame" x="207.5" y="0.0" width="206.5" height="117"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </view>
+                                                    </subviews>
                                                 </stackView>
                                             </subviews>
                                         </stackView>
@@ -598,10 +622,6 @@
                         <constraint firstAttribute="bottom" secondItem="6qU-ns-muU" secondAttribute="bottom" id="yjb-rA-kqI"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q7n-YF-vIu">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E1G-Jz-oVX">
                     <rect key="frame" x="0.0" y="88" width="414" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -614,7 +634,7 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="44" id="SPz-x0-7Mt"/>
                     </constraints>
-                    <state key="normal" image="back_icon"/>
+                    <state key="normal" image="back_white"/>
                     <connections>
                         <action selector="topBtn:" destination="-1" eventType="touchUpInside" id="Hhu-tR-e4t"/>
                     </connections>
@@ -753,11 +773,11 @@
         </view>
     </objects>
     <resources>
-        <image name="back_icon" width="24" height="24"/>
+        <image name="back_white" width="24" height="24"/>
         <image name="micPhone_n" width="36" height="36"/>
         <image name="micPhone_s" width="36" height="36"/>
         <image name="qingxidu_" width="36" height="36"/>
-        <image name="reback_icon" width="24" height="24"/>
+        <image name="reback_white" width="24" height="24"/>
         <image name="rotate" width="36" height="36"/>
         <image name="setting_n" width="36" height="36"/>
         <image name="spearkerOpen_n" width="36" height="36"/>

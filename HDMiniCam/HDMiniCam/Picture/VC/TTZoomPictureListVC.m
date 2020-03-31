@@ -206,7 +206,7 @@ TTZoomPictureCellDelegate
 - (void)longPressWith:(NSString *)path
 {
     NSInteger row = [imagePathArr indexOfObject:path];
-    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:TTLocalString(@"isDltPic_", nil) message:@""
+    UIAlertController *alertview = [UIAlertController alertControllerWithTitle:TTLocalString(@"isDeletPicture_", nil) message:@""
                                                             preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:TTLocalString(@"cacel_", nil) style:UIAlertActionStyleCancel
                                                    handler:nil];

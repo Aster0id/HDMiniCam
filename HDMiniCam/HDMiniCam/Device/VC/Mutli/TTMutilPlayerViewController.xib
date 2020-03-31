@@ -38,7 +38,7 @@
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CJ6-dI-bn4">
                                                     <rect key="frame" x="185.5" y="87.5" width="32" height="32"/>
-                                                    <state key="normal" image="add_blue"/>
+                                                    <state key="normal" image="add_white"/>
                                                     <connections>
                                                         <action selector="addDeviceBtnAction:" destination="-1" eventType="touchUpInside" id="V78-bX-MIg"/>
                                                     </connections>
@@ -62,7 +62,7 @@
                                             <subviews>
                                                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ij8-d5-kcG">
                                                     <rect key="frame" x="185.5" y="87.5" width="32" height="32"/>
-                                                    <state key="normal" image="add_blue"/>
+                                                    <state key="normal" image="add_white"/>
                                                     <connections>
                                                         <action selector="addDeviceBtnAction:" destination="-1" eventType="touchUpInside" id="9Um-os-ZOs"/>
                                                     </connections>
@@ -91,7 +91,7 @@
                                             <subviews>
                                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="65I-G0-273">
                                                     <rect key="frame" x="185.5" y="87.5" width="32" height="32"/>
-                                                    <state key="normal" image="add_blue"/>
+                                                    <state key="normal" image="add_white"/>
                                                     <connections>
                                                         <action selector="addDeviceBtnAction:" destination="-1" eventType="touchUpInside" id="m7c-ff-4dW"/>
                                                     </connections>
@@ -115,7 +115,7 @@
                                             <subviews>
                                                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zdr-ut-q8S">
                                                     <rect key="frame" x="185.5" y="87.5" width="32" height="32"/>
-                                                    <state key="normal" image="add_blue"/>
+                                                    <state key="normal" image="add_white"/>
                                                     <connections>
                                                         <action selector="addDeviceBtnAction:" destination="-1" eventType="touchUpInside" id="IPZ-UK-5SM"/>
                                                     </connections>
@@ -160,7 +160,7 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="60" id="yMW-IQ-Te5"/>
                     </constraints>
-                    <state key="normal" image="back_icon"/>
+                    <state key="normal" image="back_white"/>
                     <connections>
                         <action selector="btn:" destination="-1" eventType="touchUpInside" id="eTm-AS-0rA"/>
                     </connections>
@@ -184,7 +184,7 @@
         </view>
     </objects>
     <resources>
-        <image name="add_blue" width="32" height="32"/>
-        <image name="back_icon" width="24" height="24"/>
+        <image name="add_white" width="32" height="32"/>
+        <image name="back_white" width="24" height="24"/>
     </resources>
 </document>

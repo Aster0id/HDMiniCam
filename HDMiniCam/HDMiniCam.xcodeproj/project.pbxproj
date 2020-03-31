@@ -14,7 +14,6 @@
 		93C3396223CB75BB00B44E5F /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 93C3396123CB75BB00B44E5F /* AppDelegate.mm */; };
 		93C3396823CB75BB00B44E5F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93C3396623CB75BB00B44E5F /* Main.storyboard */; };
 		93C3396A23CB75BE00B44E5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93C3396923CB75BE00B44E5F /* Assets.xcassets */; };
-		93C3396D23CB75BE00B44E5F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93C3396B23CB75BE00B44E5F /* LaunchScreen.storyboard */; };
 		93C3397023CB75BE00B44E5F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C3396F23CB75BE00B44E5F /* main.m */; };
 		93C3398823CE1BA900B44E5F /* TTabBarBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C3397C23CE1BA800B44E5F /* TTabBarBaseViewController.m */; };
 		93C3398A23CE1BA900B44E5F /* TTBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C3397E23CE1BA800B44E5F /* TTBaseCell.m */; };
@@ -29,6 +28,7 @@
 		AB20E62123CED07300D2861C /* TTDeviceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB20E61F23CED07300D2861C /* TTDeviceListCell.m */; };
 		AB20E62223CED07300D2861C /* TTDeviceListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB20E62023CED07300D2861C /* TTDeviceListCell.xib */; };
 		AB20E62A23CEE33400D2861C /* TTSinglePictureScale.m in Sources */ = {isa = PBXBuildFile; fileRef = AB20E62823CEE33300D2861C /* TTSinglePictureScale.m */; };
+		AB2C5AB524336B0E000A7AA1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB2C5AB324336B0E000A7AA1 /* LaunchScreen.storyboard */; };
 		AB30DA4523D05B0F005BD2A1 /* TTAddTypeListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB30DA4323D05B0F005BD2A1 /* TTAddTypeListVC.m */; };
 		AB30DA4B23D060F2005BD2A1 /* TTOnlineVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AB30DA4923D060F2005BD2A1 /* TTOnlineVC.m */; };
 		AB30DA7523D163A4005BD2A1 /* TTHighConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB30DA7323D163A4005BD2A1 /* TTHighConfigViewController.m */; };
@@ -141,7 +141,6 @@
 		93C3396123CB75BB00B44E5F /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		93C3396723CB75BB00B44E5F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		93C3396923CB75BE00B44E5F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		93C3396C23CB75BE00B44E5F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		93C3396F23CB75BE00B44E5F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		93C3397C23CE1BA800B44E5F /* TTabBarBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTabBarBaseViewController.m; sourceTree = "<group>"; };
 		93C3397E23CE1BA800B44E5F /* TTBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTBaseCell.m; sourceTree = "<group>"; };
@@ -172,6 +171,7 @@
 		AB20E62023CED07300D2861C /* TTDeviceListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TTDeviceListCell.xib; sourceTree = "<group>"; };
 		AB20E62823CEE33300D2861C /* TTSinglePictureScale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTSinglePictureScale.m; sourceTree = "<group>"; };
 		AB20E62923CEE33300D2861C /* TTSinglePictureScale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTSinglePictureScale.h; sourceTree = "<group>"; };
+		AB2C5AB424336B0E000A7AA1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB30DA4223D05B0F005BD2A1 /* TTAddTypeListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTAddTypeListVC.h; sourceTree = "<group>"; };
 		AB30DA4323D05B0F005BD2A1 /* TTAddTypeListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TTAddTypeListVC.m; sourceTree = "<group>"; };
 		AB30DA4823D060F2005BD2A1 /* TTOnlineVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTOnlineVC.h; sourceTree = "<group>"; };
@@ -413,8 +413,8 @@
 				AB20E60A23CEBEF900D2861C /* Picture */,
 				AB20E61023CEBF1600D2861C /* Record */,
 				93C3396623CB75BB00B44E5F /* Main.storyboard */,
+				AB2C5AB324336B0E000A7AA1 /* LaunchScreen.storyboard */,
 				93C3396923CB75BE00B44E5F /* Assets.xcassets */,
-				93C3396B23CB75BE00B44E5F /* LaunchScreen.storyboard */,
 				AB771A2D24222979007B5E2E /* Info.plist */,
 				AB4E8AEF242C885C0023152B /* Manager */,
 				AB4E8AC1242B17950023152B /* Category */,
@@ -998,7 +998,6 @@
 				AB4E89C4242887C70023152B /* TTAlarmConfigTableViewCell.xib in Resources */,
 				AB4E8B05242EF9700023152B /* TTDefensTimeCell.xib in Resources */,
 				AB4E89CE2428B7320023152B /* TTDefensTimeViewController.xib in Resources */,
-				93C3396D23CB75BE00B44E5F /* LaunchScreen.storyboard in Resources */,
 				AB4E89DD2429C32D0023152B /* TTAddDefensTimeViewController.xib in Resources */,
 				AB4E89E8242A043D0023152B /* TTAlarmConfigCollectionCell.xib in Resources */,
 				AB4E89D82428C0060023152B /* TTAlarmConfigFootView.xib in Resources */,
@@ -1027,6 +1026,7 @@
 				AB4827B32420CB49008970A0 /* Localizable.strings in Resources */,
 				AB30DA7623D163A4005BD2A1 /* TTHighConfigViewController.xib in Resources */,
 				93C3396A23CB75BE00B44E5F /* Assets.xcassets in Resources */,
+				AB2C5AB524336B0E000A7AA1 /* LaunchScreen.storyboard in Resources */,
 				AB5462D4240FA1A100A096ED /* TTDeviceAllDayCell.xib in Resources */,
 				AB5462CF240FA0A900A096ED /* TTDeviceAllDayVC.xib in Resources */,
 				AB52C10D23F91FB200C921F1 /* TT_screenShot.mp3 in Resources */,
@@ -1167,10 +1167,10 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		93C3396B23CB75BE00B44E5F /* LaunchScreen.storyboard */ = {
+		AB2C5AB324336B0E000A7AA1 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				93C3396C23CB75BE00B44E5F /* Base */,
+				AB2C5AB424336B0E000A7AA1 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -1403,7 +1403,7 @@
 			baseConfigurationReference = 3BD0491313C1A47BA7190304 /* Pods-HDMiniCam.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = HDMiniCam/HDMiniCam.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -1433,7 +1433,7 @@
 			baseConfigurationReference = E20A0D2AFA2F70A321883351 /* Pods-HDMiniCam.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = HDMiniCam/HDMiniCam.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
