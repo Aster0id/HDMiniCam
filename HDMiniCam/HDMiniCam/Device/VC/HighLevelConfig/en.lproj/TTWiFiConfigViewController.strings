@@ -1,9 +1,0 @@
-
-/* Class = "UILabel"; text = "已连接Wi-Fi网络"; ObjectID = "Eaj-gO-vyb"; */
-"Eaj-gO-vyb.text" = "Wi-Fi network connected";
-
-/* Class = "UILabel"; text = "选择需要连接的Wi-Fi网络"; ObjectID = "jte-VK-L7M"; */
-"jte-VK-L7M.text" = "Select the Wi-Fi network you want to connect to";
-
-/* Class = "UILabel"; text = "已连接Wi-Fi网络"; ObjectID = "qxV-SZ-8Sq"; */
-"qxV-SZ-8Sq.text" = "Wi-Fi network connected";

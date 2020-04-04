@@ -200,36 +200,18 @@
 		AB482752241F9CE3008970A0 /* TYCameraTimeLineScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYCameraTimeLineScrollView.m; sourceTree = "<group>"; };
 		AB482753241F9CE4008970A0 /* TYCameraTimeLineScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYCameraTimeLineScrollView.h; sourceTree = "<group>"; };
 		AB4827562420B666008970A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TTDeviceListViewController.xib; sourceTree = "<group>"; };
-		AB4827592420B66C008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TTDeviceListViewController.strings; sourceTree = "<group>"; };
-		AB48275B2420B66F008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TTDeviceListViewController.strings"; sourceTree = "<group>"; };
 		AB48275D2420B698008970A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TTLivePlayViewController.xib; sourceTree = "<group>"; };
-		AB4827602420B6A3008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TTLivePlayViewController.strings; sourceTree = "<group>"; };
-		AB4827622420B6A5008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TTLivePlayViewController.strings"; sourceTree = "<group>"; };
 		AB4827642420B6AE008970A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TTRebackPlayViewController.xib; sourceTree = "<group>"; };
-		AB4827672420B6C7008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TTRebackPlayViewController.strings; sourceTree = "<group>"; };
-		AB4827692420B6C9008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TTRebackPlayViewController.strings"; sourceTree = "<group>"; };
 		AB48276B2420B6DC008970A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TTBrowseListViewController.xib; sourceTree = "<group>"; };
-		AB48276E2420B6E7008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TTBrowseListViewController.strings; sourceTree = "<group>"; };
-		AB4827702420B6E9008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TTBrowseListViewController.strings"; sourceTree = "<group>"; };
 		AB4827722420B6F0008970A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TTBrowseSinglePlayerViewController.xib; sourceTree = "<group>"; };
-		AB4827752420B6F8008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TTBrowseSinglePlayerViewController.strings; sourceTree = "<group>"; };
-		AB4827772420B6FD008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TTBrowseSinglePlayerViewController.strings"; sourceTree = "<group>"; };
 		AB4827792420B707008970A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TTAddTypeListVC.xib; sourceTree = "<group>"; };
 		AB4827872420B769008970A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TTWiFiConfigViewController.xib; sourceTree = "<group>"; };
-		AB48278A2420B76F008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TTWiFiConfigViewController.strings; sourceTree = "<group>"; };
-		AB48278C2420B770008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TTWiFiConfigViewController.strings"; sourceTree = "<group>"; };
 		AB48279C2420B7F4008970A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TTOnlineVC.xib; sourceTree = "<group>"; };
-		AB48279F2420B7FB008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TTOnlineVC.strings; sourceTree = "<group>"; };
-		AB4827A12420B7FD008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TTOnlineVC.strings"; sourceTree = "<group>"; };
 		AB4827A62420B845008970A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TTZoomPictureListVC.xib; sourceTree = "<group>"; };
-		AB4827A92420B84C008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TTZoomPictureListVC.strings; sourceTree = "<group>"; };
-		AB4827AB2420B84E008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TTZoomPictureListVC.strings"; sourceTree = "<group>"; };
 		AB4827B42420CB49008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AB4827B62420CB4D008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		AB4827C62421FEED008970A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AB4827C82421FEF0008970A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		AB4E89862425BF6A0023152B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TTAddTypeListVC.strings; sourceTree = "<group>"; };
-		AB4E89882425BF6D0023152B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TTAddTypeListVC.strings"; sourceTree = "<group>"; };
 		AB4E898924260AC10023152B /* TTScanningVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTScanningVC.m; sourceTree = "<group>"; };
 		AB4E898A24260AC10023152B /* TTScanningVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTScanningVC.h; sourceTree = "<group>"; };
 		AB4E89BB242883E10023152B /* TTAlarmConfigHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTAlarmConfigHeadView.h; sourceTree = "<group>"; };
@@ -563,10 +545,10 @@
 				AB30DA7223D163A4005BD2A1 /* TTHighConfigViewController.h */,
 				AB30DA7323D163A4005BD2A1 /* TTHighConfigViewController.m */,
 				AB30DA7423D163A4005BD2A1 /* TTHighConfigViewController.xib */,
-				AB423B04242EFF2700564EAF /* TTHighConfigSubView */,
 				93A30C4923D29889009A0F4C /* TTWiFiConfigViewController.h */,
 				93A30C4A23D29889009A0F4C /* TTWiFiConfigViewController.m */,
 				AB4827882420B769008970A0 /* TTWiFiConfigViewController.xib */,
+				AB423B04242EFF2700564EAF /* TTHighConfigSubView */,
 				AB423B05242EFF4900564EAF /* TTWifiConfigSubView */,
 				AB4E8B00242EF4E90023152B /* AlarmConfg */,
 			);
@@ -1179,8 +1161,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				AB4827562420B666008970A0 /* Base */,
-				AB4827592420B66C008970A0 /* en */,
-				AB48275B2420B66F008970A0 /* zh-Hans */,
 			);
 			name = TTDeviceListViewController.xib;
 			sourceTree = "<group>";
@@ -1189,8 +1169,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				AB48275D2420B698008970A0 /* Base */,
-				AB4827602420B6A3008970A0 /* en */,
-				AB4827622420B6A5008970A0 /* zh-Hans */,
 			);
 			name = TTLivePlayViewController.xib;
 			sourceTree = "<group>";
@@ -1199,8 +1177,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				AB4827642420B6AE008970A0 /* Base */,
-				AB4827672420B6C7008970A0 /* en */,
-				AB4827692420B6C9008970A0 /* zh-Hans */,
 			);
 			name = TTRebackPlayViewController.xib;
 			sourceTree = "<group>";
@@ -1209,8 +1185,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				AB48276B2420B6DC008970A0 /* Base */,
-				AB48276E2420B6E7008970A0 /* en */,
-				AB4827702420B6E9008970A0 /* zh-Hans */,
 			);
 			name = TTBrowseListViewController.xib;
 			sourceTree = "<group>";
@@ -1219,8 +1193,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				AB4827722420B6F0008970A0 /* Base */,
-				AB4827752420B6F8008970A0 /* en */,
-				AB4827772420B6FD008970A0 /* zh-Hans */,
 			);
 			name = TTBrowseSinglePlayerViewController.xib;
 			sourceTree = "<group>";
@@ -1229,8 +1201,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				AB4827792420B707008970A0 /* Base */,
-				AB4E89862425BF6A0023152B /* en */,
-				AB4E89882425BF6D0023152B /* zh-Hans */,
 			);
 			name = TTAddTypeListVC.xib;
 			sourceTree = "<group>";
@@ -1239,8 +1209,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				AB4827872420B769008970A0 /* Base */,
-				AB48278A2420B76F008970A0 /* en */,
-				AB48278C2420B770008970A0 /* zh-Hans */,
 			);
 			name = TTWiFiConfigViewController.xib;
 			sourceTree = "<group>";
@@ -1249,8 +1217,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				AB48279C2420B7F4008970A0 /* Base */,
-				AB48279F2420B7FB008970A0 /* en */,
-				AB4827A12420B7FD008970A0 /* zh-Hans */,
 			);
 			name = TTOnlineVC.xib;
 			sourceTree = "<group>";
@@ -1259,8 +1225,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				AB4827A62420B845008970A0 /* Base */,
-				AB4827A92420B84C008970A0 /* en */,
-				AB4827AB2420B84E008970A0 /* zh-Hans */,
 			);
 			name = TTZoomPictureListVC.xib;
 			sourceTree = "<group>";
